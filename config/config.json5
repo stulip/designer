@@ -1,0 +1,46 @@
+{
+  //所有模块信息配置
+  module: {
+    //
+    // dependencies 打包依赖, git 会自动下载对应模块
+    // 5000 端口预留给 Face 项目
+    web: {
+      port: 5001,
+      path: "modules/fr-web",
+      dependencies: {}
+    },
+    ui: {
+      port: 5002,
+      path: "modules/fr-ui",
+      dependencies: {}
+    },
+    // 这是一个特殊模块
+    test: {
+      port: 5101,
+      path: "module/fr-test",
+      dependencies: {}
+    }
+  },
+  // 区块配置
+  block: {
+    base: {
+      ui: 'v1', // 此处信息暂时没用,可以修改
+    },
+  },
+  proxy: [
+    {
+      context: "/\\[**\\]/(message|im)/**",
+      target: "ws://",
+      ws: true,
+      toProxy: true,
+      changeOrigin: true,
+      secure: false
+    },
+    {
+      context: "/\\[**\\]/(api|report|zuul)/**",
+      target: 'http://',
+      changeOrigin: true,
+      secure: false
+    },
+  ]
+}

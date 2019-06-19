@@ -1,0 +1,10 @@
+{
+    "xlsx": {
+        "head": 2,
+        "src": "./../../Doc/languages/lang.xlsx",
+        "dest": "./../../src/locale/",
+        "arraySeparator":",",
+        "defaultColumn": 2,
+        "defaultColumn2": 0
+    }
+}

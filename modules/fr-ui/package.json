@@ -1,0 +1,9 @@
+{
+  "name": "fr-ui",
+  "version": "1.0.0",
+  "description": "ui 组件模块",
+  "main": "src/index.js",
+  "dependencies": {
+
+  }
+}

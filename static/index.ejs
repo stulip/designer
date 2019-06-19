@@ -1,0 +1,15 @@
+<!doctype html>
+<html>
+<head>
+    <base href="/">
+    <meta charset="UTF-8">
+    <title>React Webpack</title>
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="keywords" content="React, Webpack">
+    <%= externals.css() %><script src="<%= externals.libs("libs") %>"></script>
+</head><%= externals.scripts() %>
+<body>
+<div id="root"></div>
+</body>
+</html>
