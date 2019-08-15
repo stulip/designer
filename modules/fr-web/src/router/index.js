@@ -4,7 +4,7 @@
  * @since 2019-05-27 15:45
  */
 
-import {Route} from '@xt-web/react-dom/ui';
+import {Route} from '@xt-web/react-dom';
 
 const routes = [
     {

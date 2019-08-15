@@ -32,7 +32,7 @@ const config = {
         config: configData.module[moduleName],
         name: moduleName || "",
         // 模块列表
-        block: Object.keys(configData.block[argv.block || 'base']),
+        block: configData.block[argv.block || 'dev'],
         list: configData.module,
     },
     //项目根目录
@@ -53,6 +53,7 @@ const config = {
         // "mobx": "mobx",
         // "mobx-react": "mobxReact",
         'fr-web': 'xt.web',
+        'fr-ui': 'xt.ui',
         'react-router': ['ReactRouterDOM'],
         'react-router-dom': "ReactRouterDOM",
         'react-router-config': "ReactRouterConfig",

@@ -117,7 +117,7 @@ async function mainServer() {
 
     http.createServer(app.callback()).listen(config.port, config.host);
 
-    log.info("服务启动完成:", chalk.blue(`http://[::]:${config.port}`));
+    log.info("服务启动完成:", chalk.blue(`http://${config.host}:${config.port}`));
 }
 
 //代理

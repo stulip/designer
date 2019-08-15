@@ -6,30 +6,30 @@
     // 5000 端口预留给 Face 项目
     web: {
       port: 5001,
-      path: "modules/fr-web",
-      dependencies: {}
+      path: "modules/fr-web"
     },
     ui: {
       port: 5002,
-      path: "modules/fr-ui",
-      dependencies: {}
+      path: "modules/fr-ui"
     },
     // 这是一个特殊模块
     test: {
       port: 5101,
-      path: "module/fr-test",
-      dependencies: {}
+      path: "module/fr-test"
     }
   },
   // 区块配置
   block: {
-    base: {
-      ui: 'v1', // 此处信息暂时没用,可以修改
+    dev: {
+      ui: {
+        // 此处信息暂时没用,可以扩展
+
+      },
     },
   },
   proxy: [
     {
-      context: "/\\[**\\]/(message|im)/**",
+      context: "/\\[**\\]/api/(message|im)/**",
       target: "ws://",
       ws: true,
       toProxy: true,

@@ -24,6 +24,7 @@ ignore_module = {
 }
 # 编译脚本
 build_web = utils.get_path("scripts/build.js")
+zip_dir = os.path.join('dist', '.zip')
 
 
 class struct:
@@ -39,7 +40,7 @@ def parse_args(argv):
     parser.add_argument("-r", "--release", dest="release", action="store_true", help="编译正式版(ZIP)",
                         default=0)
     parser.add_argument("-a", "--all", dest="all", action="store_true", help="编译所有模块")
-    parser.add_argument("-b", "--block", dest="block", action="store", default="base",
+    parser.add_argument("-b", "--block", dest="block", action="store", default="dev",
                         help="模块配置名称(默认:base), 编译CORE的时候需要")
     parser.add_argument("-yu", "--yarn_upgrade", dest="yarn_upgrade", action="store_true",
                         help="运行 yarn upgrade")
@@ -76,7 +77,7 @@ def start(argv, args):
         for name in error_module:
             print("\033[1;31m⬢ webpack: 编译模块 %s 失败! \033[0m" % str(name).upper())
         if args.release and len(error_module) == 0:
-            merge_assets(args)
+            merge_assets(args, config)
             print("\033[0;34m⬡ webpack:\033[0m 发布完成!")
         else:
             print("\033[0;34m⬡ webpack:\033[0m 编译完成!")
@@ -85,41 +86,41 @@ def start(argv, args):
 
 
 # 合并资源到index.js中
-def merge_assets(args):
-    os.path.isdir('.dist') and shutil.rmtree('.dist')
-    shutil.copytree('dist', '.dist')
+def merge_assets(args, config):
+    os.path.isdir(zip_dir) and shutil.rmtree(zip_dir)
+    shutil.copytree('dist', zip_dir)
 
-    merge_file(args, 'css')
-    merge_file(args, 'js')
+    merge_file(args, 'css', config)
+    merge_file(args, 'js', config)
 
     not os.path.isdir('build') and os.mkdir('build')
-    utils.zip_dir('.dist', 'build/dist-release.zip')
-    # shutil.rmtree('.dist')
+    utils.zip_dir(zip_dir, 'build/dist-release.zip')
+    # shutil.rmtree(zip_dir)
 
 
-def merge_file(args, six):
-    value = ''
+def merge_file(args, six, config):
+    block = config['block'][args.block]
     list_dirs = utils.get_path("dist")
     index_name = 'index.%s' % six
 
-    for root, dirs, files in os.walk(list_dirs):
-        for f in files:
-            path = os.path.join(root, f)
-            if f == index_name:
-                fp = open(path)
-                try:
-                    fp_value = fp.read() + "\n"
-                    if path.find('web' + os.path.sep) != -1:
-                        value = fp_value + value
-                    else:
-                        value += fp_value
-                    os.remove(path.replace("dist", '.dist'))
-                except Exception as e:
-                    raise Exception("合并资源错误:", e)
-                finally:
-                    fp.close()
+    module_list = []
+    for key, value in block.items():
+        module_list.append(key)
+    module_list.append('web')
 
-    o_path = os.path.join(utils.get_path(".dist"), 'web', six, index_name)
+    value = ''
+    for module in module_list:
+        path = os.path.join(list_dirs, module, six, index_name)
+        fp = open(path, 'r', encoding='utf-8')
+        try:
+            value += fp.read() + '\n'
+            os.remove(path.replace("dist", zip_dir))
+        except Exception as e:
+            raise Exception("合并资源错误:", e)
+        finally:
+            fp.close()
+
+    o_path = os.path.join(utils.get_path(zip_dir), 'web', six, index_name)
     os.path.isfile(o_path) and os.remove(o_path)
     out = open(o_path, "w")
     out.write(value)

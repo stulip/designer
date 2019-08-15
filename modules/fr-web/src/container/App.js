@@ -5,7 +5,7 @@
 
 import React from 'react';
 import {hot} from 'react-hot-loader';
-import {Router, Route} from '@xt-web/react-dom/ui'
+import {Router, Route} from '@xt-web/react-dom'
 import {renderRoutes} from 'react-router-config'
 import {register} from '../router';
 

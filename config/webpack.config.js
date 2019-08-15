@@ -7,6 +7,7 @@ const webpack = require('./webpack.config.base');
 //HTML 模板
 function templateParameters(compilation, assets, options) {
     const publicPath = compilation.options.output.publicPath;
+    const blockList = Object.keys(webpack.module.block);
     return {
         compilation: compilation,
         webpack: compilation.getStats().toJson(),
@@ -16,14 +17,12 @@ function templateParameters(compilation, assets, options) {
             scripts: function () {
                 if (webpack.isRelease) return '';
                 let child = da => `<script type="text/javascript" src="${da}/js/${webpack.entryName}.js?${compilation.hash}"></script>`;
-                let scriptAry = webpack.module.block.map(child);
-                return scriptAry.join("\n\t");
+                return blockList.map(child).join("\n\t");
             },
             css: function () {
                 if (webpack.isRelease) return '';
                 let child = da => `<link href="${da}/css/${webpack.entryName}.css?${compilation.hash}" rel="stylesheet">`;
-                let scriptAry = webpack.module.block.map(child);
-                return scriptAry.join("\n\t");
+                return blockList.map(child).join("\n\t");
             },
             libs: () => `${publicPath}js/${webpack.libs.name}.js?${compilation.hash}`,
             path: name => `${publicPath}${name}`
@@ -56,7 +55,7 @@ const webConfig = {
             //     return webpack.isDebug;
             // },
             template: `${webpack.rootPath}/static/index.ejs`,
-            favicon: `${webpack.rootPath}/static/favicon.ico`,
+            // favicon: `${webpack.rootPath}/static/favicon.ico`,
             templateParameters,
         }),
         new MergeIntoSingleFilePlugin({
@@ -81,7 +80,8 @@ const webConfig = {
         new CopyWebpackPlugin(
             [
                 // {from: path.join(webpack.rootPath, 'static', 'js'), to: 'js'},
-                // {from: path.join(webpack.rootPath, 'static', 'images'), to: 'images'}
+                // {from: path.join(webpack.rootPath, 'static', 'images'), to: 'images'},
+                {from: path.join(webpack.rootPath, 'static', 'favicon.ico'), to: '../'}
             ]
         ),
         // new CopyWebpackPlugin([{from: 'entry.js', to: 'js/entry.js'}]),
