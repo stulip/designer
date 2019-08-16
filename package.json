@@ -33,6 +33,8 @@
     "react-router": "^5.0.1",
     "react-router-config": "^5.0.1",
     "react-router-dom": "^5.0.1",
+    "mb-sketch-ruler": "1.0.1",
+    "styled-components": "^4.3.2",
     "whatwg-fetch": "^3.0.0"
   },
   "devDependencies": {
