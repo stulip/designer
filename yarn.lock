@@ -1121,10 +1121,10 @@
   resolved "https://registry.yarnpkg.com/@xt-web/core/-/core-0.1.7.tgz#ccbeb383c26678680eae95c05a57097121142fa2"
   integrity sha512-SJ+ZLrFfkCdd5/Vrzmro+tqiBcz8yXnbCcuVWycWFTOQivy7VS8qpj4va39O8pl2b+hVIk+0H67OTQ9PJRu7ow==
 
-"@xt-web/react-dom@^0.1.2":
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/@xt-web/react-dom/-/react-dom-0.1.2.tgz#e1db1067248b0636f1078485169d84555bf04520"
-  integrity sha512-3JfAg42GgLURAW6GzJ4PBKLvSKo8odBmZi3CRkBeuNRVJ9SXuElgLL+bmov6TCOfrsIjJmFJEn98vjJELSmeag==
+"@xt-web/react-dom@^0.1.3":
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/@xt-web/react-dom/-/react-dom-0.1.3.tgz#e4beb5442dd2fc1216ee92314fd9ab744ed4199d"
+  integrity sha512-NDJfRzWXv4dCm7c2Y6Ok7dyTwEq0BIvuaKG9EhENVdQZiXNmTaLSHr9Gb4Oi/XoNf8fWhFZtoXcYUQnTb/NDKQ==
   dependencies:
     "@xt-web/react" "^0.1.6"
 

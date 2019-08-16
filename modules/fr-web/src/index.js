@@ -8,9 +8,4 @@ import './assets'
 
 window.onload = ()=> ReactDOM.render(<App/>, document.getElementById("root"));
 
-export function test (){
-    console.log('大猴子');
-}
-
-
 export const version = process.env.MODULE_VERSION;

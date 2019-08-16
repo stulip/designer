@@ -1,9 +1,9 @@
 import React from 'react';
 
 import './assets/index.css';
-import {test} from 'fr-web';
 
-test()
+import Component from './components'
+
 const version = process.env.MODULE_VERSION;
 export {
     version

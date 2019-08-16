@@ -5,6 +5,7 @@
  */
 import React from 'react';
 import {renderRoutes} from 'react-router-config'
+import {Route} from "@xt-web/react-dom";
 
 export const Layout = (props)=> {
 
@@ -21,13 +22,17 @@ export const test1 = (props)=> {
     return (
         <div>
             <span>test1</span>
+            <button onClick={()=>Route.push("/home")}>调整到Home</button>
             {renderRoutes(props.route.routes)}
         </div>
     )
 };
 
 export const test2 = ()=> (
-    <div>test2</div>
+    <div>
+        <div>test2</div>
+        <button onClick={()=>Route.push("/test")}>调整到</button>
+    </div>
 );
 
 
