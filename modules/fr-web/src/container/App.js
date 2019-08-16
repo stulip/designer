@@ -3,7 +3,7 @@
  * 起点
  */
 
-import React from 'react';
+import React, {Suspense} from 'react';
 import {hot} from 'react-hot-loader';
 import {Router, Route} from '@xt-web/react-dom'
 import {renderRoutes} from 'react-router-config'

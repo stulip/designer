@@ -5,13 +5,18 @@
  */
 import React from 'react';
 import {Route} from '@xt-web/react-dom'
+import { hot } from 'react-hot-loader/root';
 
-export default function (props){
+const Home = function (props){
     return (
         <div>
-            <button onClick={()=>Route.push("/test")}>调整到</button>
+            <button onClick={()=>Route.push("/test")}>调整到123</button>
         </div>
     )
-}
+};
 
-module.hot && module.hot.accept();
+export default hot(Home);
+
+// module.hot && module.hot.accept();
+
+
