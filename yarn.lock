@@ -879,6 +879,11 @@
     prop-types "^15.6.2"
     scheduler "^0.15.0"
 
+"@ibot/ibot@^0.6.0-dev.1":
+  version "0.6.0-dev.1"
+  resolved "https://registry.yarnpkg.com/@ibot/ibot/-/ibot-0.6.0-dev.1.tgz#f187d235a9d44fce7d568f1e856fd6bb1cee508d"
+  integrity sha512-LhkoRBxSrhwhpn4xPI9Es6ibcfOsmgwLqQKz/cvC8uyreXOg4uL+NEO2eCAorcyDI1yno6RK4gZzHPoKLnwJbg==
+
 "@nodelib/fs.scandir@2.1.1":
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/@nodelib/fs.scandir/-/fs.scandir-2.1.1.tgz#7fa8fed654939e1a39753d286b48b4836d00e0eb"
@@ -4440,7 +4445,7 @@ lodash.uniq@^4.5.0:
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
   integrity sha1-0CJTc662Uq3BvILklFM5qEJ1R3M=
 
-lodash@^4.16.5, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.13, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.17.5:
+lodash@^4.16.5, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.13, lodash@^4.17.15, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.17.5:
   version "4.17.15"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
   integrity sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
@@ -4494,7 +4499,12 @@ map-visit@^1.0.0:
   dependencies:
     object-visit "^1.0.0"
 
-mb-sketch-ruler@1.1.0-dev.26:
+mb-react-color-picker@^1.1.0-dev.1:
+  version "1.1.0-dev.1"
+  resolved "https://registry.yarnpkg.com/mb-react-color-picker/-/mb-react-color-picker-1.1.0-dev.1.tgz#b45b0380d2da673cf57ce79bea3005170b689b8a"
+  integrity sha512-fg3nioJb8hDlGMig09FiyfcHdlWhNR8pDpiIx35O2MTJFEoXsLEW38pR9BEkxivlb94Xrom6GM+agcuqM9yNwg==
+
+mb-sketch-ruler@^1.1.0-dev.26:
   version "1.1.0-dev.26"
   resolved "https://registry.yarnpkg.com/mb-sketch-ruler/-/mb-sketch-ruler-1.1.0-dev.26.tgz#d834261d898801d3df87671508ce88e33383dd68"
   integrity sha512-+ALgGf5CKfVOzd7VH6VNUSeMZZnF0yCW6Ie4wptDOt9M7iv/LVM264MqDq0NMwYL8s53pncR+WnAKbUbrfPHbA==
