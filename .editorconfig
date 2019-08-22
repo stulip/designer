@@ -24,10 +24,12 @@ end_of_line = lf
 trim_trailing_whitespace = true
 # 是否使文件以一个空白行结尾
 insert_final_newline = true
+# 每行最大字符数
+max_line_length = 120
 
 
 # Matches the exact files either package.json or .travis.yml
-[{*.json,*.json5,.travis.yml,.babelrc,*.css}]
+[{*.json,*.json5,.travis.yml,.babelrc,*.css,*.yaml,*.dart}]
 indent_style = space
 indent_size = 2
 

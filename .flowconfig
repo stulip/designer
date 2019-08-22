@@ -1,4 +1,16 @@
+[ignore]
+.*/build/.*
+[include]
 
+[libs]
+/flow-typed
+
+[lints]
+
+
+[options]
+
+[strict]
 
 [version]
 ^0.98.0
