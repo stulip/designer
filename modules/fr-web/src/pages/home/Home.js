@@ -15,6 +15,8 @@ class Home extends PureComponent {
         scale: 2, //658813476562495, //1,
         startX: 0,
         startY: 0,
+        isShowRuler: true,
+        isShowReferLine: true,
         lines: {
             h: [100, 200],
             v: [100, 200]
@@ -56,8 +58,20 @@ class Home extends PureComponent {
         this.setState({ lines });
     };
 
+    handleShowReferLine = ()=> {
+        this.setState({isShowReferLine: !this.state.isShowReferLine});
+    };
+
+    handleShowRuler = ()=> {
+        this.setState({isShowRuler: !this.state.isShowRuler});
+    };
+
+    handleCornerClick = ()=> {
+        console.log('Corner Click');
+    };
+
     render() {
-        const { scale, startX, startY, lines } = this.state;
+        const { scale, startX, startY, lines, isShowRuler, isShowReferLine } = this.state;
         const { h, v } = lines;
 
         const rectWidth = 160;
@@ -88,7 +102,11 @@ class Home extends PureComponent {
                     shadow={shadow}
                     horLineArr={h}
                     verLineArr={v}
+                    isShowRuler={isShowRuler}
+                    isShowReferLine={isShowReferLine}
                     handleLine={this.handleLine}
+                    handleShowRuler={this.handleShowRuler}
+                    handleShowReferLine={this.handleShowReferLine}
                     cornerActive={true}
                     onCornerClick={this.handleCornerClick}
                 />
