@@ -4,5 +4,7 @@
  * @sine 2019-08-16 09:28
  */
 
+import {hot} from "react-hot-loader/root";
+import {Home} from './Home'
 
-export default from './Home';
+export default hot(Home);

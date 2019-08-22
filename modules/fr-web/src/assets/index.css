@@ -19,8 +19,8 @@ body * {
 
 .wrapper {
   position: absolute;
-  top: 100px;
-  left: 100px;
+  top: 200px;
+  left: 200px;
   width: 600px;
   height: 500px;
   border: 1px solid #dadadc
