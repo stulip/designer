@@ -18,10 +18,12 @@ export class Home extends PureComponent {
     render() {
         return (
             <div>
-                <button onClick={this.gotoHome}>
-                    HOME
-                </button>
-                <span>sb2</span>
+                <div>
+                    <button onClick={this.gotoHome}>
+                        HOME
+                    </button>
+                </div>
+                <span>sb app</span>
                 <Color/>
                 <div>
                     <Resizeble/>

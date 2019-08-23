@@ -6,8 +6,8 @@
 
 import React from 'react';
 import './assets/index.css';
-import {register} from './router';
 import 'react-hot-loader';
+import {register} from './router';
 
 register();
 const version = process.env.MODULE_VERSION;
