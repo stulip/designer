@@ -9,8 +9,9 @@
     <meta name="keywords" content="React, Webpack">
     <link rel="shortcut icon" href="favicon.ico">
     <%= externals.css() %><script src="<%= externals.libs("libs") %>"></script>
-</head><%= externals.scripts() %>
+</head>
 <body>
 <div id="root"></div>
 </body>
+<%= externals.scripts() %>
 </html>

@@ -185,7 +185,7 @@ async function writeDevInfo(body) {
     })();
 </script>
 `;
-    return body.replace("</body>", `${await appendTest()}${devLog}</body>`);
+    return body.replace("</html>", `${await appendTest()}${devLog}</html>`);
 }
 
 !!argv.module ? webStart() : mainStart();

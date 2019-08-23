@@ -12,6 +12,10 @@
       port: 5002,
       path: "modules/fr-ui"
     },
+    app: {
+      port: 5003,
+      path: "modules/fr-app"
+    },
     // 这是一个特殊模块
     test: {
       port: 5101,
@@ -23,8 +27,9 @@
     dev: {
       ui: {
         // 此处信息暂时没用,可以扩展
-
       },
+      app: {
+      }
     },
   },
   proxy: [

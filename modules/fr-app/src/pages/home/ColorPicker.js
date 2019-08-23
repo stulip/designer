@@ -5,12 +5,12 @@
  * @sine 2019-08-22 16:55
  */
 import React, { Component } from 'react'
-
-import ColorPicker, { parseColor } from 'mb-react-color-picker';
+import { ColorPicker } from 'fr-web';
+const parseColor = ColorPicker.parseColor;
 
 // NOTE: if you need to use @ibot icons, you should import this file in your project
-import '@ibot/ibot/lib/icon/index.css'
-import { Icon } from '@ibot/ibot'
+
+import { ibot } from 'fr-web'
 
 const DEFAULT_COLOR = '#1D83BB';
 
@@ -151,7 +151,7 @@ class SystemColorPicker extends React.Component {
         const { hex } = this.props
         return (
             <div className="system-color-picker-wrapper">
-                <Icon type="dora" name="tube" />
+                <ibot.Icon type="dora" name="tube" />
                 <input
                     className="system-color-picker"
                     type="color"

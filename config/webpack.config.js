@@ -35,6 +35,8 @@ const webConfig = {
     entry: {
         [webpack.entryName]: [
             require.resolve('./polyfills'),
+            require.resolve('@xt-web/react'),
+            require.resolve('@xt-web/react-dom'),
             ...webpack.config.entry[webpack.entryName]
         ],
     },
@@ -49,7 +51,7 @@ const webConfig = {
             filename: '../index.html',
             minify: true,
             hash: true,
-            inject: 'head',
+            inject: 'body',
             // excludeChunks: [config.entryName],
             // chunksSortMode: function (a, b) {
             //     return webpack.isDebug;

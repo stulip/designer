@@ -5,7 +5,7 @@
  * @sine 2019-08-22 16:22
  */
 import React from 'react';
-import ResizableRect from 'react-resizable-rotatable-draggable'
+import {ResizableRect} from 'fr-web'
 
 export class Resizeble extends React.Component {
 

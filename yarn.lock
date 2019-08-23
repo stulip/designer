@@ -1105,29 +1105,25 @@
     "@webassemblyjs/wast-parser" "1.8.5"
     "@xtuc/long" "4.2.2"
 
-"@xt-web/core@^0.1.7":
-  version "0.1.7"
-  resolved "https://registry.yarnpkg.com/@xt-web/core/-/core-0.1.7.tgz#ccbeb383c26678680eae95c05a57097121142fa2"
-  integrity sha512-SJ+ZLrFfkCdd5/Vrzmro+tqiBcz8yXnbCcuVWycWFTOQivy7VS8qpj4va39O8pl2b+hVIk+0H67OTQ9PJRu7ow==
+"@xt-web/core@^0", "@xt-web/core@^0.2", "@xt-web/core@^0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@xt-web/core/-/core-0.2.1.tgz#0abada1dedec99d20cd1dc197e84d5bdbbbb3b2c"
+  integrity sha512-NR/sqGHDcgvaq5PhLIin6HsR7L9w7bcp7nGUeoLZuylgrY9Gkl8+n8rNBLeDcnSyhy0+GwGcIHsjfee30zs91A==
 
-"@xt-web/core@^0.1.8":
-  version "0.1.8"
-  resolved "https://registry.yarnpkg.com/@xt-web/core/-/core-0.1.8.tgz#1393f76c612994c57832437515a3b4dbc51f971b"
-  integrity sha512-ZHBq52FOte3m0CB+jrw7HNIPsNYRRafYeiLmdwDWSYFYUeYw2PNb1CbSdg8gLkIo35GbfyX97qmsVgoXJX98KA==
-
-"@xt-web/react-dom@^0.1.3":
-  version "0.1.3"
-  resolved "https://registry.yarnpkg.com/@xt-web/react-dom/-/react-dom-0.1.3.tgz#e4beb5442dd2fc1216ee92314fd9ab744ed4199d"
-  integrity sha512-NDJfRzWXv4dCm7c2Y6Ok7dyTwEq0BIvuaKG9EhENVdQZiXNmTaLSHr9Gb4Oi/XoNf8fWhFZtoXcYUQnTb/NDKQ==
+"@xt-web/react-dom@^0.1.5":
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/@xt-web/react-dom/-/react-dom-0.1.5.tgz#b3971e5eae9effd791f783bd0e666c0228e59061"
+  integrity sha512-GJUyFW7rtheFdfSlB1zK3Zo21VoQ1ThJs0LR8BSTw+OcP+3xNwyv7a1MKphQYXLtRTu3q/E47p+wLXvx1sqCyQ==
   dependencies:
-    "@xt-web/react" "^0.1.6"
+    "@xt-web/core" "^0"
+    "@xt-web/react" "^0"
 
-"@xt-web/react@^0.1.6":
-  version "0.1.6"
-  resolved "https://registry.yarnpkg.com/@xt-web/react/-/react-0.1.6.tgz#8320c02a706d2939b6dbd158ea483a08442f1378"
-  integrity sha512-zBOR5zygbfdbeDW3hfZ1ZbRw5QSn8hpsxkL+ESFL7bjX+ntrxgxaPziMySbTzUj5K/K93g532bwTTBAFs+aM+Q==
+"@xt-web/react@^0", "@xt-web/react@^0.1.11":
+  version "0.1.11"
+  resolved "https://registry.yarnpkg.com/@xt-web/react/-/react-0.1.11.tgz#aaa04777fe59390be83d696ea1758297d017be58"
+  integrity sha512-K06Vy+w1GFYl4F347FvE/kiYPH/N4pB2kKdXx9z4ZMkVvpMbQsYkaIZv1juRLICt3JQSj0NnIfGYDxmFk+9PJw==
   dependencies:
-    "@xt-web/core" "^0.1.7"
+    "@xt-web/core" "^0.2"
 
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"
@@ -4312,10 +4308,10 @@ less-loader@^5.0.0:
     loader-utils "^1.1.0"
     pify "^4.0.1"
 
-less@^3.10.2:
-  version "3.10.2"
-  resolved "https://registry.yarnpkg.com/less/-/less-3.10.2.tgz#49b94da22e18ed112d9500bdb2340969dafee57f"
-  integrity sha512-crOb5r8AnIYkWss6sJNccgb20UqvDfdZhopuDG9LGfcSQY+fAKIA/W4as5+ELnfUxnDruqC7iYyeDZmC44nMnw==
+less@^3.10.3:
+  version "3.10.3"
+  resolved "https://registry.yarnpkg.com/less/-/less-3.10.3.tgz#417a0975d5eeecc52cff4bcfa3c09d35781e6792"
+  integrity sha512-vz32vqfgmoxF1h3K4J+yKCtajH0PWmjkIFgbs5d78E/c/e+UQTnI+lWK+1eQRE95PXM2mC3rJlLSSP9VQHnaow==
   dependencies:
     clone "^2.1.2"
   optionalDependencies:

@@ -54,6 +54,9 @@ const config = {
         // "mobx-react": "mobxReact",
         'fr-web': 'xt.web',
         'fr-ui': 'xt.ui',
+        '@xt-web/core': "$xt.core",
+        '@xt-web/react': "$xt.react",
+        '@xt-web/react-dom': "$xt.reactDOM",
         'react-router': ['ReactRouterDOM'],
         'react-router-dom': "ReactRouterDOM",
         'react-router-config': "ReactRouterConfig",
@@ -63,7 +66,7 @@ const config = {
     },
     alias:
         [
-            '@babel', 'regenerator-runtime', 'react-hot-loader', '@xt-web',
+            '@babel', 'regenerator-runtime', 'react-hot-loader',
             ...isDebug ?
                 [
                     'fast-levenshtein', 'hoist-non-react-statics', 'prop-types', 'react-is',
@@ -120,6 +123,11 @@ config.libs.cdn = {
     reactRouterConfig: {
         name: `react-router-config${config.libs.min}.js`,
         from: 'node_modules/react-router-config/umd',
+        to: config.libs.name,
+    },
+    xtCore: {
+        name: `xt.core.min.js`,
+        from: 'node_modules/@xt-web/core/dist',
         to: config.libs.name,
     }
 };

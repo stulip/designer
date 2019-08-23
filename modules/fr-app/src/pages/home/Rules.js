@@ -4,7 +4,7 @@
  * @sine 2019-08-16 09:30
  */
 import React, {PureComponent} from "react";
-import ReactRuler from "mb-sketch-ruler";
+import {Ruler} from "fr-web";
 
 const thick = 16;
 
@@ -90,7 +90,7 @@ export class Rules extends PureComponent {
         return (
             <div className="wrapper">
                 <div className="scale-value">{`scale: ${scale}`}</div>
-                <ReactRuler
+                <Ruler
                     thick={thick}
                     scale={scale}
                     width={582}

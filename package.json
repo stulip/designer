@@ -23,9 +23,9 @@
     "yarn": ">=1.10.0"
   },
   "dependencies": {
-    "@xt-web/core": "^0.1.8",
-    "@xt-web/react": "^0.1.6",
-    "@xt-web/react-dom": "^0.1.3",
+    "@xt-web/core": "^0.2.1",
+    "@xt-web/react": "^0.1.11",
+    "@xt-web/react-dom": "^0.1.5",
     "@ibot/ibot": "^0.6.0-dev.1",
     "mb-sketch-ruler": "^1.1.0-dev.26",
     "mb-react-color-picker": "^1.1.0-dev.1",
@@ -74,7 +74,7 @@
     "koa": "^2.8.1",
     "koa-connect": "^2.0.1",
     "koa-static": "^5.0.0",
-    "less": "^3.10.2",
+    "less": "^3.10.3",
     "less-loader": "^5.0.0",
     "mini-css-extract-plugin": "^0.8.0",
     "node-fetch": "^2.6.0",
