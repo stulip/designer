@@ -20,7 +20,7 @@ export class Home extends PureComponent {
             <div>
                 <div>
                     <button onClick={this.gotoHome}>
-                        HOME
+                        HOME22
                     </button>
                 </div>
                 <span>sb app</span>

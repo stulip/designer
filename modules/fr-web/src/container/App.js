@@ -4,7 +4,7 @@
  */
 
 import React, {Suspense} from 'react';
-// import {hot} from 'react-hot-loader/root';
+import { hot } from "react-hot-loader/root";
 import {Router, Route} from '@xt-web/react-dom'
 import {renderRoutes} from 'react-router-config'
 import {register} from '../router';
@@ -18,4 +18,4 @@ const App = ()=> (
 );
 
 register();
-export default App;
+export default hot(App);

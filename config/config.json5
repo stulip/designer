@@ -6,20 +6,20 @@
     // 5000 端口预留给 Face 项目
     web: {
       port: 5001,
-      path: "modules/fr-web"
+      path: "fr-web"
     },
     ui: {
       port: 5002,
-      path: "modules/fr-ui"
+      path: "fr-ui"
     },
     app: {
       port: 5003,
-      path: "modules/fr-app"
+      path: "fr-app"
     },
     // 这是一个特殊模块
     test: {
       port: 5101,
-      path: "module/fr-test"
+      path: "fr-test"
     }
   },
   // 区块配置

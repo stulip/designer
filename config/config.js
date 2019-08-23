@@ -46,7 +46,8 @@ module.exports = {
         watchOptions: {
             ignored: /node_modules/
         },
-        context: path.join(webpack.rootPath, moConfig.path),
+        // context: path.join(webpack.rootPath, moConfig.path),
+        context: path.join(webpack.rootPath, webpack.moduleRoot),
         output: {
             ...webpack.config.output,
             path: path.join(webpack.rootPath, 'dist', webpack.module.name),

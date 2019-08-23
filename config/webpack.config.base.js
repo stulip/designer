@@ -22,10 +22,12 @@ const isDebug = NODE_ENV !== 'production';
 
 // 模块名称
 const moduleName = argv.module;
+const moduleRoot = "modules";
 
 //CDN 配置
 const config = {
     isDebug,
+    moduleRoot,
     isRelease: !!argv.release,
     proxy: configData.proxy,
     module: {
@@ -75,7 +77,7 @@ const config = {
         ]
 };
 //模块的package.json
-config.packages = config.module.name ? require(`${config.rootPath}/${config.module.config.path}/package.json`) : {};
+config.packages = config.module.name ? require(`${config.rootPath}/${config.moduleRoot}/${config.module.config.path}/package.json`) : {};
 
 config.libs.cdn = {
     // jquery: {
@@ -186,7 +188,7 @@ function plugins() {
         new HappyPack({
             id: 'js',
             threadPool: happyThreadPool,
-            loaders: ['babel-loader?cacheDirectory=true']
+            loaders: ["react-hot-loader/webpack", "babel-loader?cacheDirectory=true"]
         }),
         new webpack.DefinePlugin({
             'process.env': {
@@ -309,7 +311,7 @@ module.exports.config = {
             ...isDebug ? [
                 require.resolve('webpack-plugin-serve/client')
             ] : [],
-            'index',
+            `./${config.module.config.path}/src/index`
         ]
     },
     output: {
@@ -325,7 +327,7 @@ module.exports.config = {
     module: {rules},
     resolve: {
         extensions: ['.js', '.json', '.css', '.less'],
-        modules: ['src'],
+        modules: [path.join(config.rootPath, config.moduleRoot, config.module.config.path, "src")],
         alias: config.alias.reduce((abc, def) => (abc[def] = path.resolve('node_modules', def), abc), {
             'fr-art': path.resolve('modules', 'fr-art')
         }),
