@@ -15,8 +15,8 @@ export class Resizeble extends React.Component {
         this.state = {
             width: 100,
             height: 100,
-            top: 100,
-            left: 100,
+            top: 80,
+            left: 50,
             rotateAngle: 0
         }
     }

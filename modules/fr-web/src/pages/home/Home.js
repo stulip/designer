@@ -14,11 +14,12 @@ export class Home extends PureComponent {
 
     render() {
         return (
-            <div>
-                <div className="playground">
-                    <h1>🌈 Web Designer Editor</h1>
+            <div className={"grid-background"}>
+                <div className="playground" style={{ marginTop: 120 }}>
+                    <h1>🌈 Web Designer</h1>
                     <h3>
-                        <button onClick={this.gotoApp}>
+                        <button onClick={this.gotoApp}
+                                style={{ width: 120, height: 26, backgroundColor: "#FF4081", color: "#fff" }}>
                             App Designer
                         </button>
                     </h3>
