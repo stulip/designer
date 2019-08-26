@@ -13,7 +13,6 @@ const proxy = require('http-proxy-middleware');
 const compress = require('compression');
 const convert = require('koa-connect');
 const history = require('connect-history-api-fallback');
-const webpack = require('webpack');
 const argv = require('yargs').argv; //命令行参数
 const config = require('../config');
 
@@ -37,6 +36,7 @@ const log = {
 
 //启动 webpack-serve 服务
 async function webStart() {
+    const webpack = require('webpack');
     const compiler = webpack(config.webpack);
     if (await detect(config.module.config.port) !== config.module.config.port) {
         log.error(`启动失败, 端口 ${config.module.config.port} 已存在!`);

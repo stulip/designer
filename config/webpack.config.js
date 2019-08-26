@@ -42,7 +42,7 @@ const webConfig = {
     },
     resolve: {
         ...webpack.config.resolve,
-        modules: [path.join(webpack.rootPath, webpack.moduleRoot, webpack.module.config.path, "src"), "node_modules"]
+        modules: [path.join(webpack.rootPath, webpack.moduleRoot, webpack.modulePath, "src"), "node_modules"]
     },
     plugins: [
         ...webpack.config.plugins,

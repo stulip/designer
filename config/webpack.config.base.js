@@ -76,6 +76,7 @@ const config = {
                 ] : []
         ]
 };
+config.modulePath = config.module.config? config.module.config.path: '';
 //模块的package.json
 config.packages = config.module.name ? require(`${config.rootPath}/${config.moduleRoot}/${config.module.config.path}/package.json`) : {};
 
@@ -311,7 +312,7 @@ module.exports.config = {
             ...isDebug ? [
                 require.resolve('webpack-plugin-serve/client')
             ] : [],
-            `./${config.module.config.path}/src/index`
+            `./${config.modulePath}/src/index`
         ]
     },
     output: {
@@ -327,7 +328,7 @@ module.exports.config = {
     module: {rules},
     resolve: {
         extensions: ['.js', '.json', '.css', '.less'],
-        modules: [path.join(config.rootPath, config.moduleRoot, config.module.config.path, "src")],
+        modules: [path.join(config.rootPath, config.moduleRoot, config.modulePath, "src")],
         alias: config.alias.reduce((abc, def) => (abc[def] = path.resolve('node_modules', def), abc), {
             'fr-art': path.resolve('modules', 'fr-art')
         }),
