@@ -69,8 +69,9 @@ const config = {
             '@babel', 'regenerator-runtime', 'react-hot-loader',
             ...isDebug ?
                 [
-                    'fast-levenshtein', 'hoist-non-react-statics', 'prop-types', 'react-is',
-                    'shallowequal', 'react-lifecycles-compat', 'lodash/merge'
+                    'fast-levenshtein', 'hoist-non-react-statics', 'prop-types', 'react-is', 'sort-keys', 'is-plain-obj',
+                    'shallowequal', 'react-lifecycles-compat', 'lodash/merge', 'normalize-url', 'prepend-http', 'query-string',
+                    'strict-uri-encode'
                 ] : []
         ]
 };
@@ -135,16 +136,21 @@ config.libs.cdn = {
 
 //css loader 配置信息
 const cssLoader = [
-    isDebug? 'style-loader': MiniCssExtractPlugin.loader,
+    {
+        loader: MiniCssExtractPlugin.loader,
+        options: {
+            hmr: process.env.NODE_ENV === 'development',
+            // if hmr does not work, this is a forceful method.
+            // reloadAll: true,
+        }
+    },
     {
         loader: "css-loader",
         options: {
             importLoaders: 1,
         },
     },
-    {
-        loader: 'postcss-loader'
-    }
+    "postcss-loader"
 ];
 
 function plugins() {
