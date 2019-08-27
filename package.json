@@ -88,6 +88,7 @@
     "react-hot-loader": "^4.12.11",
     "uglifyjs-webpack-plugin": "^2.2.0",
     "url-loader": "^2.1.0",
+    "style-loader": "^1.0.0",
     "webpack": "^4.39.2",
     "webpack-merge-and-include-globally": "^2.1.16",
     "webpack-plugin-serve": "^0.12.0",

@@ -135,8 +135,7 @@ config.libs.cdn = {
 
 //css loader 配置信息
 const cssLoader = [
-    MiniCssExtractPlugin.loader,
-    // require.resolve('style-loader'),
+    isDebug? 'style-loader': MiniCssExtractPlugin.loader,
     {
         loader: "css-loader",
         options: {
