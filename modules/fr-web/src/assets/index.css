@@ -1,11 +1,9 @@
 
-.fr-web {
-}
 body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
-  overflow: hidden
+  overflow: hidden;
 }
 
 body * {
@@ -17,6 +15,7 @@ body * {
   user-select: none
 }
 
+/*背景格子*/
 .grid-background {
   position: absolute;
   top: 0;
@@ -27,4 +26,22 @@ body * {
   background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
   background-position: -2px -2px;
   mix-blend-mode: difference;
+}
+
+.app-btn-designer {
+  font-size: 14px;
+  width: 120px;
+  height: 26px;
+  background: #FF4081;
+  color: #fff;
+  //cursor: pointer;
+
+  &:hover {
+    background: brown;
+  }
+}
+
+
+.test {
+  background: url("~fr-art/errors/404.png");
 }

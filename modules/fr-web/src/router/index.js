@@ -11,6 +11,9 @@ const routes = [
         path: '',
         component: AsyncComps(()=> import('../pages/home'))
     },
+];
+
+const web = [
     {
         path: 'test',
         component: require('../pages/test/test1').test1,
@@ -36,5 +39,6 @@ const routes = [
 
 export function register (){
     Route.addRoute('/', routes);
+    Route.addRoute('web', web);
     Route.set404Page(require('../pages/error')._404);
 }

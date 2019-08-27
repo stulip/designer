@@ -10,7 +10,7 @@ import Ruler from 'mb-sketch-ruler';
 import ResizableRect from 'react-resizable-rotatable-draggable'
 import ColorPicker, {parseColor} from 'mb-react-color-picker';
 ColorPicker.parseColor = parseColor;
-import * as ibot from '@ibot/ibot';
+import IBotIcon from '@ibot/ibot/lib/icon';
 
 // end
 
@@ -22,5 +22,5 @@ export {
     Ruler,
     ResizableRect,
     ColorPicker,
-    ibot
+    IBotIcon
 }

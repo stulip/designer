@@ -5,12 +5,10 @@ const appRootPath = require("app-root-path");
 const webpack = require('webpack');
 const uuid = require('uuid');
 // const PrepackWebpackPlugin = require('prepack-webpack-plugin').default;
-const autoprefixer = require('autoprefixer');
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
-const postcssPresetEnv = require('postcss-preset-env');
 const HappyPack = require('happypack');
 const happyThreadPool = HappyPack.ThreadPool({size: Math.min(os.cpus().length, 8)});
 const {getLastVersion} = require('../scripts/utils');
@@ -140,27 +138,13 @@ const cssLoader = [
     MiniCssExtractPlugin.loader,
     // require.resolve('style-loader'),
     {
-        loader: require.resolve('css-loader'),
+        loader: "css-loader",
         options: {
-            // discardComments: {removeAll: true},
             importLoaders: 1,
-            // minimize: isDebug,
         },
     },
     {
-        loader: require.resolve('postcss-loader'),
-        options: {
-            // Necessary for external CSS imports to work
-            // https://github.com/facebookincubator/create-react-app/issues/2677
-            ident: 'postcss',
-            plugins: () => [
-                postcssPresetEnv({
-                    features: {
-                        'nesting-rules': true
-                    }
-                })
-            ],
-        },
+        loader: 'postcss-loader'
     }
 ];
 
@@ -267,7 +251,7 @@ const rules = [
                 limit: 512,
                 name: 'image/[hash:8].[ext]',
                 outputPath: '../art',
-                publicPath: 'art'
+                publicPath: '/art'
             }
         },
     },
@@ -279,6 +263,7 @@ const rules = [
     },
     {
         test: /\.less$/,
+        exclude: /node_modules/,
         use: cssLoader.concat([
             require.resolve('less-loader')
         ])
@@ -292,10 +277,10 @@ const rules = [
         use: {
             loader: "url-loader",
             options: {
-                limit: 100000,
+                limit: 10000,
                 name: "fonts/[hash:8].[ext]",
                 outputPath: '../art',
-                publicPath: 'art'
+                publicPath: '/art'
             }
         }
     }

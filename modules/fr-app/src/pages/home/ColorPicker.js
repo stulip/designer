@@ -10,7 +10,7 @@ const parseColor = ColorPicker.parseColor;
 
 // NOTE: if you need to use @ibot icons, you should import this file in your project
 
-import { ibot } from 'fr-web'
+import { IBotIcon } from 'fr-web'
 
 const DEFAULT_COLOR = '#1D83BB';
 
@@ -151,7 +151,7 @@ class SystemColorPicker extends React.Component {
         const { hex } = this.props
         return (
             <div className="system-color-picker-wrapper">
-                <ibot.Icon type="dora" name="tube" />
+                <IBotIcon type="dora" name="tube" />
                 <input
                     className="system-color-picker"
                     type="color"
