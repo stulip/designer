@@ -78,7 +78,7 @@ const config = {
 };
 config.modulePath = config.module.config? config.module.config.path: '';
 //模块的package.json
-config.packages = config.module.name ? require(`${config.rootPath}/${config.moduleRoot}/${config.module.config.path}/package.json`) : {};
+config.packages = config.module.name ? require(`${config.rootPath}/${config.moduleRoot}/${config.modulePath}/package.json`) : {};
 
 config.libs.cdn = {
     // jquery: {
