@@ -8,13 +8,14 @@ import {AsyncComps} from '@xt-web/react'
 
 const routes = [
     {
+        path: "",
+        component: AsyncComps(() => import("../pages/design"))
+    },
+    {
         path: 'view',
         component: AsyncComps(()=> import('../pages/home'))
     },
-    {
-        path: '',
-        component: AsyncComps(()=> import('../pages/design'))
-    }
+
 ];
 
 export function register (){

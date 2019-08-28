@@ -17,15 +17,13 @@ export class Home extends PureComponent {
 
     render() {
         return (
-            <div className={"grid-background fr-index"}>
+            <div className={"grid-background"}>
                 <div className="playground" style={{ marginTop: 120 }}>
                     <h1>🌈 Web Designer</h1>
-                    <h3>
-                        <button className={"app-btn-designer"} onClick={this.gotoApp}>App Designer</button>
-                    </h3>
-                    <h3>
-                        <button className={"app-btn-designer"} onClick={this.gotoTest}>测试页面</button>
-                    </h3>
+                    <div className={"home-mbtn"}>
+                        <button className={"btn-designer"} onClick={this.gotoApp}>App Designer</button>
+                        <button className={"btn-designer"} onClick={this.gotoTest}>测试页面</button>
+                    </div>
                 </div>
             </div>
         );

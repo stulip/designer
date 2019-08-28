@@ -1,5 +1,5 @@
 
 import '@ibot/ibot/lib/icon/index.css'
-import "./index.css";
-import './home.css';
+import "./index.pcss";
+import "./home.pcss";
 

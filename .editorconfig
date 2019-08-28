@@ -29,11 +29,11 @@ max_line_length = 120
 
 
 # Matches the exact files either package.json or .travis.yml
-[{*.json,*.json5,.travis.yml,.babelrc,*.css,*.yaml,*.dart}]
+[{*.json,*.json5,.travis.yml,.babelrc,*.yaml,*.dart,}]
 indent_style = space
 indent_size = 2
 
 
-[{*.py}]
+[{*.py,*.pcss,*.css}]
 indent_style = space
 indent_size = 4

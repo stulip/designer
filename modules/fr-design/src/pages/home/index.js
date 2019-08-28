@@ -5,6 +5,6 @@
  */
 
 import {hot} from "react-hot-loader/root";
-import {Home} from './Home'
+import { Home } from "./view/Home";
 
 export default hot(Home);

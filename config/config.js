@@ -3,7 +3,7 @@ const fs = require('fs');
 const {WebpackPluginServe} = require('webpack-plugin-serve');
 const webpack = require('./webpack.config');
 
-const mainPort = 1234;
+const mainPort = 1235;
 const mainHost = '127.0.0.1';// IPv4 IPv6
 
 

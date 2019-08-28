@@ -8,6 +8,7 @@ import { Color } from "./ColorPicker";
 import { Resizeble } from "./Resizeble";
 import { Rules } from "./Rules";
 import { Route } from "@xt-web/react-dom";
+import "./../assets/home.pcss";
 
 export class Home extends PureComponent {
 

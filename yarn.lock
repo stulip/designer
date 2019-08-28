@@ -1110,29 +1110,25 @@
     "@webassemblyjs/wast-parser" "1.8.5"
     "@xtuc/long" "4.2.2"
 
-"@xt-web/core@^0":
-  version "0.0.0"
-  uid ""
+"@xt-web/core@^0", "@xt-web/core@^0.2", "@xt-web/core@^0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@xt-web/core/-/core-0.2.1.tgz#0abada1dedec99d20cd1dc197e84d5bdbbbb3b2c"
+  integrity sha512-NR/sqGHDcgvaq5PhLIin6HsR7L9w7bcp7nGUeoLZuylgrY9Gkl8+n8rNBLeDcnSyhy0+GwGcIHsjfee30zs91A==
 
-"@xt-web/core@^0.2":
-  version "0.0.0"
-  uid ""
+"@xt-web/react-dom@^0.1.7":
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/@xt-web/react-dom/-/react-dom-0.1.7.tgz#09e6d32f543b605683ceff04a85a40f5befd0d42"
+  integrity sha512-4WEy3IB8bQuTINt9FaDXFttQ3XT8HyXuv4peozRSJ7ukmU/GZZm0rGmPGzOKbTg0qiW8dbukUiseqZsOA7M7vg==
+  dependencies:
+    "@xt-web/core" "^0"
+    "@xt-web/react" "^0"
 
-"@xt-web/core@link:../xt-web/packages/xt-core":
-  version "0.0.0"
-  uid ""
-
-"@xt-web/react-dom@link:../xt-web/packages/xt-react-dom":
-  version "0.0.0"
-  uid ""
-
-"@xt-web/react@^0":
-  version "0.0.0"
-  uid ""
-
-"@xt-web/react@link:../xt-web/packages/xt-react":
-  version "0.0.0"
-  uid ""
+"@xt-web/react@^0", "@xt-web/react@^0.1.12":
+  version "0.1.12"
+  resolved "https://registry.yarnpkg.com/@xt-web/react/-/react-0.1.12.tgz#4bfb6d387da4e7c5e605faa5888fd5812630f719"
+  integrity sha512-wqOxDz/UtTSW1gtV0pYDNl4P5leDlhT5iNXChV1zAvgztLi1kwD5mK071mcwpPi6d/PDOHmUI/iFbyFSv9pg1g==
+  dependencies:
+    "@xt-web/core" "^0.2"
 
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"
@@ -8129,10 +8125,10 @@ webpack-sources@^1.1.0, webpack-sources@^1.4.0, webpack-sources@^1.4.1:
     source-list-map "^2.0.0"
     source-map "~0.6.1"
 
-webpack@4.39.0:
-  version "4.39.0"
-  resolved "https://registry.yarnpkg.com/webpack/-/webpack-4.39.0.tgz#1d511308c3dd8f9fe3152c9447ce30f1814a620c"
-  integrity sha512-nrxFNSEKm4T1C/EsgOgN50skt//Pl4X7kgJC1MrlE47M292LSCVmMOC47iTGL0CGxbdwhKGgeThrJcw0bstEfA==
+webpack@^4.39.3:
+  version "4.39.3"
+  resolved "https://registry.yarnpkg.com/webpack/-/webpack-4.39.3.tgz#a02179d1032156b713b6ec2da7e0df9d037def50"
+  integrity sha512-BXSI9M211JyCVc3JxHWDpze85CvjC842EvpRsVTc/d15YJGlox7GIDd38kJgWrb3ZluyvIjgenbLDMBQPDcxYQ==
   dependencies:
     "@webassemblyjs/ast" "1.8.5"
     "@webassemblyjs/helper-module-context" "1.8.5"
