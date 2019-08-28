@@ -8,11 +8,15 @@ import {AsyncComps} from '@xt-web/react'
 
 const routes = [
     {
-        path: 'designer',
+        path: 'view',
         component: AsyncComps(()=> import('../pages/home'))
     },
+    {
+        path: '',
+        component: AsyncComps(()=> import('../pages/design'))
+    }
 ];
 
 export function register (){
-    Route.addRoute('app', routes);
+    Route.addRoute('design', routes);
 }

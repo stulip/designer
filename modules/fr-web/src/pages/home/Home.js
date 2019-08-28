@@ -8,7 +8,11 @@ import { Route } from "@xt-web/react-dom";
 
 export class Home extends PureComponent {
     gotoApp = () => {
-        Route.push("/app/designer");
+        Route.push("/design");
+    };
+
+    gotoTest = ()=> {
+        Route.push("/design/view");
     };
 
     render() {
@@ -18,6 +22,9 @@ export class Home extends PureComponent {
                     <h1>🌈 Web Designer</h1>
                     <h3>
                         <button className={"app-btn-designer"} onClick={this.gotoApp}>App Designer</button>
+                    </h3>
+                    <h3>
+                        <button className={"app-btn-designer"} onClick={this.gotoTest}>测试页面</button>
                     </h3>
                 </div>
             </div>

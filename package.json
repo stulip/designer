@@ -24,9 +24,9 @@
   },
   "dependencies": {
     "@ibot/ibot": "^0.6.0-dev.1",
-    "@xt-web/core": "^0.2.1",
-    "@xt-web/react": "^0.1.12",
-    "@xt-web/react-dom": "^0.1.5",
+    "@xt-web/core": "link:../xt-web/packages/xt-core",
+    "@xt-web/react": "link:../xt-web/packages/xt-react",
+    "@xt-web/react-dom": "link:../xt-web/packages/xt-react-dom",
     "antd": "^3.22.0",
     "lodash": "^4.17.15",
     "mb-react-color-picker": "^1.1.0-dev.1",

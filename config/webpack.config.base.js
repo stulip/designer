@@ -263,8 +263,14 @@ const rules = [
     {
         test: /\.js$/,
         // exclude: /(node_modules)/,
-        include: RegExp(`(@xt-web|fr-${moduleName})`),
+        // include: RegExp(`(@xt-web|fr-${moduleName})`),
+        include: RegExp(`(fr-${moduleName})`),
         use: "happypack/loader?id=js"
+    },
+    {
+        test: /\.js$/,
+        include: RegExp('xt-web'),
+        use: 'babel-loader?cacheDirectory=true'
     },
     {
         test: /\.less$/,
@@ -274,7 +280,7 @@ const rules = [
         ])
     },
     {
-        test: /\.css$/,
+        test: /\.(css|pcss)$/,
         use: cssLoader
     },
     {

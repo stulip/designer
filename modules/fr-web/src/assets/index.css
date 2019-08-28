@@ -28,20 +28,14 @@ body * {
   mix-blend-mode: difference;
 }
 
-.app-btn-designer {
-  font-size: 14px;
-  width: 120px;
-  height: 26px;
-  background: #FF4081;
-  color: #fff;
-  cursor: pointer;
-
-  &:hover {
-    background: brown;
-  }
-}
-
-
-.test {
-  background: url("~fr-art/errors/404.png");
+._404 {
+  height: 100vh;
+  background: #f8f8f8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  //padding-top: 199px;
+  flex-direction: column;
+  font-size: 18px;
+  color: #666;
 }

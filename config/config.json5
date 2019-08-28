@@ -12,9 +12,9 @@
       port: 5002,
       path: "fr-ui"
     },
-    xx: {
+    design: {
       port: 5003,
-      path: "fr-xx"
+      path: "fr-design"
     },
     // 这是一个特殊模块
     test: {
@@ -28,7 +28,7 @@
       ui: {
         // 此处信息暂时没用,可以扩展
       },
-      xx: {
+      design: {
       }
     },
   },
