@@ -15,6 +15,11 @@ export class Home extends PureComponent {
         Route.push("/design/view");
     };
 
+    gotoTest2 = () => {
+        // Route.push("/design/about");
+    };
+
+
     render() {
         return (
             <div className={"grid-background"}>

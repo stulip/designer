@@ -9,8 +9,6 @@ const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
-const HappyPack = require('happypack');
-const happyThreadPool = HappyPack.ThreadPool({size: Math.min(os.cpus().length, 8)});
 const {getLastVersion} = require('../scripts/utils');
 
 const configData = require('./config.json5');
@@ -172,14 +170,9 @@ function plugins() {
         new webpack.ProvidePlugin(config.provide),
         new MiniCssExtractPlugin({
             filename: "css/[name].css",
-            chunkFilename: "css/[chunkhash].css"
+            chunkFilename: isDebug ? "css/[name].css" : "css/[chunkhash].css"
         }),
         new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-        new HappyPack({
-            id: 'js',
-            threadPool: happyThreadPool,
-            loaders: ["react-hot-loader/webpack", "babel-loader?cacheDirectory=true"]
-        }),
         new webpack.DefinePlugin({
             'process.env': {
                 'MODULE_VERSION': JSON.stringify(getLastVersion(config.packages.version))
@@ -208,14 +201,15 @@ function optimization() {
                 //     reuseExistingChunk: false,
                 //     test: /node_modules\/(.*).js/
                 // },
-                styles: {
-                    name: 'styles',
-                    test: /.(less|css)$/,
-                    chunks: 'async',
-                    minChunks: 1,
-                    reuseExistingChunk: true,
-                    enforce: true
-                }
+                // 开发模式关闭
+                // styles: {
+                //     name: 'styles',
+                //     test: /.(less|css)$/,
+                //     chunks: 'async',
+                //     minChunks: 1,
+                //     reuseExistingChunk: true,
+                //     enforce: true
+                // }
             }
         },
         ...!isDebug && {
@@ -264,7 +258,18 @@ const rules = [
         test: /\.js$/,
         // exclude: /(node_modules)/,
         include: RegExp(`(@xt-web|fr-${moduleName})`),
-        use: "happypack/loader?id=js"
+        use: [{
+            loader: "thread-loader",
+            options: {
+                // workers: os.cpus().length,
+                workerParallelJobs: 50,
+                workerNodeArgs: ["--max-old-space-size=1024"],
+                poolRespawn: false,
+                poolTimeout: 2000,
+                poolParallelJobs: 50,
+                name: "webpack-pool"
+            }
+        }, "react-hot-loader/webpack", "babel-loader?cacheDirectory=true"]
     },
     {
         test: /\.less$/,

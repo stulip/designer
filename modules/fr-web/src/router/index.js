@@ -36,6 +36,13 @@ const web = [
     }
 ];
 
+if (process.env.NODE_ENV === "development") {
+    // hot bug fix
+    routes.push({
+        path: "hot-bug-about",
+        component: AsyncComps(() => import("../pages/about"))
+    });
+}
 
 export function register (){
     Route.addRoute('/', routes);
