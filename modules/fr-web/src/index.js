@@ -15,10 +15,8 @@ import IBotIcon from '@ibot/ibot/lib/icon';
 // end
 
 window.onload = ()=> ReactDOM.render(<App/>, document.getElementById("root"));
-
-const version = process.env.MODULE_VERSION;
+export const version = process.env.MODULE_VERSION;
 export {
-    version,
     Ruler,
     ResizableRect,
     ColorPicker,

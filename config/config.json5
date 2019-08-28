@@ -12,9 +12,9 @@
       port: 5002,
       path: "fr-ui"
     },
-    app: {
+    xx: {
       port: 5003,
-      path: "fr-app"
+      path: "fr-xx"
     },
     // 这是一个特殊模块
     test: {

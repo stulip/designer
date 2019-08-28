@@ -1,6 +1,5 @@
 import React from 'react';
-import './assets/index.css';
-const version = process.env.MODULE_VERSION;
-export {
-    version
-}
+import 'react-hot-loader';
+import './assets';
+
+export const version = process.env.MODULE_VERSION;

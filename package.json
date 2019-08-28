@@ -25,7 +25,7 @@
   "dependencies": {
     "@ibot/ibot": "^0.6.0-dev.1",
     "@xt-web/core": "^0.2.1",
-    "@xt-web/react": "^0.1.11",
+    "@xt-web/react": "^0.1.12",
     "@xt-web/react-dom": "^0.1.5",
     "antd": "^3.22.0",
     "lodash": "^4.17.15",

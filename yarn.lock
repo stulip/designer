@@ -1123,10 +1123,17 @@
     "@xt-web/core" "^0"
     "@xt-web/react" "^0"
 
-"@xt-web/react@^0", "@xt-web/react@^0.1.11":
+"@xt-web/react@^0":
   version "0.1.11"
   resolved "https://registry.yarnpkg.com/@xt-web/react/-/react-0.1.11.tgz#aaa04777fe59390be83d696ea1758297d017be58"
   integrity sha512-K06Vy+w1GFYl4F347FvE/kiYPH/N4pB2kKdXx9z4ZMkVvpMbQsYkaIZv1juRLICt3JQSj0NnIfGYDxmFk+9PJw==
+  dependencies:
+    "@xt-web/core" "^0.2"
+
+"@xt-web/react@^0.1.12":
+  version "0.1.12"
+  resolved "https://registry.yarnpkg.com/@xt-web/react/-/react-0.1.12.tgz#4bfb6d387da4e7c5e605faa5888fd5812630f719"
+  integrity sha512-wqOxDz/UtTSW1gtV0pYDNl4P5leDlhT5iNXChV1zAvgztLi1kwD5mK071mcwpPi6d/PDOHmUI/iFbyFSv9pg1g==
   dependencies:
     "@xt-web/core" "^0.2"
 
