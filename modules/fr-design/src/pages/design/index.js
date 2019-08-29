@@ -5,6 +5,6 @@
  */
 
 import { hot } from "react-hot-loader/root";
-import { Design } from "./view/Design";
+import { Main } from "./view/Main";
 
-export default hot(Design);
+export default hot(Main);

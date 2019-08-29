@@ -19,7 +19,7 @@ export class Footer extends React.Component<Props, State> {
     render() {
         return (
             <div className={'ds-footer'}>
-                footer
+                <span>网页、App设计</span>
             </div>
         );
     };

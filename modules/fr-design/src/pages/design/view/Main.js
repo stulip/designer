@@ -12,8 +12,9 @@ import {Toolbar} from "./Toolbar";
 import {Screens} from "./Screens";
 import {Footer} from "./Footer";
 import {Rules} from "./Rules";
+import { Widgets } from "./Widgets";
 
-export class Design extends PureComponent {
+export class Main extends PureComponent {
 
     render() {
         return (
@@ -22,6 +23,7 @@ export class Design extends PureComponent {
                     <Toolbar/>
                     <div className={'ds-content'}>
                         <Screens/>
+                        <Widgets/>
                         <div className={'panel-left'}>
                             left
                         </div>

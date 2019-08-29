@@ -37,7 +37,7 @@ export class Rules extends PureComponent {
 
     resize = ()=> {
         clearTimeout(this._countTimeout);
-        this._countTimeout = setTimeout(this.countSize, 300);
+        this._countTimeout = setTimeout(this.countSize, 100);
     };
 
 
