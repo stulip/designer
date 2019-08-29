@@ -9,7 +9,7 @@ import {AsyncComps} from '@xt-web/react'
 const routes = [
     {
         path: "",
-        component: AsyncComps(() => import("../pages/designs"))
+        component: AsyncComps(() => import("../pages/design"))
     },
     {
         path: 'view',

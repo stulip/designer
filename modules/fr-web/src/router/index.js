@@ -39,7 +39,7 @@ const web = [
 if (process.env.NODE_ENV === "development") {
     // hot bug fix
     routes.push({
-        path: "hot-bug-about",
+        path: "__hot-bug-about__",
         component: AsyncComps(() => import("../pages/about"))
     });
 }

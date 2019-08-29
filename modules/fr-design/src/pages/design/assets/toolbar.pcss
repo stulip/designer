@@ -1,0 +1,64 @@
+
+.ds-toolbar {
+    position: relative;
+    height: 56px;
+    box-shadow: rgba(39, 54, 78, 0.12) 1px 0px 6px 0px;
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    align-items: center;
+    z-index: 107;
+    background: rgb(255, 255, 255);
+
+    .center {
+        display: flex;
+        -webkit-box-pack: justify;
+        justify-content: space-between;
+        margin-left: -7px;
+        flex: 1 1 0%;
+        padding: 5px 0px 8px;
+    }
+
+    .left{
+        padding-right: 10px;
+        display: flex;
+        -webkit-box-align: center;
+        align-items: center;
+        height: 100%;
+        flex: 0 0 283px;
+
+        .back {
+            display: flex;
+            width: 40px;
+            height: 100%;
+            -webkit-box-pack: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            align-items: center;
+            color: rgb(141, 158, 167);
+            font-size: 16px;
+            cursor: pointer;
+            padding: 0px 7px;
+            transition: all 0.1s linear 0s;
+        }
+        .title {
+            font-size: 14px;
+            color: rgb(91, 107, 115);
+            line-height: unset;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+    }
+
+    .right {
+        padding-top: 5px;
+        padding-bottom: 8px;
+        align-self: stretch;
+        display: flex;
+        -webkit-box-align: center;
+        align-items: center;
+        margin: 0px 30px;
+    }
+}
