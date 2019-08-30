@@ -11,6 +11,7 @@ import ResizableRect from 'react-resizable-rotatable-draggable'
 import ColorPicker, {parseColor} from 'mb-react-color-picker';
 ColorPicker.parseColor = parseColor;
 import IBotIcon from '@ibot/ibot/lib/icon';
+import IBotSVG from '@ibot/ibot/lib/svg';
 
 // end
 
@@ -20,5 +21,6 @@ export {
     Ruler,
     ResizableRect,
     ColorPicker,
-    IBotIcon
+    IBotIcon,
+    IBotSVG
 }

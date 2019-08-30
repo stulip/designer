@@ -11,14 +11,20 @@ import '../assets/screens.pcss'
 type Props = {
 
 };
+
 type State = {
 
 };
 
 export class Screens extends React.Component<Props, State> {
+
+    handleWheel = (event)=> {
+        console.log(event)
+    };
+
     render() {
         return (
-            <div id={'screens'} onScroll={this.handleScroll} onWheel={this.handleWheel}>
+            <div id={'screens'} onWheel={this.handleWheel}>
                 <div className={'viewport'}>
                 </div>
             </div>
