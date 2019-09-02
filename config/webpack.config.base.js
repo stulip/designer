@@ -48,8 +48,9 @@ const config = {
         react: 'React',
         'react-dom': 'ReactDOM',
         'object-assign': "Object.assign",
-        // "mobx": "mobx",
-        // "mobx-react": "mobxReact",
+        "mobx": "mobx",
+        "mobx-react": "mobxReact",
+        "mobx-react-lite": "mobxReactLite",
         'fr-web': 'xt.web',
         'fr-ui': 'xt.ui',
         '@xt-web/core': "$xt.core",
@@ -83,16 +84,6 @@ config.libs.cdn = {
     //     from: 'node_modules/jquery/dist',
     //     to: moduleConfig.CDNPath,
     // },
-    // mobx: {
-    //     name: `mobx.umd${config.libs.min}.js`,
-    //     from: 'node_modules/mobx/lib',
-    //     to: moduleConfig.CDNPath,
-    // },
-    // mobxReact: {
-    //     name: `mobx.react${config.libs.min}.js`,
-    //     from: `node_modules/mobx-react/index${config.libs.min}.js`,
-    //     to: moduleConfig.CDNPath + `/mobx.react${config.libs.min}.js`,
-    // },
     react: {
         name: `react.${NODE_ENV}${config.libs.min}.js`,
         from: 'node_modules/react/umd',
@@ -102,6 +93,21 @@ config.libs.cdn = {
         name: `react-dom.${NODE_ENV}${config.libs.min}.js`,
         // from: 'node_modules/react-dom/umd',
         from: isDebug ? 'node_modules/@hot-loader/react-dom/umd' : 'node_modules/react-dom/umd',
+        to: config.libs.name,
+    },
+    mobx: {
+        name: `mobx.umd${config.libs.min}.js`,
+        from: 'node_modules/mobx/lib',
+        to: config.libs.name,
+    },
+    mobxReacLite: {
+        name: `mobx-react-lite.js`,
+        from: `node_modules/mobx-react-lite/dist/index${config.libs.min}.js`,
+        to: config.libs.name + `/mobx-react-lite${config.libs.min}.js`,
+    },
+    mobxReact: {
+        name: `mobx-react.umd.js`,
+        from: `node_modules/mobx-react/dist`,
         to: config.libs.name,
     },
     // umd react-router-dom include router package

@@ -1,0 +1,68 @@
+
+
+
+.ds-viewport {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 400px;
+
+    .float-btn {
+        position: absolute;
+        left: 27px;
+        width: 92px;
+        height: 28px;
+        padding-left: 10px;
+        padding-right: 8px;
+        display: flex;
+        -webkit-box-pack: justify;
+        justify-content: space-between;
+        -webkit-box-align: center;
+        align-items: center;
+        z-index: 3;
+        cursor: pointer;
+        color: #101010;
+        background-color: #ffffff;
+        box-shadow: rgba(39, 54, 78, 0.08) 0px 2px 5px 0px;
+        pointer-events: auto;
+        white-space: nowrap;
+        border-width: 1px;
+        border-style: solid;
+        border-color: transparent;
+        border-image: initial;
+        border-radius: 2px;
+
+        &:hover {
+            color: #5b6b73;
+            background: #F5F5F5;
+        }
+
+        &:nth-child(1) {
+            top: 38px;
+        }
+        &:nth-child(2) {
+            top: 86px;
+        }
+
+        .dora {
+            transform: rotate(-90deg);
+        }
+    }
+
+    .dark {
+        color: #ffffff;
+        background: #7d8694;
+
+        &:hover {
+            color: #ffffff;
+            background: #5b6b73;
+        }
+    }
+
+
+    .art-board {
+        flex: 1;
+        position: relative;
+        pointer-events: none;
+    }
+}
