@@ -52,13 +52,17 @@ async function main (){
 
     compiler.run(async (err, stats)=> {
         if (err) {
-            await revertBuild();
+            try{
+                await revertBuild();
+            } catch (e) {}
             log.error(err.stack || err);
             if (err.details) log.error(err.details);
             process.exit(1); // eslint-disable-line
         }
         if (stats.compilation.errors.length) {
-            await revertBuild();
+            try{
+                await revertBuild();
+            } catch (e) {}
             log.error(stats.compilation.errors);
             process.exit(1); // eslint-disable-line
         }

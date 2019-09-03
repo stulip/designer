@@ -2,7 +2,18 @@
  * babel 配置
  */
 module.exports = {
-    presets: ["@babel/preset-env", "@babel/preset-react", "@babel/preset-flow"],
+    presets: [
+        [
+            "@babel/preset-env",
+            {
+                targets: {
+                    esmodules: true,
+                },
+            }
+        ],
+        "@babel/preset-react",
+        "@babel/preset-flow"
+    ],
     plugins: [
         ["lodash"],
         [
@@ -11,21 +22,19 @@ module.exports = {
                 corejs: false,
                 helpers: false,
                 regenerator: true,
-                useESModules: false
+                useESModules: true
             }
         ],
         ["@babel/plugin-proposal-decorators", { legacy: true }],
         ["@babel/plugin-proposal-class-properties", { loose: true }],
-        ["@babel/plugin-proposal-export-default-from"],
-        ["@babel/plugin-syntax-dynamic-import"],
         [
             "import",
             {
                 libraryName: "antd",
-                libraryDirectory: "lib",   // default: lib
+                libraryDirectory: "lib", // default: lib
                 style: "css"
             }
-        ],
+        ]
     ],
     env: {
         production: {

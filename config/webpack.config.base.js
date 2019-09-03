@@ -5,7 +5,7 @@ const appRootPath = require("app-root-path");
 const webpack = require('webpack');
 const uuid = require('uuid');
 // const PrepackWebpackPlugin = require('prepack-webpack-plugin').default;
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
@@ -45,9 +45,10 @@ const config = {
     },
     externals: {
         // jquery: 'jQuery',
+        'object-assign': "Object.assign",
         react: 'React',
         'react-dom': 'ReactDOM',
-        'object-assign': "Object.assign",
+        'react-is': 'ReactIs',
         "mobx": "mobx",
         "mobx-react": "mobxReact",
         "mobx-react-lite": "mobxReactLite",
@@ -94,6 +95,11 @@ config.libs.cdn = {
         name: `react-dom.${NODE_ENV}${config.libs.min}.js`,
         // from: 'node_modules/react-dom/umd',
         from: isDebug ? 'node_modules/@hot-loader/react-dom/umd' : 'node_modules/react-dom/umd',
+        to: config.libs.name,
+    },
+    reactIs: {
+        name: `react-is.${NODE_ENV}${config.libs.min}.js`,
+        from: 'node_modules/react-is/umd',
         to: config.libs.name,
     },
     mobx: {
@@ -221,25 +227,23 @@ function optimization() {
         },
         ...!isDebug && {
             minimizer: [
-                new UglifyJsPlugin({
-                    cache: false,
+                new TerserPlugin({
+                    cache: true,
                     parallel: true,
                     sourceMap: false,
-                    uglifyOptions: {
+                    terserOptions: {
                         compress: {
                             // warnings: false,
                             comparisons: false,
                             drop_console: true,
                             drop_debugger: true
                         },
-                        mangle: {
-                            // safari10: true,
-                        },
-                        safari10: true,
-                        output: {
-                            comments: false,
-                            ascii_only: true,
-                        }
+                        nameCache: {},
+                        mangle: true,
+                        // output: {
+                        //     comments: false,
+                        //     ascii_only: true,
+                        // }
                     }
                 }),
                 new OptimizeCSSAssetsPlugin({})
