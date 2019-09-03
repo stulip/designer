@@ -19,3 +19,9 @@ if (typeof jQuery !== "undefined"){
     //放弃jQuery的 $ 变量名;
     // jQuery.noConflict();
 }
+
+if (typeof lodash === 'undefined'){
+    self.lodash = {};
+    self.lodash.isBoolean = require('lodash/isBoolean');
+    self.lodash.compact = require('lodash/compact');
+}

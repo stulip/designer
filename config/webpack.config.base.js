@@ -59,6 +59,7 @@ const config = {
         'react-router': ['ReactRouterDOM'],
         'react-router-dom': "ReactRouterDOM",
         'react-router-config': "ReactRouterConfig",
+        'lodash': "lodash",
     },
     provide: {
         // jQuery: "jquery",

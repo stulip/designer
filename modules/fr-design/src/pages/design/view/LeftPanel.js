@@ -18,7 +18,6 @@ export class LeftPanel extends React.Component<Props, State> {
     render() {
         return (
             <div className={'panel-left'}>
-                left
             </div>
         );
     };
