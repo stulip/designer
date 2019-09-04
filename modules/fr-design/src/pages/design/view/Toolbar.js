@@ -11,6 +11,7 @@ import '../assets/toolbar.pcss'
 import {Route} from "@xt-web/react-dom";
 import {IBotIcon, IBotSVG} from 'fr-web';
 import {ToolbarStore} from "../store/ToolbarStore";
+import {observer} from "mobx-react";
 
 type Props = {
     store: ToolbarStore
@@ -19,13 +20,15 @@ type State = {
 
 };
 
+@observer
 export class Toolbar extends React.Component<Props, State> {
 
     constructor(props) {
         super(props);
     }
 
-    render() {
+    _render(){
+        let that = this;
         return (
             <div className={'ds-toolbar'}>
                 <div className={'left'}>
@@ -80,11 +83,15 @@ export class Toolbar extends React.Component<Props, State> {
                             <div className={'wrapper'}>
                                 <IBotSVG  name={'play'}/>
                             </div>
-                            <span>运行</span>
+                            <span>运行2</span>
                         </a>
                     </div>
                 </div>
             </div>
         );
+    }
+
+    render() {
+        return this._render();
     };
-};
+}

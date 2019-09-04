@@ -324,7 +324,7 @@ module.exports.config = {
     output: {
         hashDigestLength: 8,
         filename: 'js/[name].js',
-        chunkFilename: 'js/[chunkhash].js',
+        chunkFilename: isDebug? 'js/[name].js': 'js/[chunkhash].js',
         hotUpdateMainFilename: "hot/[hash].update.json",
         hotUpdateChunkFilename: 'hot/[hash].update.js',
         //`${config.module.name.charAt(0).toUpperCase()}${config.module.name.slice(1)}`

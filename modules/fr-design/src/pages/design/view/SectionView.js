@@ -7,6 +7,7 @@
 import * as React from 'react';
 import {IBotIcon} from "fr-web";
 import {Rules} from "./Rules";
+import {ScrollBar} from "./ScrollBar";
 
 type Props = {
 
@@ -16,6 +17,7 @@ type State = {
 };
 
 export class SectionView extends React.Component<Props, State> {
+
     render() {
         return (
             <section className={'art-board'}>
@@ -28,6 +30,7 @@ export class SectionView extends React.Component<Props, State> {
                     <span>链接上一页</span>
                 </div>
                 <Rules />
+                <ScrollBar x={0.5}/>
             </section>
         );
     };

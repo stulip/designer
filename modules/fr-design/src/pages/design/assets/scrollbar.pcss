@@ -1,0 +1,73 @@
+
+.scroll-bar {
+
+    position: absolute;
+    top: 17px;
+    left: 17px;
+    right: 0;
+    bottom: 0;
+    z-index: 4;
+    pointer-events: none;
+
+    .track {
+        position: absolute;
+        pointer-events: auto;
+        background: transparent;
+
+        .handler {
+            position: absolute;
+            cursor: pointer;
+        }
+    }
+
+    .handler {
+        bottom: 2px;
+        height: 10px;
+
+        .thumb {
+            position: absolute;
+            pointer-events: none;
+            border-radius: 4px;
+            transition: background 0.2s ease-in-out 0s;
+        }
+    }
+
+
+    .x-track {
+        left: 0;
+        right: 11px;
+        bottom: 0;
+        height: 12px;
+
+        .handler {
+            bottom: 2px;
+            height: 10px;
+        }
+
+        .thumb {
+            bottom: 0;
+            width: 100%;
+            height: 6px;
+            background: rgb(210, 210, 216);
+        }
+    }
+
+    .y-track {
+        top: 0;
+        bottom: 11px;
+        right: 0;
+        width: 12px;
+
+        .handler {
+            right: 2px;
+            width: 10px;
+        }
+
+        .thumb {
+            right: 0;
+            height: 100%;
+            width: 6px;
+            background: rgb(222, 222, 228);
+        }
+    }
+}
