@@ -13,6 +13,20 @@ import {SectionStore} from "./SectionStore";
 
 export class MainStore {
 
+    // 配置
+    config = {
+        // 视图大小
+        screenSize: {
+            width: 375,
+            height: 812,
+        },
+        // 视口大小
+        viewportSize: {
+            width: 375,
+            height: 812,
+        }
+    };
+
     screens: ScreensStore;
     toolbar: ToolbarStore;
     widgets: WidgetsStore;

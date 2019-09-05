@@ -31,8 +31,8 @@ export class Widgets extends React.Component<Props, State> {
                         <IBotIcon name={"windows"} type={"icon"}/>
                     </li>
                 </ul>
-                <a className={"toggle-area"}>
-                    <IBotIcon name={"left_double_bracket"} type={"dora"}/>
+                <a className={"toggle-area"} onClick={store.toggle}>
+                    <IBotIcon name={"left_double_bracket"} type={"dora"} className={`toggle-btn ${store.isToggle? 'is-toggle': ''}`}/>
                 </a>
             </div>
         );

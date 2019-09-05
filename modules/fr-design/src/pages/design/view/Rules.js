@@ -5,45 +5,33 @@
  * @sine 2019-08-29 14:33
  */
 
-import React, { PureComponent } from "react";
-import reactDOM from 'react-dom';
+import React, { Component } from "react";
 import { Ruler } from "fr-web";
+import {observer} from "mobx-react";
+import {SectionStore} from "../store/SectionStore";
+
+type Props = {
+    store: SectionStore
+}
 
 const thick = 16;
-export class Rules extends PureComponent {
+@observer
+export class Rules extends Component<Props> {
     state = {
         scale: 1, //658813476562495, //1,
         startX: -150,
         startY: -150,
         isShowRuler: true,
         isShowReferLine: true,
-        width: 100,
-        height: 100,
         lines: {
             h: [100, 400],
             v: [100, 300]
         }
     };
 
-    componentDidMount(): * {
-        this.$div = reactDOM.findDOMNode(this.ruler);
-        window.addEventListener("resize", this.resize);
-        this.countSize();
-    }
-
     componentWillUnmount() {
         window.removeEventListener('resize', this.resize)
     }
-
-    resize = ()=> {
-        clearTimeout(this._countTimeout);
-        this._countTimeout = setTimeout(this.countSize, 100);
-    };
-
-
-    countSize = ()=> {
-        this.setState({width: this.$div.offsetWidth, height: this.$div.offsetHeight});
-    };
 
     componentDidUpdate(prevProps, prevState) {
         if (this.state.scale !== prevState.scale) {
@@ -85,8 +73,10 @@ export class Rules extends PureComponent {
     };
 
     render() {
-        const { scale, startX, startY, lines, isShowRuler, isShowReferLine, width, height } = this.state;
+        const { scale, startX, startY, lines, isShowRuler, isShowReferLine } = this.state;
+        const store = this.props.store;
         const { h, v } = lines;
+        const {width, height} = store.size;
         return (
             <Ruler
                 ref={rf=>this.ruler = rf}
