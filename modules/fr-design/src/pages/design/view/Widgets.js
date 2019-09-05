@@ -8,12 +8,16 @@
 import * as React from "react";
 import "../assets/widgets.pcss";
 import { IBotIcon } from "fr-web";
+import {observer} from "mobx-react";
+import {WidgetsStore} from "../store/WidgetsStore";
 
-type Props = {};
+type Props = {store: WidgetsStore};
 type State = {};
 
+@observer
 export class Widgets extends React.Component<Props, State> {
     render() {
+        let store = this.props.store;
         return (
             <div className={"ds-widgets-bar"}>
                 <ul className={"basic"} id={"basic-widgets"}>

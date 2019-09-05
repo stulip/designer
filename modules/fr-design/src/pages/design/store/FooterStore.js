@@ -1,12 +1,13 @@
 /**
- * 设计器工具栏Store
+ *
  * @flow
  * @author tangzehua
- * @sine 2019-08-29 10:47
+ * @sine 2019-09-05 10:27
  */
+import {observable, action, computed} from 'mobx';
 import type {MainStore} from "./MainStore.flow";
 
-export class ToolbarStore {
+export class FooterStore {
     main: MainStore;
     constructor (main: MainStore){
         this.main = main;

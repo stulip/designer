@@ -21,38 +21,39 @@ export class Main extends Component {
 
     constructor(props) {
         super(props);
-        this.store = new MainStore(props);
+        let that = this;
+        that.store = new MainStore(props);
     }
 
     renderContext() {
-        let that = this;
+        let store = this.store;
         return (
             <div className={"ds-content"}>
-                <Screens />
-                <Widgets />
-                <LeftPanel />
+                <Screens store={store.screens}/>
+                <Widgets store={store.widgets}/>
+                <LeftPanel store={store.widgets}/>
                 <main className={"ds-viewport"}>
-                    <SectionView />
-                    <Footer />
+                    <SectionView store={store.section}/>
+                    <Footer store={store.footer}/>
                 </main>
-                <RightPanel />
+                <RightPanel store={store.widgets}/>
             </div>
         );
     }
 
     _render (){
-        let that = this;
+        let store = this.store;
         return (
             <div id={"design"}>
-                <div className={"ds-design"}>13
-                    <Toolbar store={that.store}/>
+                <div className={"ds-design"}>
+                    <Toolbar store={store.toolbar}/>
                     {this.renderContext()}
                 </div>
             </div>
         );
     }
 
-    render() {
+    render (){
         return this._render();
     }
 }
