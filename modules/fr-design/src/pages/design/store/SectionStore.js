@@ -6,11 +6,11 @@
  */
 import { observable, action, computed } from "mobx";
 import type { MainStore } from "./MainStore.flow";
-import { viewMinSize } from "../config.js";
+import { viewMinSize, scrollMinWidth } from "../config.js";
 
 export class SectionStore {
     // 视口大小, 需要计算
-    @observable viewportSize = { width: viewMinSize.width, height: viewMinSize.height };
+    @observable _viewportSize = { width: viewMinSize.width, height: viewMinSize.height };
     // content 缩放倍数
     @observable contentScale = 1;
     // content 尺寸
@@ -19,6 +19,9 @@ export class SectionStore {
     @observable contentPosition = { x: 0, y: 0 };
     // scroll bar 位置
     @observable scroll = { x: 0.5, y: 0.5 };
+
+    // 标尺坐标
+    @observable rulerPosition = {x: 0, y: 0};
     // 是否显示标尺
     @observable isShowRuler = true;
     // 是否显示标尺辅助线
@@ -27,11 +30,10 @@ export class SectionStore {
     main: MainStore;
     constructor(main: MainStore) {
         let that = this;
-        const { screenSize } = main.config;
         that.main = main;
-
-        const vpWidth = screenSize.width * 10;
-        const vpHeight = screenSize.height * 4;
+        const { screenSize, viewportScale } = main.config;
+        const vpWidth = screenSize.width * viewportScale.x;
+        const vpHeight = screenSize.height * viewportScale.y;
         that.setViewportSize(vpWidth, vpHeight);
     }
 
@@ -55,7 +57,7 @@ export class SectionStore {
      */
     @action
     setViewportSize(width: number, height: number) {
-        this.viewportSize = {
+        this._viewportSize = {
             width: Math.max(viewMinSize.width, width),
             height: Math.max(viewMinSize.height, height)
         };
@@ -124,5 +126,49 @@ export class SectionStore {
         const scrollX = (width - px) / (width * 2);
         const scrollY = (height - py) / (height * 2);
         that.setScrollPosition(scrollX, scrollY);
+        that.setRulerPosition(-px, -py);
+    }
+
+    /**
+     * 视口尺寸, 不小于内容区域
+     * @returns {{width: *, height: *}}
+     */
+    @computed
+    get viewportSize() {
+        return {
+            width: Math.max(this.contentSize.width, this._viewportSize.width),
+            height: Math.max(this.contentSize.height, this._viewportSize.height)
+        };
+    }
+
+    /**
+     * 滚动视区尺寸
+     * @returns {{width: number, height: number}}
+     */
+    @computed
+    get scrollSize() {
+        return { width: this.viewportSize.width * 2, height: this.viewportSize.height * 2 };
+    }
+
+    /**
+     * 滚动条, 尺寸
+     * @returns {{width: *, height: *}}
+     */
+    @computed
+    get scrollBarSize() {
+        let that = this;
+        const width = Math.max(scrollMinWidth, 100 / (that.scrollSize.width / that.contentSize.width));
+        const height = Math.max(scrollMinWidth, 100 / (that.scrollSize.height / that.contentSize.height));
+        return { width, height, vecX: 100 - width, vecY: 100 - height };
+    }
+
+    /**
+     * 设置标尺坐标
+     * @param {number} x
+     * @param {number} y
+     */
+    @action
+    setRulerPosition (x: number, y: number){
+        this.rulerPosition = {x, y};
     }
 }

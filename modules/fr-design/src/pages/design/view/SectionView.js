@@ -50,7 +50,7 @@ export class SectionView extends React.Component<Props, State> {
                     <span>链接上一页</span>
                 </div>
                 <Rules store={store} />
-                <ScrollBar {...store.scroll} />
+                <ScrollBar x={store.scroll.x} y={store.scroll.y} size={store.scrollBarSize}/>
                 <iframe className={"vp-iframe"} ref={rf => (that.iframe = rf)} />
             </section>
         );

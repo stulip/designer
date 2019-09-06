@@ -22,7 +22,6 @@ export class Screens extends React.Component<Props, State> {
         const {x: cmx = 0, y: cmy = 0} = section.contentPosition;
 
         const transform = `matrix(1, 0, 0, 1, ${cmx}, ${cmy})`;
-        console.log(transform);
         return (
             <div id={"screens"} onWheel={section.handleWheel}>
                 <div className={"viewport"} style={{ width, height, minWidth: width, minHeight: height, transform }}>
