@@ -21,17 +21,11 @@ export class Rules extends Component<Props> {
         scale: 1, //658813476562495, //1,
         startX: -150,
         startY: -150,
-        isShowRuler: true,
-        isShowReferLine: true,
         lines: {
             h: [100, 400],
             v: [100, 300]
         }
     };
-
-    componentWillUnmount() {
-        window.removeEventListener('resize', this.resize)
-    }
 
     componentDidUpdate(prevProps, prevState) {
         if (this.state.scale !== prevState.scale) {
@@ -53,40 +47,27 @@ export class Rules extends Component<Props> {
         this.setState({ lines });
     };
 
-    handleShowReferLine = () => {
-        this.setState({ isShowReferLine: !this.state.isShowReferLine });
-    };
-
-    handleShowRuler = () => {
-        this.setState({ isShowRuler: !this.state.isShowRuler });
-    };
-
-    handleCornerClick = () => {
-        console.log("Corner Click");
-    };
-
     render() {
-        const { scale, startX, startY, lines, isShowRuler, isShowReferLine } = this.state;
+        const { scale, startX, startY, lines } = this.state;
         const store = this.props.store;
         const { h, v } = lines;
-        const {width, height} = store.size;
+        const {contentScale, contentSize, isShowRuler, isShowReferLine} = store;
         return (
             <Ruler
-                ref={rf=>this.ruler = rf}
                 thick={thick}
-                scale={scale}
-                width={width}
-                height={height}
+                scale={contentScale}
+                width={contentSize.width}
+                height={contentSize.height}
                 startX={startX}
                 startY={startY}
                 // shadow={shadow}
                 horLineArr={h}
                 verLineArr={v}
-                isShowRuler={isShowRuler}
+                isShowRuler={true}
                 isShowReferLine={isShowReferLine}
                 handleLine={this.handleLine}
-                handleShowRuler={this.handleShowRuler}
-                handleShowReferLine={this.handleShowReferLine}
+                handleShowRuler={store.handleShowRuler}
+                handleShowReferLine={store.handleShowReferLine}
                 cornerActive={true}
                 onCornerClick={store.handleCornerClick}
             />

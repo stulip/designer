@@ -11,10 +11,10 @@ import "../assets/scrollbar.pcss";
 type Props = {};
 type State = {};
 
-// 滚动条长度
-const width = 100 / 3;
+// 滚动条最小长度
+const minWidth = 100 / 10;
 // 最大
-const maxVec = 100 - width;
+const maxVec = 100 - minWidth;
 
 /**
  *
@@ -23,18 +23,18 @@ const maxVec = 100 - width;
  * @returns {*}
  * @constructor
  */
-export const ScrollBar = ({x = 0, y = 0}) => {
+export const ScrollBar = ({x = 0, y = 0, }) => {
     const scrollX = Math.min(maxVec, x * maxVec);
     const scrollY = Math.min(maxVec, y * maxVec);
     return (
         <div className={"scroll-bar"}>
             <div data-axis={"x"} className={"track x-track"}>
-                <div className={"handler"} style={{width: width + '%', left: scrollX + "%"}}>
+                <div className={"handler"} style={{width: minWidth + '%', left: scrollX + "%"}}>
                     <div className={"thumb"}/>
                 </div>
             </div>
             <div data-axis={"y"} className={"track y-track"}>
-                <div className={"handler"} style={{height: width + '%', top: scrollY + "%"}}>
+                <div className={"handler"} style={{height: minWidth + '%', top: scrollY + "%"}}>
                     <div className={"thumb"}/>
                 </div>
             </div>
