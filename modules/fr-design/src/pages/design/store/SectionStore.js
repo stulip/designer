@@ -32,14 +32,21 @@ export class SectionStore {
         this.size = { width, height };
     }
 
-    @action
     handleWheel = event => {
         let that = this;
-        console.log(event)
         const {deltaY, deltaX} = event;
-        const y = ((that.scroll.y * 100 + deltaY) / 100);
-        const x = ((that.scroll.x * 100 + deltaX) / 100);
-        that.scroll.y = Math.max(Math.min(y, 1), 0);
-        that.scroll.x = Math.max(Math.min(x, 1), 0);
+        const y = that.scroll.y + deltaY / 1025;
+        const x = that.scroll.x + deltaX / 1025;
+        that.setScrollPosition(x, y);
     };
+
+    handleCornerClick = ()=> {
+        this.setScrollPosition(0.5, 0.5);
+    };
+
+    @action
+    setScrollPosition (x: number, y: number){
+        this.scroll.x = Math.max(Math.min(1, x), 0);
+        this.scroll.y = Math.max(Math.min(1, y), 0);
+    }
 }

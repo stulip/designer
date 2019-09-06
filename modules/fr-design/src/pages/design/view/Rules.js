@@ -49,13 +49,6 @@ export class Rules extends Component<Props> {
         const startY = (screensRect.top + thick - canvasRect.top) / scale;
         this.setState({ startX, startY });
     };
-    handleWheel = e => {
-        if (e.ctrlKey || e.metaKey) {
-            e.preventDefault();
-            const nextScale = parseFloat(Math.max(0.2, this.state.scale - e.deltaY / 500).toFixed(2));
-            this.setState({ scale: nextScale });
-        }
-    };
     handleLine = lines => {
         this.setState({ lines });
     };
@@ -95,7 +88,7 @@ export class Rules extends Component<Props> {
                 handleShowRuler={this.handleShowRuler}
                 handleShowReferLine={this.handleShowReferLine}
                 cornerActive={true}
-                onCornerClick={this.handleCornerClick}
+                onCornerClick={store.handleCornerClick}
             />
         );
     }

@@ -10,31 +10,22 @@ import {WidgetsStore} from "./WidgetsStore";
 import {FooterStore} from "./FooterStore";
 import {ScreensStore} from "./ScreensStore";
 import {SectionStore} from "./SectionStore";
+import {createConfig} from "../config";
 
 export class MainStore {
 
     // 配置
-    config = {
-        // 视图大小
-        screenSize: {
-            width: 375,
-            height: 812,
-        },
-        // 视口大小
-        viewportSize: {
-            width: 375,
-            height: 812,
-        }
-    };
-
+    config;
+    // store
     screens: ScreensStore;
     toolbar: ToolbarStore;
     widgets: WidgetsStore;
     footer: FooterStore;
     section: SectionStore;
 
-    constructor (){
+    constructor (props){
         let that = this;
+        that.config = createConfig({});
         that.screens = new ScreensStore(that);
         that.toolbar = new ToolbarStore(that);
         that.widgets = new WidgetsStore(that);
