@@ -6,7 +6,7 @@
  */
 import { observable, action, computed } from "mobx";
 import type { MainStore } from "./MainStore.flow";
-import { viewMinSize, scrollMinWidth } from "../config.js";
+import { viewMinSize, scrollbarMinWidth, scrollbarThick } from "../config.js";
 
 export class SectionStore {
     // 视口大小, 需要计算
@@ -48,6 +48,7 @@ export class SectionStore {
             width: Math.max(viewMinSize.width, width),
             height: Math.max(viewMinSize.height, height)
         };
+        this.handleRulerPosition();
     }
 
     /**
@@ -123,10 +124,22 @@ export class SectionStore {
         that.contentPosition.x = px;
         that.contentPosition.y = py;
 
+        // 设置滚动条
         const scrollX = (width - px) / (width * 2);
         const scrollY = (height - py) / (height * 2);
         that.setScrollPosition(scrollX, scrollY);
-        that.setRulerPosition(-px, -py);
+        that.handleRulerPosition();
+    }
+
+    /**
+     * 计算标尺坐标
+     */
+    handleRulerPosition (){
+        let that = this;
+        const {screenSize} = that.main.config;
+        const rulerX = (that.contentSize.width - screenSize.width) / 2 + that.contentPosition.x - scrollbarThick;
+        const rulerY = (that.contentSize.height - screenSize.height) / 2 + that.contentPosition.y - scrollbarThick;
+        that.setRulerPosition(-rulerX, -rulerY);
     }
 
     /**
@@ -157,8 +170,8 @@ export class SectionStore {
     @computed
     get scrollBarSize() {
         let that = this;
-        const width = Math.max(scrollMinWidth, 100 / (that.scrollSize.width / that.contentSize.width));
-        const height = Math.max(scrollMinWidth, 100 / (that.scrollSize.height / that.contentSize.height));
+        const width = Math.max(scrollbarMinWidth, 100 / (that.scrollSize.width / that.contentSize.width));
+        const height = Math.max(scrollbarMinWidth, 100 / (that.scrollSize.height / that.contentSize.height));
         return { width, height, vecX: 100 - width, vecY: 100 - height };
     }
 

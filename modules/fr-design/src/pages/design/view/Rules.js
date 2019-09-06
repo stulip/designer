@@ -9,12 +9,12 @@ import React, { Component } from "react";
 import { Ruler } from "fr-web";
 import { observer } from "mobx-react";
 import { SectionStore } from "../store/SectionStore";
+import {scrollbarThick} from "../config";
 
 type Props = {
     store: SectionStore
 };
 
-const thick = 16;
 @observer
 export class Rules extends Component<Props> {
     state = {
@@ -37,7 +37,7 @@ export class Rules extends Component<Props> {
         const shadow = { x: 0, y: 0, width: screenSize.width, height: screenSize.height };
         return (
             <Ruler
-                thick={thick}
+                thick={scrollbarThick}
                 scale={contentScale}
                 width={contentSize.width}
                 height={contentSize.height}
