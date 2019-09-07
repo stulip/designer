@@ -6,7 +6,7 @@
  */
 import { observable, action, computed } from "mobx";
 import type { MainStore } from "./MainStore.flow";
-import { viewMinSize, scrollbarMinWidth, scrollbarThick, zoomScale, getGridSize } from "../config";
+import { viewMinSize, scrollbarMinWidth, scrollbarThick, zoomScale } from "../config";
 
 export class SectionStore {
     // 视口大小, 需要计算
@@ -26,6 +26,8 @@ export class SectionStore {
     @observable isShowRuler = true;
     // 是否显示标尺辅助线
     @observable isShowReferLine = true;
+    // 标尺标注尺寸
+    rulerShadow = { x: 0, y: 0, width: viewMinSize.width, height: viewMinSize.height };
 
     main: MainStore;
     constructor(main: MainStore) {
@@ -35,6 +37,8 @@ export class SectionStore {
         const vpWidth = screenSize.width * viewportScale.x;
         const vpHeight = screenSize.height * viewportScale.y;
         that.setViewportSize(vpWidth, vpHeight);
+
+        that.rulerShadow = { x: 0, y: 0, width: screenSize.width, height: screenSize.height };
     }
 
     /**
@@ -140,7 +144,7 @@ export class SectionStore {
         const px = Math.min(Math.max(x || 0, -width), width);
         const py = Math.min(Math.max(y || 0, -height), height);
 
-        if (px !== that.contentPosition.x || py !== that.contentPosition.y){
+        if (px !== that.contentPosition.x || py !== that.contentPosition.y) {
             that.contentPosition.x = px;
             that.contentPosition.y = py;
 
@@ -157,10 +161,19 @@ export class SectionStore {
      */
     handleRulerPosition() {
         let that = this;
+
         const { screenSize } = that.main.config;
-        const rulerX = (that.contentSize.width - screenSize.width) / 2 + that.contentPosition.x - scrollbarThick;
-        const rulerY = (that.contentSize.height - screenSize.height) / 2 + that.contentPosition.y - scrollbarThick;
-        that.setRulerPosition(-rulerX / that.contentScale, rulerY / that.contentScale);
+        const {canvasRef, screensRef} = that.main.screens;
+        if( !screensRef.current) return;
+
+        const canvasRect = canvasRef.current.getBoundingClientRect();
+        const screensRect = screensRef.current.getBoundingClientRect();
+        // console.log(canvasRect,screensRect );
+        console.log(canvasRect.left, canvasRect.top)
+        const rulerX =  -canvasRect.left / that.contentScale;
+        const rulerY =  -canvasRect.top / that.contentScale;
+
+        that.setRulerPosition(rulerX, rulerY);
     }
 
     /**
@@ -194,6 +207,18 @@ export class SectionStore {
         const width = Math.max(scrollbarMinWidth, 100 / (that.scrollSize.width / that.contentSize.width));
         const height = Math.max(scrollbarMinWidth, 100 / (that.scrollSize.height / that.contentSize.height));
         return { width, height, vecX: 100 - width, vecY: 100 - height };
+    }
+
+    /**
+     * 标尺尺寸
+     * @returns {{width: number, height: number}}
+     */
+    @computed
+    get rulerSize() {
+        return {
+            width: this.contentSize.width - scrollbarThick - 1,
+            height: this.contentSize.height - scrollbarThick - 1
+        };
     }
 
     /**

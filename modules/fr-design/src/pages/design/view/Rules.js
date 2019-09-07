@@ -9,7 +9,7 @@ import React, { Component } from "react";
 import { Ruler } from "fr-web";
 import { observer } from "mobx-react";
 import { SectionStore } from "../store/SectionStore";
-import {scrollbarThick} from "../config";
+import { scrollbarThick } from "../config";
 
 type Props = {
     store: SectionStore
@@ -29,22 +29,28 @@ export class Rules extends Component<Props> {
     };
 
     render() {
-        const {  lines } = this.state;
+        const { lines } = this.state;
         const store = this.props.store;
         const { h, v } = lines;
-        const { contentScale, contentSize, isShowRuler, isShowReferLine, main, rulerPosition } = store;
-        const { screenSize } = main.config;
-        const shadow = { x: 0, y: 0, width: screenSize.width, height: screenSize.height };
-        console.log(rulerPosition.x, rulerPosition.y)
+        const {
+            contentScale,
+            contentSize,
+            isShowRuler,
+            isShowReferLine,
+            main,
+            rulerPosition,
+            rulerSize,
+            rulerShadow
+        } = store;
         return (
             <Ruler
                 thick={scrollbarThick}
                 scale={contentScale}
-                width={contentSize.width}
-                height={contentSize.height}
+                width={rulerSize.width}
+                height={rulerSize.height}
                 startX={rulerPosition.x}
                 startY={rulerPosition.y}
-                shadow={shadow}
+                shadow={rulerShadow}
                 horLineArr={h}
                 verLineArr={v}
                 isShowRuler={true}

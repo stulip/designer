@@ -7,16 +7,16 @@
 
 import React from "react";
 import "../assets/screens.pcss";
-import { SectionStore } from "../store/SectionStore";
 import {observer} from "mobx-react";
+import {ScreensStore} from "../store/ScreensStore";
 
-type Props = { store: SectionStore };
+type Props = { store: ScreensStore };
 type State = {};
 
 @observer
 export class Screens extends React.Component<Props, State> {
     _render() {
-        const { main } = this.props.store;
+        const { main, canvasRef, screensRef } = this.props.store;
         const {contentPosition, handleWheel, contentScale} = main.section;
         const { width, height } = main.config.screenSize;
         const {x: cmx = 0, y: cmy = 0} = contentPosition;
@@ -24,10 +24,10 @@ export class Screens extends React.Component<Props, State> {
         const scaleValue = parseInt(100 * contentScale);
 
         return (
-            <div id={"screens"} onWheel={handleWheel} className={'grid-background'}>
+            <div onWheel={handleWheel} className={'screens'} ref={screensRef}>
                 <div className={"viewport"} style={{ width, height, minWidth: width, minHeight: height, transform }}>
                     <div className={'no-zoom-area'}>
-                        <div className={'screen'} id={'screen'}>
+                        <div className={'screen'} ref={canvasRef}>
                             <div className={'title-label'}>
                                 <span>主页 - 默认状态</span>
                                 <span>{scaleValue + "%"}</span>

@@ -6,8 +6,13 @@
  */
 import {observable, action, computed} from 'mobx';
 import type {MainStore} from "./MainStore.flow";
+import React from "react";
 
 export class ScreensStore {
+
+    screensRef:createRef = React.createRef();
+    canvasRef:createRef = React.createRef();
+
     main: MainStore;
     constructor (main: MainStore){
         this.main = main;

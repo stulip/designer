@@ -10,9 +10,9 @@ const thick = 16;
 
 export class Rules extends PureComponent {
     state = {
-        scale: 2, //658813476562495, //1,
-        startX: 0,
-        startY: 0,
+        scale: 1, //658813476562495, //1,
+        startX: -100,
+        startY: -100,
         isShowRuler: true,
         isShowReferLine: true,
         lines: {
@@ -89,12 +89,11 @@ export class Rules extends PureComponent {
 
         return (
             <div className="wrapper">
-                <div className="scale-value">{`scale: ${scale}`}</div>
                 <Ruler
                     thick={thick}
                     scale={scale}
-                    width={582}
-                    height={482}
+                    width={600 - thick - 2}
+                    height={700 - thick - 2}
                     startX={startX}
                     startY={startY}
                     shadow={shadow}

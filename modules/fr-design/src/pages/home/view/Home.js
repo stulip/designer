@@ -18,7 +18,7 @@ export class Home extends PureComponent {
 
     render() {
         return (
-            <div>
+            <div className={'fr-test'}>
                 <button onClick={this.gotoHome}> HOME</button>
                 <span>sb app</span>
                 <div>
