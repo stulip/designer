@@ -21,7 +21,7 @@ export class SectionStore {
     @observable scroll = { x: 0.5, y: 0.5 };
 
     // 标尺坐标
-    @observable rulerPosition = {x: 0, y: 0};
+    @observable rulerPosition = { x: 0, y: 0 };
     // 是否显示标尺
     @observable isShowRuler = true;
     // 是否显示标尺辅助线
@@ -64,16 +64,28 @@ export class SectionStore {
         };
     }
 
+    @action
+    setContentScale(scale: number) {
+        this.contentScale = scale;
+        this.handleRulerPosition();
+    }
+
     /**
      * 视区滚轮事件
      * @param {WheelEvent} event
      */
     handleWheel = event => {
         let that = this;
+        event.preventDefault();
         const { deltaY, deltaX } = event;
-        const contentY = that.contentPosition.y - deltaY;
-        const contentX = that.contentPosition.x - deltaX;
-        that.setContentPosition(contentX, contentY);
+        if (event.ctrlKey || event.metaKey) {
+            const nextScale = parseFloat(Math.max(0.2, that.contentScale - deltaY / 500).toFixed(2));
+            that.setContentScale(nextScale);
+        } else {
+            const contentY = that.contentPosition.y - deltaY;
+            const contentX = that.contentPosition.x - deltaX;
+            that.setContentPosition(contentX, contentY);
+        }
     };
 
     /**
@@ -112,8 +124,8 @@ export class SectionStore {
 
     /**
      * 设置视图坐标, 同时修改滚动条
-     * @param x
-     * @param y
+     * @param {number} x
+     * @param {number} y
      */
     @action
     setContentPosition(x: number, y: number) {
@@ -134,12 +146,12 @@ export class SectionStore {
     /**
      * 计算标尺坐标
      */
-    handleRulerPosition (){
+    handleRulerPosition() {
         let that = this;
-        const {screenSize} = that.main.config;
+        const { screenSize } = that.main.config;
         const rulerX = (that.contentSize.width - screenSize.width) / 2 + that.contentPosition.x - scrollbarThick;
-        const rulerY = (that.contentSize.height - screenSize.height) / 2 + that.contentPosition.y - scrollbarThick;
-        that.setRulerPosition(-rulerX, -rulerY);
+        const rulerY = (that.contentSize.height - screenSize.height) / 2 + that.contentPosition.y;
+        that.setRulerPosition(-rulerX / that.contentScale, -rulerY / that.contentScale);
     }
 
     /**
@@ -181,7 +193,7 @@ export class SectionStore {
      * @param {number} y
      */
     @action
-    setRulerPosition (x: number, y: number){
-        this.rulerPosition = {x, y};
+    setRulerPosition(x: number, y: number) {
+        this.rulerPosition = { x, y };
     }
 }
