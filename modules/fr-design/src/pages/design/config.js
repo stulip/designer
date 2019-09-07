@@ -9,6 +9,8 @@ export const viewMinSize = Object.freeze({ width: 600, height: 500 });
 // 滚动条最小长度
 export const scrollbarMinWidth = 100 / 10;
 export const scrollbarThick = 16;
+// 视图缩放比例
+export const zoomScale = {max: 4, min: 0.2};
 
 const config = {
     // 层大小(iPhone X)

@@ -17,15 +17,24 @@ type State = {};
 export class Screens extends React.Component<Props, State> {
     _render() {
         const { main } = this.props.store;
-        const section = main.section;
+        const {contentPosition, handleWheel, contentScale} = main.section;
         const { width, height } = main.config.screenSize;
-        const {x: cmx = 0, y: cmy = 0} = section.contentPosition;
-
+        const {x: cmx = 0, y: cmy = 0} = contentPosition;
         const transform = `matrix(1, 0, 0, 1, ${cmx}, ${cmy})`;
+        const scaleValue = parseInt(100 * contentScale);
+
         return (
-            <div id={"screens"} onWheel={section.handleWheel}>
+            <div id={"screens"} onWheel={handleWheel} className={'grid-background'}>
                 <div className={"viewport"} style={{ width, height, minWidth: width, minHeight: height, transform }}>
-                    vp
+                    <div className={'no-zoom-area'}>
+                        <div className={'screen'} id={'screen'}>
+                            <div className={'title-label'}>
+                                <span>主页 - 默认状态</span>
+                                <span>{scaleValue + "%"}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div className={'zoom-area'} style={{transform: `scale(${contentScale})`}}>123</div>
                 </div>
             </div>
         );

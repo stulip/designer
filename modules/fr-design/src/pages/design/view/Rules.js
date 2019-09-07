@@ -20,7 +20,7 @@ export class Rules extends Component<Props> {
     state = {
         lines: {
             h: [100, 400],
-            v: [100, 300]
+            v: [100, 400]
         }
     };
 
@@ -35,6 +35,7 @@ export class Rules extends Component<Props> {
         const { contentScale, contentSize, isShowRuler, isShowReferLine, main, rulerPosition } = store;
         const { screenSize } = main.config;
         const shadow = { x: 0, y: 0, width: screenSize.width, height: screenSize.height };
+        console.log(rulerPosition.x, rulerPosition.y)
         return (
             <Ruler
                 thick={scrollbarThick}

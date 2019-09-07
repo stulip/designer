@@ -9,8 +9,9 @@ import type {MainStore} from "./MainStore.flow";
 
 export class WidgetsStore {
 
+    // 左侧面板是否折叠
     @observable
-    isToggle = false;
+    isToggle = true;
 
     main: MainStore;
     constructor (main: MainStore){

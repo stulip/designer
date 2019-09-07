@@ -29,6 +29,8 @@ export class Toolbar extends React.Component<Props, State> {
 
     _render(){
         let that = this;
+        const {main} = that.props.store;
+        const scaleValue = parseInt(100 * main.section.contentScale);
         return (
             <div className={'ds-toolbar'}>
                 <div className={'left'}>
@@ -55,6 +57,20 @@ export class Toolbar extends React.Component<Props, State> {
                             </div>
                             <span>重做</span>
                         </a>
+                    </div>
+                    <div>
+                        <div>
+                            <div className={'zoom'}>
+                                <IBotSVG name={'minus'} className={'icon'}/>
+                                <a className={'icons'}>
+                                    <div className={'wrapper'}>
+                                        <span className={'scale-text'}>{scaleValue}%</span>
+                                    </div>
+                                    <span>缩放</span>
+                                </a>
+                                <IBotSVG name={'plus'} className={'icon'}/>
+                            </div>
+                        </div>
                     </div>
                     <div>
                         <a className={'icons'}>

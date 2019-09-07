@@ -6,7 +6,7 @@
  */
 import { observable, action, computed } from "mobx";
 import type { MainStore } from "./MainStore.flow";
-import { viewMinSize, scrollbarMinWidth, scrollbarThick } from "../config.js";
+import { viewMinSize, scrollbarMinWidth, scrollbarThick, zoomScale, getGridSize } from "../config";
 
 export class SectionStore {
     // 视口大小, 需要计算
@@ -64,10 +64,17 @@ export class SectionStore {
         };
     }
 
+    /**
+     * 设置视图缩放比例
+     * @param scale
+     */
     @action
     setContentScale(scale: number) {
-        this.contentScale = scale;
-        this.handleRulerPosition();
+        const nextScale = Math.max(Math.min(zoomScale.max, scale), zoomScale.min);
+        if (this.contentScale !== nextScale) {
+            this.contentScale = nextScale;
+            this.handleRulerPosition();
+        }
     }
 
     /**
@@ -76,7 +83,6 @@ export class SectionStore {
      */
     handleWheel = event => {
         let that = this;
-        event.preventDefault();
         const { deltaY, deltaX } = event;
         if (event.ctrlKey || event.metaKey) {
             const nextScale = parseFloat(Math.max(0.2, that.contentScale - deltaY / 500).toFixed(2));
@@ -133,14 +139,17 @@ export class SectionStore {
         const { width, height } = that.viewportSize;
         const px = Math.min(Math.max(x || 0, -width), width);
         const py = Math.min(Math.max(y || 0, -height), height);
-        that.contentPosition.x = px;
-        that.contentPosition.y = py;
 
-        // 设置滚动条
-        const scrollX = (width - px) / (width * 2);
-        const scrollY = (height - py) / (height * 2);
-        that.setScrollPosition(scrollX, scrollY);
-        that.handleRulerPosition();
+        if (px !== that.contentPosition.x || py !== that.contentPosition.y){
+            that.contentPosition.x = px;
+            that.contentPosition.y = py;
+
+            // 设置滚动条
+            const scrollX = (width - px) / (width * 2);
+            const scrollY = (height - py) / (height * 2);
+            that.setScrollPosition(scrollX, scrollY);
+            that.handleRulerPosition();
+        }
     }
 
     /**
@@ -150,8 +159,8 @@ export class SectionStore {
         let that = this;
         const { screenSize } = that.main.config;
         const rulerX = (that.contentSize.width - screenSize.width) / 2 + that.contentPosition.x - scrollbarThick;
-        const rulerY = (that.contentSize.height - screenSize.height) / 2 + that.contentPosition.y;
-        that.setRulerPosition(-rulerX / that.contentScale, -rulerY / that.contentScale);
+        const rulerY = (that.contentSize.height - screenSize.height) / 2 + that.contentPosition.y - scrollbarThick;
+        that.setRulerPosition(-rulerX / that.contentScale, rulerY / that.contentScale);
     }
 
     /**
