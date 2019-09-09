@@ -8,9 +8,9 @@ import { observable, action, computed } from "mobx";
 import type { MainStore } from "./MainStore.flow";
 import { viewMinSize, scrollbarMinWidth, scrollbarThick, zoomScale } from "../config";
 import React from "react";
+import { Types } from "@xt-web/core";
 
 export class SectionStore {
-
     sectionRef = React.createRef();
     // 视口大小, 需要计算
     @observable _viewportSize = { width: viewMinSize.width, height: viewMinSize.height };
@@ -166,14 +166,14 @@ export class SectionStore {
         let that = this;
 
         const { screenSize } = that.main.config;
-        const {canvasRef} = that.main.screens;
-        if( !canvasRef.current || !that.sectionRef.current) return;
+        const { canvasRef } = that.main.screens;
+        if (!canvasRef.current || !that.sectionRef.current) return;
 
         const canvasRect = canvasRef.current.getBoundingClientRect();
         const sectionRect = that.sectionRef.current.getBoundingClientRect();
 
-        const rulerX =  -(canvasRect.left - scrollbarThick - sectionRect.left) / that.contentScale;
-        const rulerY =  -(canvasRect.top - scrollbarThick - sectionRect.top) / that.contentScale;
+        const rulerX = -(canvasRect.left - scrollbarThick - sectionRect.left) / that.contentScale;
+        const rulerY = -(canvasRect.top - scrollbarThick - sectionRect.top) / that.contentScale;
         that.setRulerPosition(rulerX, rulerY);
     }
 
@@ -231,4 +231,18 @@ export class SectionStore {
     setRulerPosition(x: number, y: number) {
         this.rulerPosition = { x, y };
     }
+
+    /**
+     * 滚动条移动
+     * @param {{x: number, y: number}} XY坐标 [0, 1]
+     */
+    handleScrollBarMove = ({ x, y }) => {
+        let that = this;
+        const { width, height } = that.viewportSize;
+        if (!Types.isEmpty(x) && x !== that.scroll.x) {
+            that.setContentPosition(width * 2 * - x + width, that.contentPosition.y);
+        } else if (!Types.isEmpty(y) && y !== that.scroll.y) {
+            that.setContentPosition(that.contentPosition.x, height * 2 * - y + height);
+        }
+    };
 }

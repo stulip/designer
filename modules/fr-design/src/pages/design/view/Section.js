@@ -19,7 +19,6 @@ type State = {};
 
 @observer
 export class Section extends React.Component<Props, State> {
-
     resize = event => {
         this.setContentSize(event.currentTarget);
     };
@@ -30,10 +29,10 @@ export class Section extends React.Component<Props, State> {
         this.setContentSize(win);
     }
 
-    setContentSize (win: window){
+    setContentSize(win: window) {
         let that = this;
         const { innerWidth, innerHeight } = win;
-        that.props.store.setContentSize(innerWidth, innerHeight)
+        that.props.store.setContentSize(innerWidth, innerHeight);
     }
 
     _render() {
@@ -50,7 +49,12 @@ export class Section extends React.Component<Props, State> {
                     <span>链接上一页</span>
                 </div>
                 <Rules store={store} />
-                <ScrollBar x={store.scroll.x} y={store.scroll.y} size={store.scrollBarSize}/>
+                <ScrollBar
+                    x={store.scroll.x}
+                    y={store.scroll.y}
+                    size={store.scrollBarSize}
+                    handleBarMove={store.handleScrollBarMove}
+                />
                 <iframe className={"vp-iframe"} ref={rf => (that.iframe = rf)} />
             </section>
         );

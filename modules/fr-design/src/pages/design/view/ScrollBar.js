@@ -8,29 +8,112 @@
 import * as React from "react";
 import "../assets/scrollbar.pcss";
 
-/**
- *
- * @param {number} x [0, 1] X 轴
- * @param {number} y [0, 1] Y 轴
- * @param {{width: number, height: number, vecX: number, vecY: number}} size 滚动条尺寸
- * @returns {*}
- * @constructor
- */
-export const ScrollBar = ({x = 0, y = 0, size}) => {
-    const scrollX = Math.min(size.vecX, x * size.vecX);
-    const scrollY = Math.min(size.vecY, y * size.vecY);
-    return (
-        <div className={"scroll-bar"}>
-            <div data-axis={"x"} className={"track x-track"}>
-                <div className={"handler"} style={{width: size.width + '%', left: scrollX + "%"}}>
-                    <div className={"thumb"}/>
-                </div>
-            </div>
-            <div data-axis={"y"} className={"track y-track"}>
-                <div className={"handler"} style={{height: size.height + '%', top: scrollY + "%"}}>
-                    <div className={"thumb"}/>
-                </div>
-            </div>
-        </div>
-    )
+type Props = {
+    x: number, // [0, 1] X 轴
+    y: number, // [0, 1] Y 轴
+    size: {
+        width: number,
+        height: number,
+        vecX: number,
+        vecY: number
+    },
+    handleBarMove: ({x: number, y: number}) => {}
 };
+
+const SCROLL_TYPE = {X: 1, Y: 2};
+
+export class ScrollBar extends React.PureComponent<Props> {
+    static defaultProps = {
+        handleBarMove: () => {}
+    };
+
+    // 鼠标是否按下
+    _mouseDown = false;
+    _mouseOffset = 0;
+    constructor(props) {
+        super(props);
+    }
+
+    componentDidMount() {
+        window.addEventListener("mouseup", this.handleMouseUp);
+        window.addEventListener("mousemove", this.handleMouseMove);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener("mouseup", this.handleMouseUp);
+        window.removeEventListener("mousemove", this.handleMouseMove);
+    }
+
+    handleMouseXDown = (event: MouseEvent) => {
+        let that = this;
+        if (event.button === 0) {
+            that._mouseDown = SCROLL_TYPE.X;
+            const barHX = that.xhRef.getBoundingClientRect();
+            that._mouseOffset = event.pageX - barHX.left;
+        }
+    };
+
+    handleMouseYDown = (event: MouseEvent) => {
+        let that = this;
+        if (event.button === 0) {
+            that._mouseDown = SCROLL_TYPE.Y;
+            const barHY = that.yhRef.getBoundingClientRect();
+            that._mouseOffset = event.pageY - barHY.top;
+        }
+    };
+
+    handleMouseUp = () => {
+        let that = this;
+        that._mouseDown = 0;
+        that._mouseOffset = 0;
+    };
+
+    handleMouseMove = (event: MouseEvent) => {
+        let that = this;
+        const { pageY, pageX } = event;
+
+        if (that._mouseDown) {
+            const {  size } = this.props;
+            if (that._mouseDown === SCROLL_TYPE.X) {
+                const barX = that.xRef.getBoundingClientRect();
+                const x = (pageX - that._mouseOffset - barX.left) /  (barX.width * size.vecX / 100);
+                that.props.handleBarMove({x});
+            } else if (that._mouseDown === SCROLL_TYPE.Y) {
+                const barY = that.yRef.getBoundingClientRect();
+                const y = (pageY - that._mouseOffset - barY.top) /  (barY.height * size.vecY / 100);
+                that.props.handleBarMove({y});
+            }
+        }
+    };
+
+    render() {
+        let that = this;
+        const { x = 0, y = 0, size } = this.props;
+        const scrollX = Math.min(size.vecX, x * size.vecX);
+        const scrollY = Math.min(size.vecY, y * size.vecY);
+        return (
+            <div className={"scroll-bar"}>
+                <div data-axis={"x"} className={"track x-track"} ref={rf => (that.xRef = rf)}>
+                    <div
+                        ref={rf => (that.xhRef = rf)}
+                        className={"handler"}
+                        style={{ width: size.width + "%", left: scrollX + "%" }}
+                        onMouseDown={that.handleMouseXDown}
+                    >
+                        <div className={"thumb"} />
+                    </div>
+                </div>
+                <div data-axis={"y"} className={"track y-track"} ref={rf => (that.yRef = rf)}>
+                    <div
+                        ref={rf => (that.yhRef = rf)}
+                        className={"handler"}
+                        style={{ height: size.height + "%", top: scrollY + "%" }}
+                        onMouseDown={that.handleMouseYDown}
+                    >
+                        <div className={"thumb"} />
+                    </div>
+                </div>
+            </div>
+        );
+    }
+}
