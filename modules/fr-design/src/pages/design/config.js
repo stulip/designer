@@ -16,7 +16,7 @@ const config = {
     // 层大小(iPhone X)
     screenSize: {
         width: 375,
-        height: 500 //812
+        height: 812 //812
     },
     // 视区按照screen尺寸放大倍数
     viewportScale: { x: 6, y: 3 }

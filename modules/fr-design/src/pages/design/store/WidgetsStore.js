@@ -11,7 +11,7 @@ export class WidgetsStore {
 
     // 左侧面板是否折叠
     @observable
-    isToggle = true;
+    isToggle = false;
     // 左侧面板宽度
     @observable
     _leftPanelWidth = 0;
