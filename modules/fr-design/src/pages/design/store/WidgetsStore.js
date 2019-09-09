@@ -12,6 +12,12 @@ export class WidgetsStore {
     // 左侧面板是否折叠
     @observable
     isToggle = true;
+    // 左侧面板宽度
+    @observable
+    _leftPanelWidth = 0;
+    // 左侧面板实际大小
+    @observable
+    leftPanelVXWidth = 240;
 
     main: MainStore;
     constructor (main: MainStore){
@@ -22,4 +28,10 @@ export class WidgetsStore {
     toggle (){
         this.isToggle = ! this.isToggle;
     }
+
+    @computed
+    get leftPanelWidth (){
+        return this.isToggle? 0: this.leftPanelVXWidth;
+    }
+
 }

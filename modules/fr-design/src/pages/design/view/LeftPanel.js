@@ -16,10 +16,13 @@ type State = {};
 export class LeftPanel extends React.Component<Props, State> {
 
     _render (){
-        const store = this.props.store;
-        const leftWidth = !store.isToggle ? 240: 0;
+        const {leftPanelWidth, isToggle, leftPanelVXWidth} = this.props.store;
         return (
-            <div className={"panel-left "} style={{ width: leftWidth }}></div>
+            <div className={`panel-left ${isToggle ? 'panel-left-size':''}`} style={{ width: leftPanelWidth }}>
+                <div style={{width: leftPanelVXWidth}} className={'content'}>
+                    左侧面板
+                </div>
+            </div>
         )
     }
     render() {

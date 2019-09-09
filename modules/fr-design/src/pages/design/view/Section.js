@@ -18,7 +18,7 @@ type Props = {
 type State = {};
 
 @observer
-export class SectionView extends React.Component<Props, State> {
+export class Section extends React.Component<Props, State> {
 
     resize = event => {
         this.setContentSize(event.currentTarget);
@@ -40,7 +40,7 @@ export class SectionView extends React.Component<Props, State> {
         const that = this;
         const store = this.props.store;
         return (
-            <section className={"art-board"}>
+            <section className={"art-board"} ref={store.sectionRef}>
                 <div className={"prev-page float-btn dark"}>
                     <IBotIcon type={"dora"} name={"arrow_up"} />
                     <span>返回工作区</span>

@@ -10,8 +10,7 @@ import React from "react";
 
 export class ScreensStore {
 
-    screensRef:createRef = React.createRef();
-    canvasRef:createRef = React.createRef();
+    canvasRef:{current: Element} = React.createRef();
 
     main: MainStore;
     constructor (main: MainStore){

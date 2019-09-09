@@ -7,8 +7,11 @@
 import { observable, action, computed } from "mobx";
 import type { MainStore } from "./MainStore.flow";
 import { viewMinSize, scrollbarMinWidth, scrollbarThick, zoomScale } from "../config";
+import React from "react";
 
 export class SectionStore {
+
+    sectionRef = React.createRef();
     // 视口大小, 需要计算
     @observable _viewportSize = { width: viewMinSize.width, height: viewMinSize.height };
     // content 缩放倍数
@@ -163,16 +166,14 @@ export class SectionStore {
         let that = this;
 
         const { screenSize } = that.main.config;
-        const {canvasRef, screensRef} = that.main.screens;
-        if( !screensRef.current) return;
+        const {canvasRef} = that.main.screens;
+        if( !canvasRef.current || !that.sectionRef.current) return;
 
         const canvasRect = canvasRef.current.getBoundingClientRect();
-        const screensRect = screensRef.current.getBoundingClientRect();
-        // console.log(canvasRect,screensRect );
-        console.log(canvasRect.left, canvasRect.top)
-        const rulerX =  -canvasRect.left / that.contentScale;
-        const rulerY =  -canvasRect.top / that.contentScale;
+        const sectionRect = that.sectionRef.current.getBoundingClientRect();
 
+        const rulerX =  -(canvasRect.left - scrollbarThick - sectionRect.left) / that.contentScale;
+        const rulerY =  -(canvasRect.top - scrollbarThick - sectionRect.top) / that.contentScale;
         that.setRulerPosition(rulerX, rulerY);
     }
 

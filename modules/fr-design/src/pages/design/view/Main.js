@@ -12,7 +12,7 @@ import { Footer } from "./Footer";
 import { Widgets } from "./Widgets";
 import { RightPanel } from "./RightPanel";
 import { LeftPanel } from "./LeftPanel";
-import { SectionView } from "./SectionView";
+import { Section } from "./Section";
 import {observer} from "mobx-react";
 import {MainStore} from "../store/MainStore";
 
@@ -33,7 +33,7 @@ export class Main extends Component {
                 <Widgets store={store.widgets}/>
                 <LeftPanel store={store.widgets}/>
                 <main className={"ds-viewport"}>
-                    <SectionView store={store.section}/>
+                    <Section store={store.section}/>
                     <Footer store={store.footer}/>
                 </main>
                 <RightPanel store={store.widgets}/>

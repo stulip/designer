@@ -16,7 +16,7 @@ type State = {};
 @observer
 export class Screens extends React.Component<Props, State> {
     _render() {
-        const { main, canvasRef, screensRef } = this.props.store;
+        const { main, canvasRef } = this.props.store;
         const {contentPosition, handleWheel, contentScale} = main.section;
         const { width, height } = main.config.screenSize;
         const {x: cmx = 0, y: cmy = 0} = contentPosition;
@@ -24,7 +24,7 @@ export class Screens extends React.Component<Props, State> {
         const scaleValue = parseInt(100 * contentScale);
 
         return (
-            <div onWheel={handleWheel} className={'screens'} ref={screensRef}>
+            <div onWheel={handleWheel} className={'screens'}>
                 <div className={"viewport"} style={{ width, height, minWidth: width, minHeight: height, transform }}>
                     <div className={'no-zoom-area'}>
                         <div className={'screen'} ref={canvasRef}>
