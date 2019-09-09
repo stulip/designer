@@ -18,6 +18,10 @@ export class SectionStore {
     @observable contentScale = 1;
     // content 尺寸
     @observable contentSize = { width: viewMinSize.width, height: viewMinSize.height };
+    // 内容Rect 属性
+    contentRect = {};
+    // 视口Rect 属性
+    sectionRect = {};
     // 视口坐标
     @observable contentPosition = { x: 0, y: 0 };
     // scroll bar 位置
@@ -51,11 +55,21 @@ export class SectionStore {
      */
     @action
     setContentSize(width: number, height: number) {
-        this.contentSize = {
+        let that = this;
+        that.contentSize = {
             width: Math.max(viewMinSize.width, width),
             height: Math.max(viewMinSize.height, height)
         };
-        this.handleRulerPosition();
+        if (that.main.screens.canvasRef) {
+            const contentRect = that.main.screens.canvasRef.current.getBoundingClientRect();
+            that.contentRect = {
+                top: contentRect.top - that.contentPosition.y,
+                left: contentRect.left - that.contentPosition.x
+            };
+            console.log(contentRect);
+            that.sectionRect = that.sectionRef.current.getBoundingClientRect();
+        }
+        that.handleRulerPosition();
     }
 
     /**
@@ -166,11 +180,11 @@ export class SectionStore {
         let that = this;
 
         const { screenSize } = that.main.config;
-        const { canvasRef } = that.main.screens;
-        if (!canvasRef.current || !that.sectionRef.current) return;
-
-        const canvasRect = canvasRef.current.getBoundingClientRect();
-        const sectionRect = that.sectionRef.current.getBoundingClientRect();
+        const canvasRect = {
+            top: that.contentPosition.y + that.contentRect.top,
+            left: that.contentPosition.x + that.contentRect.left
+        };
+        const sectionRect = that.sectionRect;
 
         const rulerX = -(canvasRect.left - scrollbarThick - sectionRect.left) / that.contentScale;
         const rulerY = -(canvasRect.top - scrollbarThick - sectionRect.top) / that.contentScale;

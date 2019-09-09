@@ -19,7 +19,7 @@ const config = {
         height: 500 //812
     },
     // 视区按照screen尺寸放大倍数
-    viewportScale: { x: 8, y: 4 }
+    viewportScale: { x: 6, y: 3 }
 };
 
 export const createConfig = options => {
