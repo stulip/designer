@@ -19,7 +19,7 @@ type Props = {
 export class Rules extends Component<Props> {
     state = {
         lines: {
-            h: [-40, 415],
+            h: [-60, 435],
             v: [100, 400]
         }
     };
