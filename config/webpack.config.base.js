@@ -333,7 +333,7 @@ module.exports.config = {
     },
     module: {rules},
     resolve: {
-        extensions: ['.js', '.json', '.css', '.less'],
+        extensions: ['.js', '.json', '.css', '.pcss', '.jsx'],
         modules: [path.join(config.rootPath, config.moduleRoot, config.modulePath, "src")],
         alias: config.alias.reduce((abc, def) => (abc[def] = path.resolve('node_modules', def), abc), {
             'fr-art': path.resolve('modules', 'fr-art')
