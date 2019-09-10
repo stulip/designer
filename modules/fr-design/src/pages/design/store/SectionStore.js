@@ -60,13 +60,12 @@ export class SectionStore {
             width: Math.max(viewMinSize.width, width),
             height: Math.max(viewMinSize.height, height)
         };
-        if (that.main.screens.canvasRef) {
+        if (that.main.screens.canvasRef.current) {
             const contentRect = that.main.screens.canvasRef.current.getBoundingClientRect();
             that.contentRect = {
                 top: contentRect.top - that.contentPosition.y,
                 left: contentRect.left - that.contentPosition.x
             };
-            console.log(contentRect);
             that.sectionRect = that.sectionRef.current.getBoundingClientRect();
         }
         that.handleRulerPosition();

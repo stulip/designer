@@ -12,6 +12,17 @@
     align-items: center;
     transition: background 0.2s ease-in-out;
 
+    .screen {
+        position: relative;
+        top: -13px;
+        left: -13px;
+        padding: 12px;
+        padding-bottom: 34px;
+        background: #fff;
+        box-sizing: content-box;
+        box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.1);
+    }
+
     .viewport {
         position: relative;
         background: #fff;
@@ -54,6 +65,83 @@
         width: 100%;
         height: 100%;
         transform-origin: center center;
+    }
+
+    .canvas-bg-area {
+        position: absolute;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+
+        .slider {
+            position: absolute;
+            width: 3px;
+            top: 0;
+            left: -33px;
+            bottom: 0;
+            pointer-events: auto;
+            background: #d9d9d9;
+
+            img {
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+            }
+
+            .is-hh {
+                top: 0;
+            }
+            .is-fh {
+                bottom: 0;
+            }
+
+            .is-fh, .is-hh {
+                position: absolute;
+                width: 100%;
+                left: 0;
+                background: #ff7100;
+                border-radius: 3px;
+            }
+
+            .hh {
+                margin-top: -7px;
+            }
+            .fh {
+                margin-bottom: -10px;
+            }
+
+            .hh, .fh {
+                position: absolute;
+                cursor: -webkit-grab;
+                cursor: grab;
+                margin-left: -10px;
+                width: 25px;
+                height: 16px;
+            }
+        }
+    }
+
+    .footer {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        height: 35px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        pointer-events: none;
+    }
+
+    .sbgcolor {
+        position: relative;
+        display: block;
+        width: 18px;
+        height: 18px;
+        border: 1px solid #0000001f;
+        border-radius: 3px;
+        pointer-events: auto;
+        overflow: hidden;
     }
 
 }
