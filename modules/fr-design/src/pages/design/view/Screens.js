@@ -10,7 +10,7 @@ import "../assets/screens.pcss";
 import { observer } from "mobx-react";
 import { ScreensStore } from "../store/ScreensStore";
 import { IBotTooltip, IBotIcon } from "fr-web";
-import {small_grid} from './svg'
+import { small_grid } from "./svg";
 type Props = { store: ScreensStore };
 type State = {};
 
@@ -75,6 +75,32 @@ export class Screens extends React.Component<Props, State> {
         );
     }
 
+    renderToolArea() {
+        let that = this;
+        const store = that.props.store;
+        const { main, pageConfig } = store;
+        const { width, height } = main.config.screenSize;
+        const { contentScale } = main.section;
+        const scaleValue = parseInt(100 * contentScale);
+        const scaleWidth = width * contentScale, scaleHeight = height * contentScale;
+        return (
+            <>
+                <div className={"screen"} style={{ width: scaleWidth, height:scaleHeight  }}>
+                    <div className={"title-label"}>
+                        <span>主页 - 默认状态</span>
+                        <span>{scaleValue + "%"}</span>
+                    </div>
+                </div>
+                <div className={"canvas-bg-area"} style={{ width: scaleWidth, height: scaleHeight }}>
+                    {that.renderBgArea()}
+                </div>
+                <div className={"bg-view"} style={{height: scaleHeight, backgroundColor: pageConfig.backgroundColor}}>
+                    {small_grid()}
+                </div>
+            </>
+        );
+    }
+
     _render() {
         let that = this;
         const store = that.props.store;
@@ -84,26 +110,20 @@ export class Screens extends React.Component<Props, State> {
         const { x: cmx = 0, y: cmy = 0 } = contentPosition;
         const transform = `matrix(1, 0, 0, 1, ${cmx}, ${cmy})`;
         const scaleValue = parseInt(100 * contentScale);
-
+        const position = (100 - scaleValue) / 2;
+        const scaleStyle = { top: `${position}%`, left: `${position}%`, width: `${scaleValue}%`, height: `${scaleValue}%` };
         return (
             <div onWheel={handleWheel} className={"screens"}>
                 <div className={"viewport"} style={{ width, height, minWidth: width, minHeight: height, transform }}>
-                    <div className={"no-zoom-area"} style={{ top: "0%", left: "0%", width: "100%", height: "100%" }}>
-                        <div className={"screen"} style={{ width, height }}>
-                            <div className={"title-label"}>
-                                <span>主页 - 默认状态</span>
-                                <span>{scaleValue + "%"}</span>
-                            </div>
-                        </div>
-                        <div className={"canvas-bg-area"} style={{ width, height }}>
-                            {that.renderBgArea()}
-                        </div>
-                        <div className={"bg-view"} style={{height}}>
-                            {small_grid()}
-                        </div>
+                    <div className={"no-zoom-area"} style={scaleStyle}>
+                        {that.renderToolArea()}
                     </div>
                     <div className={"zoom-area"} style={{ transform: `scale(${contentScale})` }}>
                         {that.renderCanvas()}
+                    </div>
+                    <div className={"no-zoom-area"}  style={scaleStyle}>
+                        <div className="first-page-divider" />
+                        <div className={"fe-canvas"}></div>
                     </div>
                 </div>
             </div>

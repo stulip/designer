@@ -23,7 +23,6 @@
 
     .viewport {
         position: relative;
-        background: #fff;
     }
 
     .title-label {
@@ -216,8 +215,24 @@
         left: 0;
         width: 100%;
 
-        background-color: #ffffff;
         background-image: none;
         background-size: 100%;
     }
+}
+
+
+.first-page-divider {
+    position: absolute;
+    top: 100%;
+    left: -12.5%;
+    width: 125%;
+    border-top: 1px dashed #EB5648;
+    z-index: 1;
+}
+
+.fe-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
 }
