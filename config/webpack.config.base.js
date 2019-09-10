@@ -266,7 +266,7 @@ const rules = [
         },
     },
     {
-        test: /\.js$/,
+        test: /\.(js|jsx)$/,
         // exclude: /(node_modules)/,
         include: RegExp(`(@xt-web|fr-${moduleName})`),
         use: [{
