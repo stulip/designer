@@ -21,16 +21,21 @@ export class Screens extends React.Component<Props, State> {
     renderBgArea() {
         let that = this;
         const store = that.props.store;
-        const { pageConfig } = store;
+        const { main, pageConfig } = store;
+        const { width, height } = main.config.screenSize;
+        const { contentScale } = main.section;
+
+        const topHeight = 44 * contentScale;
+        const bottomHeight = 34 * contentScale;
         return (
             <>
                 <div className={"slider"}>
-                    <span className="is-hh" style={{ height: "44px" }} />
-                    <span className="is-fh" style={{ height: "34px" }} />
-                    <div className="hh" style={{ top: "44px" }}>
+                    <span className="is-hh" style={{ height: topHeight }} />
+                    <span className="is-fh" style={{ height: bottomHeight }} />
+                    <div className="hh" style={{ top: topHeight }}>
                         <img src={sliderImage} />
                     </div>
-                    <div className="fh" style={{ bottom: "34px" }}>
+                    <div className="fh" style={{ bottom: bottomHeight }}>
                         <img src={sliderImage} />
                     </div>
                 </div>
