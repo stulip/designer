@@ -17,11 +17,23 @@ export class ScreensStore {
     pageConfig = {
         // 背景颜色
         backgroundColor: '#fff',
+        // 画布尺寸
+        canvasSize: {width: 0, height: 0}
     };
 
     main: MainStore;
     constructor (main: MainStore){
         this.main = main;
+        const { screenSize } = main.config;
+        this.pageConfig.canvasSize = {...screenSize};
+    }
+
+    /**
+     * 获取canvas的Rect属性
+     * @returns {Element|ClientRect}
+     */
+    getCanvasBoundingRect (){
+        return this.canvasRef.current && this.canvasRef.current.getBoundingClientRect();
     }
 
     /**

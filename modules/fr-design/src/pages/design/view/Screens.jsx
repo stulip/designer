@@ -22,7 +22,7 @@ export class Screens extends React.Component<Props, State> {
         let that = this;
         const store = that.props.store;
         const { main, pageConfig } = store;
-        const { width, height } = main.config.screenSize;
+        const { width, height } = pageConfig.canvasSize;
         const { contentScale } = main.section;
 
         const topHeight = 44 * contentScale;
@@ -67,7 +67,7 @@ export class Screens extends React.Component<Props, State> {
         let that = this;
         const store = that.props.store;
         const { main, canvasRef, pageConfig } = store;
-        const { width, height } = main.config.screenSize;
+        const { width, height } = pageConfig.canvasSize;
         return (
             <div
                 id={"canvas"}
@@ -84,7 +84,7 @@ export class Screens extends React.Component<Props, State> {
         let that = this;
         const store = that.props.store;
         const { main, pageConfig } = store;
-        const { width, height } = main.config.screenSize;
+        const { width, height } = pageConfig.canvasSize;
         const { contentScale } = main.section;
         const scaleValue = parseInt(100 * contentScale);
         const scaleWidth = width * contentScale, scaleHeight = height * contentScale;
@@ -109,9 +109,9 @@ export class Screens extends React.Component<Props, State> {
     _render() {
         let that = this;
         const store = that.props.store;
-        const { main, screenRef, pageConfig } = store;
+        const { main, screenRef, pageConfig, } = store;
         const { contentPosition, handleWheel, contentScale } = main.section;
-        const { width, height } = main.config.screenSize;
+        const { width, height } = pageConfig.canvasSize;
         const { x: cmx = 0, y: cmy = 0 } = contentPosition;
         const transform = `matrix(1, 0, 0, 1, ${cmx}, ${cmy})`;
         const scaleValue = parseInt(100 * contentScale);
@@ -127,7 +127,8 @@ export class Screens extends React.Component<Props, State> {
                         {that.renderCanvas()}
                     </div>
                     <div className={"no-zoom-area"}  style={scaleStyle}>
-                        <div className="first-page-divider" />
+                        {main.config.screenSize.height < height && <div className="first-page-divider"/>}
+
                         <div className={"fe-canvas"}></div>
                     </div>
                 </div>

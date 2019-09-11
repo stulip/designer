@@ -31,14 +31,15 @@ export const zoomScale = {
     }
 };
 
+// 视区按照screen尺寸放大倍数
+export const viewportScale ={ x: 6, y: 3 };
+
 const config = {
     // 层大小(iPhone X)
     screenSize: {
         width: 375,
         height: 812 //812
-    },
-    // 视区按照screen尺寸放大倍数
-    viewportScale: { x: 6, y: 3 }
+    }
 };
 
 export const createConfig = options => {

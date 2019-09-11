@@ -6,7 +6,7 @@
  */
 import { observable, action, computed } from "mobx";
 import type { MainStore } from "./MainStore.flow";
-import { viewMinSize, scrollbarMinWidth, scrollbarThick, zoomScale } from "../config";
+import { viewMinSize, scrollbarMinWidth, scrollbarThick, zoomScale, viewportScale } from "../config";
 import React from "react";
 import { Types } from "@xt-web/core";
 
@@ -40,12 +40,12 @@ export class SectionStore {
     constructor(main: MainStore) {
         let that = this;
         that.main = main;
-        const { screenSize, viewportScale } = main.config;
-        const vpWidth = screenSize.width * viewportScale.x;
-        const vpHeight = screenSize.height * viewportScale.y;
+        const { canvasSize } = main.screens.pageConfig;
+        const vpWidth = canvasSize.width * viewportScale.x;
+        const vpHeight = canvasSize.height * viewportScale.y;
         that.setViewportSize(vpWidth, vpHeight);
 
-        that.rulerShadow = { x: 0, y: 0, width: screenSize.width, height: screenSize.height };
+        that.rulerShadow = { x: 0, y: 0, width: canvasSize.width, height: canvasSize.height };
     }
 
     /**
@@ -60,8 +60,9 @@ export class SectionStore {
             width: Math.max(viewMinSize.width, width),
             height: Math.max(viewMinSize.height, height)
         };
-        if (that.main.screens.canvasRef.current) {
-            const contentRect = that.main.screens.canvasRef.current.getBoundingClientRect();
+
+        const contentRect = that.main.screens.getCanvasBoundingRect();
+        if (contentRect) {
             that.contentRect = {
                 top: contentRect.top - that.contentPosition.y,
                 left: contentRect.left - that.contentPosition.x
@@ -90,13 +91,23 @@ export class SectionStore {
      */
     @action
     setContentScale(scale: number) {
+        let that = this;
         const nextScale = Math.max(
             Math.min(zoomScale.interval[zoomScale.interval.length - 1], scale),
             zoomScale.interval[0]
         );
-        if (this.contentScale !== nextScale) {
-            this.contentScale = nextScale;
-            this.handleRulerPosition();
+
+        if (that.contentScale !== nextScale) {
+            const {canvasSize} = that.main.screens.pageConfig;
+            const baseScale = that.contentScale - nextScale;
+
+            const contentRect = that.main.screens.getCanvasBoundingRect();
+            that.contentRect = {
+                top: contentRect.top - that.contentPosition.y + ( canvasSize.height * baseScale) / 2,
+                left: contentRect.left - that.contentPosition.x + ( canvasSize.width * baseScale) / 2
+            };
+            that.contentScale = nextScale;
+            that.handleRulerPosition();
         }
     }
 
@@ -181,7 +192,6 @@ export class SectionStore {
     handleRulerPosition() {
         let that = this;
 
-        const { screenSize } = that.main.config;
         const canvasRect = {
             top: that.contentPosition.y + that.contentRect.top,
             left: that.contentPosition.x + that.contentRect.left
