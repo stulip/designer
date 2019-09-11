@@ -115,12 +115,27 @@ export class SectionStore {
      * 视区滚轮事件
      * @param {WheelEvent} event
      */
-    handleWheel = event => {
+    handleWheel = (event: WheelEvent) => {
         let that = this;
-        const { deltaY, deltaX } = event;
+        const { deltaY, deltaX, pageX, pageY } = event;
         if (event.ctrlKey || event.metaKey) {
-            const nextScale = parseFloat(Math.max(0.2, that.contentScale - deltaY / 500).toFixed(2));
-            that.setContentScale(nextScale);
+            const {canvasSize} = that.main.screens.pageConfig;
+            // 设置缩放
+            const lastScale = that.contentScale;
+            that.setContentScale(parseFloat((that.contentScale - deltaY / 500).toFixed(2)));
+            const baseScale = lastScale - that.contentScale;
+
+
+            const pxx = pageX - that.contentRect.left;
+            const pyy = pageY - that.contentRect.top;
+            const px = that.contentPosition.x - canvasSize.width * baseScale / 2 + pxx * baseScale / 2;
+            const py = that.contentPosition.y - canvasSize.height * baseScale / 2 + pyy * baseScale / 2;
+
+            // const px = that.contentRect.left + canvasSize.width / 2 - pageX;
+            // const py = that.contentRect.top + canvasSize.height / 2 - pageY;
+
+            // console.log( canvasSize.width * baseScale, pxx / 2 * baseScale);
+            that.setContentPosition(px, py)
         } else {
             const contentY = that.contentPosition.y - deltaY;
             const contentX = that.contentPosition.x - deltaX;
