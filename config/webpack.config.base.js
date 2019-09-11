@@ -282,13 +282,13 @@ const rules = [
             }
         }, "react-hot-loader/webpack", "babel-loader?cacheDirectory=true"]
     },
-    {
-        test: /\.less$/,
-        exclude: /node_modules/,
-        use: cssLoader.concat([
-            require.resolve('less-loader')
-        ])
-    },
+    // {
+    //     test: /\.less$/,
+    //     exclude: /node_modules/,
+    //     use: cssLoader.concat([
+    //         require.resolve('less-loader')
+    //     ])
+    // },
     {
         test: /\.(css|pcss)$/,
         use: cssLoader
