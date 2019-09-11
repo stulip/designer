@@ -20,6 +20,25 @@ type State = {
 
 };
 
+const ZoomItem = ({handleZoom, value})=> (
+    <div>
+        <div className={'zoom'}>
+            <a onClick={()=> handleZoom(1)} className={'icon'}>
+                <IBotSVG name={'minus'} />
+            </a>
+            <a className={'icons'} onDoubleClick={()=> handleZoom(0)}>
+                <div className={'wrapper'}>
+                    <span className={'scale-text'}>{value}%</span>
+                </div>
+                <span>缩放</span>
+            </a>
+            <a onClick={()=> handleZoom(2)}  className={'icon'}>
+                <IBotSVG name={'plus'}/>
+            </a>
+        </div>
+    </div>
+);
+
 @observer
 export class Toolbar extends React.Component<Props, State> {
 
@@ -29,8 +48,9 @@ export class Toolbar extends React.Component<Props, State> {
 
     _render(){
         let that = this;
-        const {main} = that.props.store;
-        const scaleValue = parseInt(100 * main.section.contentScale);
+        const store = that.props.store;
+        const {contentScale} = store.main.section;
+        const scaleValue = parseInt(100 * contentScale);
         return (
             <div className={'ds-toolbar'}>
                 <div className={'left'}>
@@ -58,20 +78,7 @@ export class Toolbar extends React.Component<Props, State> {
                             <span>重做</span>
                         </a>
                     </div>
-                    <div>
-                        <div>
-                            <div className={'zoom'}>
-                                <IBotSVG name={'minus'} className={'icon'}/>
-                                <a className={'icons'}>
-                                    <div className={'wrapper'}>
-                                        <span className={'scale-text'}>{scaleValue}%</span>
-                                    </div>
-                                    <span>缩放</span>
-                                </a>
-                                <IBotSVG name={'plus'} className={'icon'}/>
-                            </div>
-                        </div>
-                    </div>
+                    <ZoomItem handleZoom={store.handleZoom} value={scaleValue}/>
                     <div>
                         <a className={'icons'}>
                             <div className={'wrapper'}>

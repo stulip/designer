@@ -15,7 +15,7 @@ export class SectionStore {
     // 视口大小, 需要计算
     @observable _viewportSize = { width: viewMinSize.width, height: viewMinSize.height };
     // content 缩放倍数
-    @observable contentScale = 1;
+    @observable contentScale = zoomScale.normal;
     // content 尺寸
     @observable contentSize = { width: viewMinSize.width, height: viewMinSize.height };
     // 内容Rect 属性
@@ -90,7 +90,10 @@ export class SectionStore {
      */
     @action
     setContentScale(scale: number) {
-        const nextScale = Math.max(Math.min(zoomScale.max, scale), zoomScale.min);
+        const nextScale = Math.max(
+            Math.min(zoomScale.interval[zoomScale.interval.length - 1], scale),
+            zoomScale.interval[0]
+        );
         if (this.contentScale !== nextScale) {
             this.contentScale = nextScale;
             this.handleRulerPosition();
@@ -253,9 +256,9 @@ export class SectionStore {
         let that = this;
         const { width, height } = that.viewportSize;
         if (!Types.isEmpty(x) && x !== that.scroll.x) {
-            that.setContentPosition(width * 2 * - x + width, that.contentPosition.y);
+            that.setContentPosition(width * 2 * -x + width, that.contentPosition.y);
         } else if (!Types.isEmpty(y) && y !== that.scroll.y) {
-            that.setContentPosition(that.contentPosition.x, height * 2 * - y + height);
+            that.setContentPosition(that.contentPosition.x, height * 2 * -y + height);
         }
     };
 }

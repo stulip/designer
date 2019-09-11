@@ -38,8 +38,7 @@
     "react-router": "^5.0.1",
     "react-router-config": "^5.0.1",
     "react-router-dom": "^5.0.1",
-    "styled-components": "^4.3.2",
-    "fr-art": "latest"
+    "styled-components": "^4.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.6.0",
