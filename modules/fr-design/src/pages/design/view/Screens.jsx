@@ -18,6 +18,17 @@ const sliderImage = require("fr-art/design/slider-arrow.png");
 
 @observer
 export class Screens extends React.Component<Props, State> {
+
+    componentDidMount(): * {
+        const store = this.props.store.main.section;
+        store.wheelRef.current.addEventListener('mousewheel', store.handleWheel, {passive: false});
+    }
+
+    componentWillUnmount(): * {
+        const store = this.props.store.main.section;
+        store.wheelRef.current.removeEventListener('mousewheel', store.handleWheel);
+    }
+
     renderBgArea() {
         let that = this;
         const store = that.props.store;
@@ -110,7 +121,7 @@ export class Screens extends React.Component<Props, State> {
         let that = this;
         const store = that.props.store;
         const { main, screenRef, pageConfig, } = store;
-        const { contentPosition, handleWheel, contentScale } = main.section;
+        const { contentPosition, contentScale, wheelRef } = main.section;
         const { width, height } = pageConfig.canvasSize;
         const { x: cmx = 0, y: cmy = 0 } = contentPosition;
         const transform = `matrix(1, 0, 0, 1, ${cmx}, ${cmy})`;
@@ -118,7 +129,7 @@ export class Screens extends React.Component<Props, State> {
         const position = (100 - scaleValue) / 2;
         const scaleStyle = { top: `${position}%`, left: `${position}%`, width: `${scaleValue}%`, height: `${scaleValue}%` };
         return (
-            <div onWheel={handleWheel} className={"screens"}>
+            <div className={"screens"} ref={wheelRef}>
                 <div className={"viewport"} style={{ width, height, minWidth: width, minHeight: height, transform }}>
                     <div className={"no-zoom-area"} style={scaleStyle}>
                         {that.renderToolArea()}

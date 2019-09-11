@@ -12,6 +12,8 @@ import { Types } from "@xt-web/core";
 
 export class SectionStore {
     sectionRef = React.createRef();
+    wheelRef = React.createRef();
+
     // 视口大小, 需要计算
     @observable _viewportSize = { width: viewMinSize.width, height: viewMinSize.height };
     // content 缩放倍数
@@ -117,6 +119,8 @@ export class SectionStore {
      */
     handleWheel = (event: WheelEvent) => {
         let that = this;
+        event.preventDefault();
+        event.stopPropagation();
         const { deltaY, deltaX, pageX, pageY } = event;
         if (event.ctrlKey || event.metaKey) {
             const {canvasSize} = that.main.screens.pageConfig;
