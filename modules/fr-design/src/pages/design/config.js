@@ -5,7 +5,7 @@
  */
 
 // 视口最小尺寸
-export const viewMinSize = Object.freeze({ width: 600, height: 500 });
+export const viewMinSize = Object.freeze({ width: 100, height: 100 });
 // 滚动条最小长度
 export const scrollbarMinWidth = 100 / 10;
 export const scrollbarThick = 16;

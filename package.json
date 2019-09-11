@@ -1,5 +1,5 @@
 {
-  "name": "react-webpack",
+  "name": "web-design",
   "version": "1.0.1",
   "description": "react webpack",
   "main": "index.js",
@@ -20,7 +20,7 @@
   ],
   "engines": {
     "node": ">=8.3",
-    "yarn": ">=1.10.0"
+    "yarn": ">=1.15.0"
   },
   "dependencies": {
     "@ibot/ibot": "^0.6.0-dev.1",

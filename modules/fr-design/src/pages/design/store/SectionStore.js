@@ -125,20 +125,17 @@ export class SectionStore {
         if (event.ctrlKey || event.metaKey) {
             const {canvasSize} = that.main.screens.pageConfig;
             // 设置缩放
-            const lastScale = that.contentScale;
+            const lastContentRect = that.contentRect;
             that.setContentScale(parseFloat((that.contentScale - deltaY / 500).toFixed(2)));
-            const baseScale = lastScale - that.contentScale;
 
+            const width = canvasSize.width * that.contentScale / 2;
+            const height = canvasSize.height * that.contentScale / 2;
+            const baseRect = {left: that.contentRect.left - lastContentRect.left, top: that.contentRect.top - lastContentRect.top};
 
-            const pxx = pageX - that.contentRect.left;
-            const pyy = pageY - that.contentRect.top;
-            const px = that.contentPosition.x - canvasSize.width * baseScale / 2 + pxx * baseScale / 2;
-            const py = that.contentPosition.y - canvasSize.height * baseScale / 2 + pyy * baseScale / 2;
-
-            // const px = that.contentRect.left + canvasSize.width / 2 - pageX;
-            // const py = that.contentRect.top + canvasSize.height / 2 - pageY;
-
-            // console.log( canvasSize.width * baseScale, pxx / 2 * baseScale);
+            const screenX = pageX - (lastContentRect.left + that.contentPosition.x);
+            const screenY = pageY - (lastContentRect.top + that.contentPosition.y);
+            const px = that.contentPosition.x - baseRect.left * (1 - screenX / width);
+            const py = that.contentPosition.y - baseRect.top * (1 - screenY / height);
             that.setContentPosition(px, py)
         } else {
             const contentY = that.contentPosition.y - deltaY;
