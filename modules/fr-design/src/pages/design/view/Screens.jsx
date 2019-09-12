@@ -21,13 +21,17 @@ const sliderImage = require("fr-art/design/slider-arrow.png");
 export class Screens extends React.Component<Props, State> {
 
     componentDidMount(): * {
-        const store = this.props.store.main.section;
-        store.wheelRef.current.addEventListener('mousewheel', store.handleWheel, {passive: false});
+        const store = this.props.store;
+        if (store.screensRef.current){
+            store.screensRef.current.addEventListener('mousewheel', store.main.section.handleWheel, {passive: false});
+        }
     }
 
     componentWillUnmount(): * {
-        const store = this.props.store.main.section;
-        store.wheelRef.current.removeEventListener('mousewheel', store.handleWheel);
+        const store = this.props.store;
+        if (store.screensRef.current){
+            store.screensRef.current.removeEventListener('mousewheel', store.main.section.handleWheel);
+        }
     }
 
     renderBgArea() {
@@ -121,8 +125,8 @@ export class Screens extends React.Component<Props, State> {
     _render() {
         let that = this;
         const store = that.props.store;
-        const { main, screenRef, pageConfig, } = store;
-        const { contentPosition, contentScale, wheelRef } = main.section;
+        const { main, screenRef, pageConfig, screensRef} = store;
+        const { contentPosition, contentScale } = main.section;
         const { width, height } = pageConfig.canvasSize;
         const { x: cmx = 0, y: cmy = 0 } = contentPosition;
         const transform = `matrix(1, 0, 0, 1, ${cmx}, ${cmy})`;
@@ -130,7 +134,7 @@ export class Screens extends React.Component<Props, State> {
         const position = (100 - scaleValue) / 2;
         const scaleStyle = { top: `${position}%`, left: `${position}%`, width: `${scaleValue}%`, height: `${scaleValue}%` };
         return (
-            <div className={"screens"} ref={wheelRef} onMouseDown={store.handleMouseDown}>
+            <div className={"screens"} ref={screensRef} onMouseDown={store.handleMouseDown}>
                 <div className={"viewport"} style={{ width, height, minWidth: width, minHeight: height, transform }}>
                     <div className={"no-zoom-area"} style={scaleStyle}>
                         {that.renderToolArea()}
@@ -144,7 +148,7 @@ export class Screens extends React.Component<Props, State> {
                         <div className={"fe-canvas"}></div>
                     </div>
                 </div>
-                <RangeSelection position={store.mouseDownPosition} handleMouseUp={store.handleMouseUp}/>
+                <RangeSelection rect={store.rangeBoundRect} handleRect={store.handleRangeBoundRect}/>
             </div>
         );
     }

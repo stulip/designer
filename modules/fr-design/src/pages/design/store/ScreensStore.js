@@ -9,8 +9,10 @@ import type {MainStore} from "./MainStore.flow";
 import React from "react";
 
 export class ScreensStore {
-
+    screensRef = React.createRef();
     canvasRef:{current: Element} = React.createRef();
+
+
 
     // 页面配置信息
     @observable
@@ -21,9 +23,9 @@ export class ScreensStore {
         canvasSize: {width: 0, height: 0}
     };
 
-    // 鼠标按下坐标
+    // 选框矩阵
     @observable
-    mouseDownPosition = null;
+    rangeBoundRect = null;
 
     main: MainStore;
     constructor (main: MainStore){
@@ -51,11 +53,17 @@ export class ScreensStore {
     handleMouseDown = (event: MouseEvent)=> {
         event.stopPropagation();
         event.preventDefault();
-        this.mouseDownPosition = {x: event.pageX, y: event.pageY};
+        this.rangeBoundRect = {x: event.pageX, y: event.pageY, width: 0, height: 0};
     };
 
     @action
-    handleMouseUp = (event: MouseEvent)=> {
-        this.mouseDownPosition = null;
+    handleRangeBoundRect = (rect: Object)=> {
+        let that = this;
+        // if (rect){
+        //     const canvasRect = that.main.section.sectionRect;
+        //     rect.height += canvasRect.y;
+        //     console.log(rect)
+        // }
+        this.rangeBoundRect = rect;
     }
 }

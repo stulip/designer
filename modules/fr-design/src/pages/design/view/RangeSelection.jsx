@@ -8,30 +8,24 @@
 import * as React from "react";
 import { observer } from "mobx-react";
 
-type Props = {
-    position?: MouseEvent,
-    handleMouseUp?: (event: MouseEvent) => void
+type BoundRect = {
+    x: number,
+    y: number,
+    width: number,
+    height: number
 };
+type Props = {
+    rect: BoundRect,
+    handleRect?: (event: MouseEvent) => void
+};
+
 type State = {};
 
 @observer
 export class RangeSelection extends React.PureComponent<Props, State> {
-    state = {
-        position: {x: 0, y: 0},
-        size: {width: 0, height: 0}
-    };
-
     static defaultProps = {
-        handleMouseUp: () => {}
+        handleRect: () => {}
     };
-
-    static getDerivedStateFromProps(props, state) {
-        const position = props.position;
-        if ( position !== state.position){
-            return {position, size: position? state.size: {width: 0, height: 0}}
-        }
-        return null;
-    }
 
     componentDidMount() {
         window.addEventListener("mouseup", this.handleMouseUp);
@@ -43,31 +37,33 @@ export class RangeSelection extends React.PureComponent<Props, State> {
         window.removeEventListener("mousemove", this.handleMouseMove);
     }
 
-
     handleMouseUp = (event: MouseEvent) => {
-        let that = this;
-        that.props.handleMouseUp();
+        this.props.handleRect();
     };
 
     handleMouseMove = (event: MouseEvent) => {
         let that = this;
-        const {position} = that.state;
-        if ( !position) return;
-        const {pageX, pageY} = event;
-        const size = {
-            width: Math.abs(pageX - position.x),
-            height: Math.abs(pageY - position.y)
+        const { rect: propsRect } = that.props;
+        if (!propsRect) return;
+
+        const { pageX, pageY } = event;
+        const {x, y} = propsRect;
+        const rect = {
+            x: x,
+            y: y,
+            width: Math.abs(pageX - x),
+            height: Math.abs(pageY - y)
         };
-        console.log(size);
-        that.setState({size});
+        console.log(document.querySelector(".range-selection").getBoundingClientRect());
+        // console.log(rect);
+        this.props.handleRect(rect);
     };
 
     render() {
-        let that = this;
-        const { size} = that.state;
-        const position = that.state.position || {x: 0, y: 0};
-        const rangeStyle = { top: position.y, left: position.x, width: size.width, height: size.height };
-        // return !size.width || !size.width && <div className={"range-selection"} style={rangeStyle}/>;
-        return  <div className={"range-selection"} style={rangeStyle}/>;
+        const {rect} = this.props;
+        if ( !rect) return null;
+
+        const rangeStyle = { top: rect.y, left: rect.x, width: rect.width, height: rect.height };
+        return <div className={"range-selection"} style={rangeStyle} />;
     }
 }

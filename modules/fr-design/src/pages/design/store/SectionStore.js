@@ -12,7 +12,6 @@ import { Types } from "@xt-web/core";
 
 export class SectionStore {
     sectionRef = React.createRef();
-    wheelRef = React.createRef();
 
     // 视口大小, 需要计算
     @observable _viewportSize = { width: viewMinSize.width, height: viewMinSize.height };
