@@ -121,28 +121,45 @@ export class SectionStore {
         let that = this;
         event.preventDefault();
         event.stopPropagation();
+
         const { deltaY, deltaX, pageX, pageY } = event;
         if (event.ctrlKey || event.metaKey) {
-            const {canvasSize} = that.main.screens.pageConfig;
-            // 设置缩放
-            const lastContentRect = that.contentRect;
-            that.setContentScale(parseFloat((that.contentScale - deltaY / 500).toFixed(2)));
-
-            const width = canvasSize.width * that.contentScale / 2;
-            const height = canvasSize.height * that.contentScale / 2;
-            const baseRect = {left: that.contentRect.left - lastContentRect.left, top: that.contentRect.top - lastContentRect.top};
-
-            const screenX = pageX - (lastContentRect.left + that.contentPosition.x);
-            const screenY = pageY - (lastContentRect.top + that.contentPosition.y);
-            const px = that.contentPosition.x - baseRect.left * (1 - screenX / width);
-            const py = that.contentPosition.y - baseRect.top * (1 - screenY / height);
-            that.setContentPosition(px, py)
+            that.handleWheelScale(event);
         } else {
+            // 滚轮调整坐标
             const contentY = that.contentPosition.y - deltaY;
             const contentX = that.contentPosition.x - deltaX;
             that.setContentPosition(contentX, contentY);
         }
     };
+
+    /**
+     * 滚轮缩放
+     * @param {WheelEvent} event
+     */
+    handleWheelScale (event: WheelEvent){
+        let that = this;
+        const { deltaY, deltaX, pageX, pageY } = event;
+        const {canvasSize} = that.main.screens.pageConfig;
+        // 设置缩放
+        const lastContentRect = that.contentRect, lastScale = that.contentScale;
+        that.setContentScale(parseFloat((that.contentScale - deltaY / 500).toFixed(2)));
+        const baseScale = lastScale - that.contentScale;
+
+        const cutWidth = canvasSize.width * baseScale / 2;
+        const cutHeight = canvasSize.height * baseScale / 2;
+        if ( !cutWidth || !cutHeight) return;
+
+        const screenX = pageX - (lastContentRect.left + that.contentPosition.x );
+        const screenY = pageY - (lastContentRect.top + that.contentPosition.y);
+
+        const width = canvasSize.width * lastScale / 2;
+        const height = canvasSize.height * lastScale / 2;
+
+        const contentX = that.contentPosition.x - cutWidth * (1 - screenX / width);
+        const contentY = that.contentPosition.y - cutHeight* (1 - screenY / height);
+        that.setContentPosition(contentX, contentY)
+    }
 
     /**
      * 标尺原点点击事件
