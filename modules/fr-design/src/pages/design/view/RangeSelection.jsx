@@ -1,5 +1,5 @@
 /**
- *
+ * 矩形选框
  * @author tangzehua
  * @sine 2019-09-12 16:48
  */
@@ -12,7 +12,9 @@ type BoundRect = {
     x: number,
     y: number,
     width: number,
-    height: number
+    height: number,
+    originX: number,
+    originY: number
 };
 type Props = {
     rect: BoundRect,
@@ -47,21 +49,24 @@ export class RangeSelection extends React.PureComponent<Props, State> {
         if (!propsRect) return;
 
         const { pageX, pageY } = event;
-        const {x, y} = propsRect;
+        const { originX, originY } = propsRect;
+        const width = Math.abs(pageX - originX);
+        const height = Math.abs(pageY - originY);
+
         const rect = {
-            x: x,
-            y: y,
-            width: Math.abs(pageX - x),
-            height: Math.abs(pageY - y)
+            x: pageX < originX ? originX - width : originX,
+            y: pageY < originY ? originY - height : originY,
+            originX,
+            originY,
+            width,
+            height
         };
-        console.log(document.querySelector(".range-selection").getBoundingClientRect());
-        // console.log(rect);
-        this.props.handleRect(rect);
+        that.props.handleRect(rect);
     };
 
     render() {
-        const {rect} = this.props;
-        if ( !rect) return null;
+        const { rect } = this.props;
+        if (!rect) return null;
 
         const rangeStyle = { top: rect.y, left: rect.x, width: rect.width, height: rect.height };
         return <div className={"range-selection"} style={rangeStyle} />;

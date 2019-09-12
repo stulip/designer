@@ -4,23 +4,21 @@
  * @author tangzehua
  * @sine 2019-09-05 10:44
  */
-import {observable, action, computed} from 'mobx';
-import type {MainStore} from "./MainStore.flow";
+import { observable, action, computed } from "mobx";
+import type { MainStore } from "./MainStore.flow";
 import React from "react";
 
 export class ScreensStore {
     screensRef = React.createRef();
-    canvasRef:{current: Element} = React.createRef();
-
-
+    canvasRef: { current: Element } = React.createRef();
 
     // 页面配置信息
     @observable
     pageConfig = {
         // 背景颜色
-        backgroundColor: '#fff',
+        backgroundColor: "#fff",
         // 画布尺寸
-        canvasSize: {width: 0, height: 0}
+        canvasSize: { width: 0, height: 0 }
     };
 
     // 选框矩阵
@@ -28,42 +26,41 @@ export class ScreensStore {
     rangeBoundRect = null;
 
     main: MainStore;
-    constructor (main: MainStore){
+    constructor(main: MainStore) {
         this.main = main;
         const { screenSize } = main.config;
-        this.pageConfig.canvasSize = {...screenSize};
+        this.pageConfig.canvasSize = { ...screenSize };
     }
 
     /**
      * 获取canvas的Rect属性
      * @returns {Element|ClientRect}
      */
-    getCanvasBoundingRect (){
+    getCanvasBoundingRect() {
         return this.canvasRef.current && this.canvasRef.current.getBoundingClientRect();
     }
 
     /**
      * 背景颜色设置(事件)
      */
-    handleBackgroundColor = ()=> {
-
-    };
+    handleBackgroundColor = () => {};
 
     @action
-    handleMouseDown = (event: MouseEvent)=> {
+    handleMouseDown = (event: MouseEvent) => {
         event.stopPropagation();
         event.preventDefault();
-        this.rangeBoundRect = {x: event.pageX, y: event.pageY, width: 0, height: 0};
+        this.rangeBoundRect = {
+            x: event.pageX,
+            y: event.pageY,
+            originX: event.pageX,
+            originY: event.pageY,
+            width: 0,
+            height: 0,
+        };
     };
 
     @action
-    handleRangeBoundRect = (rect: Object)=> {
-        let that = this;
-        // if (rect){
-        //     const canvasRect = that.main.section.sectionRect;
-        //     rect.height += canvasRect.y;
-        //     console.log(rect)
-        // }
+    handleRangeBoundRect = (rect: Object) => {
         this.rangeBoundRect = rect;
-    }
+    };
 }
