@@ -111,7 +111,7 @@ export class Screens extends React.Component<Props, State> {
                     {that.renderBgArea()}
                 </div>
                 <div className={"bg-view"} style={{height: scaleHeight, backgroundColor: pageConfig.backgroundColor}}>
-                    {small_grid()}
+                    {small_grid(contentScale)}
                 </div>
             </>
         );
