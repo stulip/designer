@@ -21,6 +21,10 @@ export class ScreensStore {
         canvasSize: {width: 0, height: 0}
     };
 
+    // 鼠标按下坐标
+    @observable
+    mouseDownPosition = null;
+
     main: MainStore;
     constructor (main: MainStore){
         this.main = main;
@@ -41,5 +45,17 @@ export class ScreensStore {
      */
     handleBackgroundColor = ()=> {
 
+    };
+
+    @action
+    handleMouseDown = (event: MouseEvent)=> {
+        event.stopPropagation();
+        event.preventDefault();
+        this.mouseDownPosition = {x: event.pageX, y: event.pageY};
+    };
+
+    @action
+    handleMouseUp = (event: MouseEvent)=> {
+        this.mouseDownPosition = null;
     }
 }

@@ -24,9 +24,12 @@ export class Section extends React.Component<Props, State> {
     };
 
     componentDidMount() {
-        let win = this.iframe.contentWindow;
-        win.onresize = this.resize;
-        this.setContentSize(win);
+        let that = this;
+        const store = this.props.store;
+        let win = that.iframe.contentWindow;
+        win.onresize = that.resize;
+        that.setContentSize(win);
+        // store.sectionRef.current.addEventListener()
     }
 
     setContentSize(win: window) {
@@ -39,7 +42,7 @@ export class Section extends React.Component<Props, State> {
         const that = this;
         const store = this.props.store;
         return (
-            <section className={"art-board"} ref={store.sectionRef}>
+            <section className={"art-board"} ref={store.sectionRef} onMouseDown={store.handleMouseDown}>
                 <div className={"prev-page float-btn dark"}>
                     <IBotIcon type={"dora"} name={"arrow_up"} />
                     <span>返回工作区</span>

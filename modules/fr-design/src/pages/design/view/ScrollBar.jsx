@@ -34,12 +34,12 @@ export class ScrollBar extends React.PureComponent<Props> {
         super(props);
     }
 
-    componentDidMount() {
+    mountListener (){
         window.addEventListener("mouseup", this.handleMouseUp);
         window.addEventListener("mousemove", this.handleMouseMove);
     }
 
-    componentWillUnmount() {
+    unmountListener (){
         window.removeEventListener("mouseup", this.handleMouseUp);
         window.removeEventListener("mousemove", this.handleMouseMove);
     }
@@ -50,6 +50,7 @@ export class ScrollBar extends React.PureComponent<Props> {
             that._mouseDown = SCROLL_TYPE.X;
             const barHX = that.xhRef.getBoundingClientRect();
             that._mouseOffset = event.pageX - barHX.left;
+            that.mountListener();
         }
     };
 
@@ -59,6 +60,7 @@ export class ScrollBar extends React.PureComponent<Props> {
             that._mouseDown = SCROLL_TYPE.Y;
             const barHY = that.yhRef.getBoundingClientRect();
             that._mouseOffset = event.pageY - barHY.top;
+            that.mountListener();
         }
     };
 
@@ -66,6 +68,7 @@ export class ScrollBar extends React.PureComponent<Props> {
         let that = this;
         that._mouseDown = 0;
         that._mouseOffset = 0;
+        that.unmountListener();
     };
 
     handleMouseMove = (event: MouseEvent) => {

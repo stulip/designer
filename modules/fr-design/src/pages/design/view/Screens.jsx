@@ -11,6 +11,7 @@ import { observer } from "mobx-react";
 import { ScreensStore } from "../store/ScreensStore";
 import { IBotTooltip, IBotIcon } from "fr-web";
 import { small_grid } from "./svg";
+import {RangeSelection} from "./RangeSelection";
 type Props = { store: ScreensStore };
 type State = {};
 
@@ -129,7 +130,7 @@ export class Screens extends React.Component<Props, State> {
         const position = (100 - scaleValue) / 2;
         const scaleStyle = { top: `${position}%`, left: `${position}%`, width: `${scaleValue}%`, height: `${scaleValue}%` };
         return (
-            <div className={"screens"} ref={wheelRef}>
+            <div className={"screens"} ref={wheelRef} onMouseDown={store.handleMouseDown}>
                 <div className={"viewport"} style={{ width, height, minWidth: width, minHeight: height, transform }}>
                     <div className={"no-zoom-area"} style={scaleStyle}>
                         {that.renderToolArea()}
@@ -143,6 +144,7 @@ export class Screens extends React.Component<Props, State> {
                         <div className={"fe-canvas"}></div>
                     </div>
                 </div>
+                <RangeSelection position={store.mouseDownPosition} handleMouseUp={store.handleMouseUp}/>
             </div>
         );
     }
