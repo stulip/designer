@@ -42,7 +42,7 @@ export class Section extends React.Component<Props, State> {
         const that = this;
         const store = this.props.store;
         return (
-            <section className={"art-board"} ref={store.sectionRef} onMouseDown={store.handleMouseDown}>
+            <section className={"art-board"} ref={store.sectionRef}>
                 <div className={"prev-page float-btn dark"}>
                     <IBotIcon type={"dora"} name={"arrow_up"} />
                     <span>返回工作区</span>

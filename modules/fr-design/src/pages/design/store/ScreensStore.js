@@ -12,15 +12,6 @@ export class ScreensStore {
     screensRef = React.createRef();
     canvasRef: { current: Element } = React.createRef();
 
-    // 页面配置信息
-    @observable
-    pageConfig = {
-        // 背景颜色
-        backgroundColor: "#fff",
-        // 画布尺寸
-        canvasSize: { width: 0, height: 0 }
-    };
-
     // 选框矩阵
     @observable
     rangeBoundRect = null;
@@ -28,8 +19,6 @@ export class ScreensStore {
     main: MainStore;
     constructor(main: MainStore) {
         this.main = main;
-        const { screenSize } = main.config;
-        this.pageConfig.canvasSize = { ...screenSize };
     }
 
     /**
@@ -63,5 +52,6 @@ export class ScreensStore {
     @action
     handleRangeBoundRect = (rect: Object) => {
         this.rangeBoundRect = rect;
+        rect && console.log(rect.x, rect.y, rect.width, rect.height)
     };
 }

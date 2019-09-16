@@ -35,8 +35,13 @@ export const zoomScale = {
 export const viewportScale ={ x: 6, y: 3 };
 
 const config = {
-    // 层大小(iPhone X)
+    // 层大小, 画布(iPhone X)
     screenSize: {
+        width: 375,
+        height: 812 //812
+    },
+    // 驱动尺寸大小(iPhone X)
+    deviceSize: {
         width: 375,
         height: 812 //812
     }

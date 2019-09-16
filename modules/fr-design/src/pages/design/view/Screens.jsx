@@ -37,9 +37,9 @@ export class Screens extends React.Component<Props, State> {
     renderBgArea() {
         let that = this;
         const store = that.props.store;
-        const { main, pageConfig } = store;
-        const { width, height } = pageConfig.canvasSize;
-        const { contentScale } = main.section;
+        const { main } = store;
+        const { contentScale, canvasRect } = main.section;
+        const { width, height } = canvasRect;
 
         const topHeight = 44 * contentScale;
         const bottomHeight = 34 * contentScale;
@@ -70,7 +70,7 @@ export class Screens extends React.Component<Props, State> {
                     <IBotTooltip content={"设置背景颜色"} position={"bottom"}>
                         <a
                             className={"sbgcolor"}
-                            style={{ backgroundColor: pageConfig.backgroundColor }}
+                            style={{ backgroundColor: main.pageConfig.backgroundColor }}
                             onClick={store.handleBackgroundColor}
                         />
                     </IBotTooltip>
@@ -82,8 +82,8 @@ export class Screens extends React.Component<Props, State> {
     renderCanvas() {
         let that = this;
         const store = that.props.store;
-        const { main, canvasRef, pageConfig } = store;
-        const { width, height } = pageConfig.canvasSize;
+        const { main, canvasRef } = store;
+        const { width, height } = main.section.canvasRect;
         return (
             <div
                 id={"canvas"}
@@ -99,9 +99,9 @@ export class Screens extends React.Component<Props, State> {
     renderToolArea() {
         let that = this;
         const store = that.props.store;
-        const { main, pageConfig } = store;
-        const { width, height } = pageConfig.canvasSize;
-        const { contentScale } = main.section;
+        const { main } = store;
+        const { contentScale, canvasRect } = main.section;
+        const { width, height } = canvasRect;
         const scaleValue = parseInt(100 * contentScale);
         const scaleWidth = width * contentScale, scaleHeight = height * contentScale;
         return (
@@ -115,7 +115,7 @@ export class Screens extends React.Component<Props, State> {
                 <div className={"canvas-bg-area"} style={{ width: scaleWidth, height: scaleHeight }}>
                     {that.renderBgArea()}
                 </div>
-                <div className={"bg-view"} style={{height: scaleHeight, backgroundColor: pageConfig.backgroundColor}}>
+                <div className={"bg-view"} style={{height: scaleHeight, backgroundColor: main.pageConfig.backgroundColor}}>
                     {small_grid(contentScale)}
                 </div>
             </>
@@ -125,11 +125,10 @@ export class Screens extends React.Component<Props, State> {
     _render() {
         let that = this;
         const store = that.props.store;
-        const { main, screenRef, pageConfig, screensRef} = store;
-        const { contentPosition, contentScale } = main.section;
-        const { width, height } = pageConfig.canvasSize;
-        const { x: cmx = 0, y: cmy = 0 } = contentPosition;
-        const transform = `matrix(1, 0, 0, 1, ${cmx}, ${cmy})`;
+        const { main, screenRef, screensRef} = store;
+        const { canvasRect, contentScale } = main.section;
+        const { width, height } = canvasRect;
+        const transform = `matrix(1, 0, 0, 1, ${canvasRect.x}, ${canvasRect.y})`;
         const scaleValue = parseInt(100 * contentScale);
         const position = (100 - scaleValue) / 2;
         const scaleStyle = { top: `${position}%`, left: `${position}%`, width: `${scaleValue}%`, height: `${scaleValue}%` };
@@ -143,7 +142,7 @@ export class Screens extends React.Component<Props, State> {
                         {that.renderCanvas()}
                     </div>
                     <div className={"no-zoom-area"}  style={scaleStyle}>
-                        {main.config.screenSize.height < height && <div className="first-page-divider"/>}
+                        {main.config.deviceSize.height < height && <div className="first-page-divider"/>}
 
                         <div className={"fe-canvas"}></div>
                     </div>
