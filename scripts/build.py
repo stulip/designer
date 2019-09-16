@@ -22,6 +22,8 @@ ignore_module = {
     "all": ['test'],
     "release": ['test'],
 }
+# 默认debug模块
+debug_module = "web"
 # 编译脚本
 build_web = utils.get_path("scripts/build.js")
 zip_dir = os.path.join('dist', '.zip')
@@ -40,6 +42,7 @@ def parse_args(argv):
     parser.add_argument("-r", "--release", dest="release", action="store_true", help="编译正式版(ZIP)",
                         default=0)
     parser.add_argument("-a", "--all", dest="all", action="store_true", help="编译所有模块")
+    parser.add_argument("-d", "--dev", dest="dev", action="store_true", help="编译DEV版本")
     parser.add_argument("-b", "--block", dest="block", action="store", default="dev",
                         help="模块配置名称(默认:base), 编译CORE的时候需要")
     parser.add_argument("-yu", "--yarn_upgrade", dest="yarn_upgrade", action="store_true",
@@ -47,17 +50,14 @@ def parse_args(argv):
     parser.add_argument("-f", "--force", dest="force", action="store_true", help="-g = true时强制更新代码")
 
     (args, unkonw) = parser.parse_known_args(argv)
+    args.module = len(unkonw) > 1 and unkonw[1] or (args.dev and debug_module or None)
     return args
 
 
 def start(argv, args):
     if 'help' in args:
         return
-    module = None
-    if len(argv) > 1:
-        module = argv[1]
-
-    # print(args.release)
+    module = args.module
     config = utils.read_json(utils.get_path('config/config.json5'))
     if module is None or args.all or args.release:
         if args.release:
@@ -70,8 +70,8 @@ def start(argv, args):
                 continue
 
             print("\033[0;34m⬡ webpack:\033[0m 编译模块 %s" % str(mo_name).upper())
-            commend = 'node %s --module %s --progress false --block %s --release %s' % (
-            build_web, mo_name, args.block, args.release)
+            commend = 'node %s --module %s --progress false --block %s --release %s --dev %s' % (
+            build_web, mo_name, args.block, args.release, args.dev)
             thread_start(build_js, (mo_name, commend,))
         thread_sleep()
         for name in error_module:
@@ -136,8 +136,8 @@ def build_module(args, module):
         if stat != 0:
             raise Exception("安装模块 %s 依赖失败!" % module.upper())
     progress = args.git and 'false' or 'true'
-    commend = 'node %s --module %s --progress %s --block %s' % (
-    build_web, module, progress, args.block)
+    commend = 'node %s --module %s --progress %s --block %s --dev %s' % (
+    build_web, module, progress, args.block, args.dev)
     stat = subprocess.call(commend, shell=True)
     if stat != 0:
         raise Exception("编译模块 %s 失败!" % module.upper())

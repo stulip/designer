@@ -15,6 +15,8 @@ const configData = require('./config.json5');
 const argv = require('yargs').argv;
 const NODE_ENV = argv.mode || process.env.NODE_ENV || 'development';
 const isDebug = NODE_ENV !== 'production';
+const isDev = argv.dev;
+const libName = isDev? "development": "production";
 
 // 模块名称
 const moduleName = argv.module;
@@ -23,6 +25,7 @@ const moduleRoot = "modules";
 //CDN 配置
 const config = {
     isDebug,
+    isDev,
     moduleRoot,
     isRelease: !!argv.release,
     proxy: configData.proxy,
@@ -41,7 +44,7 @@ const config = {
     libsName: 'libs',
     libs: {
         name: 'libs',
-        min: isDebug ? '' : '.min',
+        min: isDev ? '' : '.min',
     },
     externals: {
         // jquery: 'jQuery',
@@ -87,18 +90,18 @@ config.libs.cdn = {
     //     to: moduleConfig.CDNPath,
     // },
     react: {
-        name: `react.${NODE_ENV}${config.libs.min}.js`,
+        name: `react.${libName}${config.libs.min}.js`,
         from: 'node_modules/react/umd',
         to: config.libs.name,
     },
     reactDom: {
-        name: `react-dom.${NODE_ENV}${config.libs.min}.js`,
+        name: `react-dom.${libName}${config.libs.min}.js`,
         // from: 'node_modules/react-dom/umd',
-        from: isDebug ? 'node_modules/@hot-loader/react-dom/umd' : 'node_modules/react-dom/umd',
+        from: isDev ? 'node_modules/@hot-loader/react-dom/umd' : 'node_modules/react-dom/umd',
         to: config.libs.name,
     },
     reactIs: {
-        name: `react-is.${NODE_ENV}${config.libs.min}.js`,
+        name: `react-is.${libName}${config.libs.min}.js`,
         from: 'node_modules/react-is/umd',
         to: config.libs.name,
     },
@@ -150,7 +153,7 @@ const cssLoader = [
     {
         loader: MiniCssExtractPlugin.loader,
         options: {
-            hmr: process.env.NODE_ENV === 'development',
+            hmr: isDebug,
             // if hmr does not work, this is a forceful method.
             // reloadAll: true,
         }
