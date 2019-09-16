@@ -140,7 +140,7 @@ export class SectionStore {
         let that = this;
         const { deltaY, deltaX, pageX, pageY } = event;
         // 设置缩放
-        const lastContentRect = that.canvasRect, lastScale = that.contentScale;
+        const lastContentRect = {...that.canvasRect}, lastScale = that.contentScale;
         that.setContentScale(parseFloat((that.contentScale - deltaY / 500).toFixed(2)));
         const baseScale = lastScale - that.contentScale;
 
