@@ -17,15 +17,13 @@ export class SectionStore {
     // content 缩放倍数
     @observable contentScale = zoomScale.normal;
     // 画布矩阵
-    @observable canvasRect = {width: 0, height: 0, x: 0, y: 0};
+    @observable canvasRect = {width: 0, height: 0, x: 0, y: 0, top: 0, left: 0};
     // content 尺寸
     @observable contentSize = { width: viewMinSize.width, height: viewMinSize.height };
-    // 内容Rect 属性
-    contentRect = {};
     // 视口Rect 属性
     sectionRect = {};
-    // scroll bar 位置
-    @observable scroll = { x: 0.5, y: 0.5 };
+    // scrollPosition bar 位置
+    @observable scrollPosition = { x: 0.5, y: 0.5 };
 
     // 标尺坐标
     @observable rulerPosition = { x: 0, y: 0 };
@@ -34,7 +32,7 @@ export class SectionStore {
     // 是否显示标尺辅助线
     @observable isShowReferLine = true;
     // 标尺标注尺寸
-    rulerShadow = { x: 0, y: 0, width: viewMinSize.width, height: viewMinSize.height };
+    @observable rulerShadow = { x: 0, y: 0, width: viewMinSize.width, height: viewMinSize.height };
 
     main: MainStore;
     constructor(main: MainStore) {
@@ -71,10 +69,8 @@ export class SectionStore {
 
         const contentRect = that.main.screens.getCanvasBoundingRect();
         if (contentRect) {
-            that.contentRect = {
-                top: contentRect.top - that.canvasRect.y,
-                left: contentRect.left - that.canvasRect.x
-            };
+            that.canvasRect.top = contentRect.top - that.canvasRect.y;
+            that.canvasRect.left = contentRect.left - that.canvasRect.x;
             that.sectionRect = that.sectionRef.current.getBoundingClientRect();
         }
         that.handleRulerPosition();
@@ -109,10 +105,8 @@ export class SectionStore {
             const baseScale = that.contentScale - nextScale;
 
             const contentRect = that.main.screens.getCanvasBoundingRect();
-            that.contentRect = {
-                top: contentRect.top - that.canvasRect.y + ( that.canvasRect.height * baseScale) / 2,
-                left: contentRect.left - that.canvasRect.x + ( that.canvasRect.width * baseScale) / 2
-            };
+            that.canvasRect.left = contentRect.left - that.canvasRect.x + ( that.canvasRect.width * baseScale) / 2;
+            that.canvasRect.top = contentRect.top - that.canvasRect.y + ( that.canvasRect.height * baseScale) / 2;
             that.contentScale = nextScale;
             that.handleRulerPosition();
         }
@@ -132,7 +126,9 @@ export class SectionStore {
             that.handleWheelScale(event);
         } else {
             // 滚轮调整画布坐标
-            that.setCanvasPosition(that.canvasRect.x - deltaX, that.canvasRect.y - deltaY);
+            const canvasX = that.canvasRect.x - deltaX;
+            const canvasY = that.canvasRect.y - deltaY;
+            that.setCanvasPosition(canvasX, canvasY);
         }
     };
 
@@ -144,7 +140,7 @@ export class SectionStore {
         let that = this;
         const { deltaY, deltaX, pageX, pageY } = event;
         // 设置缩放
-        const lastContentRect = that.contentRect, lastScale = that.contentScale;
+        const lastContentRect = that.canvasRect, lastScale = that.contentScale;
         that.setContentScale(parseFloat((that.contentScale - deltaY / 500).toFixed(2)));
         const baseScale = lastScale - that.contentScale;
 
@@ -193,8 +189,8 @@ export class SectionStore {
      */
     @action
     setScrollPosition(x: number, y: number) {
-        this.scroll.x = Math.max(Math.min(1, x || 0), 0);
-        this.scroll.y = Math.max(Math.min(1, y || 0), 0);
+        this.scrollPosition.x = Math.max(Math.min(1, x || 0), 0);
+        this.scrollPosition.y = Math.max(Math.min(1, y || 0), 0);
     }
 
     /**
@@ -240,8 +236,8 @@ export class SectionStore {
         let that = this;
 
         const canvasPosition = {
-            y: that.canvasRect.y + that.contentRect.top,
-            x: that.canvasRect.x + that.contentRect.left
+            y: that.canvasRect.y + that.canvasRect.top,
+            x: that.canvasRect.x + that.canvasRect.left
         };
         const sectionRect = that.sectionRect;
 
@@ -323,9 +319,9 @@ export class SectionStore {
     handleScrollBarMove = ({ x, y }) => {
         let that = this;
         const { width, height } = that.viewportSize;
-        if (!Types.isEmpty(x) && x !== that.scroll.x) {
+        if (!Types.isEmpty(x) && x !== that.scrollPosition.x) {
             that.setCanvasPosition(width * 2 * -x + width, that.canvasRect.y);
-        } else if (!Types.isEmpty(y) && y !== that.scroll.y) {
+        } else if (!Types.isEmpty(y) && y !== that.scrollPosition.y) {
             that.setCanvasPosition(that.canvasRect.x, height * 2 * -y + height);
         }
     };

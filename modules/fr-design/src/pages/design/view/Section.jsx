@@ -53,8 +53,8 @@ export class Section extends React.Component<Props, State> {
                 </div>
                 <Rules store={store} />
                 <ScrollBar
-                    x={store.scroll.x}
-                    y={store.scroll.y}
+                    x={store.scrollPosition.x}
+                    y={store.scrollPosition.y}
                     size={store.scrollBarSize}
                     handleBarMove={store.handleScrollBarMove}
                 />
