@@ -216,13 +216,6 @@ export class SectionStore {
             that.canvasRect.width = nextWidth;
             that.canvasRect.height = nextHeight;
 
-            // 计算画布边距
-            const canvasRect = that.main.screens.getCanvasBoundingRect();
-            if (canvasRect) {
-                that.canvasRect.top = canvasRect.top - that.canvasRect.y + (lastHeight - nextHeight) / 2;
-                that.canvasRect.left = canvasRect.left - that.canvasRect.x + (lastWidth - nextWidth) / 2;
-            }
-
             that.setRulerShadow(0, 0, nextWidth, nextHeight);
             that.handleRulerPosition();
         }
@@ -271,18 +264,9 @@ export class SectionStore {
      */
     adjustCanvasSize(deltaWidth: number, deltaHeight: number) {
         let that = this;
-        const lastWidth = that.canvasRect.width;
-        const lastHeight = that.canvasRect.height;
-        const width = deltaWidth + lastWidth;
-        const height = deltaHeight + lastHeight;
+        const width = deltaWidth + that.canvasRect.width;
+        const height = deltaHeight + that.canvasRect.height;
         that.setCanvasSize(width, height);
-
-        // 需要调整位置
-        if (lastWidth !== that.canvasRect.width || lastHeight !== that.canvasRect.height) {
-            const positionX = that.canvasRect.x + (that.canvasRect.width - lastWidth) / 2;
-            const positionY = that.canvasRect.y + (that.canvasRect.height - lastHeight) / 2;
-            that.setCanvasPosition(positionX, positionY);
-        }
     }
 
     /**

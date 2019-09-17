@@ -119,13 +119,14 @@ export class Screens extends React.Component<Props, State> {
         const { main, screenRef, screensRef} = store;
         const { canvasRect, canvasScale } = main.section;
         const { width, height } = canvasRect;
+        const {deviceSize} = main.config;
         const transform = `matrix(1, 0, 0, 1, ${canvasRect.x}, ${canvasRect.y})`;
         const scaleValue = parseInt(100 * canvasScale);
         const position = (100 - scaleValue) / 2;
         const scaleStyle = { top: `${position}%`, left: `${position}%`, width: `${scaleValue}%`, height: `${scaleValue}%` };
         return (
             <div className={"screens"} ref={screensRef} onMouseDown={store.handleMouseDown}>
-                <div className={"viewport"} style={{ width, height, minWidth: width, minHeight: height, transform }}>
+                <div className={"viewport"} style={{ width: deviceSize.width, height: deviceSize.height, minWidth: deviceSize.width, minHeight: deviceSize.height, transform }}>
                     <div className={"no-zoom-area"} style={scaleStyle}>
                         {that.renderToolArea()}
                     </div>
@@ -133,7 +134,7 @@ export class Screens extends React.Component<Props, State> {
                         {that.renderCanvas()}
                     </div>
                     <div className={"no-zoom-area"}  style={scaleStyle}>
-                        {main.config.deviceSize.height < height && <div className="first-page-divider"/>}
+                        {deviceSize.height < height && <div className="first-page-divider"/>}
 
                         <div className={"fe-canvas"}></div>
                     </div>
