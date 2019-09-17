@@ -30,6 +30,7 @@ export class AdjustSizeCanvas extends React.PureComponent<Props, State> {
 
     constructor(props) {
         super(props);
+        this.resizeYRef = React.createRef();
         this.originPosition = { x: 0, y: 0, originX: 0, originY: 0 };
         this.state = {
             isMove: false,
@@ -55,18 +56,20 @@ export class AdjustSizeCanvas extends React.PureComponent<Props, State> {
         event.stopPropagation();
         event.preventDefault();
         if (event.button !== 0) return;
-        const {pageY, pageX, target} = event;
-        const {left, top, width, height} = target.getBoundingClientRect();
-        this.setState({isMove: true});
-        this.addListener();
-        this.originPosition = { x: pageX, y: pageY, originX: left, originY: top };
+        const {pageY, pageX} = event;
+        let that = this;
+
+        const {left, top,} = that.resizeYRef.current.getBoundingClientRect();
+        that.setState({isMove: true});
+        that.addListener();
+        that.originPosition = { x: pageX, y: pageY, originX: left + 4, originY: top + 4 };
     };
 
     handleMouseMove = (event: MouseEvent) => {
         let that = this;
         if ( !that.state.isMove) return;
         const {direction} = that.props;
-        const { pageX, pageY, target } = event;
+        const { pageX, pageY} = event;
         const { x, y, originX, originY} = that.originPosition;
 
         let deltaX = 0, deltaY = 0;
@@ -78,9 +81,10 @@ export class AdjustSizeCanvas extends React.PureComponent<Props, State> {
             deltaX = pageX - x;
             deltaY = pageY - y;
         }
-        that.originPosition = { x: pageX, y: pageY, originX: originX + deltaX, originY:originY + deltaY };
+        const {left, top} = that.resizeYRef.current.getBoundingClientRect();
+        that.originPosition = { x: pageX, y: pageY, originX: left + 4, originY:top + 4};
 
-        if (deltaY < 0 && originY > pageY || deltaX > 0 && originX > pageX){
+        if (deltaY > 0 && originY > pageY || deltaX > 0 && originX > pageX){
             return;
         }
         that.props.handleResize( deltaX, deltaY );
@@ -92,7 +96,7 @@ export class AdjustSizeCanvas extends React.PureComponent<Props, State> {
         const {width, height} = that.props;
         return (
             <div className={"drag-resize"}>
-                <div className={"resize-y"} onMouseDown={that.handleMouseDown}>
+                <div className={"resize-y"} onMouseDown={that.handleMouseDown} ref={that.resizeYRef}>
                     <span className="enlarge">
                         <IBotIcon name={"arrow_down"} type={"dora"} />
                     </span>
