@@ -63,25 +63,25 @@ export class ScreensStore {
             const {contentRect} = section;
 
             let offsetX = 0, offsetY = 0;
-            if (rect.x < contentRect.left){
+            if (rect.x < contentRect.left && rect.x < lastRect.x){
                 // 左边
                 offsetX = -Math.abs(lastRect.x - rect.x);
                 rect.width -= offsetX;
                 rect.originX -= offsetX;
-            } else if (rect.x + rect.width > contentRect.left + contentRect.width){
+            } else if (rect.width > lastRect.width && contentRect.left + contentRect.width < rect.x + rect.width){
                 // 右边
                 offsetX = Math.abs((rect.x + rect.width) - (lastRect.x + lastRect.width));
                 rect.originX -= offsetX;
             }
 
-            if (contentRect.top > rect.y){
+            if (contentRect.top > rect.y && rect.y < lastRect.y){
                 // 上边
                 offsetY = -Math.abs(rect.y - lastRect.y);
                 rect.height -= offsetY;
                 rect.originY -= offsetY;
-            } else if (rect.y + rect.height > contentRect.top + contentRect.height) {
+            } else if (rect.height > lastRect.height && rect.y + rect.height > contentRect.top + contentRect.height) {
                 // 下边
-                offsetY = Math.abs((lastRect.y + lastRect.height) - (rect.y + rect.height))
+                offsetY = Math.abs((lastRect.y + lastRect.height) - (rect.y + rect.height));
                 rect.originY -= offsetY;
             }
             section.offsetCanvasPosition(offsetX, offsetY);
