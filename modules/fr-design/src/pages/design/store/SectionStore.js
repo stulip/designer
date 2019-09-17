@@ -5,7 +5,7 @@
  * @sine 2019-09-05 10:56
  */
 import { observable, action, computed } from "mobx";
-import type {MainStore, Rect} from "./MainStore.flow";
+import type { MainStore, Rect } from "../flow/Main.flow";
 import { viewMinSize, scrollbarMinWidth, scrollbarThick, zoomScale, viewportScale } from "../config";
 import React from "react";
 import { Types } from "@xt-web/core";
@@ -17,7 +17,7 @@ export class SectionStore {
     // content 缩放倍数
     @observable canvasScale = zoomScale.normal;
     // 画布矩阵
-    @observable canvasRect: Rect = {width: 0, height: 0, x: 0, y: 0, top: 0, left: 0};
+    @observable canvasRect: Rect = { width: 0, height: 0, x: 0, y: 0, top: 0, left: 0 };
     // 视口 content 矩阵
     @observable contentRect: Rect = { width: viewMinSize.width, height: viewMinSize.height, top: 0, left: 0 };
     // scrollPosition bar 位置
@@ -43,13 +43,11 @@ export class SectionStore {
      * @param {Object} config 页面配置信息
      * @param {Object} [options]
      */
-    init (config, options = {}){
+    init(config, options = {}) {
         let that = this;
-        const {screenSize} = config;
+        const { screenSize } = config;
         that.setCanvasSize(screenSize.width, screenSize.height);
         that.setViewportSize(screenSize.width * viewportScale.x, screenSize.height * viewportScale.y);
-        that.setRulerShadow(0, 0, screenSize.width, screenSize.height);
-
     }
 
     /**
@@ -107,12 +105,12 @@ export class SectionStore {
 
             // 重新计算 画布边距
             const canvasRect = that.main.screens.getCanvasBoundingRect();
-            that.canvasRect.left = canvasRect.left - that.canvasRect.x + ( that.canvasRect.width * baseScale) / 2;
-            that.canvasRect.top = canvasRect.top - that.canvasRect.y + ( that.canvasRect.height * baseScale) / 2;
+            that.canvasRect.left = canvasRect.left - that.canvasRect.x + (that.canvasRect.width * baseScale) / 2;
+            that.canvasRect.top = canvasRect.top - that.canvasRect.y + (that.canvasRect.height * baseScale) / 2;
 
             // 重新计算视区大小
-            const vpWidth = that.viewportSize.width / lastScale  * nextScale;
-            const vpHeight = that.viewportSize.height / lastScale * nextScale;
+            const vpWidth = (that.viewportSize.width / lastScale) * nextScale;
+            const vpHeight = (that.viewportSize.height / lastScale) * nextScale;
             that.setViewportSize(vpWidth, vpHeight);
 
             that.canvasScale = nextScale;
@@ -134,7 +132,7 @@ export class SectionStore {
             that.handleWheelScale(event);
         } else {
             // 滚轮调整画布坐标
-            that.offsetCanvasPosition(deltaX, deltaY)
+            that.adjustCanvasPosition(deltaX, deltaY);
         }
     };
 
@@ -142,27 +140,28 @@ export class SectionStore {
      * 滚轮缩放
      * @param {WheelEvent} event
      */
-    handleWheelScale (event: WheelEvent){
+    handleWheelScale(event: WheelEvent) {
         let that = this;
         const { deltaY, deltaX, pageX, pageY } = event;
         // 设置缩放
-        const lastContentRect = {...that.canvasRect}, lastScale = that.canvasScale;
+        const lastContentRect = { ...that.canvasRect },
+            lastScale = that.canvasScale;
         that.setContentScale(parseFloat((that.canvasScale - deltaY / 500).toFixed(2)));
         const baseScale = lastScale - that.canvasScale;
 
-        const cutWidth = that.canvasRect.width * baseScale / 2;
-        const cutHeight = that.canvasRect.height * baseScale / 2;
-        if ( !cutWidth || !cutHeight) return;
+        const cutWidth = (that.canvasRect.width * baseScale) / 2;
+        const cutHeight = (that.canvasRect.height * baseScale) / 2;
+        if (!cutWidth || !cutHeight) return;
 
-        const screenX = pageX - (lastContentRect.left + that.canvasRect.x );
+        const screenX = pageX - (lastContentRect.left + that.canvasRect.x);
         const screenY = pageY - (lastContentRect.top + that.canvasRect.y);
 
-        const width = that.canvasRect.width * lastScale / 2;
-        const height = that.canvasRect.height * lastScale / 2;
+        const width = (that.canvasRect.width * lastScale) / 2;
+        const height = (that.canvasRect.height * lastScale) / 2;
 
         const contentX = that.canvasRect.x - cutWidth * (1 - screenX / width);
-        const contentY = that.canvasRect.y - cutHeight* (1 - screenY / height);
-        that.setCanvasPosition(contentX, contentY)
+        const contentY = that.canvasRect.y - cutHeight * (1 - screenY / height);
+        that.setCanvasPosition(contentX, contentY);
     }
 
     /**
@@ -204,10 +203,29 @@ export class SectionStore {
      * @param width
      * @param height
      */
-    setCanvasSize (width: number, height: number){
+    @action
+    setCanvasSize(width: number, height: number) {
         let that = this;
-        that.canvasRect.width = width;
-        that.canvasRect.height = height;
+        const { deviceSize } = that.main.config;
+        const nextWidth = Math.max(width, deviceSize.width);
+        const nextHeight = Math.max(height, deviceSize.height);
+
+        const lastWidth = that.canvasRect.width;
+        const lastHeight = that.canvasRect.height;
+        if (nextWidth !== lastWidth || nextHeight !== lastHeight) {
+            that.canvasRect.width = nextWidth;
+            that.canvasRect.height = nextHeight;
+
+            // 计算画布边距
+            const canvasRect = that.main.screens.getCanvasBoundingRect();
+            if (canvasRect) {
+                that.canvasRect.top = canvasRect.top - that.canvasRect.y + (lastHeight - nextHeight) / 2;
+                that.canvasRect.left = canvasRect.left - that.canvasRect.x + (lastWidth - nextWidth) / 2;
+            }
+
+            that.setRulerShadow(0, 0, nextWidth, nextHeight);
+            that.handleRulerPosition();
+        }
     }
 
     /**
@@ -239,11 +257,32 @@ export class SectionStore {
      * @param {number} deltaX 偏移X 坐标量
      * @param {number} deltaY 偏移Y 坐标量
      */
-    offsetCanvasPosition (deltaX: number, deltaY: number){
+    adjustCanvasPosition(deltaX: number, deltaY: number) {
         let that = this;
         const canvasX = that.canvasRect.x - deltaX;
         const canvasY = that.canvasRect.y - deltaY;
         that.setCanvasPosition(canvasX, canvasY);
+    }
+
+    /**
+     * 增量画布大小
+     * @param {number} deltaWidth 增量宽度
+     * @param {number} deltaHeight 增量高度
+     */
+    adjustCanvasSize(deltaWidth: number, deltaHeight: number) {
+        let that = this;
+        const lastWidth = that.canvasRect.width;
+        const lastHeight = that.canvasRect.height;
+        const width = deltaWidth + lastWidth;
+        const height = deltaHeight + lastHeight;
+        that.setCanvasSize(width, height);
+
+        // 需要调整位置
+        if (lastWidth !== that.canvasRect.width || lastHeight !== that.canvasRect.height) {
+            const positionX = that.canvasRect.x + (that.canvasRect.width - lastWidth) / 2;
+            const positionY = that.canvasRect.y + (that.canvasRect.height - lastHeight) / 2;
+            that.setCanvasPosition(positionX, positionY);
+        }
     }
 
     /**
@@ -326,8 +365,8 @@ export class SectionStore {
      * @param {number} width
      * @param {number} height
      */
-    setRulerShadow (x: number, y: number, width: number, height: number){
-        this.rulerShadow = {x, y, width, height};
+    setRulerShadow(x: number, y: number, width: number, height: number) {
+        this.rulerShadow = { x, y, width, height };
     }
 
     /**

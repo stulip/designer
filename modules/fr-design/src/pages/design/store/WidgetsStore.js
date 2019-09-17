@@ -5,7 +5,7 @@
  * @sine 2019-09-05 10:18
  */
 import {observable, action, computed} from 'mobx';
-import type {MainStore} from "./MainStore.flow";
+import type {MainStore} from "../flow/Main.flow";
 
 export class WidgetsStore {
 

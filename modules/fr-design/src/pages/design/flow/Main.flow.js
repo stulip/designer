@@ -1,8 +1,8 @@
-import { ToolbarStore } from "./ToolbarStore";
-import { WidgetsStore } from "./WidgetsStore";
-import { FooterStore } from "./FooterStore";
-import { ScreensStore } from "./ScreensStore";
-import { SectionStore } from "./SectionStore";
+import { ToolbarStore } from "../store/ToolbarStore";
+import { WidgetsStore } from "../store/WidgetsStore";
+import { FooterStore } from "../store/FooterStore";
+import { ScreensStore } from "../store/ScreensStore";
+import { SectionStore } from "../store/SectionStore";
 
 export type MainStore = {
     screens: ScreensStore,

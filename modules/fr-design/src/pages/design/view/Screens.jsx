@@ -11,7 +11,8 @@ import { observer } from "mobx-react";
 import { ScreensStore } from "../store/ScreensStore";
 import { IBotTooltip, IBotIcon } from "fr-web";
 import { small_grid } from "./svg";
-import {RangeSelection} from "./RangeSelection";
+import {RangeSelection} from "../components/RangeSelection";
+import {AdjustSizeCanvas} from "../components/AdjustSizeCanvas";
 type Props = { store: ScreensStore };
 type State = {};
 
@@ -55,17 +56,7 @@ export class Screens extends React.Component<Props, State> {
                         <img src={sliderImage} />
                     </div>
                 </div>
-                <div className={"drag-resize"}>
-                    <div className={"resize-y"}>
-                        <span className="enlarge">
-                            <IBotIcon name={"arrow_down"} type={"dora"} />
-                        </span>
-                        <span className="tip">拖动调节页面高度</span>
-                        <span className="reduce">
-                            <IBotIcon name={"arrow_up"} type={"dora"} />
-                        </span>
-                    </div>
-                </div>
+                <AdjustSizeCanvas handleResize={store.handleCanvasResize} width={width} height={height}/>
                 <div className={"back-buttons"}>
                     <IBotTooltip content={"设置背景颜色"} position={"bottom"}>
                         <a

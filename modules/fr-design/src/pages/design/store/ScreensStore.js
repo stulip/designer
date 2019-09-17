@@ -5,7 +5,7 @@
  * @sine 2019-09-05 10:44
  */
 import { observable, action, computed } from "mobx";
-import type {MainStore, Rect} from "./MainStore.flow";
+import type {MainStore, Rect} from "../flow/Main.flow";
 import React from "react";
 
 export class ScreensStore {
@@ -84,9 +84,18 @@ export class ScreensStore {
                 offsetY = Math.abs((lastRect.y + lastRect.height) - (rect.y + rect.height));
                 rect.originY -= offsetY;
             }
-            section.offsetCanvasPosition(offsetX, offsetY);
+            section.adjustCanvasPosition(offsetX, offsetY);
         }
 
         that.rangeBoundRect = rect;
     };
+
+    /**
+     * 调整画布大小
+     * @param {number} deltaX
+     * @param {number} deltaY 增量值
+     */
+    handleCanvasResize = (deltaX, deltaY)=> {
+        this.main.section.adjustCanvasSize(deltaX, deltaY);
+    }
 }
