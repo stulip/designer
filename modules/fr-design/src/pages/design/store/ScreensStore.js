@@ -51,7 +51,8 @@ export class ScreensStore {
 
     @action
     handleRangeBoundRect = (rect: Object) => {
-        this.rangeBoundRect = rect;
-        rect && console.log(rect.x, rect.y, rect.width, rect.height)
+        let that = this;
+        that.rangeBoundRect = rect;
+        rect && console.log(rect.x, rect.y, rect.width, rect.height, that.main.section.cont)
     };
 }

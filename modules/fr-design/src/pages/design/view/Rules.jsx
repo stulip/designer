@@ -33,8 +33,7 @@ export class Rules extends Component<Props> {
         const store = this.props.store;
         const { h, v } = lines;
         const {
-            contentScale,
-            contentSize,
+            canvasScale,
             isShowRuler,
             isShowReferLine,
             main,
@@ -45,7 +44,7 @@ export class Rules extends Component<Props> {
         return (
             <Ruler
                 thick={scrollbarThick}
-                scale={contentScale}
+                scale={canvasScale}
                 width={rulerSize.width}
                 height={rulerSize.height}
                 startX={rulerPosition.x}

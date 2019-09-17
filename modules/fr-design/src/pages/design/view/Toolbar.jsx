@@ -49,8 +49,8 @@ export class Toolbar extends React.Component<Props, State> {
     _render(){
         let that = this;
         const store = that.props.store;
-        const {contentScale} = store.main.section;
-        const scaleValue = parseInt(100 * contentScale);
+        const {canvasScale} = store.main.section;
+        const scaleValue = parseInt(100 * canvasScale);
         return (
             <div className={'ds-toolbar'}>
                 <div className={'left'}>

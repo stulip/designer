@@ -20,7 +20,7 @@ export class ToolbarStore {
     handleZoom = (value)=> {
         let that = this;
         const section = that.main.section;
-        const contentScale = section.contentScale;
+        const contentScale = section.canvasScale;
         switch (value) {
             case 1:
             case 2:

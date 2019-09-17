@@ -38,11 +38,11 @@ export class Screens extends React.Component<Props, State> {
         let that = this;
         const store = that.props.store;
         const { main } = store;
-        const { contentScale, canvasRect } = main.section;
+        const { canvasScale, canvasRect } = main.section;
         const { width, height } = canvasRect;
 
-        const topHeight = 44 * contentScale;
-        const bottomHeight = 34 * contentScale;
+        const topHeight = 44 * canvasScale;
+        const bottomHeight = 34 * canvasScale;
         return (
             <>
                 <div className={"slider"}>
@@ -100,10 +100,10 @@ export class Screens extends React.Component<Props, State> {
         let that = this;
         const store = that.props.store;
         const { main } = store;
-        const { contentScale, canvasRect } = main.section;
+        const { canvasScale, canvasRect } = main.section;
         const { width, height } = canvasRect;
-        const scaleValue = parseInt(100 * contentScale);
-        const scaleWidth = width * contentScale, scaleHeight = height * contentScale;
+        const scaleValue = parseInt(100 * canvasScale);
+        const scaleWidth = width * canvasScale, scaleHeight = height * canvasScale;
         return (
             <>
                 <div className={"screen"} style={{ width: scaleWidth, height:scaleHeight  }}>
@@ -116,7 +116,7 @@ export class Screens extends React.Component<Props, State> {
                     {that.renderBgArea()}
                 </div>
                 <div className={"bg-view"} style={{height: scaleHeight, backgroundColor: main.pageConfig.backgroundColor}}>
-                    {small_grid(contentScale)}
+                    {small_grid(canvasScale)}
                 </div>
             </>
         );
@@ -126,10 +126,10 @@ export class Screens extends React.Component<Props, State> {
         let that = this;
         const store = that.props.store;
         const { main, screenRef, screensRef} = store;
-        const { canvasRect, contentScale } = main.section;
+        const { canvasRect, canvasScale } = main.section;
         const { width, height } = canvasRect;
         const transform = `matrix(1, 0, 0, 1, ${canvasRect.x}, ${canvasRect.y})`;
-        const scaleValue = parseInt(100 * contentScale);
+        const scaleValue = parseInt(100 * canvasScale);
         const position = (100 - scaleValue) / 2;
         const scaleStyle = { top: `${position}%`, left: `${position}%`, width: `${scaleValue}%`, height: `${scaleValue}%` };
         return (
@@ -138,7 +138,7 @@ export class Screens extends React.Component<Props, State> {
                     <div className={"no-zoom-area"} style={scaleStyle}>
                         {that.renderToolArea()}
                     </div>
-                    <div className={"zoom-area"} style={{ transform: `scale(${contentScale})` }}>
+                    <div className={"zoom-area"} style={{ transform: `scale(${canvasScale})` }}>
                         {that.renderCanvas()}
                     </div>
                     <div className={"no-zoom-area"}  style={scaleStyle}>
