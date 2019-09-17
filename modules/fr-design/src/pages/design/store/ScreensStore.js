@@ -5,7 +5,7 @@
  * @sine 2019-09-05 10:44
  */
 import { observable, action, computed } from "mobx";
-import type { MainStore } from "./MainStore.flow";
+import type {MainStore, Rect} from "./MainStore.flow";
 import React from "react";
 
 export class ScreensStore {
@@ -14,7 +14,7 @@ export class ScreensStore {
 
     // 选框矩阵
     @observable
-    rangeBoundRect = null;
+    rangeBoundRect:Rect = null;
 
     main: MainStore;
     constructor(main: MainStore) {
@@ -49,10 +49,44 @@ export class ScreensStore {
         };
     };
 
+    /**
+     * 设置鼠标选框boundRect
+     * @param {{x: number, y: number, width: number, height: number, originX: number, originY: number}} rect
+     */
     @action
-    handleRangeBoundRect = (rect: Object) => {
+    handleRangeBoundRect = (rect) => {
         let that = this;
+        if ( rect ){
+            const lastRect = that.rangeBoundRect;
+            // 根据需要调整滚动条位置
+            const section = that.main.section;
+            const {contentRect} = section;
+
+            let offsetX = 0, offsetY = 0;
+            if (rect.x < contentRect.left){
+                // 左边
+                offsetX = -Math.abs(lastRect.x - rect.x);
+                rect.width -= offsetX;
+                rect.originX -= offsetX;
+            } else if (rect.x + rect.width > contentRect.left + contentRect.width){
+                // 右边
+                offsetX = Math.abs((rect.x + rect.width) - (lastRect.x + lastRect.width));
+                rect.originX -= offsetX;
+            }
+
+            if (contentRect.top > rect.y){
+                // 上边
+                offsetY = -Math.abs(rect.y - lastRect.y);
+                rect.height -= offsetY;
+                rect.originY -= offsetY;
+            } else if (rect.y + rect.height > contentRect.top + contentRect.height) {
+                // 下边
+                offsetY = Math.abs((lastRect.y + lastRect.height) - (rect.y + rect.height))
+                rect.originY -= offsetY;
+            }
+            section.offsetCanvasPosition(offsetX, offsetY);
+        }
+
         that.rangeBoundRect = rect;
-        rect && console.log(rect.x, rect.y, rect.width, rect.height, that.main.section.contentRect)
     };
 }
