@@ -53,6 +53,6 @@ export class ScreensStore {
     handleRangeBoundRect = (rect: Object) => {
         let that = this;
         that.rangeBoundRect = rect;
-        rect && console.log(rect.x, rect.y, rect.width, rect.height, that.main.section.cont)
+        rect && console.log(rect.x, rect.y, rect.width, rect.height, that.main.section.contentRect)
     };
 }

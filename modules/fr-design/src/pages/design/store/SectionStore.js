@@ -63,19 +63,21 @@ export class SectionStore {
         that.contentRect.width = Math.max(viewMinSize.width, width);
         that.contentRect.height = Math.max(viewMinSize.height, height);
 
+        // 计算画布边距
         const canvasRect = that.main.screens.getCanvasBoundingRect();
-        if (canvasRect) {
-            const contentRect = that.sectionRef.current.getBoundingClientRect();
-            that.canvasRect.top = canvasRect.top - that.canvasRect.y;
-            that.canvasRect.left = canvasRect.left - that.canvasRect.x;
-            that.contentRect.left = contentRect.left;
-            that.contentRect.top = contentRect.top;
-        }
+        that.canvasRect.top = canvasRect.top - that.canvasRect.y;
+        that.canvasRect.left = canvasRect.left - that.canvasRect.x;
+
+        // 计算视口边距
+        const contentRect = that.sectionRef.current.getBoundingClientRect();
+        that.contentRect.left = contentRect.left;
+        that.contentRect.top = contentRect.top;
+
         that.handleRulerPosition();
     }
 
     /**
-     * 设置视口尺寸
+     * 设置视区尺寸
      * @param {number} width
      * @param {number} height
      */
@@ -100,11 +102,19 @@ export class SectionStore {
         );
 
         if (that.canvasScale !== nextScale) {
-            const baseScale = that.canvasScale - nextScale;
+            const lastScale = that.canvasScale;
+            const baseScale = lastScale - nextScale;
 
+            // 重新计算 画布边距
             const contentRect = that.main.screens.getCanvasBoundingRect();
             that.canvasRect.left = contentRect.left - that.canvasRect.x + ( that.canvasRect.width * baseScale) / 2;
             that.canvasRect.top = contentRect.top - that.canvasRect.y + ( that.canvasRect.height * baseScale) / 2;
+
+            // 重新计算视区大小
+            const vpWidth = that.viewportSize.width / lastScale  * nextScale;
+            const vpHeight = that.viewportSize.height / lastScale * nextScale;
+            that.setViewportSize(vpWidth, vpHeight);
+
             that.canvasScale = nextScale;
             that.handleRulerPosition();
         }
