@@ -38,13 +38,13 @@ export class AdjustSizeCanvas extends React.PureComponent<Props, State> {
     }
 
     addListener() {
-        window.addEventListener("mouseup", this.handleMouseUp);
-        window.addEventListener("mousemove", this.handleMouseMove);
+        document.addEventListener("mouseup", this.handleMouseUp);
+        document.addEventListener("mousemove", this.handleMouseMove);
     }
 
     removeListener() {
-        window.removeEventListener("mouseup", this.handleMouseUp);
-        window.removeEventListener("mousemove", this.handleMouseMove);
+        document.removeEventListener("mouseup", this.handleMouseUp);
+        document.removeEventListener("mousemove", this.handleMouseMove);
     }
 
     handleMouseUp = (event: MouseEvent) => {

@@ -35,13 +35,13 @@ export class ScrollBar extends React.PureComponent<Props> {
     }
 
     mountListener (){
-        window.addEventListener("mouseup", this.handleMouseUp);
-        window.addEventListener("mousemove", this.handleMouseMove);
+        document.addEventListener("mouseup", this.handleMouseUp);
+        document.addEventListener("mousemove", this.handleMouseMove);
     }
 
     unmountListener (){
-        window.removeEventListener("mouseup", this.handleMouseUp);
-        window.removeEventListener("mousemove", this.handleMouseMove);
+        document.removeEventListener("mouseup", this.handleMouseUp);
+        document.removeEventListener("mousemove", this.handleMouseMove);
     }
 
     handleMouseXDown = (event: MouseEvent) => {

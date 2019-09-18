@@ -9,10 +9,11 @@ import React from "react";
 import "../assets/screens.pcss";
 import { observer } from "mobx-react";
 import { ScreensStore } from "../store/ScreensStore";
-import { IBotTooltip, IBotIcon } from "fr-web";
+import {IBotTooltip, IBotIcon} from "fr-web";
 import { small_grid } from "./svg";
 import {RangeSelection} from "../components/RangeSelection";
 import {AdjustSizeCanvas} from "../components/AdjustSizeCanvas";
+import {Index} from "fr-ui";
 type Props = { store: ScreensStore };
 type State = {};
 
@@ -41,9 +42,11 @@ export class Screens extends React.Component<Props, State> {
         const { main } = store;
         const { canvasScale, canvasRect } = main.section;
         const { width, height } = canvasRect;
+        const {deviceRect} = main.config;
 
-        const topHeight = 44 * canvasScale;
-        const bottomHeight = 34 * canvasScale;
+        const topHeight = deviceRect.top * canvasScale;
+        const bottomHeight = deviceRect.bottom * canvasScale;
+        const backgroundColor = main.pageConfig.backgroundColor;
         return (
             <>
                 <div className={"slider"}>
@@ -58,11 +61,12 @@ export class Screens extends React.Component<Props, State> {
                 </div>
                 <AdjustSizeCanvas handleResize={store.handleCanvasResize} width={width} height={height}/>
                 <div className={"back-buttons"}>
-                    <IBotTooltip content={"设置背景颜色"} position={"bottom"}>
+                    <IBotTooltip content={"设置背景颜色"} position={"left"}>
                         <a
                             className={"sbgcolor"}
-                            style={{ backgroundColor: main.pageConfig.backgroundColor }}
-                            onClick={store.handleBackgroundColor}
+                            style={{ backgroundColor}}
+                            onClick={main.handleBackgroundColor}
+                            onMouseDown={event => event.stopPropagation()}
                         />
                     </IBotTooltip>
                 </div>
@@ -119,14 +123,14 @@ export class Screens extends React.Component<Props, State> {
         const { main, screenRef, screensRef} = store;
         const { canvasRect, canvasScale } = main.section;
         const { width, height } = canvasRect;
-        const {deviceSize} = main.config;
+        const {deviceRect} = main.config;
         const transform = `matrix(1, 0, 0, 1, ${canvasRect.x}, ${canvasRect.y})`;
         const scaleValue = parseInt(100 * canvasScale);
         const position = (100 - scaleValue) / 2;
         const scaleStyle = { top: `${position}%`, left: `${position}%`, width: `${scaleValue}%`, height: `${scaleValue}%` };
         return (
             <div className={"screens"} ref={screensRef} onMouseDown={store.handleMouseDown}>
-                <div className={"viewport"} style={{ width: deviceSize.width, height: deviceSize.height, minWidth: deviceSize.width, minHeight: deviceSize.height, transform }}>
+                <div className={"viewport"} style={{ width: deviceRect.width, height: deviceRect.height, minWidth: deviceRect.width, minHeight: deviceRect.height, transform }}>
                     <div className={"no-zoom-area"} style={scaleStyle}>
                         {that.renderToolArea()}
                     </div>
@@ -134,7 +138,7 @@ export class Screens extends React.Component<Props, State> {
                         {that.renderCanvas()}
                     </div>
                     <div className={"no-zoom-area"}  style={scaleStyle}>
-                        {deviceSize.height < height && <div className="first-page-divider"/>}
+                        {deviceRect.height < height && <div className="first-page-divider"/>}
 
                         <div className={"fe-canvas"}></div>
                     </div>

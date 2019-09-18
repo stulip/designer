@@ -206,9 +206,9 @@ export class SectionStore {
     @action
     setCanvasSize(width: number, height: number) {
         let that = this;
-        const { deviceSize } = that.main.config;
-        const nextWidth = Math.max(width, deviceSize.width);
-        const nextHeight = Math.max(height, deviceSize.height);
+        const { deviceRect } = that.main.config;
+        const nextWidth = Math.max(width, deviceRect.width);
+        const nextHeight = Math.max(height, deviceRect.height);
 
         const lastWidth = that.canvasRect.width;
         const lastHeight = that.canvasRect.height;

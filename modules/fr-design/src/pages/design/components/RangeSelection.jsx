@@ -30,13 +30,13 @@ export class RangeSelection extends React.PureComponent<Props, State> {
     };
 
     componentDidMount() {
-        window.addEventListener("mouseup", this.handleMouseUp);
-        window.addEventListener("mousemove", this.handleMouseMove);
+        document.addEventListener("mouseup", this.handleMouseUp);
+        document.addEventListener("mousemove", this.handleMouseMove);
     }
 
     componentWillUnmount() {
-        window.removeEventListener("mouseup", this.handleMouseUp);
-        window.removeEventListener("mousemove", this.handleMouseMove);
+        document.removeEventListener("mouseup", this.handleMouseUp);
+        document.removeEventListener("mousemove", this.handleMouseMove);
     }
 
     handleMouseUp = (event: MouseEvent) => {

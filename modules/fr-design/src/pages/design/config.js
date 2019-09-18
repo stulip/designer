@@ -41,9 +41,11 @@ const config = {
         height: 812 //812
     },
     // 驱动尺寸大小(iPhone X)
-    deviceSize: {
+    deviceRect: {
         width: 375,
-        height: 812 //812
+        height: 812, //812
+        top: 44,
+        bottom: 34,
     }
 };
 
