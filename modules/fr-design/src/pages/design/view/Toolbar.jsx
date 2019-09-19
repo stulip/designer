@@ -49,13 +49,14 @@ export class Toolbar extends React.Component<Props, State> {
     _render(){
         let that = this;
         const store = that.props.store;
+        const {isApp} = store.main.config;
         const {canvasScale} = store.main.section;
         const scaleValue = parseInt(100 * canvasScale);
         return (
             <div className={'ds-toolbar'}>
                 <div className={'left'}>
                     <IBotIcon className={'back'} type={'mb'} name={'mobile-back'} onClick={() => Route.push("/")}/>
-                    <span className={'title'}>App Design</span>
+                    <span className={'title'}>{isApp? "App": "Web"} Design</span>
                 </div>
                 <div className={'center'}>
                     <div>

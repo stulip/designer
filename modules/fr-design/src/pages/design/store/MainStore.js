@@ -11,10 +11,11 @@ import { FooterStore } from "./FooterStore";
 import { ScreensStore } from "./ScreensStore";
 import { SectionStore } from "./SectionStore";
 import { createConfig } from "../config";
+import type {PageConfig} from "../flow/Main.flow";
 
 export class MainStore {
     // 配置
-    config;
+    config: PageConfig;
     // store
     screens: ScreensStore;
     toolbar: ToolbarStore;
@@ -24,7 +25,7 @@ export class MainStore {
 
     // 页面配置信息
     @observable
-    pageConfig = {
+    pageData = {
         // 背景颜色
         backgroundColor: "#fff"
     };
@@ -39,16 +40,20 @@ export class MainStore {
         that.widgets = new WidgetsStore(that);
         that.footer = new FooterStore(that);
         that.section = new SectionStore(that);
-        that.init();
+        that.init(props);
     }
 
     /**
      * 初始化
      */
-    init() {
+    init(props) {
         let that = this;
-        that.config = createConfig({});
+        const { name } = props.match.params;
+        that.config = createConfig({
+            isApp: name === 'app',
+        });
         that.section.init(that.config);
+        that.widgets.init(that.config);
     }
 
     /**
@@ -57,7 +62,7 @@ export class MainStore {
     @action
     handleBackgroundColor = (event: MouseEvent) => {
         let that = this;
-        that.handleColorPicker(event, that.pageConfig.backgroundColor, that.setBackgroundColor);
+        that.handleColorPicker(event, that.pageData.backgroundColor, that.setBackgroundColor);
     };
 
     /**
@@ -66,7 +71,7 @@ export class MainStore {
      */
     @action
     setBackgroundColor = (color)=> {
-        this.pageConfig.backgroundColor = color;
+        this.pageData.backgroundColor = color;
     };
 
     /**

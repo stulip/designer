@@ -24,6 +24,18 @@ export class WidgetsStore {
         this.main = main;
     }
 
+    /**
+     * 初始化
+     * @param {PageConfig} config 页面配置信息
+     * @param {Object} [options]
+     */
+    @action
+    init (config, options = {}){
+        let that = this;
+        const {isApp} = config;
+        that.isToggle = !isApp;
+    }
+
     @action.bound
     toggle (){
         this.isToggle = ! this.isToggle;

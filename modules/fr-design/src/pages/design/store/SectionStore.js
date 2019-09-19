@@ -40,14 +40,14 @@ export class SectionStore {
 
     /**
      * 初始化
-     * @param {Object} config 页面配置信息
+     * @param {PageConfig} config 页面配置信息
      * @param {Object} [options]
      */
     init(config, options = {}) {
         let that = this;
-        const { screenSize } = config;
-        that.setCanvasSize(screenSize.width, screenSize.height);
-        that.setViewportSize(screenSize.width * viewportScale.x, screenSize.height * viewportScale.y);
+        const { canvasSize } = config;
+        that.setCanvasSize(canvasSize.width, canvasSize.height);
+        that.setViewportSize(canvasSize.width * viewportScale.x, canvasSize.height * viewportScale.y);
     }
 
     /**
@@ -206,9 +206,9 @@ export class SectionStore {
     @action
     setCanvasSize(width: number, height: number) {
         let that = this;
-        const { deviceRect } = that.main.config;
-        const nextWidth = Math.max(width, deviceRect.width);
-        const nextHeight = Math.max(height, deviceRect.height);
+        const { designRect } = that.main.config;
+        const nextWidth = Math.max(width, designRect.width);
+        const nextHeight = Math.max(height, designRect.height);
 
         const lastWidth = that.canvasRect.width;
         const lastHeight = that.canvasRect.height;

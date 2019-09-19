@@ -42,11 +42,11 @@ export class Screens extends React.Component<Props, State> {
         const { main } = store;
         const { canvasScale, canvasRect } = main.section;
         const { width, height } = canvasRect;
-        const {deviceRect} = main.config;
+        const {designRect} = main.config;
 
-        const topHeight = deviceRect.top * canvasScale;
-        const bottomHeight = deviceRect.bottom * canvasScale;
-        const backgroundColor = main.pageConfig.backgroundColor;
+        const topHeight = designRect.top * canvasScale;
+        const bottomHeight = designRect.bottom * canvasScale;
+        const backgroundColor = main.pageData.backgroundColor;
         return (
             <>
                 <div className={"slider"}>
@@ -110,7 +110,7 @@ export class Screens extends React.Component<Props, State> {
                 <div className={"canvas-bg-area"} style={{ width: scaleWidth, height: scaleHeight }}>
                     {that.renderBgArea()}
                 </div>
-                <div className={"bg-view"} style={{height: scaleHeight, backgroundColor: main.pageConfig.backgroundColor}}>
+                <div className={"bg-view"} style={{height: scaleHeight, backgroundColor: main.pageData.backgroundColor}}>
                     {small_grid(canvasScale)}
                 </div>
             </>
@@ -123,14 +123,14 @@ export class Screens extends React.Component<Props, State> {
         const { main, screenRef, screensRef} = store;
         const { canvasRect, canvasScale } = main.section;
         const { width, height } = canvasRect;
-        const {deviceRect} = main.config;
+        const {designRect} = main.config;
         const transform = `matrix(1, 0, 0, 1, ${canvasRect.x}, ${canvasRect.y})`;
         const scaleValue = parseInt(100 * canvasScale);
         const position = (100 - scaleValue) / 2;
         const scaleStyle = { top: `${position}%`, left: `${position}%`, width: `${scaleValue}%`, height: `${scaleValue}%` };
         return (
             <div className={"screens"} ref={screensRef} onMouseDown={store.handleMouseDown}>
-                <div className={"viewport"} style={{ width: deviceRect.width, height: deviceRect.height, minWidth: deviceRect.width, minHeight: deviceRect.height, transform }}>
+                <div className={"viewport"} style={{ width: designRect.width, height: designRect.height, minWidth: designRect.width, minHeight: designRect.height, transform }}>
                     <div className={"no-zoom-area"} style={scaleStyle}>
                         {that.renderToolArea()}
                     </div>
@@ -138,7 +138,7 @@ export class Screens extends React.Component<Props, State> {
                         {that.renderCanvas()}
                     </div>
                     <div className={"no-zoom-area"}  style={scaleStyle}>
-                        {deviceRect.height < height && <div className="first-page-divider"/>}
+                        {designRect.height < height && <div className="first-page-divider"/>}
 
                         <div className={"fe-canvas"}></div>
                     </div>
