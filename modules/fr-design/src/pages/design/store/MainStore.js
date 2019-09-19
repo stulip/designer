@@ -11,7 +11,7 @@ import { FooterStore } from "./FooterStore";
 import { ScreensStore } from "./ScreensStore";
 import { SectionStore } from "./SectionStore";
 import { createConfig } from "../config";
-import type {PageConfig} from "../flow/Main.flow";
+import type {PageConfig, PageData} from "../flow/Main.flow";
 
 export class MainStore {
     // 配置
@@ -25,7 +25,8 @@ export class MainStore {
 
     // 页面配置信息
     @observable
-    pageData = {
+    pageData: PageData = {
+        id: "007",
         // 背景颜色
         backgroundColor: "#fff"
     };
@@ -52,8 +53,12 @@ export class MainStore {
         that.config = createConfig({
             isApp: name === 'app',
         });
-        that.section.init(that.config);
-        that.widgets.init(that.config);
+        const config = that.config;
+        const options = {
+            data: that.pageData,
+        };
+        that.section.init(config, options);
+        that.widgets.init(config, options);
     }
 
     /**

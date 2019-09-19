@@ -26,3 +26,9 @@ export type PageConfig = {
     designRect: ClientRect, // 设计尺寸信息
     canvasSize: {width: number, height: number}, // canvasSize
 }
+
+
+export type PageData = {
+    backgroundColor: string,
+    id: string|number,
+}

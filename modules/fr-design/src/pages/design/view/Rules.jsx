@@ -20,7 +20,7 @@ export class Rules extends Component<Props> {
     state = {
         lines: {
             h: [-60, 435],
-            v: [100, 400]
+            v: [100, 650]
         }
     };
 

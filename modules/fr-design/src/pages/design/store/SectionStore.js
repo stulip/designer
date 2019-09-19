@@ -6,7 +6,7 @@
  */
 import { observable, action, computed } from "mobx";
 import type { MainStore, Rect } from "../flow/Main.flow";
-import { viewMinSize, scrollbarMinWidth, scrollbarThick, zoomScale, viewportScale } from "../config";
+import {viewMinSize, scrollbarMinWidth, scrollbarThick, zoomScale, viewportScale, LocalData, ENUM} from "../config";
 import React from "react";
 import { Types } from "@xt-web/core";
 
@@ -41,11 +41,15 @@ export class SectionStore {
     /**
      * 初始化
      * @param {PageConfig} config 页面配置信息
-     * @param {Object} [options]
+     * @param {{data: PageData }} [options]
      */
     init(config, options = {}) {
         let that = this;
         const { canvasSize } = config;
+        const {data} = options;
+
+        // 取出保存在本地的 缩放大小
+        that.canvasScale = LocalData.getFloatItem(`${ENUM.DESIGN_SCALE}_${data.id}`, that.canvasScale);
         that.setCanvasSize(canvasSize.width, canvasSize.height);
         that.setViewportSize(canvasSize.width * viewportScale.x, canvasSize.height * viewportScale.y);
     }
@@ -115,6 +119,8 @@ export class SectionStore {
 
             that.canvasScale = nextScale;
             that.handleRulerPosition();
+
+            LocalData.setItem(`${ENUM.DESIGN_SCALE}_${that.main.pageData.id}`, that.canvasScale);
         }
     }
 
