@@ -6,7 +6,7 @@
 
 import React, { Component } from "react";
 import { IBotIcon, ColorPicker as Picker } from "fr-web";
-import "./assets/index.pcss";
+import "./assets";
 import { Types } from "@xt-web/core";
 
 const parseColor = Picker.parseColor;
