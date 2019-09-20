@@ -10,7 +10,7 @@ import "../assets/screens.pcss";
 import { observer } from "mobx-react";
 import { ScreensStore } from "../store/ScreensStore";
 import {IBotTooltip, IBotIcon} from "fr-web";
-import { small_grid } from "./svg";
+import { small_grid } from "../components/svg";
 import {RangeSelection} from "../components/RangeSelection";
 import {AdjustSizeCanvas} from "../components/AdjustSizeCanvas";
 import {Index} from "fr-ui";

@@ -5,49 +5,69 @@
  * @sine 2019-09-02 16:28
  */
 
-import React from 'react';
-import {IBotIcon, IBotSVG} from 'fr-web';
-import {common_widget} from './svg'
+import React from "react";
+import { IBotIcon, IBotSVG, IBotTooltip } from "fr-web";
+import { observer } from "mobx-react";
+import { WidgetsStore, SlideBarConfig } from "../store/WidgetsStore";
 
 type Props = {
-
+    store: WidgetsStore
 };
-type State = {
+type State = {};
 
-};
-
-
+@observer
 export class RightPanel extends React.Component<Props, State> {
-    render() {
+    renderTips(title, keyboard) {
         return (
-            <div className={'panel-right'}>
-                <div className={'slide-bar'}>
-                    <a className={'nav-button'}>
-                        <IBotSVG  icon={common_widget}/>
-                    </a>
-                    <span className={'line'}/>
-                    <div className={'nav-buttons'}>
-                        <a className={'nav-button'}>
-                            <IBotSVG name={'design/common_widget'}/>
-                        </a>
-                        <a className={'nav-button'}>
-                            <IBotSVG name={'design/my_widget'}/>
-                        </a>
-                        <a className={'nav-button'}>
-                            <IBotSVG name={'design/smiley'}/>
-                        </a>
-                        <a className={'nav-button'}>
-                            <IBotSVG name={'design/master'}/>
-                        </a>
-                        <a className={'nav-button trash-button'}>
-                            <IBotSVG name={'recycle'}/>
-                        </a>
-                    </div>
-                </div>
-                <div className={'content'}>
+           <>
+               <div className="left">{title}</div>
+               <div className="right">{keyboard}</div>
+           </>
+        );
+    }
 
-                </div>
-            </div>
+    renderBarItem = data => {
+        let that = this;
+        let store = this.props.store;
+        const { name, tip, keyboard } = data;
+        const style = `nav-button ${data.className || ""} ${name === store.slideActiveType ? "active" : ""}`;
+        const tipDOM = keyboard ? that.renderTips(tip, keyboard) : tip;
+        return (
+            <IBotTooltip
+                key={data.name}
+                content={tipDOM}
+                arrowed={false}
+                type={"link"}
+                className={style}
+                tipClassName={keyboard && "widget"}
+                onClick={store.handleSlideActive}
+                data-type={name}
+                position={"left"}
+                theme={"core"}
+                delay={0}
+            >
+                <IBotSVG icon={data.svg} name={data.svgName} />
+            </IBotTooltip>
         );
     };
-};
+
+    _render() {
+        let that = this;
+        let store = this.props.store;
+        const [widget, ...slideBars] = SlideBarConfig;
+        return (
+            <div className={"panel-right"}>
+                <div className={"slide-bar"}>
+                    {that.renderBarItem(widget)}
+                    <span className={"line"} />
+                    <div className={"nav-buttons"}>{slideBars.map(this.renderBarItem)}</div>
+                </div>
+                <div className={"content"}>123</div>
+            </div>
+        );
+    }
+
+    render() {
+        return this._render();
+    }
+}
