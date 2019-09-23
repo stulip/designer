@@ -15,7 +15,7 @@ import { LeftPanel } from "./LeftPanel";
 import { Section } from "./Section";
 import { observer } from "mobx-react";
 import { MainStore } from "../store/MainStore";
-import { ColorPicker } from "fr-ui";
+import { ColorPicker, PopupPanel } from "fr-ui";
 
 @observer
 export class Main extends Component {
@@ -26,14 +26,14 @@ export class Main extends Component {
     }
 
     componentDidMount() {
-        document.addEventListener('contextmenu', this.handleContextMenu)
+        document.addEventListener("contextmenu", this.handleContextMenu);
     }
 
     componentWillUnmount() {
-        document.removeEventListener('contextmenu', this.handleContextMenu)
+        document.removeEventListener("contextmenu", this.handleContextMenu);
     }
 
-    handleContextMenu = (event)=> {
+    handleContextMenu = event => {
         event.preventDefault();
     };
 
@@ -53,6 +53,44 @@ export class Main extends Component {
         );
     }
 
+    renderSlidePanel() {
+        let store = this.store;
+        const { slideActiveType, handleSlidePanelClose } = store.widgets;
+        const topHeight = 112;
+        return (
+            <>
+                <PopupPanel
+                    title={"组件"}
+                    visible={slideActiveType === "widget"}
+                    className={"dznoaI"}
+                    top={topHeight}
+                    onClose={handleSlidePanelClose}
+                />
+                <PopupPanel
+                    title={"我的组件"}
+                    visible={slideActiveType === "my_widget"}
+                    className={"dznoaI"}
+                    top={topHeight}
+                    onClose={handleSlidePanelClose}
+                />
+                <PopupPanel
+                    title={"图标"}
+                    visible={slideActiveType === "icons"}
+                    className={"dznoaI"}
+                    top={topHeight}
+                    onClose={handleSlidePanelClose}
+                />
+                <PopupPanel
+                    title={"母版"}
+                    visible={slideActiveType === "master"}
+                    className={"dznoaI"}
+                    top={topHeight}
+                    onClose={handleSlidePanelClose}
+                />
+            </>
+        );
+    }
+
     _render() {
         let store = this.store;
         const { color, targetRect, onChange: colorChange } = store.colorPickProps;
@@ -62,11 +100,8 @@ export class Main extends Component {
                     <Toolbar store={store.toolbar} />
                     {this.renderContext()}
                     <div className={"fixed_area"}>
-                        <ColorPicker
-                            color={color}
-                            onChange={colorChange}
-                            targetRect={targetRect}
-                        />
+                        {this.renderSlidePanel()}
+                        <ColorPicker color={color} onChange={colorChange} targetRect={targetRect} />
                     </div>
                 </div>
             </div>

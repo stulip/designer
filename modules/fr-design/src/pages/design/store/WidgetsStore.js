@@ -59,18 +59,30 @@ export class WidgetsStore {
     @action
     handleSlideActive = event => {
         let that = this;
-        let dataType = event.currentTarget.getAttribute("data-type");
-        switch (dataType) {
-            case 'status':
-            case 'widget':
-            case 'my_widget':
-            case 'icons':
-            case 'master':
-                that.slideActiveType = dataType;
-                break;
-            default:
-                break;
+        const dataType = event.currentTarget.getAttribute("data-type");
+        if (that.slideActiveType === dataType) {
+            that.slideActiveType = 0;
+        } else {
+            switch (dataType) {
+                case 'status':
+                case 'widget':
+                case 'my_widget':
+                case 'icons':
+                case 'master':
+                    that.slideActiveType = dataType;
+                    break;
+                default:
+                    break;
+            }
         }
-
     };
+
+    setSlideActiveType (dataType){
+
+    }
+
+    @action
+    handleSlidePanelClose = ()=> {
+        this.slideActiveType = 0;
+    }
 }
