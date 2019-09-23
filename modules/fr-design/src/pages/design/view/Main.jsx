@@ -25,6 +25,18 @@ export class Main extends Component {
         that.store = new MainStore(props);
     }
 
+    componentDidMount() {
+        document.addEventListener('contextmenu', this.handleContextMenu)
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener('contextmenu', this.handleContextMenu)
+    }
+
+    handleContextMenu = (event)=> {
+        event.preventDefault();
+    };
+
     renderContext() {
         let store = this.store;
         return (
