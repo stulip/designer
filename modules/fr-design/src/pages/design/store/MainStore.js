@@ -10,12 +10,16 @@ import { WidgetsStore } from "./WidgetsStore";
 import { FooterStore } from "./FooterStore";
 import { ScreensStore } from "./ScreensStore";
 import { SectionStore } from "./SectionStore";
-import { createConfig } from "~/config";
-import type {PageConfig, PageData} from "~/flow/Main.flow";
+import { createConfig } from "../../../config";
+import type {PageConfig, PageData} from "../../../flow/Main.flow";
+import { EventEmitter } from 'fr-web'
 
 export class MainStore {
     // 配置
     config: PageConfig;
+
+    // keyboard
+    keyEvents: EventEmitter;
     // store
     screens: ScreensStore;
     toolbar: ToolbarStore;
@@ -36,6 +40,7 @@ export class MainStore {
 
     constructor(props) {
         let that = this;
+        that.keyEvents = new EventEmitter();
         that.screens = new ScreensStore(that);
         that.toolbar = new ToolbarStore(that);
         that.widgets = new WidgetsStore(that);

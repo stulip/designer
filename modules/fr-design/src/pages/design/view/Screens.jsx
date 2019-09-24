@@ -10,10 +10,9 @@ import "../assets/screens.pcss";
 import { observer } from "mobx-react";
 import { ScreensStore } from "../store/ScreensStore";
 import {IBotTooltip, IBotIcon} from "fr-web";
-import { small_grid } from "~/assets/svg";
-import {RangeSelection} from "~/components/RangeSelection";
-import {AdjustSizeCanvas} from "~/components/AdjustSizeCanvas";
-import {Index} from "fr-ui";
+import { small_grid } from "../../../assets/svg";
+import {RangeSelection} from "../../../components/RangeSelection";
+import {AdjustSizeCanvas} from "../../../components/AdjustSizeCanvas";
 type Props = { store: ScreensStore };
 type State = {};
 

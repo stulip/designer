@@ -16,8 +16,11 @@ import { Tooltip as IBotTooltip } from "@ibot/ibot/lib/text";
 
 import { configure } from "mobx";
 configure({ enforceActions: "observed" });
+
+import { EventEmitter} from "eventemitter3";
+const DesignEvent = new EventEmitter();
 // end
 
 window.onload = () => ReactDOM.render(<App />, document.getElementById("root"));
 export const version = process.env.MODULE_VERSION;
-export { Ruler, ResizableRect, ColorPicker, IBotIcon, IBotSVG, IBotTooltip };
+export { Ruler, ResizableRect, ColorPicker, IBotIcon, IBotSVG, IBotTooltip, EventEmitter, DesignEvent };

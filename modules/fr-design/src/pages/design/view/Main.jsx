@@ -26,14 +26,29 @@ export class Main extends Component {
     }
 
     componentDidMount() {
-        document.addEventListener("contextmenu", this.handleContextMenu);
+        let that = this;
+        document.addEventListener("contextmenu", that.handleContextMenu);
+        document.addEventListener('keydown', that.handleKeyboard);
+        // document.addEventListener('keydown', that.handleKeyboardBan);
     }
 
     componentWillUnmount() {
-        document.removeEventListener("contextmenu", this.handleContextMenu);
+        let that = this;
+        that.store.keyEvents.removeAllListeners();
+        document.removeEventListener("contextmenu", that.handleContextMenu);
+        document.removeEventListener('keyup', that.handleKeyboard)
     }
 
-    handleContextMenu = event => {
+    handleKeyboard = (event: KeyboardEvent) => {
+        const eventNames = this.store.keyEvents.eventNames();
+        if (eventNames.includes(String(event.keyCode))){
+            event.preventDefault();
+        }
+        console.log(event.keyCode);
+        this.store.keyEvents.emit(String(event.keyCode), event);
+    };
+
+    handleContextMenu = (event: MouseEvent) => {
         event.preventDefault();
     };
 

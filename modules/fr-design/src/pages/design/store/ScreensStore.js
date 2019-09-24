@@ -5,7 +5,7 @@
  * @sine 2019-09-05 10:44
  */
 import { observable, action, computed } from "mobx";
-import type {MainStore, Rect} from "~/flow/Main.flow";
+import type {MainStore, Rect} from "../../../flow/Main.flow";
 import React from "react";
 
 export class ScreensStore {

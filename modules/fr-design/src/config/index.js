@@ -38,6 +38,9 @@ export const viewportScale = { x: 6, y: 3 };
 
 export const ENUM = {
     DESIGN_SCALE: "design_scale",
+
+    ZOOM_M: 1,
+    ZOOM_P: 2,
 };
 
 // 驱动信息
