@@ -1,20 +1,28 @@
 /**
  * babel 配置
  */
+const path = require('path');
+
 module.exports = {
     presets: [
         [
             "@babel/preset-env",
             {
                 targets: {
-                    esmodules: true,
-                },
+                    esmodules: true
+                }
             }
         ],
         "@babel/preset-react",
         "@babel/preset-flow"
     ],
     plugins: [
+        [
+            "babel-plugin-root-import",
+            {
+                rootPathSuffix: path.join(process.env.NODE_MODULE_PATH, 'src')
+            }
+        ],
         ["lodash"],
         [
             "@babel/plugin-transform-runtime",

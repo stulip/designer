@@ -5,8 +5,8 @@
  * @sine 2019-09-05 10:18
  */
 import { observable, action, computed } from "mobx";
-import type { MainStore } from "../flow/Main.flow";
-import { status_widget } from "./../components/svg";
+import type { MainStore } from "~/flow/Main.flow";
+import { status_widget } from "~/assets/svg";
 
 export const SlideBarConfig = [
     { name: "status", svg: status_widget, tip: '状态', keyboard: '`'},

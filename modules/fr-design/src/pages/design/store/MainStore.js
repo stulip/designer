@@ -10,8 +10,8 @@ import { WidgetsStore } from "./WidgetsStore";
 import { FooterStore } from "./FooterStore";
 import { ScreensStore } from "./ScreensStore";
 import { SectionStore } from "./SectionStore";
-import { createConfig } from "../config";
-import type {PageConfig, PageData} from "../flow/Main.flow";
+import { createConfig } from "~/config";
+import type {PageConfig, PageData} from "~/flow/Main.flow";
 
 export class MainStore {
     // 配置

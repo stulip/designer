@@ -4,8 +4,8 @@
  * @author tangzehua
  * @sine 2019-08-29 10:47
  */
-import type {MainStore} from "../flow/Main.flow";
-import {zoomScale} from '../config'
+import type {MainStore} from "~/flow/Main.flow";
+import {zoomScale} from '~/config'
 import {setConfig} from "react-hot-loader";
 
 export class ToolbarStore {
