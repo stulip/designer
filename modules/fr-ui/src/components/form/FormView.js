@@ -6,6 +6,7 @@
  */
 import React from "react";
 import { Types, Tools } from "@xt-web/core";
+import {Required} from './Required'
 
 // 接口请求参数,具体数据参考Paging.js
 type ApiProps = {
@@ -57,6 +58,48 @@ export type ItemProps = {
 
 // 组件集合
 const CompsMap = new Map<String, CompsProps>();
+
+/**
+ *
+ * 转换前端formData 数据为后端接口需要的格式
+ * 比如, 对象, 对象拆分
+ * inlineForm: 是否内联Object, 默认false
+ * form 表单需要的名称字段
+ * field 取值字段, 或者方法返回值
+ * @param {Array<Object>} config -> {form: string, field: string|(data)=> {...}, inlineForm: boolean}
+ * @param {Object} formData
+ * @returns {Object}
+ */
+const serveData = function (config: Array<Object>, formData: Object){
+    let newData = Object.create(null);
+    config.forEach(da => {
+        let data = formData[da.form];
+        if (Types.isFunction(da.field)) {
+            data = Types.isArray(data)
+                ? data.map((da2, dx) => da.field(da2, formData, dx))
+                : da.field(data || da._defaultValue, formData);
+
+            if (Types.isArray(data) || !da.inlineForm) {
+                // newData[da.form] = data;
+                Tools.parseFieldData(newData, da.form, data);
+            } else {
+                let ix = da.form.lastIndexOf(".");
+                if ( ix !== -1 ) {
+                    let field = da.form.substr(0, ix);
+                    Tools.parseFieldData(newData, field, Object.assign(Tools.getItemValue(newData, field, Object.create(null)), data))
+                } else {
+                    Object.assign(newData, data);
+                }
+            }
+        } else if (da.field && Types.isArray(data) && data.length && Types.isObject(data[0])) {
+            // 数组的情况
+            Tools.parseFieldData(newData, da.form, data.map(nd => nd[da.field]));
+        } else {
+            Tools.parseFieldData(newData, da.form, da.field && data ? data[da.field] : (Types.isObject(data) ? Object.assign({}, data) : data));
+        }
+    });
+    return newData;
+};
 
 /**
  * 转换 props 到 state
@@ -210,7 +253,7 @@ class FormView extends React.Component {
             return null;
         }
 
-        const serveData = Utils.serveData(config, formData);
+        const serveData = serveData(config, formData);
 
         const nData = {};
         for (const key in formData) {
@@ -336,7 +379,7 @@ class FormView extends React.Component {
             return value.trim().length === 0;
         } else if (Types.isObject(value)) {
             return (
-                Types.isEmptyObject(value) || !Utils.getItemValue(value, item.sub, Utils.getItemValue(value, "name"))
+                Types.isEmptyObject(value) || !Tools.getItemValue(value, item.sub, Tools.getItemValue(value, "name"))
             );
         } else if (Array.isArray(value)) {
             return !value.length || value.some(da => that._validateEmpty(item, da));

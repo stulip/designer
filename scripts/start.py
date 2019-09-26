@@ -27,10 +27,10 @@ def start(argv, args):
     start_script = utils.get_path("scripts/start.js")
     if module is None or module.find("-") != -1:
         args.test and print('启动测试模块')
-        os.system('node %s --test %s' % (start_script, args.test and 1 or 0))
+        os.system('node %s --test %s --dev' % (start_script, args.test and 1 or 0))
     else:
         print("启动模块: %s" % module.upper())
-        os.system('node %s --module %s' % (start_script, module))
+        os.system('node %s --module %s --dev' % (start_script, module))
 
 
 if __name__ == '__main__':
