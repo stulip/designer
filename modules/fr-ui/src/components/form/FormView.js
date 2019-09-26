@@ -6,7 +6,8 @@
  */
 import React from "react";
 import { Types, Tools } from "@xt-web/core";
-import {Required} from './Required'
+import { Required } from "./Required";
+import "./assets/form-item.pcss";
 
 // 接口请求参数,具体数据参考Paging.js
 type ApiProps = {
@@ -70,7 +71,7 @@ const CompsMap = new Map<String, CompsProps>();
  * @param {Object} formData
  * @returns {Object}
  */
-const serveData = function (config: Array<Object>, formData: Object){
+const serveData = function(config: Array<Object>, formData: Object) {
     let newData = Object.create(null);
     config.forEach(da => {
         let data = formData[da.form];
@@ -84,9 +85,13 @@ const serveData = function (config: Array<Object>, formData: Object){
                 Tools.parseFieldData(newData, da.form, data);
             } else {
                 let ix = da.form.lastIndexOf(".");
-                if ( ix !== -1 ) {
+                if (ix !== -1) {
                     let field = da.form.substr(0, ix);
-                    Tools.parseFieldData(newData, field, Object.assign(Tools.getItemValue(newData, field, Object.create(null)), data))
+                    Tools.parseFieldData(
+                        newData,
+                        field,
+                        Object.assign(Tools.getItemValue(newData, field, Object.create(null)), data)
+                    );
                 } else {
                     Object.assign(newData, data);
                 }
@@ -95,7 +100,11 @@ const serveData = function (config: Array<Object>, formData: Object){
             // 数组的情况
             Tools.parseFieldData(newData, da.form, data.map(nd => nd[da.field]));
         } else {
-            Tools.parseFieldData(newData, da.form, da.field && data ? data[da.field] : (Types.isObject(data) ? Object.assign({}, data) : data));
+            Tools.parseFieldData(
+                newData,
+                da.form,
+                da.field && data ? data[da.field] : Types.isObject(data) ? Object.assign({}, data) : data
+            );
         }
     });
     return newData;
@@ -127,7 +136,13 @@ const convertState = props => {
     return { formData, config };
 };
 
-class FormView extends React.Component {
+type Props = {
+    formData?: Object,
+    config: Object,
+    ref?: { current: Object }
+};
+
+class FormView extends React.Component<Props, State> {
     state = {
         validate: [],
         _config: [],
@@ -467,7 +482,7 @@ class FormView extends React.Component {
             let keys = "",
                 itemAry = item.map((item2, index2) => (keys += item2.form) && that.switchItem(item2, index, index2));
             return (
-                <div style={{ flex: 1, flexDirection: "row", alignItems: "center" }} key={keys}>
+                <div key={keys} className={"item-group"}>
                     {itemAry}
                 </div>
             );

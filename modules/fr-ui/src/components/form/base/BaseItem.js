@@ -187,7 +187,7 @@ class BaseItem extends React.Component<Props> {
         let { top} = item;
         if ( !that.state.visible) return null;
         return (
-            <div style={{flex: 1, justifyContent: "space-between",  minHeight: 48}}>
+            <div className={'form-item'}>
                 {that.renderItem()}
             </div>
         )

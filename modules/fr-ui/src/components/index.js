@@ -6,4 +6,9 @@
  */
 export {ColorPicker} from './colorpicker/ColorPicker'
 export {PopupPanel} from './popuppanel/PopupPanel'
-export * as Form from './form'
+
+import * as Form from './form'
+
+export {
+    Form
+}

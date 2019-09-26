@@ -29,6 +29,7 @@
     "@xt-web/core": "^0.2.3",
     "@xt-web/react": "^0.1.12",
     "@xt-web/react-dom": "^0.1.7",
+    "classnames": "^2.2.6",
     "eventemitter3": "^4.0.0",
     "lodash": "^4.17.15",
     "mb-react-color-picker": "^1.1.0-dev.1",
