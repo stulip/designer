@@ -21,10 +21,12 @@ export const ArrangeConfig = [
     {
         type: ArrangeConst.evenlyH,
         icon: 'design/dist_evenly_h',
+        disable: true,
     },
     {
         type: ArrangeConst.evenlyV,
         icon: 'design/dist_evenly_v',
+        disable: true,
     },
     {
         type: ArrangeConst.alignLeft,

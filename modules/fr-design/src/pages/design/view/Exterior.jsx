@@ -10,36 +10,45 @@ import "../assets/exterior.pcss";
 import { Form } from "fr-ui";
 import { IBotSVG } from "fr-web";
 import { ArrangeConfig } from "../../../config/Attribute";
+import {observer} from "mobx-react";
 
 type Props = {};
 type State = {};
 
-const BasisConfig = [
-    [
-        {
-            form: "width",
-            type: Form.Const.Type.ConfirmInputNumber,
-            value: "100",
-            input: {
-                title: "宽"
-            }
-        },
-        {
-            form: "height",
-            type: Form.Const.Type.ConfirmInputNumber,
-            value: "20",
-            input: {
-                title: "高"
-            }
-        }
-    ]
-];
 
+@observer
 export class Exterior extends React.Component<Props, State> {
+
+    createEditConfig (){
+        let store = this.props.store;
+        const {canvasRect} = store.main.section;
+        return [
+            [
+                {
+                    form: "width",
+                    type: Form.Const.Type.ConfirmInputNumber,
+                    value: canvasRect.width,
+                    input: {
+                        title: "宽",
+                        disabled: true,
+                    },
+                },
+                {
+                    form: "height",
+                    type: Form.Const.Type.ConfirmInputNumber,
+                    value: canvasRect.height,
+                    input: {
+                        title: "高"
+                    },
+                    onChange: v => console.log(v)
+                }
+            ]
+        ]
+    }
     renderArrange = item => {
         return (
-            <a className={"item"} key={item.type}>
-                <IBotSVG name={item.icon} />
+            <a className={"item"} key={item.type} disabled={item.disable}>
+                <IBotSVG name={item.icon}  />
             </a>
         );
     };
@@ -50,7 +59,7 @@ export class Exterior extends React.Component<Props, State> {
                 <div className={"arrange"}>{ArrangeConfig.map(this.renderArrange)}</div>
                 <main>
                     <div className={"appearance-panel"}>
-                        <Form.View config={BasisConfig} />
+                        <Form.View config={this.createEditConfig()} />
                     </div>
                 </main>
             </>
