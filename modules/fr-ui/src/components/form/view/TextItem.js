@@ -16,7 +16,8 @@ class TextItem extends BaseItem {
         let {item} = that.props;
         let {value = '', error, required} = that.state;
         let text = item.text || {};
-        value = Types.isObject(value) ? that._getSubValue(value, item.sub)
+        value = Types.isObject(value)
+            ? that._getSubValue(value, item.sub)
             : (Types.isBoolean(value)? (value ?"是" : "否"): value);
 
         return (

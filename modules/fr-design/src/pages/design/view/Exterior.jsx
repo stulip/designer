@@ -15,24 +15,30 @@ type Props = {};
 type State = {};
 
 const BasisConfig = [
-    {
-        title: "高度",
-        form: "width",
-        type: "text",
-        value: "测试测试,,,,,测试"
-    },
-    {
-        title: "宽度",
-        form: "height",
-        type: "text",
-        value: "测试测试,,,,,测试"
-    }
+    [
+        {
+            form: "width",
+            type: Form.Const.Type.ConfirmInputNumber,
+            value: "100",
+            input: {
+                title: "宽"
+            }
+        },
+        {
+            form: "height",
+            type: Form.Const.Type.ConfirmInputNumber,
+            value: "20",
+            input: {
+                title: "高"
+            }
+        }
+    ]
 ];
 
 export class Exterior extends React.Component<Props, State> {
     renderArrange = item => {
         return (
-            <a className={"item"}>
+            <a className={"item"} key={item.type}>
                 <IBotSVG name={item.icon} />
             </a>
         );

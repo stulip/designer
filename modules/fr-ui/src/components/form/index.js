@@ -1,11 +1,8 @@
 import {FormView as View} from './FormView';
+import {FormConst as Const} from './FormConst'
 
-// import {SwitchItem} from "./view/SwitchItem";
-// import {DateItem} from "./view/DateItem";
-// import {SelectNormalItem} from "./view/SelectNormalItem";
 import {TextItem} from "./view/TextItem";
-// import {InputItem} from './view/InputItem'
-// import {SelectItem} from './view/SelectItem'
+import {ConfirmInputNumberItem} from './view/ConfirmInputNumberItem'
 import {BaseItem} from './base/BaseItem';
 import { BaseSelectItem } from "./base/BaseSelectItem";
 import {required} from './Required'
@@ -43,16 +40,21 @@ import {required} from './Required'
 // 输入框
 
 // 文本显示
-View.registerComponent("text", {component: TextItem});
+View.registerComponent(Const.Type.Text, {component: TextItem});
+
+//输入框
+View.registerComponent(Const.Type.ConfirmInputNumber, {component: ConfirmInputNumberItem});
 
 
 export {
     View,
+    Const,
     // DateItem,
     // InputItem,
     // SelectItem,
     // SelectNormalItem,
     // SwitchItem,
+    ConfirmInputNumberItem,
     TextItem,
     BaseSelectItem,
     BaseItem,
