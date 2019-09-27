@@ -1,15 +1,21 @@
 
 
 .item-group {
-    flex: 1;
+    display: flex;
     flex-direction: column;
     align-items: center;
 }
 
+.appearance-panel {
+    color: #5b6b73;
+    padding: 12px 10px;
+}
+
 .form-item {
-    flex: 1;
+    display: flex;
+    -webkit-box-pack: justify;
     justify-content: space-between;
-    min-height: 48px;
+    min-height: 22px;
 
     .error {
         color: #ff190c
@@ -23,24 +29,20 @@
         }
     }
 
-    .title {
-        font-size: 12px;
-
-        &.big {
-            font-size: 14px;
-        }
+    .left-label {
+        height: 22px;
+        color: #1f292e;
+        line-height: 22px;
+        width: 60px;
     }
-    .text-item {
-        flex-direction: row;
+
+    .right-content {
+        display: flex;
+        flex: 1;
+        flex-wrap: wrap;
+        -webkit-box-pack: justify;
+        justify-content: space-between;
         align-items: center;
-        padding: 6px 16px;
-
-        .title {
-            padding-right: 10px;
-        }
-
-        .value {
-            text-align: left;
-        }
     }
+
 }

@@ -34,7 +34,7 @@ const BasisConfig = [
 export class Exterior extends React.Component<Props, State> {
     _render() {
         return (
-            <div>
+            <div className={'appearance-panel'}>
                 <Form.View config={BasisConfig}/>
             </div>
         );

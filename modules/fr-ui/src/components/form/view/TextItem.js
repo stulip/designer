@@ -20,13 +20,12 @@ class TextItem extends BaseItem {
             : (Types.isBoolean(value)? (value ?"是" : "否"): value);
 
         return (
-            <div className={'text-item'}>
-                <span className={classNames("required", {hide: !required})}>*</span>
-                <div>
-                    <span className={classNames('title', {error: error, big: !!value})}>{item.title}</span>
+            <>
+                <span className={classNames('left-label', {error: error})}>{item.title}</span>
+                <div className={'right-content'}>
                     {text.render ? text.render(value, text): <span className={'value'} { ...text}>{value}</span>}
                 </div>
-            </div>
+            </>
         )
     }
 }
