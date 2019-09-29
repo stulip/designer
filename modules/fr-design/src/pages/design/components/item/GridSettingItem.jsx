@@ -33,7 +33,6 @@ export class GridSettingItem extends Form.BaseItem<Props, State> {
         const {item} = that.props;
         const { value = {}} = that.state;
         const grid = item.grid || {};
-        console.log(value)
         return (
             <div className={"item-grid-setting"}>
                 <header>
