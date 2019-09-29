@@ -7,7 +7,7 @@
 // @flow
 import React from "react";
 import "../assets/background.pcss";
-import { Form } from "fr-ui";
+import { Form, Slider } from "fr-ui";
 import { IBotForm, ColorPicker } from "fr-web";
 import {Color, Tools} from "@xt-web/core";
 
@@ -47,12 +47,7 @@ export class BackgroundItem extends Form.BaseItem {
                                 <div className="thumbnail" style={{ backgroundColor: value.rgba }} />
                             </div>
                         </div>
-                        <div className={"slider"}>
-                            <div className="rail">
-                                <div className="fill" style={{ width: value.alpha + "%" }} />
-                                <div className="slider-btn" style={{ left: value.alpha + "%" }} />
-                            </div>
-                        </div>
+                        <Slider value={value.alpha} onChange={that.handleAlpha}/>
                         <IBotForm.PanelInputNumber
                             min={0}
                             max={100}

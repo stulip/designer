@@ -7,4 +7,4 @@
 // @flow
 import React from 'react';
 
-export const LineItem = () => <div className={'line-item'}/>;
+export const LineItem = ({item}) => <div className={'line-item'} style={{marginTop: item.top, marginBottom: item.bottom}}/>;

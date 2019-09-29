@@ -115,7 +115,8 @@ export class BasicAttr extends React.PureComponent<Props, State> {
                 value: pageData.backgroundColor,
                 onChange: that.handleBackground,
                 handlePicker: store.main.handleBackgroundColor
-            }
+            },
+            { type: Form.Const.Type.Line, top: 10, },
         ];
     }
 
