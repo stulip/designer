@@ -3,15 +3,18 @@ import { WidgetsStore } from "../pages/design/store/WidgetsStore";
 import { FooterStore } from "../pages/design/store/FooterStore";
 import { ScreensStore } from "../pages/design/store/ScreensStore";
 import { SectionStore } from "../pages/design/store/SectionStore";
+import {AttributeStore} from "../pages/design/store/AttributeStore";
 
 export type MainStore = {
     screens: ScreensStore,
     toolbar: ToolbarStore,
     widgets: WidgetsStore,
     footer: FooterStore,
-    section: SectionStore
+    section: SectionStore,
+    attribute: AttributeStore
 };
 
+export type Size = {width: number, height: number};
 export type Rect = { x?: number, y?: number, width: number, height: number, top?: number, left?: number };
 
 

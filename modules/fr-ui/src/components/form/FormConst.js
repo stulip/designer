@@ -8,6 +8,7 @@
 export const FormConst = {
 
     Type: {
+        Line: 'o.line.1',
         Text: 'o.text.1',
         Input: 'o.input.1',
         InputNumber: 'o.input.2',

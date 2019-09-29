@@ -12,7 +12,9 @@ import { ScreensStore } from "./ScreensStore";
 import { SectionStore } from "./SectionStore";
 import { createConfig } from "../../../config";
 import type {PageConfig, PageData} from "../../../flow/Main.flow";
-import { EventEmitter } from 'fr-web'
+import {DesignEvent, EventEmitter} from 'fr-web'
+import {AttributeStore} from "./AttributeStore";
+import {EventConst} from "../../../config/Attribute";
 
 export class MainStore {
     // 配置
@@ -26,6 +28,7 @@ export class MainStore {
     widgets: WidgetsStore;
     footer: FooterStore;
     section: SectionStore;
+    attribute: AttributeStore;
 
     // 页面配置信息
     @observable
@@ -46,6 +49,7 @@ export class MainStore {
         that.widgets = new WidgetsStore(that);
         that.footer = new FooterStore(that);
         that.section = new SectionStore(that);
+        that.attribute = new AttributeStore(that);
         that.init(props);
     }
 
@@ -82,6 +86,7 @@ export class MainStore {
     @action
     setBackgroundColor = (color)=> {
         this.pageData.backgroundColor = color;
+        DesignEvent.emit(EventConst.background, color);
     };
 
     /**

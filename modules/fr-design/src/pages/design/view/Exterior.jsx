@@ -11,40 +11,19 @@ import { Form } from "fr-ui";
 import { IBotSVG } from "fr-web";
 import { ArrangeConfig } from "../../../config/Attribute";
 import {observer} from "mobx-react";
+import {BasicAttr} from "../components";
+import {AttributeStore} from "../store/AttributeStore";
 
-type Props = {};
+type Props = {
+    store: AttributeStore
+};
+
 type State = {};
 
 
 @observer
 export class Exterior extends React.Component<Props, State> {
 
-    createEditConfig (){
-        let store = this.props.store;
-        const {canvasRect} = store.main.section;
-        return [
-            [
-                {
-                    form: "width",
-                    type: Form.Const.Type.ConfirmInputNumber,
-                    value: canvasRect.width,
-                    input: {
-                        title: "宽",
-                        disabled: true,
-                    },
-                },
-                {
-                    form: "height",
-                    type: Form.Const.Type.ConfirmInputNumber,
-                    value: canvasRect.height,
-                    input: {
-                        title: "高"
-                    },
-                    onChange: v => console.log(v)
-                }
-            ]
-        ]
-    }
     renderArrange = item => {
         return (
             <a className={"item"} key={item.type} disabled={item.disable}>
@@ -54,13 +33,13 @@ export class Exterior extends React.Component<Props, State> {
     };
 
     _render() {
+        let that = this;
+        const store = that.props.store;
         return (
             <>
-                <div className={"arrange"}>{ArrangeConfig.map(this.renderArrange)}</div>
+                <div className={"arrange"}>{ArrangeConfig.map(that.renderArrange)}</div>
                 <main>
-                    <div className={"appearance-panel"}>
-                        <Form.View config={this.createEditConfig()} />
-                    </div>
+                    <BasicAttr store={store}/>
                 </main>
             </>
         );

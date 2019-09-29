@@ -341,12 +341,6 @@ class FormView extends React.Component<Props, State> {
     };
 
     /**
-     * 设置触发器表单数据
-     * @param formData
-     */
-    setTriggerData = (formData: Object = {}) => {};
-
-    /**
      * 获取Item配置
      * @param {String} name
      * @returns {*}
@@ -491,7 +485,7 @@ class FormView extends React.Component<Props, State> {
         let { formData, config } = that.state;
         let value = formData[item.form],
             change = that.onValueChange,
-            key = item.form;
+            key = item.form || index;
 
         let props = {
             item,

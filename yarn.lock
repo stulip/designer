@@ -1061,10 +1061,15 @@
     "@webassemblyjs/wast-parser" "1.8.5"
     "@xtuc/long" "4.2.2"
 
-"@xt-web/core@^0", "@xt-web/core@^0.2", "@xt-web/core@^0.2.3":
+"@xt-web/core@^0", "@xt-web/core@^0.2":
   version "0.2.3"
   resolved "https://registry.yarnpkg.com/@xt-web/core/-/core-0.2.3.tgz#5df50719e72d088d03254138beb5e613f2cec793"
   integrity sha512-Y4yVqWdbovmBesxSSBElUF2xC16+ZaE5m85jekWKeBkrfSnPrkUGr3dTF15+KYuHhs5kkeiBb0SeEb50mZQmSw==
+
+"@xt-web/core@^0.2.6":
+  version "0.2.6"
+  resolved "https://registry.yarnpkg.com/@xt-web/core/-/core-0.2.6.tgz#c5a976383966fb9c4a165d5c4f15d26e2886503a"
+  integrity sha512-ee5xWZ5vqwxNaa2VswLZ/jhSqqAXcYufI90BEGNUwaDJRHiYsTHmZSdyUrBFrbyYtaPNAWY9BYbkXZA+BKJFAw==
 
 "@xt-web/react-dom@^0.1.7":
   version "0.1.7"

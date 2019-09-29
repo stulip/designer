@@ -6,6 +6,7 @@ import {ConfirmInputNumberItem} from './view/ConfirmInputNumberItem'
 import {BaseItem} from './base/BaseItem';
 import { BaseSelectItem } from "./base/BaseSelectItem";
 import {required} from './Required'
+import {LineItem} from "./view/LineItem";
 
 //单选
 // View.registerComponent("select", {
@@ -44,6 +45,9 @@ View.registerComponent(Const.Type.Text, {component: TextItem});
 
 //输入框
 View.registerComponent(Const.Type.ConfirmInputNumber, {component: ConfirmInputNumberItem});
+
+// 分隔线
+View.registerComponent(Const.Type.Line, {component: LineItem});
 
 
 export {

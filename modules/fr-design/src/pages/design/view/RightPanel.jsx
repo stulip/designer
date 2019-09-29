@@ -64,7 +64,7 @@ export class RightPanel extends React.Component<Props, State> {
                     <div className={"nav-buttons"}>{slideBars.map(this.renderBarItem)}</div>
                 </div>
                 <div className={"content"}>
-                    <Exterior store={store}/>
+                    <Exterior store={store.main.attribute}/>
                 </div>
             </div>
         );

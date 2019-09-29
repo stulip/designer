@@ -4,6 +4,11 @@
  * @sine 2019-09-24 16:17
  */
 
+export const EventConst = {
+    canvasSize: "attr.canvas.size",
+    background: "attr.background",
+};
+
 // 布局方向常量
 export const ArrangeConst = {
     alignTop: 1,
