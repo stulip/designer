@@ -38,7 +38,7 @@ export class BackgroundItem extends Form.BaseItem {
         return (
             <div className={"item-background"}>
                 <header>
-                    <p className={"title"}>背景颜色</p>
+                    <p className={"title"}>{item.title}</p>
                 </header>
                 <section>
                     <div className={"bg-content"}>

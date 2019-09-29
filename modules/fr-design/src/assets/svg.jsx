@@ -10,11 +10,12 @@ export const status_widget = [18, 18, "<path d=\"M9 18A9 9 0 1 1 9 0a9 9 0 0 1 0
 
 /**
  * 背景格子
- * @param {缩放率} [scale]
+ * @param {number} [size] grid 大小
+ * @param {number} [scale] 缩放率
  * @returns {*}
  */
-export const small_grid = (scale = 1)=> {
-    const gridWidth = 90 * scale, width = 18 * scale;
+export const small_grid = (size = 1, scale = 1)=> {
+    const gridWidth = (2.5 * size) * scale, width = (0.5 * size) * scale;
     return (
         <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
             <defs>

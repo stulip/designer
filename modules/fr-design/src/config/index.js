@@ -38,6 +38,7 @@ export const viewportScale = { x: 6, y: 3 };
 
 export const ENUM = {
     DESIGN_SCALE: "design_scale",
+    DESIGN_GRID: 'design_grid',
 
     ZOOM_M: 1,
     ZOOM_P: 2,
@@ -152,8 +153,8 @@ export class LocalData {
      * @returns {Object}
      */
     static getObjectItem (key, defaultValue){
-        const value = this.getItem(key, defaultValue);
-        return Types.isEmpty(value) ? value: JSON.parse(value);
+        const value = this.getItem(key);
+        return Types.isEmpty(value) ? defaultValue: JSON.parse(value);
     }
 
     /**

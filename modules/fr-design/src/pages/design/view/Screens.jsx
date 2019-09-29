@@ -94,7 +94,7 @@ export class Screens extends React.Component<Props, State> {
         let that = this;
         const store = that.props.store;
         const { main } = store;
-        const { canvasScale, canvasRect } = main.section;
+        const { canvasScale, canvasRect, gridAttribute } = main.section;
         const { width, height } = canvasRect;
         const scaleValue = parseInt(100 * canvasScale);
         const scaleWidth = width * canvasScale, scaleHeight = height * canvasScale;
@@ -110,7 +110,7 @@ export class Screens extends React.Component<Props, State> {
                     {that.renderBgArea()}
                 </div>
                 <div className={"bg-view"} style={{height: scaleHeight, backgroundColor: main.pageData.backgroundColor}}>
-                    {small_grid(canvasScale)}
+                    {gridAttribute.visible && small_grid(gridAttribute.size, canvasScale)}
                 </div>
             </>
         );

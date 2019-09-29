@@ -81,7 +81,8 @@ export class BasicAttr extends React.PureComponent<Props, State> {
     createEditConfig() {
         let that = this;
         let store = that.props.store;
-        const { canvasRect } = store.main.section;
+        const {section} = store.main;
+        const { canvasRect, gridAttribute} = section;
         const { config, pageData } = store.main;
         return [
             [
@@ -115,6 +116,15 @@ export class BasicAttr extends React.PureComponent<Props, State> {
                 value: pageData.backgroundColor,
                 onChange: that.handleBackground,
                 handlePicker: store.main.handleBackgroundColor
+            },
+            { type: Form.Const.Type.Line, top: 10, },
+            {
+                title: "网格",
+                type: ItemConst.Type.GridSetting,
+                form: "gridSize",
+                value: gridAttribute,
+                onChange: section.setGridAttribute,
+                grid: {max: 100}
             },
             { type: Form.Const.Type.Line, top: 10, },
         ];
