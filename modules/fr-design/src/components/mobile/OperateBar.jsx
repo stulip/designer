@@ -12,7 +12,6 @@ type Props = {
     width: number,
     height: number,
     designHeight: number,
-    scale: number,
 };
 
 export function OperateBar(props: Props) {
@@ -33,7 +32,7 @@ export function OperateBar(props: Props) {
                     transform: "rotate(0deg)"
                 }}
             >
-                <div className="rounded-bar" style={{height: 5* scale, width: 134 * scale}}>
+                <div className="rounded-bar">
                     <div className="text" style={{ padding: 0 }}>
                         <p>&nbsp;</p>
                     </div>

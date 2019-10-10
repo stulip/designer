@@ -26,13 +26,10 @@ export class ViewGroup extends React.Component<Props, State> {
         const {canvasRect, canvasScale} = main.section;
         const {designRect} = main.config;
 
-        const barHeight= designRect.top * canvasScale;
-        const bottomHeight = designRect.bottom * canvasScale;
-
         return (
             <div className={"group-list"}>
-                <StatusBar width={canvasRect.width} height={barHeight}/>
-                <OperateBar width={canvasRect.width} height={bottomHeight} designHeight={canvasRect.height} scale={canvasScale}/>
+                <StatusBar width={canvasRect.width} height={designRect.top}/>
+                <OperateBar width={canvasRect.width} height={designRect.bottom} designHeight={canvasRect.height}/>
             </div>
         );
     };
