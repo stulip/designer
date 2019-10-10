@@ -46,6 +46,7 @@ export const ENUM = {
 
 function createDevice (options){
     return {
+        type: 'pc',
         width: 0,
         height: 0,
         top: 0,
