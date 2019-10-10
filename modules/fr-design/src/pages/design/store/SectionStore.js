@@ -36,7 +36,7 @@ export class SectionStore {
 
     // 背景表格
     @observable
-    gridAttribute = {size: 36, visible: true};
+    gridAttribute = {size: 19, visible: true};
 
     main: MainStore;
     constructor(main: MainStore) {
