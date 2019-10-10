@@ -117,7 +117,7 @@ export class Screens extends React.Component<Props, State> {
                     className={classNames("bg-view", designRect.type)}
                     style={{ height: scaleHeight, backgroundColor: main.pageData.backgroundColor, borderRadius}}
                 >
-                    {gridAttribute.visible && small_grid(gridAttribute.size, canvasScale)}
+                    {gridAttribute.visible && small_grid(gridAttribute.size, canvasScale, borderRadius)}
                 </div>
             </>
         );

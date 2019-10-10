@@ -6,7 +6,7 @@
 
 // @flow
 import React from "react";
-import "../assets/iphonex-operate-bar.pcss";
+import "../assets/mobile/iphonex-operate-bar.pcss";
 
 type Props = {
     width: number,
@@ -22,7 +22,7 @@ export function IPhoneXOperateBar(props: Props) {
     if (height === 0) return null;
 
     return (
-        <div className="group-item" style={{ top: designHeight - height, left: 0, width, height, zIndex: 4 }}>
+        <div className="group-item" style={{ top: designHeight - height, width, height, zIndex: 4 }}>
             <div
                 className="widget operate_bar hcenter vmiddle iphone_x_operate_bar"
                 style={{ width, height }}

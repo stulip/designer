@@ -17,13 +17,14 @@ export const status_widget = [
  * 背景格子
  * @param {number} [size] grid 大小
  * @param {number} [scale] 缩放率
+ * @param {number} [radius] 圆角
  * @returns {*}
  */
-export const small_grid = (size = 1, scale = 1) => {
+export const small_grid = (size = 1, scale = 1, radius = 0) => {
     const gridWidth = 2.5 * size * scale,
         width = 0.5 * size * scale;
     return (
-        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" style={{borderRadius: radius}}>
             <defs>
                 <pattern id="smallGrid" width={width} height={width} patternUnits="userSpaceOnUse">
                     <path

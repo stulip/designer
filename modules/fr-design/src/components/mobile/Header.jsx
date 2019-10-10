@@ -5,8 +5,8 @@
  */
 
 // @flow
-import React from 'react';
-
+import React from "react";
+import '../assets/mobile/header.pcss'
 
 type Props = {
     width: number,
@@ -14,27 +14,13 @@ type Props = {
 };
 
 export function Header(props: Props) {
-
-    const {height, width} = props;
+    const { height, width } = props;
     return (
-        <div className="group-flow" style={{ top: 0, left: 0, width, height, zIndex: 3 }}>
-            <div
-                className="status-bar"
-                style={{
-                    width,
-                    height,
-                    left: 0,
-                    top: 0,
-                    zIndex: 3,
-                    fontWeight: "normal",
-                    fontStyle: "normal",
-                    opacity: 1,
-                    transform: "rotate(0deg)"
-                }}
-            >
-                <div className="mobile-status-bar">
-                    123
-                </div>
+        <div className="group-flow" style={{ width, height, zIndex: 3 }}>
+            <div className="header-bar" style={{ width, height }}>
+                <span className="header-left">返回</span>
+                <span className="header-title">首页</span>
+                <span className="header-right">菜单</span>
             </div>
         </div>
     );
