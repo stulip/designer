@@ -15,6 +15,7 @@ import type {PageConfig, PageData} from "../../../flow/Main.flow";
 import {DesignEvent, EventEmitter} from 'fr-web'
 import {AttributeStore} from "./AttributeStore";
 import {EventConst} from "../../../config/Attribute";
+import {ViewGroupStore} from "./ViewGroupStore";
 
 export class MainStore {
     // 配置
@@ -29,6 +30,7 @@ export class MainStore {
     footer: FooterStore;
     section: SectionStore;
     attribute: AttributeStore;
+    viewGroup: ViewGroupStore;
 
     // 页面配置信息
     @observable
@@ -50,6 +52,7 @@ export class MainStore {
         that.footer = new FooterStore(that);
         that.section = new SectionStore(that);
         that.attribute = new AttributeStore(that);
+        that.viewGroup = new ViewGroupStore(that);
         that.init(props);
     }
 

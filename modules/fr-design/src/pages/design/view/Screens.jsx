@@ -11,8 +11,9 @@ import { observer } from "mobx-react";
 import { ScreensStore } from "../store/ScreensStore";
 import {IBotTooltip, IBotIcon} from "fr-web";
 import { small_grid } from "../../../assets/svg";
-import {RangeSelection} from "../../../components/RangeSelection";
-import {AdjustSizeCanvas} from "../../../components/AdjustSizeCanvas";
+import {ViewGroup} from "./ViewGroup";
+import {AdjustSizeCanvas, RangeSelection} from 'fr-ui';
+
 type Props = { store: ScreensStore };
 type State = {};
 
@@ -85,7 +86,7 @@ export class Screens extends React.Component<Props, State> {
                 className={"canvas ios iphone iphone_x portrait"}
                 style={{ width, height, background: "none" }}
             >
-                <div className={"group-list"}></div>
+                <ViewGroup store={main.viewGroup}/>
             </div>
         );
     }

@@ -6,7 +6,9 @@
  */
 export {ColorPicker} from './colorpicker/ColorPicker'
 export {PopupPanel} from './popuppanel/PopupPanel'
-export {Slider} from './slider/Slider.jsx'
+export {Slider} from './slider/Slider'
+export {AdjustSizeCanvas} from './adjustsize/AdjustSizeCanvas'
+export {RangeSelection} from './rangeselection/RangeSelection'
 
 import * as Form from './form'
 

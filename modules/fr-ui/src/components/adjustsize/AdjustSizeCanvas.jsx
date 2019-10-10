@@ -6,10 +6,7 @@
 
 // @flow
 import * as React from "react";
-import { IBotIcon } from "fr-web";
-import {observable} from "mobx";
-import {observer} from "mobx-react";
-
+import {IBotIcon} from "fr-web";
 
 type Props = {
     handleResize: ( deltaX: number, deltaY: number ) => void,
