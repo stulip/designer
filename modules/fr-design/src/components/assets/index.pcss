@@ -1,6 +1,12 @@
 
 
 .group-list {
+    height: 100%;
+
+    .group-item {
+        position: absolute;
+    }
+
     .widget {
         position: absolute;
     }
@@ -28,5 +34,9 @@
         &:last-child {
             margin-bottom: 0;
         }
+    }
+
+    &.iphone_x, .iphone_xs_max {
+        clip-path:inset(0px 0px 0px 0px round 44px 44px 44px 44px);
     }
 }

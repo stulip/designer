@@ -6,9 +6,9 @@
 
 // @flow
 import React from 'react';
-import {StatusBar} from "../../../components/mobile/StatusBar";
+import {StatusBar, Header, IPhoneXOperateBar} from "../../../components";
 import {observer} from "mobx-react";
-import {OperateBar} from "../../../components/mobile/OperateBar";
+import {classNames} from 'fr-web'
 import '../../../components/assets'
 
 type Props = {
@@ -27,9 +27,10 @@ export class ViewGroup extends React.Component<Props, State> {
         const {designRect} = main.config;
 
         return (
-            <div className={"group-list"}>
+            <div className={classNames("group-list", designRect.type)}>
                 <StatusBar width={canvasRect.width} height={designRect.top}/>
-                <OperateBar width={canvasRect.width} height={designRect.bottom} designHeight={canvasRect.height}/>
+                <Header width={canvasRect.width} height={designRect.nav_height}/>
+                <IPhoneXOperateBar width={canvasRect.width} height={designRect.bottom} designHeight={canvasRect.height}/>
             </div>
         );
     };

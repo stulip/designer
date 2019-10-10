@@ -44,53 +44,66 @@ export const ENUM = {
     ZOOM_P: 2,
 };
 
+function createDevice (options){
+    return {
+        width: 0,
+        height: 0,
+        top: 0,
+        bottom: 0,
+        nav_height: 0,
+        ...options,
+    }
+}
+
 // 驱动信息
 const DEVICE_INFO = {
     App: [
-        {
+        createDevice({
             name: "iPhone 6/7/8",
+            type: 'iphone',
             width: 375,
             height: 667,
-            top: 0,
-            bottom: 0
-        },
-        {
+            nav_height: 44,
+        }),
+        createDevice({
             name: "iPhone 6/7/8 Plus",
+            type: 'iphone_plus',
             width: 414,
             height: 736,
-            top: 0,
-            bottom: 0
-        },
-        {
+            nav_height: 44,
+        }),
+        createDevice({
             name: "iPhone X",
+            type: 'iphone_x',
             width: 375,
             height: 812,
             top: 44,
-            bottom: 34
-        },
-        {
+            bottom: 34,
+            nav_height: 44,
+        }),
+        createDevice({
             name: "iPhone Xs Max",
+            type: 'iphone_xs_max',
             width: 414,
             height: 896,
             top: 44,
-            bottom: 34
-        }
+            bottom: 34,
+            nav_height: 44,
+        })
     ],
     Web: [
-        {
+        createDevice({
             name: "标准",
             width: 1200,
             height: 700,
-            top: 0,
-            bottom: 0
-        },
-        {
+        }),
+        createDevice({
             name: "宽屏",
             width: 1440,
             height: 810,
             top: 0,
             bottom: 0
-        }
+        })
     ]
 };
 

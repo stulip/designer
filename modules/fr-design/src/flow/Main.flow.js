@@ -17,6 +17,16 @@ export type MainStore = {
 export type Size = {width: number, height: number};
 export type Rect = { x?: number, y?: number, width: number, height: number, top?: number, left?: number };
 
+export type DesignType = {
+    width: number,
+    height: number,
+    top: number,
+    bottom: number,
+    name: string,
+    nav_height: number,
+    type: string,// device 类型,
+}
+
 
 export type ConfigOption = {
     isApp: boolean, // 是否是App设计器
@@ -26,7 +36,7 @@ export type ConfigOption = {
 
 export type PageConfig = {
     isApp: boolean, // 是否是App设计器
-    designRect: ClientRect, // 设计尺寸信息
+    designRect: DesignType, // 设计尺寸信息
     canvasSize: {width: number, height: number}, // canvasSize
 }
 

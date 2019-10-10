@@ -6,31 +6,26 @@
 
 // @flow
 import React from "react";
-import "../assets/operate-bar.pcss";
+import "../assets/iphonex-operate-bar.pcss";
 
 type Props = {
     width: number,
     height: number,
-    designHeight: number,
+    designHeight: number
 };
 
-export function OperateBar(props: Props) {
+/**
+ * @return {null}
+ */
+export function IPhoneXOperateBar(props: Props) {
     const { width, height, designHeight, scale } = props;
+    if (height === 0) return null;
+
     return (
         <div className="group-item" style={{ top: designHeight - height, left: 0, width, height, zIndex: 4 }}>
             <div
-                className="widget operate_bar hcenter vmiddle"
-                style={{
-                    width,
-                    height,
-                    left: 0,
-                    zIndex: 4,
-                    borderColor: "transparent",
-                    fontWeight: "normal",
-                    fontSize: "normal",
-                    opacity: 1,
-                    transform: "rotate(0deg)"
-                }}
+                className="widget operate_bar hcenter vmiddle iphone_x_operate_bar"
+                style={{ width, height }}
             >
                 <div className="rounded-bar">
                     <div className="text" style={{ padding: 0 }}>
