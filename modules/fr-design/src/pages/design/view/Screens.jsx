@@ -59,7 +59,7 @@ export class Screens extends React.Component<Props, State> {
                     </div>
                 </div>
                 <AdjustSizeCanvas handleResize={store.handleCanvasResize} width={width} height={height} />
-                <div className={"back-buttons"}>
+                {/*<div className={"back-buttons"}>
                     <IBotTooltip content={"设置背景颜色"} position={"left"}>
                         <a
                             className={"sbgcolor"}
@@ -68,7 +68,7 @@ export class Screens extends React.Component<Props, State> {
                             onMouseDown={event => event.stopPropagation()}
                         />
                     </IBotTooltip>
-                </div>
+                </div>*/}
             </>
         );
     }
@@ -102,9 +102,11 @@ export class Screens extends React.Component<Props, State> {
         const scaleWidth = width * canvasScale,
             scaleHeight = height * canvasScale;
         const borderRadius = designRect.top * canvasScale;
+        const screenRadius = (designRect.top + 11) * canvasScale;
         return (
             <>
-                <div className={"screen"} style={{ width: scaleWidth, height: scaleHeight }}>
+                <div className={"screen"}
+                     style={{ width: scaleWidth, height: scaleHeight, borderRadius: screenRadius }}>
                     <div className={"title-label"}>
                         <span>主页 - 默认状态</span>
                         <span>{scaleValue + "%"}</span>

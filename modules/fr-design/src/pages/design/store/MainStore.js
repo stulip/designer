@@ -37,7 +37,7 @@ export class MainStore {
     pageData: PageData = {
         id: "007",
         // 背景颜色
-        backgroundColor: "#fff"
+        backgroundColor: "#FBFBFB"
     };
 
     // 颜色选择器
