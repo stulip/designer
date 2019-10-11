@@ -14,12 +14,22 @@
     }
 
     .header-left, .header-right {
-        max-width: 30%;
         padding: 10px;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: nowrap;
-        font-size: 16px;
+        max-width: 30%;
+        .text {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            font-size: 16px;
+        }
+    }
+
+    .header-left {
+        img {
+            padding-right: 3px;
+            color: #000033;
+            filter: brightness(0.4%);
+        }
     }
 
     .header-title {

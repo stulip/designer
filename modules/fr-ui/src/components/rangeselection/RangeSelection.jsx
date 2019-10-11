@@ -64,7 +64,7 @@ export class RangeSelection extends React.PureComponent<Props, State> {
 
     render() {
         const { rect } = this.props;
-        if (!rect) return null;
+        if (!rect || rect.width === 0 || rect.height === 0) return null;
 
         const rangeStyle = { top: rect.y, left: rect.x, width: rect.width, height: rect.height };
         return <div className={"range-selection"} style={rangeStyle} />;
