@@ -9,7 +9,7 @@ import React from "react";
 import { StatusBar, Header, IPhoneXOperateBar, Text } from "../../../widget/mobile";
 import { observer } from "mobx-react";
 import { classNames } from "fr-web";
-import "../../../components/assets";
+import "../../../widget/assets";
 import { ViewGroupStore } from "../store/ViewGroupStore";
 
 type Props = {
