@@ -9,7 +9,8 @@ import React, {Fragment} from 'react';
 
 export type BaseWidgetProps = {
     onMouseExit ?: (event: MouseEvent)=> void,
-    onMouseEnter ?: (event)=> void,
+    onMouseEnter ?: (event: MouseEvent)=> void,
+    onClick ?: (event: MouseEvent)=> void,
 };
 type State = {
 
@@ -25,13 +26,15 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
 
     static defaultProps = {
         onMouseExit: ()=> {},
-        onMouseEnter: ()=> {}
+        onMouseEnter: ()=> {},
+        onClick: ()=> {}
     };
 
     constructor(props) {
         super(props);
+        let that = this;
         this.state = {
-            isSelect: false, //是否为选中状态
+
         }
     }
 
@@ -39,12 +42,14 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
         const that = this;
         that.widget.addEventListener("mouseleave", that.handleMouseLeave);
         that.widget.addEventListener("mouseenter", that.handleMouseEnter);
+        that.widget.addEventListener("click", that.handleClick);
     }
 
     componentWillUnmount() {
         const that = this;
         that.widget.removeEventListener('mouseleave', that.handleMouseLeave);
         that.widget.removeEventListener('mouseenter', that.handleMouseEnter);
+        that.widget.removeEventListener('click', that.handleClick);
     }
 
     handleMouseEnter = (event: MouseEvent): void => {
@@ -53,6 +58,12 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
 
     handleMouseLeave = (event: MouseEvent): void => {
         this.props.onMouseExit(event);
+    };
+
+    handleClick = (event: MouseEvent): void => {
+        event.preventDefault();
+        event.stopPropagation();
+        this.props.onClick(event);
     };
 
     // 子类实现

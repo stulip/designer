@@ -163,7 +163,7 @@ export class Screens extends React.Component<Props, State> {
                     <div className={"no-zoom-area"} style={scaleStyle}>
                         {designRect.height < height && <div className="first-page-divider" />}
 
-                        <div className={"fe-canvas"}>
+                        <div className={"fe-canvas"} style={{width: width * canvasScale, height: height * canvasScale}}>
                             <WidgetBorder hoveRect={main.viewGroup.hoveRect} selectRect={main.viewGroup.selectRect}/>
                         </div>
                     </div>

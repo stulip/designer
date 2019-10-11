@@ -7,7 +7,7 @@
 // @flow
 import React from "react";
 import { ViewGroupStore } from "../store/ViewGroupStore";
-import { observer } from "mobx-react";
+import {observer} from "mobx-react";
 
 type Props = {
     selectRect: ClientRect,
@@ -20,14 +20,27 @@ export class WidgetBorder extends React.PureComponent<Props, State> {
     renderHoveBorder() {
         const { hoveRect } = this.props;
         const { top, left, width, height } = hoveRect;
-        const style = { top, left, width, height, transform: "rotate(0deg)" };
+        const style = {
+            top: `${top}%`,
+            left: `${left}%`,
+            width: `${width}%`,
+            height: `${height}%`,
+            transform: "rotate(0deg)"
+        };
         return <div className={"hove"} style={style} />;
     }
 
     renderSelectBorder() {
         const { selectRect } = this.props;
         const { top, left, width, height } = selectRect;
-        const style = { top, left, width, height, transform: "rotate(0deg)", borderStyle: "solid" };
+        const style = {
+            top: `${top}%`,
+            left: `${left}%`,
+            width: `${width}%`,
+            height: `${height}%`,
+            transform: "rotate(0deg)",
+            borderStyle: "solid"
+        };
         return <div className={"select"} style={style} />;
     }
 
