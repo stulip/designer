@@ -12,7 +12,7 @@ import {Route} from "@xt-web/react-dom";
 import {IBotIcon, IBotSVG} from 'fr-web';
 import {ToolbarStore} from "../store/ToolbarStore";
 import {observer} from "mobx-react";
-import {ENUM} from '../../../config'
+import {ENUM} from '../../../config/Config'
 
 type Props = {
     store: ToolbarStore

@@ -22,7 +22,7 @@ export function IPhoneXOperateBar(props: Props) {
     if (height === 0) return null;
 
     return (
-        <div className="group-item" style={{ top: designHeight - height, width, height, zIndex: 4 }}>
+        <div className="group-item" style={{ top: designHeight - height, width, height, zIndex: 99 }}>
             <div
                 className="widget operate_bar hcenter vmiddle iphone_x_operate_bar"
                 style={{ width, height }}

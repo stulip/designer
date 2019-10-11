@@ -85,8 +85,8 @@ function showHelp() {
     }
 
     usage += "\nexamples: ";
-    usage += "\n\n $node index.js --export\n\tthis will export all files configed to json.";
-    usage += "\n\n $node index.js --export ./excel/foo.xlsx ./excel/bar.xlsx\n\tthis will export foo and bar xlsx files.";
+    usage += "\n\n $node Config.js --export\n\tthis will export all files configed to json.";
+    usage += "\n\n $node Config.js --export ./excel/foo.xlsx ./excel/bar.xlsx\n\tthis will export foo and bar xlsx files.";
 
     console.log(usage);
 }

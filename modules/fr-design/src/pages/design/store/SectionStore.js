@@ -6,7 +6,7 @@
  */
 import {observable, action, computed, toJS} from "mobx";
 import type { MainStore, Rect } from "../../../flow/Main.flow";
-import {viewMinSize, scrollbarMinWidth, scrollbarThick, zoomScale, viewportScale, LocalData, ENUM} from "../../../config";
+import {viewMinSize, scrollbarMinWidth, scrollbarThick, zoomScale, viewportScale, LocalData, ENUM} from "../../../config/Config";
 import React from "react";
 import { Types } from "@xt-web/core";
 import {DesignEvent} from "fr-web";

@@ -13,7 +13,7 @@ let config = {
     ],
     frCorePath: path.join(rootPath, 'module', 'fr-core'),
     codeSrc: [
-        
+
     ],
     iCodeSrc: [
         /[\w-/\\+]node_modules/,
@@ -71,7 +71,7 @@ commentFile = (ps, data) => {
     });
 
     //自动导入i18ncommentFile
-    // if(trans && !i18n && ps.indexOf("index.js") === -1){
+    // if(trans && !i18n && ps.indexOf("Config.js") === -1){
     //     newLine = importI18n(ps) + newLine;
     // }
     writeNewFile(ps, newLine)

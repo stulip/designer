@@ -13,6 +13,7 @@ import { IBotTooltip, IBotIcon, classNames } from "fr-web";
 import { small_grid } from "../../../assets/svg";
 import { ViewGroup } from "./ViewGroup";
 import { AdjustSizeCanvas, RangeSelection } from "fr-ui";
+import {WidgetBorder} from "./WidgetBorder";
 
 type Props = { store: ScreensStore };
 type State = {};
@@ -162,7 +163,9 @@ export class Screens extends React.Component<Props, State> {
                     <div className={"no-zoom-area"} style={scaleStyle}>
                         {designRect.height < height && <div className="first-page-divider" />}
 
-                        <div className={"fe-canvas"}></div>
+                        <div className={"fe-canvas"}>
+                            <WidgetBorder hoveRect={main.viewGroup.hoveRect} selectRect={main.viewGroup.selectRect}/>
+                        </div>
                     </div>
                 </div>
                 <RangeSelection rect={store.rangeBoundRect} handleRect={store.handleRangeBoundRect} />

@@ -10,7 +10,7 @@ import { WidgetsStore } from "./WidgetsStore";
 import { FooterStore } from "./FooterStore";
 import { ScreensStore } from "./ScreensStore";
 import { SectionStore } from "./SectionStore";
-import { createConfig } from "../../../config";
+import { createConfig } from "../../../config/Config";
 import type {PageConfig, PageData} from "../../../flow/Main.flow";
 import {DesignEvent, EventEmitter} from 'fr-web'
 import {AttributeStore} from "./AttributeStore";
