@@ -42,6 +42,10 @@ export class ScreensStore {
         };
     };
 
+    handleClick = (event: MouseEvent)=> {
+        this.main.viewGroup.cancelSelect();
+    };
+
     /**
      * 设置鼠标选框boundRect
      * @param {{x: number, y: number, width: number, height: number, originX: number, originY: number}} rect

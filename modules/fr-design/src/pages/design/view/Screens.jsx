@@ -143,7 +143,7 @@ export class Screens extends React.Component<Props, State> {
             height: `${scaleValue}%`
         };
         return (
-            <div className={"screens"} ref={screensRef} onMouseDown={store.handleMouseDown}>
+            <div className={"screens"} ref={screensRef} onMouseDown={store.handleMouseDown} onClick={store.handleClick}>
                 <div
                     className={"viewport"}
                     style={{

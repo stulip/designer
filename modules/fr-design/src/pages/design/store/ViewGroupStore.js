@@ -7,7 +7,7 @@
 import React from "react";
 import { action, observable } from "mobx";
 import type { MainStore } from "../../../flow/Main.flow";
-import {BaseWidget} from "../../../widget/base/BaseWidget";
+import { BaseWidget } from "../../../widget/base/BaseWidget";
 
 export class ViewGroupStore {
     groupRef = React.createRef();
@@ -41,29 +41,38 @@ export class ViewGroupStore {
     // 取消选中元素
     @action
     cancelSelect = () => {
-        this.selectRect = null;
-        this.widgetItem = null;
+        let that = this;
+        that.selectRect = null;
+        that.widgetItem = null;
+        // 还原标尺刻度
+        const { canvasRect } = that.main.section;
+        that.main.section.setRulerShadow(0, 0, canvasRect.width, canvasRect.height);
     };
 
     /**
      * 设置选中widget
      * @param widget
      */
-    setSelectWidget = (widget: BaseWidget)=> {
+    setSelectWidget = (widget: BaseWidget) => {
         let that = this;
         that.widgetItem = widget;
     };
 
+    /**
+     * widget获得鼠标焦点
+     * @param event
+     */
     @action
     handleWidgetMouseEnter = (event: MouseEvent) => {
         let that = this;
         const groupRect = that.group.getBoundingClientRect();
         const rect = event.currentTarget.getBoundingClientRect();
         const left = (rect.left - groupRect.left) / groupRect.width;
-        const top = (rect.top - groupRect.top) / groupRect.height * 100;
-        const width = rect.width / groupRect.width * 100;
-        const height = rect.height / groupRect.height * 100;
+        const top = ((rect.top - groupRect.top) / groupRect.height) * 100;
+        const width = (rect.width / groupRect.width) * 100;
+        const height = (rect.height / groupRect.height) * 100;
 
+        //如果被点击了就不获得焦点rect
         const selectRect = that.selectRect;
         if (
             !selectRect ||
@@ -72,24 +81,31 @@ export class ViewGroupStore {
             width !== selectRect.width ||
             height !== selectRect.height
         ) {
-            that.hoveRect = { left, top, width, height};
+            that.hoveRect = { left, top, width, height };
         } else {
             that.cancelHove();
         }
     };
 
+    /**
+     * widget 选中
+     * @param event
+     * @param widget
+     */
     @action
     handleWidgetSelect = (event: MouseEvent, widget: BaseWidget) => {
         let that = this;
         const groupRect = that.group.getBoundingClientRect();
         const rect = event.currentTarget.getBoundingClientRect();
         const left = (rect.left - groupRect.left) / groupRect.width;
-        const top = (rect.top - groupRect.top) / groupRect.height * 100;
-        const width = rect.width / groupRect.width * 100;
-        const height = rect.height / groupRect.height * 100;
+        const top = ((rect.top - groupRect.top) / groupRect.height) * 100;
+        const width = (rect.width / groupRect.width) * 100;
+        const height = (rect.height / groupRect.height) * 100;
         that.selectRect = { left, top, width, height };
 
         const hoveRect = that.hoveRect;
+        const { canvasScale } = that.main.section;
+        // 判断是否与焦点rect一样
         if (
             hoveRect &&
             left === hoveRect.left &&
@@ -99,6 +115,13 @@ export class ViewGroupStore {
         ) {
             that.cancelHove();
         }
+        // 设置标尺刻度
+        that.main.section.setRulerShadow(
+            (rect.left - groupRect.left) / canvasScale,
+            (rect.top - groupRect.top) / canvasScale,
+            rect.width / canvasScale,
+            rect.height / canvasScale
+        );
         that.setSelectWidget(widget);
     };
 }

@@ -20,14 +20,6 @@ type State = {};
 @observer
 export class ViewGroup extends React.Component<Props, State> {
 
-    componentDidMount() {
-        document.addEventListener("click", this.props.store.cancelSelect)
-    }
-
-    componentWillUnmount() {
-        document.removeEventListener("click", this.props.store.cancelSelect)
-    }
-
     _render() {
         const { store } = this.props;
         const { main } = store;

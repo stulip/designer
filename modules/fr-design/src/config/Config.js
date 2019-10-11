@@ -34,7 +34,7 @@ export const zoomScale = {
 };
 
 // 视区按照screen尺寸放大倍数
-export const viewportScale = { x: 6, y: 3 };
+export const viewportScale = { x: 3, y: 2 };
 
 export const ENUM = {
     DESIGN_SCALE: "design_scale",
