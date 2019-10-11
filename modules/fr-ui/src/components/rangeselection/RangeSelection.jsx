@@ -6,7 +6,6 @@
 
 // @flow
 import * as React from "react";
-import { observer } from "mobx-react";
 
 type BoundRect = {
     x: number,
@@ -23,7 +22,6 @@ type Props = {
 
 type State = {};
 
-@observer
 export class RangeSelection extends React.PureComponent<Props, State> {
     static defaultProps = {
         handleRect: () => {}

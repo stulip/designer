@@ -71,7 +71,6 @@ export class ColorPicker extends React.Component<Props, State> {
         if (that.state.visible && !that.clickEvent){
             that.clickEvent = true;
             document.addEventListener("mousedown", that.handleClose);
-            console.log('add')
         }
         if ( !that.state.visible){
             that.clickEvent = false;

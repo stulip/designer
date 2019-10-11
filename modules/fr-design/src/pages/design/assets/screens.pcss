@@ -24,8 +24,8 @@
         position: relative;
         top: -13px;
         left: -13px;
-        padding: 12px;
-        padding-bottom: 34px;
+        padding: 13px;
+        /*padding-bottom: 34px;*/
         background: #fff;
         box-sizing: content-box;
         box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.1);
@@ -208,13 +208,15 @@
             bottom: -1px;
             border: 1px solid #c8cdd0;
         }
+
+        &.iphone_x, &.iphone_xs_max {
+            &:after {
+                border-radius: 44px;
+            }
+        }
+
     }
 
-
-    .ios {
-        font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, "Pingfang SC", "Microsoft Yahei",
-            "WenQuanYi Micro Hei", sans-serif;
-    }
 
     .bg-view {
         position: absolute;

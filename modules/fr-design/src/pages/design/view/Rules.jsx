@@ -9,7 +9,7 @@ import React, { Component } from "react";
 import { Ruler } from "fr-web";
 import { observer } from "mobx-react";
 import { SectionStore } from "../store/SectionStore";
-import { scrollbarThick } from "../config";
+import { scrollbarThick } from "../../../config";
 
 type Props = {
     store: SectionStore

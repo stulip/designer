@@ -1,0 +1,42 @@
+
+
+.group-list {
+    height: 100%;
+
+    .group-item {
+        position: absolute;
+    }
+
+    .widget {
+        position: absolute;
+    }
+
+    .text_view .text, .rounded_rect .text, .circle_rect .text, .mtooltip .text{
+        width: 100%;
+        white-space: pre-wrap;
+        word-break: break-word;
+        word-wrap: break-word;
+    }
+
+    .label.vmiddle, .button.vmiddle, .text_view.vmiddle, .rounded_rect.vmiddle, .circle_rect.vmiddle, .operate_bar.vmiddle {
+        align-items: center;
+    }
+
+    .label.hcenter, .button.hcenter, .text_view.hcenter, .rounded_rect.hcenter, .circle_rect.hcenter, .operate_bar.hcenter {
+        justify-content: center;
+    }
+
+    .text_view .text p, .rounded_rect .text p, .circle_rect .text p, .mtooltip .text p {
+        padding: 0;
+        margin-bottom: 5px;
+        white-space: pre-wrap;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    &.iphone_x, .iphone_xs_max {
+        clip-path:inset(0px 0px 0px 0px round 44px 44px 44px 44px);
+    }
+}

@@ -1,0 +1,47 @@
+.component-slider {
+    position: relative;
+    width: 76px;
+    height: 12px;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    cursor: pointer;
+    .rail {
+        position: absolute;
+        top: 5px;
+        left: 0px;
+        width: calc(100% - 12px);
+        height: 3px;
+
+        &:before {
+            content: "";
+            position: absolute;
+            left: 0px;
+            right: -12px;
+            height: 100%;
+            background: rgb(231, 233, 234);
+            border-radius: 3px;
+        }
+
+        .fill {
+            position: absolute;
+            left: 0px;
+            height: 100%;
+            background: rgb(255, 97, 97);
+            border-radius: 3px;
+        }
+
+        .slider-btn {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            top: -5px;
+            border-radius: 50%;
+            background: white;
+            border-width: 1px;
+            border-style: solid;
+            border-color: rgb(200, 205, 208);
+            border-image: initial;
+        }
+    }
+}

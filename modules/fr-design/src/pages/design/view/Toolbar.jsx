@@ -12,6 +12,7 @@ import {Route} from "@xt-web/react-dom";
 import {IBotIcon, IBotSVG} from 'fr-web';
 import {ToolbarStore} from "../store/ToolbarStore";
 import {observer} from "mobx-react";
+import {ENUM} from '../../../config'
 
 type Props = {
     store: ToolbarStore
@@ -23,7 +24,7 @@ type State = {
 const ZoomItem = ({handleZoom, value})=> (
     <div>
         <div className={'zoom'}>
-            <a onClick={()=> handleZoom(1)} className={'icon'}>
+            <a onClick={()=> handleZoom(ENUM.ZOOM_M)} className={'icon'}>
                 <IBotSVG name={'minus'} />
             </a>
             <a className={'icons'} onDoubleClick={()=> handleZoom(0)}>
@@ -32,7 +33,7 @@ const ZoomItem = ({handleZoom, value})=> (
                 </div>
                 <span>缩放</span>
             </a>
-            <a onClick={()=> handleZoom(2)}  className={'icon'}>
+            <a onClick={()=> handleZoom(ENUM.ZOOM_P)}  className={'icon'}>
                 <IBotSVG name={'plus'}/>
             </a>
         </div>

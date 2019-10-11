@@ -4,11 +4,13 @@
  * @author tangzehua
  * @sine 2019-09-05 10:56
  */
-import { observable, action, computed } from "mobx";
-import type { MainStore, Rect } from "../flow/Main.flow";
-import {viewMinSize, scrollbarMinWidth, scrollbarThick, zoomScale, viewportScale, LocalData, ENUM} from "../config";
+import {observable, action, computed, toJS} from "mobx";
+import type { MainStore, Rect } from "../../../flow/Main.flow";
+import {viewMinSize, scrollbarMinWidth, scrollbarThick, zoomScale, viewportScale, LocalData, ENUM} from "../../../config";
 import React from "react";
 import { Types } from "@xt-web/core";
+import {DesignEvent} from "fr-web";
+import {EventConst} from "../../../config/Attribute";
 
 export class SectionStore {
     sectionRef = React.createRef();
@@ -32,10 +34,19 @@ export class SectionStore {
     // 标尺标注尺寸
     @observable rulerShadow: Rect = { x: 0, y: 0, width: viewMinSize.width, height: viewMinSize.height };
 
+    // 背景表格
+    @observable
+    gridAttribute = { size: 25, visible: true };
+
     main: MainStore;
     constructor(main: MainStore) {
         let that = this;
         that.main = main;
+        that.addKeyListener();
+    }
+
+    addKeyListener (){
+
     }
 
     /**
@@ -49,6 +60,7 @@ export class SectionStore {
         const {data} = options;
 
         // 取出保存在本地的 缩放大小
+        that.gridAttribute = LocalData.getObjectItem(`${ENUM.DESIGN_GRID}_${data.id}`, toJS(that.gridAttribute));
         that.canvasScale = LocalData.getFloatItem(`${ENUM.DESIGN_SCALE}_${data.id}`, that.canvasScale);
         that.setCanvasSize(canvasSize.width, canvasSize.height);
         that.setViewportSize(canvasSize.width * viewportScale.x, canvasSize.height * viewportScale.y);
@@ -224,6 +236,7 @@ export class SectionStore {
 
             that.setRulerShadow(0, 0, nextWidth, nextHeight);
             that.handleRulerPosition();
+            DesignEvent.emit(EventConst.canvasSize, {width: nextWidth, height: nextHeight});
         }
     }
 
@@ -372,4 +385,15 @@ export class SectionStore {
             that.setCanvasPosition(that.canvasRect.x, height * 2 * -y + height);
         }
     };
+
+    /**
+     * 设置设计器背景表格
+     * @param attr
+     */
+    @action
+    setGridAttribute = (attr: Object)=> {
+        let that = this;
+        that.gridAttribute = attr;
+        LocalData.setItem(`${ENUM.DESIGN_GRID}_${that.main.pageData.id}`, attr)
+    }
 }

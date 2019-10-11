@@ -9,11 +9,11 @@ import React from "react";
 import "../assets/screens.pcss";
 import { observer } from "mobx-react";
 import { ScreensStore } from "../store/ScreensStore";
-import {IBotTooltip, IBotIcon} from "fr-web";
-import { small_grid } from "../components/svg";
-import {RangeSelection} from "../components/RangeSelection";
-import {AdjustSizeCanvas} from "../components/AdjustSizeCanvas";
-import {Index} from "fr-ui";
+import { IBotTooltip, IBotIcon, classNames } from "fr-web";
+import { small_grid } from "../../../assets/svg";
+import { ViewGroup } from "./ViewGroup";
+import { AdjustSizeCanvas, RangeSelection } from "fr-ui";
+
 type Props = { store: ScreensStore };
 type State = {};
 
@@ -21,18 +21,17 @@ const sliderImage = require("fr-art/design/slider-arrow.png");
 
 @observer
 export class Screens extends React.Component<Props, State> {
-
     componentDidMount(): * {
         const store = this.props.store;
-        if (store.screensRef.current){
-            store.screensRef.current.addEventListener('mousewheel', store.main.section.handleWheel, {passive: false});
+        if (store.screensRef.current) {
+            store.screensRef.current.addEventListener("mousewheel", store.main.section.handleWheel, { passive: false });
         }
     }
 
     componentWillUnmount(): * {
         const store = this.props.store;
-        if (store.screensRef.current){
-            store.screensRef.current.removeEventListener('mousewheel', store.main.section.handleWheel);
+        if (store.screensRef.current) {
+            store.screensRef.current.removeEventListener("mousewheel", store.main.section.handleWheel);
         }
     }
 
@@ -42,7 +41,7 @@ export class Screens extends React.Component<Props, State> {
         const { main } = store;
         const { canvasScale, canvasRect } = main.section;
         const { width, height } = canvasRect;
-        const {designRect} = main.config;
+        const { designRect } = main.config;
 
         const topHeight = designRect.top * canvasScale;
         const bottomHeight = designRect.bottom * canvasScale;
@@ -59,17 +58,17 @@ export class Screens extends React.Component<Props, State> {
                         <img src={sliderImage} />
                     </div>
                 </div>
-                <AdjustSizeCanvas handleResize={store.handleCanvasResize} width={width} height={height}/>
-                <div className={"back-buttons"}>
+                <AdjustSizeCanvas handleResize={store.handleCanvasResize} width={width} height={height} />
+                {/*<div className={"back-buttons"}>
                     <IBotTooltip content={"设置背景颜色"} position={"left"}>
                         <a
                             className={"sbgcolor"}
-                            style={{ backgroundColor}}
+                            style={{ backgroundColor }}
                             onClick={main.handleBackgroundColor}
                             onMouseDown={event => event.stopPropagation()}
                         />
                     </IBotTooltip>
-                </div>
+                </div>*/}
             </>
         );
     }
@@ -79,14 +78,15 @@ export class Screens extends React.Component<Props, State> {
         const store = that.props.store;
         const { main, canvasRef } = store;
         const { width, height } = main.section.canvasRect;
+        const { designRect } = main.config;
         return (
             <div
                 id={"canvas"}
                 ref={canvasRef}
-                className={"canvas ios iphone iphone_x portrait"}
+                className={classNames("canvas portrait", designRect.type)}
                 style={{ width, height, background: "none" }}
             >
-                <div className={"group-list"}></div>
+                <ViewGroup store={main.viewGroup} />
             </div>
         );
     }
@@ -95,13 +95,18 @@ export class Screens extends React.Component<Props, State> {
         let that = this;
         const store = that.props.store;
         const { main } = store;
-        const { canvasScale, canvasRect } = main.section;
+        const { designRect } = main.config;
+        const { canvasScale, canvasRect, gridAttribute } = main.section;
         const { width, height } = canvasRect;
         const scaleValue = parseInt(100 * canvasScale);
-        const scaleWidth = width * canvasScale, scaleHeight = height * canvasScale;
+        const scaleWidth = width * canvasScale,
+            scaleHeight = height * canvasScale;
+        const borderRadius = designRect.top * canvasScale;
+        const screenRadius = (designRect.top + 11) * canvasScale;
         return (
             <>
-                <div className={"screen"} style={{ width: scaleWidth, height:scaleHeight  }}>
+                <div className={"screen"}
+                     style={{ width: scaleWidth, height: scaleHeight, borderRadius: screenRadius }}>
                     <div className={"title-label"}>
                         <span>主页 - 默认状态</span>
                         <span>{scaleValue + "%"}</span>
@@ -110,8 +115,11 @@ export class Screens extends React.Component<Props, State> {
                 <div className={"canvas-bg-area"} style={{ width: scaleWidth, height: scaleHeight }}>
                     {that.renderBgArea()}
                 </div>
-                <div className={"bg-view"} style={{height: scaleHeight, backgroundColor: main.pageData.backgroundColor}}>
-                    {small_grid(canvasScale)}
+                <div
+                    className={classNames("bg-view", designRect.type)}
+                    style={{ height: scaleHeight, backgroundColor: main.pageData.backgroundColor, borderRadius}}
+                >
+                    {gridAttribute.visible && small_grid(gridAttribute.size, canvasScale, borderRadius)}
                 </div>
             </>
         );
@@ -120,30 +128,44 @@ export class Screens extends React.Component<Props, State> {
     _render() {
         let that = this;
         const store = that.props.store;
-        const { main, screenRef, screensRef} = store;
+        const { main, screenRef, screensRef } = store;
         const { canvasRect, canvasScale } = main.section;
         const { width, height } = canvasRect;
-        const {designRect} = main.config;
+        const { designRect } = main.config;
         const transform = `matrix(1, 0, 0, 1, ${canvasRect.x}, ${canvasRect.y})`;
         const scaleValue = parseInt(100 * canvasScale);
         const position = (100 - scaleValue) / 2;
-        const scaleStyle = { top: `${position}%`, left: `${position}%`, width: `${scaleValue}%`, height: `${scaleValue}%` };
+        const scaleStyle = {
+            top: `${position}%`,
+            left: `${position}%`,
+            width: `${scaleValue}%`,
+            height: `${scaleValue}%`
+        };
         return (
             <div className={"screens"} ref={screensRef} onMouseDown={store.handleMouseDown}>
-                <div className={"viewport"} style={{ width: designRect.width, height: designRect.height, minWidth: designRect.width, minHeight: designRect.height, transform }}>
+                <div
+                    className={"viewport"}
+                    style={{
+                        width: designRect.width,
+                        height: designRect.height,
+                        minWidth: designRect.width,
+                        minHeight: designRect.height,
+                        transform
+                    }}
+                >
                     <div className={"no-zoom-area"} style={scaleStyle}>
                         {that.renderToolArea()}
                     </div>
                     <div className={"zoom-area"} style={{ transform: `scale(${canvasScale})` }}>
                         {that.renderCanvas()}
                     </div>
-                    <div className={"no-zoom-area"}  style={scaleStyle}>
-                        {designRect.height < height && <div className="first-page-divider"/>}
+                    <div className={"no-zoom-area"} style={scaleStyle}>
+                        {designRect.height < height && <div className="first-page-divider" />}
 
                         <div className={"fe-canvas"}></div>
                     </div>
                 </div>
-                <RangeSelection rect={store.rangeBoundRect} handleRect={store.handleRangeBoundRect}/>
+                <RangeSelection rect={store.rangeBoundRect} handleRect={store.handleRangeBoundRect} />
             </div>
         );
     }

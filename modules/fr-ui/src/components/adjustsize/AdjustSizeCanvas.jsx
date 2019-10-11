@@ -6,10 +6,7 @@
 
 // @flow
 import * as React from "react";
-import { IBotIcon } from "fr-web";
-import {observable} from "mobx";
-import {observer} from "mobx-react";
-
+import {IBotIcon} from "fr-web";
 
 type Props = {
     handleResize: ( deltaX: number, deltaY: number ) => void,
@@ -91,8 +88,21 @@ export class AdjustSizeCanvas extends React.PureComponent<Props, State> {
 
     };
 
-    render() {
+    _render() {
         let that = this;
+        const { width, height } = that.props;
+        return (
+            <div className={"drag-resize"}>
+                <div className={"resize-y"} onMouseDown={that.handleMouseDown} ref={that.resizeYRef}>
+                    <span className="tip" style={{ marginTop: 20, color: "#999" }}>{`${width} x ${height}`}</span>
+                </div>
+            </div>
+        );
+    }
+
+    render() {
+        return this._render();
+        /*let that = this;
         const {width, height} = that.props;
         return (
             <div className={"drag-resize"}>
@@ -106,6 +116,6 @@ export class AdjustSizeCanvas extends React.PureComponent<Props, State> {
                     </span>
                 </div>
             </div>
-        );
+        );*/
     }
 }

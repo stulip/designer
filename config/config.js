@@ -34,6 +34,8 @@ if (webpack.isDebug){
     ]
 }
 
+const context = path.join(webpack.rootPath, webpack.moduleRoot);
+process.env.NODE_MODULE_PATH = path.join(context, webpack.modulePath);
 
 module.exports = {
     ...webpack,
@@ -47,7 +49,7 @@ module.exports = {
             ignored: /node_modules/
         },
         // context: path.join(webpack.rootPath, moConfig.path),
-        context: path.join(webpack.rootPath, webpack.moduleRoot),
+        context,
         output: {
             ...webpack.config.output,
             path: path.join(webpack.rootPath, 'dist', webpack.module.name),

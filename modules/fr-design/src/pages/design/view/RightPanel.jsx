@@ -9,6 +9,7 @@ import React from "react";
 import { IBotIcon, IBotSVG, IBotTooltip } from "fr-web";
 import { observer } from "mobx-react";
 import { WidgetsStore, SlideBarConfig } from "../store/WidgetsStore";
+import {Exterior} from "./Exterior";
 
 type Props = {
     store: WidgetsStore
@@ -62,7 +63,9 @@ export class RightPanel extends React.Component<Props, State> {
                     <span className={"line"} />
                     <div className={"nav-buttons"}>{slideBars.map(this.renderBarItem)}</div>
                 </div>
-                <div className={"content"}>123</div>
+                <div className={"content"}>
+                    <Exterior store={store.main.attribute}/>
+                </div>
             </div>
         );
     }

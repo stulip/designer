@@ -1,14 +1,16 @@
 /**
  * babel 配置
  */
+const path = require('path');
+
 module.exports = {
     presets: [
         [
             "@babel/preset-env",
             {
                 targets: {
-                    esmodules: true,
-                },
+                    esmodules: true
+                }
             }
         ],
         "@babel/preset-react",
@@ -27,6 +29,7 @@ module.exports = {
         ],
         ["@babel/plugin-proposal-decorators", { legacy: true }],
         ["@babel/plugin-proposal-class-properties", { loose: true }],
+        ["@babel/plugin-proposal-export-namespace-from"],
         [
             "import",
             {

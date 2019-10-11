@@ -10,25 +10,34 @@ import { WidgetsStore } from "./WidgetsStore";
 import { FooterStore } from "./FooterStore";
 import { ScreensStore } from "./ScreensStore";
 import { SectionStore } from "./SectionStore";
-import { createConfig } from "../config";
-import type {PageConfig, PageData} from "../flow/Main.flow";
+import { createConfig } from "../../../config";
+import type {PageConfig, PageData} from "../../../flow/Main.flow";
+import {DesignEvent, EventEmitter} from 'fr-web'
+import {AttributeStore} from "./AttributeStore";
+import {EventConst} from "../../../config/Attribute";
+import {ViewGroupStore} from "./ViewGroupStore";
 
 export class MainStore {
     // 配置
     config: PageConfig;
+
+    // keyboard
+    keyEvents: EventEmitter;
     // store
     screens: ScreensStore;
     toolbar: ToolbarStore;
     widgets: WidgetsStore;
     footer: FooterStore;
     section: SectionStore;
+    attribute: AttributeStore;
+    viewGroup: ViewGroupStore;
 
     // 页面配置信息
     @observable
     pageData: PageData = {
         id: "007",
         // 背景颜色
-        backgroundColor: "#fff"
+        backgroundColor: "#FBFBFB"
     };
 
     // 颜色选择器
@@ -36,11 +45,14 @@ export class MainStore {
 
     constructor(props) {
         let that = this;
+        that.keyEvents = new EventEmitter();
         that.screens = new ScreensStore(that);
         that.toolbar = new ToolbarStore(that);
         that.widgets = new WidgetsStore(that);
         that.footer = new FooterStore(that);
         that.section = new SectionStore(that);
+        that.attribute = new AttributeStore(that);
+        that.viewGroup = new ViewGroupStore(that);
         that.init(props);
     }
 
@@ -77,6 +89,7 @@ export class MainStore {
     @action
     setBackgroundColor = (color)=> {
         this.pageData.backgroundColor = color;
+        DesignEvent.emit(EventConst.background, color);
     };
 
     /**

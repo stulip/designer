@@ -5,16 +5,16 @@
  * @sine 2019-09-05 10:18
  */
 import { observable, action, computed } from "mobx";
-import type { MainStore } from "../flow/Main.flow";
-import { status_widget } from "./../components/svg";
+import type { MainStore } from "../../../flow/Main.flow";
+import { status_widget } from "../../../assets/svg";
 
 export const SlideBarConfig = [
-    { name: "status", svg: status_widget, tip: '状态', keyboard: '`'},
-    { name: "widget", svgName: "design/common_widget", tip: '内置组件', keyboard: 1 },
-    { name: "my_widget", svgName: "design/my_widget", tip: '我的组件', keyboard: 2 },
-    { name: "icons", svgName: "design/smiley", tip: '图标', keyboard: 3 },
-    { name: "master", svgName: "design/master", tip: '母版', keyboard: 4 },
-    { name: "trash", svgName: "recycle", className: "trash-button", tip:'回收站' }
+    { name: "status", svg: status_widget, tip: "状态", keyboard: "`" },
+    { name: "widget", svgName: "design/common_widget", tip: "内置组件", keyboard: 1, keyCode: '49' },
+    { name: "my_widget", svgName: "design/my_widget", tip: "我的组件", keyboard: 2, keyCode: '50' },
+    { name: "icons", svgName: "design/smiley", tip: "图标", keyboard: 3, keyCode: '51' },
+    { name: "master", svgName: "design/master", tip: "母版", keyboard: 4, keyCode: '52' },
+    { name: "trash", svgName: "recycle", className: "trash-button", tip: "回收站" }
 ];
 
 export class WidgetsStore {
@@ -32,6 +32,15 @@ export class WidgetsStore {
     main: MainStore;
     constructor(main: MainStore) {
         this.main = main;
+        this.addKeyListener();
+    }
+
+    addKeyListener() {
+        let that = this;
+        SlideBarConfig.forEach(da => {
+            da.keyCode &&
+                that.main.keyEvents.addListener(String(da.keyCode), that.handleSlideKeys.bind(that, da.name));
+        });
     }
 
     /**
@@ -56,33 +65,49 @@ export class WidgetsStore {
         return this.isLeftPanelOpen ? 0 : this.leftPanelVXWidth;
     }
 
-    @action
+    handleSlideKeys(dataType, event: KeyboardEvent) {
+        this.setSlideActiveType(dataType);
+    }
+
+    /**
+     * 工具栏按钮被点击
+     * @param event
+     */
     handleSlideActive = event => {
         let that = this;
         const dataType = event.currentTarget.getAttribute("data-type");
+        that.setSlideActiveType(dataType);
+    };
+
+    /**
+     * 设置弹出工具面板打开类型
+     * @param dataType
+     */
+    @action
+    setSlideActiveType(dataType) {
+        let that = this;
         if (that.slideActiveType === dataType) {
-            that.slideActiveType = 0;
+            that.handleSlidePanelClose();
         } else {
             switch (dataType) {
-                case 'status':
-                case 'widget':
-                case 'my_widget':
-                case 'icons':
-                case 'master':
+                case "status":
+                case "widget":
+                case "my_widget":
+                case "icons":
+                case "master":
                     that.slideActiveType = dataType;
                     break;
                 default:
                     break;
             }
         }
-    };
-
-    setSlideActiveType (dataType){
-
     }
 
+    /**
+     * 关闭工具面板
+     */
     @action
-    handleSlidePanelClose = ()=> {
+    handleSlidePanelClose = () => {
         this.slideActiveType = 0;
-    }
+    };
 }
