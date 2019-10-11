@@ -7,6 +7,7 @@
 import React from "react";
 import { action, observable } from "mobx";
 import type { MainStore } from "../../../flow/Main.flow";
+import {BaseWidget} from "../../../widget/base/BaseWidget";
 
 export class ViewGroupStore {
     groupRef = React.createRef();
@@ -16,12 +17,11 @@ export class ViewGroupStore {
     }
 
     // 鼠标悬浮元素
-    @observable
-    hoveRect: ClientRect;
-
+    @observable hoveRect: ClientRect;
     // 选中元素
-    @observable
-    selectRect: ClientRect;
+    @observable selectRect: ClientRect;
+    // 选中的widget
+    widgetItem: BaseWidget;
 
     main: MainStore;
     constructor(main: MainStore) {
@@ -35,13 +35,23 @@ export class ViewGroupStore {
 
     @action
     cancelHove = () => {
-        // this.hoveRect = null;
+        this.hoveRect = null;
     };
 
-    // 取消选框
+    // 取消选中元素
     @action
     cancelSelect = () => {
         this.selectRect = null;
+        this.widgetItem = null;
+    };
+
+    /**
+     * 设置选中widget
+     * @param widget
+     */
+    setSelectWidget = (widget: BaseWidget)=> {
+        let that = this;
+        that.widgetItem = widget;
     };
 
     @action
@@ -51,37 +61,44 @@ export class ViewGroupStore {
         const rect = event.currentTarget.getBoundingClientRect();
         const left = (rect.left - groupRect.left) / groupRect.width;
         const top = (rect.top - groupRect.top) / groupRect.height * 100;
+        const width = rect.width / groupRect.width * 100;
+        const height = rect.height / groupRect.height * 100;
 
         const selectRect = that.selectRect;
         if (
             !selectRect ||
             left !== selectRect.left ||
             top !== selectRect.top ||
-            rect.width !== selectRect.width ||
-            rect.height !== selectRect.height
+            width !== selectRect.width ||
+            height !== selectRect.height
         ) {
-            that.hoveRect = { left, top, width: rect.width / groupRect.width * 100, height: rect.height / groupRect.height * 100};
+            that.hoveRect = { left, top, width, height};
+        } else {
+            that.cancelHove();
         }
     };
 
     @action
-    handleWidgetSelect = (event: MouseEvent) => {
+    handleWidgetSelect = (event: MouseEvent, widget: BaseWidget) => {
         let that = this;
         const groupRect = that.group.getBoundingClientRect();
         const rect = event.currentTarget.getBoundingClientRect();
         const left = (rect.left - groupRect.left) / groupRect.width;
         const top = (rect.top - groupRect.top) / groupRect.height * 100;
-        that.selectRect = { left, top, width: rect.width / groupRect.width * 100, height: rect.height / groupRect.height * 100 };
+        const width = rect.width / groupRect.width * 100;
+        const height = rect.height / groupRect.height * 100;
+        that.selectRect = { left, top, width, height };
 
         const hoveRect = that.hoveRect;
         if (
             hoveRect &&
             left === hoveRect.left &&
             top === hoveRect.top &&
-            rect.width === hoveRect.width &&
-            rect.height === hoveRect.height
+            width === hoveRect.width &&
+            height === hoveRect.height
         ) {
             that.cancelHove();
         }
+        that.setSelectWidget(widget);
     };
 }

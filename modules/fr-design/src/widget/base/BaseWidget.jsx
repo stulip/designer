@@ -63,7 +63,7 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
     handleClick = (event: MouseEvent): void => {
         event.preventDefault();
         event.stopPropagation();
-        this.props.onClick(event);
+        this.props.onClick(event, this);
     };
 
     // 子类实现
