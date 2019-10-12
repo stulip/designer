@@ -120,10 +120,17 @@ const convertState = props => {
         config = {};
     try {
         let setConfig = da => {
-            console.log(da);
-            da.sub = da.sub || FormView.label;
-            config[da.form] = da;
-            if (!props.formData) formData[da.form] = da.getValue ? da.getValue(da.value) : da.value;
+            if (Array.isArray(da.config)) {
+                da.config.forEach(da => {
+                    Array.isArray(da) ? da.forEach(setConfig) : setConfig(da);
+                });
+            } else {
+                if (!da.form) return;
+                console.log(da);
+                da.sub = da.sub || FormView.label;
+                config[da.form] = da;
+                if (!props.formData) formData[da.form] = da.getValue ? da.getValue(da.value) : da.value;
+            }
         };
         console.groupCollapsed("%c-> Init Fields", "color:#0066CC;");
         props.config.forEach(da => {
@@ -480,26 +487,33 @@ class FormView extends React.Component<Props, State> {
                     {itemAry}
                 </div>
             );
+        } else if (Array.isArray(item.config)) {
+            return (
+                <div className={item.className} key={index}>
+                    {item.config.map(that.switchItem)}
+                </div>
+            );
+        } else {
+            let required = that.getRequired(item);
+            let { formData, config } = that.state;
+            let value = formData[item.form],
+                change = that.onValueChange,
+                key = item.form || index;
+
+            let props = {
+                item,
+                value,
+                change,
+                formData,
+                required,
+                ref: item.form,
+                config
+            };
+
+            let Comps = that.switchComps(item, props);
+
+            return Comps ? <Comps key={key} {...props} index={index} childIndex={childIndex} /> : null;
         }
-        let required = that.getRequired(item);
-        let { formData, config } = that.state;
-        let value = formData[item.form],
-            change = that.onValueChange,
-            key = item.form || index;
-
-        let props = {
-            item,
-            value,
-            change,
-            formData,
-            required,
-            ref: item.form,
-            config
-        };
-
-        let Comps = that.switchComps(item, props);
-
-        return Comps ? <Comps key={key} {...props} index={index} childIndex={childIndex} /> : null;
     }
 
     render() {

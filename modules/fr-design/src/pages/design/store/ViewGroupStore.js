@@ -21,7 +21,7 @@ export class ViewGroupStore {
     // 选中元素
     @observable selectRect: ClientRect;
     // 选中的widget
-    widgetItem: BaseWidget;
+    widget: BaseWidget;
 
     main: MainStore;
     constructor(main: MainStore) {
@@ -42,20 +42,30 @@ export class ViewGroupStore {
     @action
     cancelSelect = () => {
         let that = this;
-        that.selectRect = null;
-        that.widgetItem = null;
         // 还原标尺刻度
         const { canvasRect } = that.main.section;
         that.main.section.setRulerShadow(0, 0, canvasRect.width, canvasRect.height);
+        that.main.attribute.setConfig([]);
+
+        if (that.main.attribute.form){
+            that.widget.formData = that.main.attribute.form.getFormData();
+        }
+        that.selectRect = null;
+        that.widget = null;
     };
 
     /**
      * 设置选中widget
      * @param widget
      */
+    @action
     setSelectWidget = (widget: BaseWidget) => {
         let that = this;
-        that.widgetItem = widget;
+        if (that.widget && that.main.attribute.form){
+            that.widget.formData = that.main.attribute.form.getFormData();
+        }
+        that.main.attribute.setConfig(widget.widgetProps(), widget.formData);
+        that.widget = widget;
     };
 
     /**
@@ -67,23 +77,24 @@ export class ViewGroupStore {
         let that = this;
         const groupRect = that.group.getBoundingClientRect();
         const rect = event.currentTarget.getBoundingClientRect();
-        const left = (rect.left - groupRect.left) / groupRect.width * 100;
+        const left = ((rect.left - groupRect.left) / groupRect.width) * 100;
         const top = ((rect.top - groupRect.top) / groupRect.height) * 100;
         const width = (rect.width / groupRect.width) * 100;
         const height = (rect.height / groupRect.height) * 100;
 
         //如果被点击了就不获得焦点rect
         const selectRect = that.selectRect;
+
         if (
-            !selectRect ||
-            left !== selectRect.left ||
-            top !== selectRect.top ||
-            width !== selectRect.width ||
-            height !== selectRect.height
+            selectRect &&
+            left === selectRect.left &&
+            top === selectRect.top &&
+            width === selectRect.width &&
+            height === selectRect.height
         ) {
-            that.hoveRect = { left, top, width, height };
-        } else {
             that.cancelHove();
+        } else {
+            that.hoveRect = { left, top, width, height };
         }
     };
 
@@ -97,7 +108,7 @@ export class ViewGroupStore {
         let that = this;
         const groupRect = that.group.getBoundingClientRect();
         const rect = event.currentTarget.getBoundingClientRect();
-        const left = (rect.left - groupRect.left) / groupRect.width * 100;
+        const left = ((rect.left - groupRect.left) / groupRect.width) * 100;
         const top = ((rect.top - groupRect.top) / groupRect.height) * 100;
         const width = (rect.width / groupRect.width) * 100;
         const height = (rect.height / groupRect.height) * 100;
@@ -130,7 +141,5 @@ export class ViewGroupStore {
      * @param {MouseEvent} event
      * @param {BaseWidget} widget
      */
-    handleWidgetDBLClick = (event: MouseEvent, widget: BaseWidget)=> {
-
-    }
+    handleWidgetDBLClick = (event: MouseEvent, widget: BaseWidget) => {};
 }

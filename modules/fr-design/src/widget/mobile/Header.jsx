@@ -7,8 +7,9 @@
 // @flow
 import React from "react";
 import '../assets/mobile/header.pcss'
-import {BaseWidget} from "../base/BaseWidget";
 import type {BaseWidgetProps} from "../base/BaseWidget";
+import {BasePanel} from "../base/BasePanel";
+import {Form} from "fr-ui";
 
 type Props = {
     ...BaseWidgetProps,
@@ -18,7 +19,25 @@ type Props = {
 
 const backImage = require('fr-art/design/back_chevron.png');
 
-export class Header extends BaseWidget<Props> {
+export class Header extends BasePanel<Props> {
+
+    widgetProps(): [] {
+        const that = this;
+        const config = super.widgetProps();
+        return [
+            ...config,
+            {
+                form: 'name2',
+                type: Form.Const.Type.ConfirmInputNumber,
+            }
+            // {
+            //     name: '标题',
+            //     config: [
+            //
+            //     ]
+            // }
+        ];
+    }
 
     render() {
         const that = this;

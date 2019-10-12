@@ -6,12 +6,11 @@
 
 // @flow
 import React from "react";
-import { Form } from "fr-ui";
-import { DesignEvent } from "fr-web";
-import { EventConst } from "../../../../config/Attribute";
-import { observer } from "mobx-react";
-import type { Size } from "../../../../flow/Main.flow";
-import { ItemConst } from "../item";
+import {Form} from "fr-ui";
+import {DesignEvent} from "fr-web";
+import {EventConst} from "../../../../config/Attribute";
+import type {Size} from "../../../../flow/Main.flow";
+import {ItemConst} from "../item";
 
 type Props = {};
 
@@ -81,60 +80,61 @@ export class BasicAttr extends React.PureComponent<Props, State> {
     createEditConfig() {
         let that = this;
         let store = that.props.store;
-        const {section} = store.main;
-        const { canvasRect, gridAttribute} = section;
+        const { section } = store.main;
+        const { canvasRect, gridAttribute } = section;
         const { config, pageData } = store.main;
         return [
-            [
-                {
-                    form: "canvas.width",
-                    type: Form.Const.Type.ConfirmInputNumber,
-                    value: canvasRect.width,
-                    input: {
-                        title: "宽",
-                        disabled: true,
-                        min: config.designRect.width
-                    },
-                    onChange: that.handleWidth
-                },
-                {
-                    form: "canvas.height",
-                    type: Form.Const.Type.ConfirmInputNumber,
-                    value: canvasRect.height,
-                    input: {
-                        title: "高",
-                        min: config.designRect.height
-                    },
-                    onChange: that.handleHeight
-                }
-            ],
-            { type: Form.Const.Type.Line },
             {
-                title: "背景颜色",
-                type: ItemConst.Type.Background,
-                form: "background",
-                value: pageData.backgroundColor,
-                onChange: that.handleBackground,
-                handlePicker: store.main.handleBackgroundColor
-            },
-            { type: Form.Const.Type.Line, top: 10, },
-            {
-                title: "网格",
-                type: ItemConst.Type.GridSetting,
-                form: "gridSize",
-                value: gridAttribute,
-                onChange: section.setGridAttribute,
-                grid: {max: 100}
-            },
-            { type: Form.Const.Type.Line, top: 10, },
+                className: "appearance-panel",
+                config: [
+                    [
+                        {
+                            form: "canvas.width",
+                            type: Form.Const.Type.ConfirmInputNumber,
+                            value: canvasRect.width,
+                            input: {
+                                title: "宽",
+                                disabled: true,
+                                min: config.designRect.width
+                            },
+                            onChange: that.handleWidth
+                        },
+                        {
+                            form: "canvas.height",
+                            type: Form.Const.Type.ConfirmInputNumber,
+                            value: canvasRect.height,
+                            input: {
+                                title: "高",
+                                min: config.designRect.height
+                            },
+                            onChange: that.handleHeight
+                        }
+                    ],
+                    { type: Form.Const.Type.Line },
+                    {
+                        title: "背景颜色",
+                        type: ItemConst.Type.Background,
+                        form: "background",
+                        value: pageData.backgroundColor,
+                        onChange: that.handleBackground,
+                        handlePicker: store.main.handleBackgroundColor
+                    },
+                    { type: Form.Const.Type.Line, top: 10 },
+                    {
+                        title: "网格",
+                        type: ItemConst.Type.GridSetting,
+                        form: "gridSize",
+                        value: gridAttribute,
+                        onChange: section.setGridAttribute,
+                        grid: { max: 100 }
+                    },
+                    { type: Form.Const.Type.Line, top: 10 }
+                ]
+            }
         ];
     }
 
     render() {
-        return (
-            <div className={"appearance-panel"}>
-                <Form.View config={this.config} ref={this.formRef} />
-            </div>
-        );
+        return <Form.View config={this.config} ref={this.formRef} />;
     }
 }

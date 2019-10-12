@@ -10,9 +10,10 @@ import "../assets/exterior.pcss";
 import { Form } from "fr-ui";
 import { IBotSVG } from "fr-web";
 import { ArrangeConfig } from "../../../config/Attribute";
-import {observer} from "mobx-react";
-import {BasicAttr} from "../components";
-import {AttributeStore} from "../store/AttributeStore";
+import { observer } from "mobx-react";
+import { BasicAttr } from "../components";
+import { AttributeStore } from "../store/AttributeStore";
+import { toJS } from "mobx";
 
 type Props = {
     store: AttributeStore
@@ -20,14 +21,12 @@ type Props = {
 
 type State = {};
 
-
 @observer
 export class Exterior extends React.Component<Props, State> {
-
     renderArrange = item => {
         return (
             <a className={"item"} key={item.type} disabled={item.disable}>
-                <IBotSVG name={item.icon}  />
+                <IBotSVG name={item.icon} />
             </a>
         );
     };
@@ -35,11 +34,16 @@ export class Exterior extends React.Component<Props, State> {
     _render() {
         let that = this;
         const store = that.props.store;
+        const config = toJS(store.formConfig);
         return (
             <>
                 <div className={"arrange"}>{ArrangeConfig.map(that.renderArrange)}</div>
-                <main>
-                    <BasicAttr store={store}/>
+                <main className={'ds-attribute'}>
+                        {!config || !config.length ? (
+                            <BasicAttr store={store} />
+                        ) : (
+                            <Form.View config={config} ref={store.formRef} formData={store.formData}/>
+                        )}
                 </main>
             </>
         );

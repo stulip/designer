@@ -1,16 +1,24 @@
 /**
- *
+ * widget 属性
  * @flow
  * @author tangzehua
  * @sine 2019-09-29 11:11
  */
+import React from 'react';
 import {observable, action, computed} from 'mobx';
 import type {MainStore, Rect, Size} from "../../../flow/Main.flow";
 
 export class AttributeStore {
 
+    // form
+    formRef = React.createRef();
+    get form (){
+        return this.formRef.current;
+    }
+
     @observable
-    basicFormData = {};
+    formConfig = [];
+    formData = {};
 
     main: MainStore;
     constructor(main: MainStore) {
@@ -24,5 +32,11 @@ export class AttributeStore {
 
     handleBackground = (color: string) => {
         this.main.setBackgroundColor(color);
+    };
+
+    @action
+    setConfig (config, formData){
+        this.formConfig = config;
+        this.formData = formData;
     }
 }
