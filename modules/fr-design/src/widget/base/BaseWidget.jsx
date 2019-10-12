@@ -38,6 +38,7 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
         const that = this;
         if ( !that.widget) return;
         that.widget.addEventListener("mouseleave", that.handleMouseLeave);
+        that.widget.addEventListener("mousedown", that.handleMouseDown);
         that.widget.addEventListener("mouseover", that.handleMouseEnter);
         that.widget.addEventListener("click", that.handleClick);
         that.widget.addEventListener("dblclick", that.handleDBLClick);
@@ -47,10 +48,16 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
         const that = this;
         if ( !that.widget) return;
         that.widget.removeEventListener('mouseleave', that.handleMouseLeave);
+        that.widget.removeEventListener("mousedown", that.handleMouseDown);
         that.widget.removeEventListener('mouseover', that.handleMouseEnter);
         that.widget.removeEventListener('click', that.handleClick);
         that.widget.removeEventListener('dblclick', that.handleDBLClick);
     }
+
+    handleMouseDown = (event: MouseEvent): void => {
+        event.preventDefault();
+        event.stopPropagation();
+    };
 
     /**
      * 获得鼠标焦点
