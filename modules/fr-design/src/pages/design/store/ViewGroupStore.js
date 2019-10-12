@@ -67,7 +67,7 @@ export class ViewGroupStore {
         let that = this;
         const groupRect = that.group.getBoundingClientRect();
         const rect = event.currentTarget.getBoundingClientRect();
-        const left = (rect.left - groupRect.left) / groupRect.width;
+        const left = (rect.left - groupRect.left) / groupRect.width * 100;
         const top = ((rect.top - groupRect.top) / groupRect.height) * 100;
         const width = (rect.width / groupRect.width) * 100;
         const height = (rect.height / groupRect.height) * 100;
@@ -97,7 +97,7 @@ export class ViewGroupStore {
         let that = this;
         const groupRect = that.group.getBoundingClientRect();
         const rect = event.currentTarget.getBoundingClientRect();
-        const left = (rect.left - groupRect.left) / groupRect.width;
+        const left = (rect.left - groupRect.left) / groupRect.width * 100;
         const top = ((rect.top - groupRect.top) / groupRect.height) * 100;
         const width = (rect.width / groupRect.width) * 100;
         const height = (rect.height / groupRect.height) * 100;

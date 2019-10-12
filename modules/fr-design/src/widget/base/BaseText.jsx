@@ -8,6 +8,7 @@
 import React from 'react';
 import {BaseWidget} from "./BaseWidget";
 import type {BaseWidgetProps} from "./BaseWidget";
+import '../assets/text.pcss'
 
 export type BaseTextProps = {
     ...BaseWidgetProps
@@ -24,7 +25,7 @@ export class BaseText extends BaseWidget<BaseTextProps, State> {
     renderWidget() {
         const {children} = this.props;
         return (
-            <div>
+            <div className={'rich-text'}>
                 <p>
                     <span>{children}</span>
                 </p>

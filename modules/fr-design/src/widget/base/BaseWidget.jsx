@@ -34,6 +34,7 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
 
     componentDidMount() {
         const that = this;
+        if ( !that.widget) return;
         that.widget.addEventListener("mouseleave", that.handleMouseLeave);
         that.widget.addEventListener("mouseenter", that.handleMouseEnter);
         that.widget.addEventListener("click", that.handleClick);
@@ -42,6 +43,7 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
 
     componentWillUnmount() {
         const that = this;
+        if ( !that.widget) return;
         that.widget.removeEventListener('mouseleave', that.handleMouseLeave);
         that.widget.removeEventListener('mouseenter', that.handleMouseEnter);
         that.widget.removeEventListener('click', that.handleClick);
@@ -49,18 +51,22 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
     }
 
     /**
-     * 失去鼠标焦点
+     * 获得鼠标焦点
      * @param event
      */
     handleMouseEnter = (event: MouseEvent): void => {
+        event.preventDefault();
+        event.stopPropagation();
         DesignEvent.emit(EventConst.widgetMouseEnter, event, this);
     };
 
     /**
-     * 获得鼠标焦点
+     * 失去鼠标焦点
      * @param event
      */
     handleMouseLeave = (event: MouseEvent): void => {
+        event.preventDefault();
+        event.stopPropagation();
         DesignEvent.emit(EventConst.widgetMouseExit, event, this);
     };
 
@@ -83,7 +89,9 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
     };
 
     // 子类实现
-    renderWidget (){ }
+    renderWidget (){
+        return this.props.children;
+    }
 
     render() {
         let that = this;

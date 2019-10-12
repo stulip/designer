@@ -6,7 +6,7 @@
 
 // @flow
 import React from "react";
-import { StatusBar, Header, IPhoneXOperateBar, Text } from "../../../widget/mobile";
+import { StatusBar, Header, IPhoneXOperateBar, Text, Panel } from "../../../widget/mobile";
 import { observer } from "mobx-react";
 import {classNames, DesignEvent} from "fr-web";
 import "../../../widget/assets";
@@ -58,14 +58,16 @@ export class ViewGroup extends React.Component<Props, State> {
                     height={designRect.bottom}
                     designHeight={canvasRect.height}
                 />
+                <Panel>
+                    <Text>
+                        刘亦菲
+                    </Text>
+                    <Text>
+                        李小璐不雅视频
+                    </Text>
+                </Panel>
                 <Text>
-                    测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
-                </Text>
-                <Text>
-                    测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
-                </Text>
-                <Text>
-                    测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
+                    杨幂
                 </Text>
                 <Text>
                     <span>
