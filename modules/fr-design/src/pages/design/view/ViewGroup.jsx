@@ -8,9 +8,10 @@
 import React from "react";
 import { StatusBar, Header, IPhoneXOperateBar, Text } from "../../../widget/mobile";
 import { observer } from "mobx-react";
-import { classNames } from "fr-web";
+import {classNames, DesignEvent} from "fr-web";
 import "../../../widget/assets";
 import { ViewGroupStore } from "../store/ViewGroupStore";
+import {EventConst} from "../../../config/Attribute";
 
 type Props = {
     store: ViewGroupStore
@@ -19,6 +20,22 @@ type State = {};
 
 @observer
 export class ViewGroup extends React.Component<Props, State> {
+
+    componentDidMount() {
+        const store = this.props.store;
+        DesignEvent.addListener(EventConst.widgetMouseClick, store.handleWidgetClick);
+        DesignEvent.addListener(EventConst.widgetMouseExit, store.handleWidgetMouseExit);
+        DesignEvent.addListener(EventConst.widgetMouseEnter, store.handleWidgetMouseEnter);
+        DesignEvent.addListener(EventConst.widgetMouseDBLClick, store.handleWidgetDBLClick);
+    }
+
+    componentWillUnmount() {
+        const store = this.props.store;
+        DesignEvent.removeListener(EventConst.widgetMouseClick, store.handleWidgetClick);
+        DesignEvent.removeListener(EventConst.widgetMouseExit, store.handleWidgetMouseExit);
+        DesignEvent.removeListener(EventConst.widgetMouseEnter, store.handleWidgetMouseEnter);
+        DesignEvent.removeListener(EventConst.widgetMouseDBLClick, store.handleWidgetDBLClick);
+    }
 
     _render() {
         const { store } = this.props;
@@ -31,83 +48,71 @@ export class ViewGroup extends React.Component<Props, State> {
                 <StatusBar
                     width={canvasRect.width}
                     height={designRect.top}
-                    onMouseExit={store.handleWidgetMouseExit}
-                    onMouseEnter={store.handleWidgetMouseEnter}
-                    onClick = {store.handleWidgetSelect}
                 />
                 <Header
                     width={canvasRect.width}
                     height={designRect.nav_height}
-                    onMouseExit={store.handleWidgetMouseExit}
-                    onMouseEnter={store.handleWidgetMouseEnter}
-                    onClick = {store.handleWidgetSelect}
                 />
                 <IPhoneXOperateBar
                     width={canvasRect.width}
                     height={designRect.bottom}
                     designHeight={canvasRect.height}
-                    onClick = {store.handleWidgetSelect}
                 />
-                <Text onMouseExit={store.handleWidgetMouseExit}
-                      onMouseEnter={store.handleWidgetMouseEnter}>
+                <Text>
                     测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
                 </Text>
-                <div>
+                <Text>
+                    测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
+                </Text>
+                <Text>
+                    测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
+                </Text>
+                <Text>
                     <span>
                         测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
                     </span>
-                </div>
-                <div>
+                </Text>
+                <Text>
                     <span>
                         测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
                     </span>
-                </div>
-                <div>
+                </Text>
+                <Text>
                     <span>
                         测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
                     </span>
-                </div>
-                <div>
+                </Text>
+                <Text>
                     <span>
                         测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
                     </span>
-                </div>
-                <div>
+                </Text>
+                <Text>
                     <span>
                         测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
                     </span>
-                </div>
-                <div>
+                </Text>
+                <Text>
                     <span>
                         测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
                     </span>
-                </div>
-                <div>
+                </Text>
+                <Text>
                     <span>
                         测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
                     </span>
-                </div>
-                <div>
+                </Text>
+                <Text>
                     <span>
                         测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
                     </span>
-                </div>
-                <div>
+                </Text>
+                <Text>
                     <span>
                         测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
                     </span>
-                </div>
-                <div>
-                    <span>
-                        测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
-                    </span>
-                </div>
-                <div>
-                    <span>
-                        测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
-                    </span>
-                </div>
-                <div>
+                </Text>
+                <Text>
                     <span>
                         测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
                     </span>
@@ -150,7 +155,7 @@ export class ViewGroup extends React.Component<Props, State> {
                     <span>
                         测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
                     </span>
-                </div>
+                </Text>
             </div>
         );
     }

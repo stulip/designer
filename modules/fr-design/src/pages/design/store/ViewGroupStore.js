@@ -88,12 +88,12 @@ export class ViewGroupStore {
     };
 
     /**
-     * widget 选中
-     * @param event
-     * @param widget
+     * widget 单击事件
+     * @param {MouseEvent} event
+     * @param {BaseWidget} widget
      */
     @action
-    handleWidgetSelect = (event: MouseEvent, widget: BaseWidget) => {
+    handleWidgetClick = (event: MouseEvent, widget: BaseWidget) => {
         let that = this;
         const groupRect = that.group.getBoundingClientRect();
         const rect = event.currentTarget.getBoundingClientRect();
@@ -124,4 +124,13 @@ export class ViewGroupStore {
         );
         that.setSelectWidget(widget);
     };
+
+    /**
+     * widget 双击事件
+     * @param {MouseEvent} event
+     * @param {BaseWidget} widget
+     */
+    handleWidgetDBLClick = (event: MouseEvent, widget: BaseWidget)=> {
+
+    }
 }

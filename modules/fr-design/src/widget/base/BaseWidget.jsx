@@ -6,11 +6,11 @@
 
 // @flow
 import React, {Fragment} from 'react';
+import {DesignEvent} from "fr-web";
+import {EventConst} from "../../config/Attribute";
 
 export type BaseWidgetProps = {
-    onMouseExit ?: (event: MouseEvent)=> void,
-    onMouseEnter ?: (event: MouseEvent)=> void,
-    onClick ?: (event: MouseEvent)=> void,
+
 };
 type State = {
 
@@ -23,12 +23,6 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
     get widget (){
         return this.widgetRef.current;
     }
-
-    static defaultProps = {
-        onMouseExit: ()=> {},
-        onMouseEnter: ()=> {},
-        onClick: ()=> {}
-    };
 
     constructor(props) {
         super(props);
@@ -43,6 +37,7 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
         that.widget.addEventListener("mouseleave", that.handleMouseLeave);
         that.widget.addEventListener("mouseenter", that.handleMouseEnter);
         that.widget.addEventListener("click", that.handleClick);
+        that.widget.addEventListener("dblclick", that.handleDBLClick);
     }
 
     componentWillUnmount() {
@@ -50,20 +45,41 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
         that.widget.removeEventListener('mouseleave', that.handleMouseLeave);
         that.widget.removeEventListener('mouseenter', that.handleMouseEnter);
         that.widget.removeEventListener('click', that.handleClick);
+        that.widget.removeEventListener('dblclick', that.handleDBLClick);
     }
 
+    /**
+     * 失去鼠标焦点
+     * @param event
+     */
     handleMouseEnter = (event: MouseEvent): void => {
-        this.props.onMouseEnter(event);
+        DesignEvent.emit(EventConst.widgetMouseEnter, event, this);
     };
 
+    /**
+     * 获得鼠标焦点
+     * @param event
+     */
     handleMouseLeave = (event: MouseEvent): void => {
-        this.props.onMouseExit(event);
+        DesignEvent.emit(EventConst.widgetMouseExit, event, this);
     };
 
+    /**
+     * 元素被点击
+     * @param event
+     */
     handleClick = (event: MouseEvent): void => {
         event.preventDefault();
         event.stopPropagation();
-        this.props.onClick(event, this);
+        DesignEvent.emit(EventConst.widgetMouseClick, event, this)
+    };
+
+    /**
+     * 双击事
+     * @param event
+     */
+    handleDBLClick = (event: MouseEvent): void => {
+        DesignEvent.emit(EventConst.widgetMouseDBLClick, event, this);
     };
 
     // 子类实现

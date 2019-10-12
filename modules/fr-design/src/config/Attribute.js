@@ -7,6 +7,11 @@
 export const EventConst = {
     canvasSize: "attr.canvas.size",
     background: "attr.background",
+
+    widgetMouseExit: "widget.mouse.exit",
+    widgetMouseEnter: "widget.mouse.enter",
+    widgetMouseClick: "widget.mouse.click",
+    widgetMouseDBLClick: "widget.mouse.dblclick",
 };
 
 // 布局方向常量
