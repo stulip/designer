@@ -40,9 +40,6 @@ export class ScreensStore {
             width: 0,
             height: 0,
         };
-    };
-
-    handleClick = (event: MouseEvent)=> {
         this.main.viewGroup.cancelSelect();
     };
 

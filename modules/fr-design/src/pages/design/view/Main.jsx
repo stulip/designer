@@ -16,6 +16,8 @@ import { Section } from "./Section";
 import { observer } from "mobx-react";
 import { MainStore } from "../store/MainStore";
 import { ColorPicker, PopupPanel } from "fr-ui";
+import {DesignEvent} from "fr-web";
+import {EventConst} from "../../../config/Attribute";
 
 @observer
 export class Main extends Component {
@@ -36,7 +38,8 @@ export class Main extends Component {
         let that = this;
         that.store.keyEvents.removeAllListeners();
         document.removeEventListener("contextmenu", that.handleContextMenu);
-        document.removeEventListener('keyup', that.handleKeyboard)
+        document.removeEventListener('keyup', that.handleKeyboard);
+        that.store.removeListener();
     }
 
     handleKeyboard = (event: KeyboardEvent) => {

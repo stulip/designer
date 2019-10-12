@@ -7,12 +7,12 @@
 
 import React from "react";
 import "../assets/screens.pcss";
-import { observer } from "mobx-react";
-import { ScreensStore } from "../store/ScreensStore";
-import { IBotTooltip, IBotIcon, classNames } from "fr-web";
-import { small_grid } from "../../../assets/svg";
-import { ViewGroup } from "./ViewGroup";
-import { AdjustSizeCanvas, RangeSelection } from "fr-ui";
+import {observer} from "mobx-react";
+import {ScreensStore} from "../store/ScreensStore";
+import {classNames} from "fr-web";
+import {small_grid} from "../../../assets/svg";
+import {ViewGroup} from "./ViewGroup";
+import {AdjustSizeCanvas, RangeSelection} from "fr-ui";
 import {WidgetBorder} from "./WidgetBorder";
 
 type Props = { store: ScreensStore };
@@ -143,7 +143,7 @@ export class Screens extends React.Component<Props, State> {
             height: `${scaleValue}%`
         };
         return (
-            <div className={"screens"} ref={screensRef} onMouseDown={store.handleMouseDown} onClick={store.handleClick}>
+            <div className={"screens"} ref={screensRef} onMouseDown={store.handleMouseDown}>
                 <div
                     className={"viewport"}
                     style={{

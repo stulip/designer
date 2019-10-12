@@ -7,6 +7,7 @@
 import React from "react";
 import type { ItemProps } from "./../FormView";
 import { Types, Tools } from "@xt-web/core";
+import {DesignEvent} from "fr-web";
 
 type Props = {
     value: any,
@@ -49,6 +50,37 @@ class BaseItem extends React.Component<Props> {
     getValue(value): any {
         return value;
     }
+
+    componentDidMount() {
+        const {key} = this.getListener();
+        key && DesignEvent.addListener(key, this.listenerValueChange)
+    }
+
+    componentWillUnmount() {
+        const {key} = this.getListener();
+        key && DesignEvent.removeListener(key, this.listenerValueChange)
+    }
+
+    getListener (){
+        const {listener} = this.props.item;
+        let key = listener, getValue, setValue;
+        if (key && Types.isObject(key)){
+            getValue = key.getValue;
+            setValue = key.setValue;
+            key = key.key;
+        }
+        return {key, getValue, setValue}
+    }
+
+    /**
+     * 监听值改变
+     * @param value
+     */
+    listenerValueChange = (value)=> {
+        let that = this;
+        const {getValue} = that.getListener();
+        that._onChange(getValue ? getValue(value): value);
+    };
 
     UNSAFE_componentWillReceiveProps(nextProps) {
         let that = this;
@@ -118,6 +150,13 @@ class BaseItem extends React.Component<Props> {
     }
 
     onChange(data) {
+        let that = this;
+        const {key, setValue} = that.getListener();
+        DesignEvent.emit(key, setValue? setValue(data): data);
+        that._onChange(data);
+    };
+
+    _onChange(data) {
         let that = this;
         let { item } = that.props;
         that.setValue(data);

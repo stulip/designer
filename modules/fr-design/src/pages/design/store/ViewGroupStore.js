@@ -47,7 +47,7 @@ export class ViewGroupStore {
         that.main.section.setRulerShadow(0, 0, canvasRect.width, canvasRect.height);
         that.main.attribute.setConfig([]);
 
-        if (that.main.attribute.form){
+        if (that.main.attribute.form && that.widget){
             that.widget.formData = that.main.attribute.form.getFormData();
         }
         that.selectRect = null;
@@ -75,6 +75,8 @@ export class ViewGroupStore {
     @action
     handleWidgetMouseEnter = (event: MouseEvent) => {
         let that = this;
+        // 鼠标选择状态
+        if (that.main.screens.rangeBoundRect) return;
         const groupRect = that.group.getBoundingClientRect();
         const rect = event.currentTarget.getBoundingClientRect();
         const left = ((rect.left - groupRect.left) / groupRect.width) * 100;

@@ -5,7 +5,7 @@
  * @sine 2019-09-05 10:56
  */
 import {observable, action, computed, toJS} from "mobx";
-import type { MainStore, Rect } from "../../../flow/Main.flow";
+import type {MainStore, Rect, Size} from "../../../flow/Main.flow";
 import {viewMinSize, scrollbarMinWidth, scrollbarThick, zoomScale, viewportScale, LocalData, ENUM} from "../../../config/Config";
 import React from "react";
 import { Types } from "@xt-web/core";
@@ -231,14 +231,24 @@ export class SectionStore {
         const lastWidth = that.canvasRect.width;
         const lastHeight = that.canvasRect.height;
         if (nextWidth !== lastWidth || nextHeight !== lastHeight) {
-            that.canvasRect.width = nextWidth;
-            that.canvasRect.height = nextHeight;
-
-            that.setRulerShadow(0, 0, nextWidth, nextHeight);
-            that.handleRulerPosition();
             DesignEvent.emit(EventConst.canvasSize, {width: nextWidth, height: nextHeight});
         }
     }
+
+    /**
+     * 采用监听调用
+     * @param size
+     */
+    @action
+    onListenerCanvasSize = (size: Size) =>{
+        let that = this;
+        const {width = that.canvasRect.width, height = that.canvasRect.height} = size;
+        that.canvasRect.width = width;
+        that.canvasRect.height = height;
+
+        that.setRulerShadow(0, 0, width, height);
+        that.handleRulerPosition();
+    };
 
     /**
      * 设置画布坐标, 同时修改滚动条

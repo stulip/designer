@@ -53,7 +53,20 @@ export class MainStore {
         that.section = new SectionStore(that);
         that.attribute = new AttributeStore(that);
         that.viewGroup = new ViewGroupStore(that);
+        that.addListener();
         that.init(props);
+    }
+
+    addListener (){
+        let that = this;
+        DesignEvent.addListener(EventConst.background, that.onListenerBackgroundColor);
+        DesignEvent.addListener(EventConst.canvasSize, that.section.onListenerCanvasSize);
+    }
+
+    removeListener (){
+        let that = this;
+        DesignEvent.removeListener(EventConst.background, that.store.onListenerBackgroundColor);
+        DesignEvent.removeListener(EventConst.canvasSize, that.section.onListenerCanvasSize);
     }
 
     /**
@@ -71,6 +84,7 @@ export class MainStore {
         };
         that.section.init(config, options);
         that.widgets.init(config, options);
+        that.attribute.init(config, options);
     }
 
     /**
@@ -88,8 +102,12 @@ export class MainStore {
      */
     @action
     setBackgroundColor = (color)=> {
-        this.pageData.backgroundColor = color;
         DesignEvent.emit(EventConst.background, color);
+    };
+
+    @action
+    onListenerBackgroundColor = (color)=> {
+        this.pageData.backgroundColor = color;
     };
 
     /**

@@ -4,9 +4,10 @@
  * @sine 2019-09-24 16:17
  */
 
+// 设计器事件常量
 export const EventConst = {
-    canvasSize: "attr.canvas.size",
-    background: "attr.background",
+    canvasSize: "basic.canvas.size",
+    background: "basic.background",
 
     widgetMouseExit: "widget.mouse.exit",
     widgetMouseEnter: "widget.mouse.enter",

@@ -126,17 +126,17 @@ const convertState = props => {
                 });
             } else {
                 if (!da.form) return;
-                console.log(da);
+                // console.log(da);
                 da.sub = da.sub || FormView.label;
                 config[da.form] = da;
-                if (!props.formData) formData[da.form] = da.getValue ? da.getValue(da.value) : da.value;
+                if (!props.formData || Types.isEmptyObject(props.formData)) formData[da.form] = da.getValue ? da.getValue(da.value) : da.value;
             }
         };
-        console.groupCollapsed("%c-> Init Fields", "color:#0066CC;");
+        // console.groupCollapsed("%c-> Init Fields", "color:#0066CC;");
         props.config.forEach(da => {
             Array.isArray(da) ? da.forEach(setConfig) : setConfig(da);
         });
-        console.groupEnd();
+        // console.groupEnd();
     } catch (e) {
         console.error(e);
     }

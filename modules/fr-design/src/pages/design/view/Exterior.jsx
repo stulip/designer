@@ -11,7 +11,6 @@ import { Form } from "fr-ui";
 import { IBotSVG } from "fr-web";
 import { ArrangeConfig } from "../../../config/Attribute";
 import { observer } from "mobx-react";
-import { BasicAttr } from "../components";
 import { AttributeStore } from "../store/AttributeStore";
 import { toJS } from "mobx";
 
@@ -39,11 +38,7 @@ export class Exterior extends React.Component<Props, State> {
             <>
                 <div className={"arrange"}>{ArrangeConfig.map(that.renderArrange)}</div>
                 <main className={'ds-attribute'}>
-                        {!config || !config.length ? (
-                            <BasicAttr store={store} />
-                        ) : (
-                            <Form.View config={config} ref={store.formRef} formData={store.formData}/>
-                        )}
+                    <Form.View config={config} ref={store.formRef} formData={store.formData}/>
                 </main>
             </>
         );

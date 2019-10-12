@@ -5,12 +5,10 @@
  * @sine 2019-09-02 16:30
  */
 import * as React from "react";
-import { IBotIcon } from "fr-web";
-import { Rules } from "./Rules";
-import { ScrollBar } from "./ScrollBar";
-import { observer } from "mobx-react";
-import { action } from "mobx";
-import { SectionStore } from "../store/SectionStore";
+import {Rules} from "./Rules";
+import {ScrollBar} from "./ScrollBar";
+import {observer} from "mobx-react";
+import {SectionStore} from "../store/SectionStore";
 
 type Props = {
     store: SectionStore
