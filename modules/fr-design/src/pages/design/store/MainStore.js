@@ -65,7 +65,7 @@ export class MainStore {
 
     removeListener (){
         let that = this;
-        DesignEvent.removeListener(EventConst.background, that.store.onListenerBackgroundColor);
+        DesignEvent.removeListener(EventConst.background, that.onListenerBackgroundColor);
         DesignEvent.removeListener(EventConst.canvasSize, that.section.onListenerCanvasSize);
     }
 

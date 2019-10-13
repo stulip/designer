@@ -26,7 +26,7 @@ ignore_module = {
 debug_module = "web"
 # 编译脚本
 build_web = utils.get_path("scripts/build.js")
-zip_dir = os.path.join('dist', '.zip')
+zip_dir = os.path.join('build', 'dist')
 
 
 class struct:
@@ -65,7 +65,7 @@ def start(argv, args):
         for mo_name, mo_config in config['module'].items():
             if (args.all and mo_name in ignore_module['all']) or (
                 args.release and mo_name in ignore_module['release']) or (
-                module is None and mo_name in ignore_module['build']):
+                module is None and not args.release and mo_name in ignore_module['build']):
                 print("\033[1;33m⬡ webpack:\033[0m 忽略模块 %s" % mo_name.upper())
                 continue
 
@@ -122,7 +122,7 @@ def merge_file(args, six, config):
 
     o_path = os.path.join(utils.get_path(zip_dir), 'web', six, index_name)
     os.path.isfile(o_path) and os.remove(o_path)
-    out = open(o_path, "w")
+    out = open(o_path, "w", encoding='utf-8')
     out.write(value)
     out.close()
 
