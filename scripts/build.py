@@ -66,21 +66,21 @@ def start(argv, args):
             if (args.all and mo_name in ignore_module['all']) or (
                 args.release and mo_name in ignore_module['release']) or (
                 module is None and not args.release and mo_name in ignore_module['build']):
-                print("\033[1;33m⬡ webpack:\033[0m 忽略模块 %s" % mo_name.upper())
+                print("\033[1;33m⬡ webpack:\033[0m Ignore Module %s" % mo_name.upper())
                 continue
 
-            print("\033[0;34m⬡ webpack:\033[0m 编译模块 %s" % str(mo_name).upper())
+            print("\033[0;34m⬡ webpack:\033[0m Build Module %s" % str(mo_name).upper())
             commend = 'node %s --module %s --progress false --block %s --release %s --dev %s' % (
             build_web, mo_name, args.block, args.release, args.dev)
             thread_start(build_js, (mo_name, commend,))
         thread_sleep()
         for name in error_module:
-            print("\033[1;31m⬢ webpack: 编译模块 %s 失败! \033[0m" % str(name).upper())
+            print("\033[1;31m⬢ webpack: Build Module %s 失败! \033[0m" % str(name).upper())
         if args.release and len(error_module) == 0:
             merge_assets(args, config)
-            print("\033[0;34m⬡ webpack:\033[0m 发布完成!")
+            print("\033[0;34m⬡ webpack:\033[0m Publish!")
         else:
-            print("\033[0;34m⬡ webpack:\033[0m 编译完成!")
+            print("\033[0;34m⬡ webpack:\033[0m Build End!")
     else:
         build_module(args, module)
 
