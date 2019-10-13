@@ -103,10 +103,9 @@ def merge_file(args, six, config):
     list_dirs = utils.get_path("dist")
     index_name = 'index.%s' % six
 
-    module_list = []
+    module_list = ["web"]
     for key, value in block.items():
         module_list.append(key)
-    module_list.append('web')
 
     value = ''
     for module in module_list:
