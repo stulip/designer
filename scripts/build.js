@@ -21,7 +21,8 @@ if (argv.progress !== 'false') {
 const dist = path.join(config.webpack.output.path, '..');
 const backDistPath = path.join(dist, '_' + config.module.name);
 
-const logPrefix = {ok: chalk.blue('⬡ webpack:'), whoops: chalk.red('⬢ webpack:')};
+//⬡ ⬢
+const logPrefix = {ok: chalk.blue('webpack:'), whoops: chalk.red('webpack:')};
 const log = {
     error: (...args) => {
         if (argv.silent) return;
