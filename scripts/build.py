@@ -26,7 +26,8 @@ ignore_module = {
 debug_module = "web"
 # 编译脚本
 build_web = utils.get_path("scripts/build.js")
-zip_dir = os.path.join('build', 'dist')
+zip_dir = os.path.join('dist', '.zip')
+release_dist = os.path.join('build', 'dist')
 
 
 class struct:
@@ -48,6 +49,7 @@ def parse_args(argv):
     parser.add_argument("-yu", "--yarn_upgrade", dest="yarn_upgrade", action="store_true",
                         help="运行 yarn upgrade")
     parser.add_argument("-f", "--force", dest="force", action="store_true", help="-g = true时强制更新代码")
+    parser.add_argument("-rp", "--release_path", default=release_dist, action="store", help="编译Release版本时, 目标路径")
 
     (args, unkonw) = parser.parse_known_args(argv)
     args.module = len(unkonw) > 1 and unkonw[1] or (args.dev and debug_module or None)
@@ -95,8 +97,20 @@ def merge_assets(args, config):
 
     not os.path.isdir('build') and os.mkdir('build')
     utils.zip_dir(zip_dir, 'build/dist-release.zip')
-    # shutil.rmtree(zip_dir)
 
+    copy_release(args.release_path)
+    # 删除 zip 目录
+    shutil.rmtree(zip_dir)
+
+# 复制dist到release目录
+def copy_release (dist):
+    if os.path.isdir(dist):
+        if os.path.isfile(os.path.join(dist, 'index.html')):
+            shutil.rmtree(dist)
+        else:
+            raise Exception("此目录非项目工作目录!")
+
+    shutil.copytree(zip_dir, dist)
 
 def merge_file(args, six, config):
     block = config['block'][args.block]
