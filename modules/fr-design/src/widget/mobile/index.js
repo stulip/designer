@@ -3,9 +3,17 @@
  * @author tangzehua
  * @sine 2019-10-10 15:02
  */
+import {WidgetConst} from '../WidgetConfig'
+import {Header} from './Header'
+import {StatusBar} from './StatusBar'
+import {BottomOperateBar} from './BottomOperateBar'
+import {Text} from './Text'
+import {Panel} from './Panel'
 
-export {Header} from './Header'
-export {StatusBar} from './StatusBar'
-export {IPhoneXOperateBar} from './iPhoneXOperateBar'
-export {Text} from './Text'
-export {Panel} from './Panel'
+export const App = {
+    [WidgetConst.App.StatusBar]: StatusBar,
+    [WidgetConst.App.Header]: Header,
+    [WidgetConst.App.BottomOperateBar]: BottomOperateBar,
+    [WidgetConst.App.Text]: Text,
+    [WidgetConst.App.Panel]: Panel,
+};

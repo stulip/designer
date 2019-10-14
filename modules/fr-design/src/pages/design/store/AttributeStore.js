@@ -49,9 +49,9 @@ export class AttributeStore extends BaseStore {
                             form: "canvas.width",
                             type: Form.Const.Type.ConfirmInputNumber,
                             value: canvasRect.width,
+                            disabled: true,
                             input: {
                                 title: "宽",
-                                disabled: true,
                                 min: config.designRect.width
                             },
                             listener: {

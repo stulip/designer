@@ -116,8 +116,7 @@ const serveData = function(config: Array<Object>, formData: Object) {
  * @returns {{formData: (*|{}), config}}
  */
 const convertState = props => {
-    let formData = props.formData || {},
-        config = {};
+    let formData = props.formData || {}, config = {};
     try {
         let setConfig = da => {
             if (Array.isArray(da.config)) {
@@ -129,7 +128,9 @@ const convertState = props => {
                 // console.log(da);
                 da.sub = da.sub || FormView.label;
                 config[da.form] = da;
-                if (!props.formData || Types.isEmptyObject(props.formData)) formData[da.form] = da.getValue ? da.getValue(da.value) : da.value;
+                if ( !props.formData || ( props.formData && Types.isUndefined(props.formData[da.form]))){
+                    formData[da.form] = da.getValue ? da.getValue(da.value) : da.value;
+                }
             }
         };
         // console.groupCollapsed("%c-> Init Fields", "color:#0066CC;");

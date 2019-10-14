@@ -21,13 +21,17 @@ type State = {
 
 export class BaseText extends BaseWidget<BaseTextProps, State> {
 
+    getName(): string {
+        return "文字";
+    }
 
     renderWidget() {
         const {children} = this.props;
+        const {value} = this.formData || {};
         return (
             <div className={'rich-text'}>
                 <p>
-                    <span>{children}</span>
+                    <span>{value}</span>
                 </p>
             </div>
         );

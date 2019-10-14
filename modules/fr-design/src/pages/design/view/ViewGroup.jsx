@@ -6,17 +6,70 @@
 
 // @flow
 import React from "react";
-import { StatusBar, Header, IPhoneXOperateBar, Text, Panel } from "../../../widget/mobile";
+import { App } from "../../../widget/mobile";
 import { observer } from "mobx-react";
 import {classNames, DesignEvent} from "fr-web";
 import "../../../widget/assets";
 import { ViewGroupStore } from "../store/ViewGroupStore";
 import {EventConst} from "../../../config/Attribute";
+import {WidgetConst} from "../../../widget/WidgetConfig";
 
 type Props = {
     store: ViewGroupStore
 };
 type State = {};
+
+const GroupWidget = [
+    {
+        component: WidgetConst.App.StatusBar,
+    },
+    {
+        component: WidgetConst.App.Header,
+        value: {
+            title: '采购中心'
+        },
+        children: [
+
+        ]
+    },
+    {
+        component: WidgetConst.App.BottomOperateBar
+    },
+    {
+        component: WidgetConst.App.Panel,
+        children: [
+            {
+                component: WidgetConst.App.Text,
+                value: '刘亦菲'
+            },
+            {
+                component: WidgetConst.App.Text,
+                value: '李小璐果照'
+            }
+        ]
+    },
+    {
+        component: WidgetConst.App.Text,
+        value: '测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试'
+    },
+    {
+        component: WidgetConst.App.Text,
+        value: '测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试'
+    },
+    {
+        component: WidgetConst.App.Text,
+        value: '测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试'
+    },
+    {
+        component: WidgetConst.App.Text,
+        value: '测试测试测试测试测试测试测试测试测试测试测试测试测试测试' +
+            '测测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测' +
+            '试测试测试测试测试测试测试测试测试测试测试测试测试测试' +
+            '测试测试测试测试测试测试测试测试试测试测试测' +
+            '测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试试测试测试测试测试测试测试测试测试测试测试'
+    }
+];
+
 
 @observer
 export class ViewGroup extends React.Component<Props, State> {
@@ -31,6 +84,21 @@ export class ViewGroup extends React.Component<Props, State> {
         store.unmount();
     }
 
+    createWidget = (config) =>{
+        const { store } = this.props;
+        const { main } = store;
+        const { canvasRect, canvasScale } = main.section;
+        const { designRect } = main.config;
+        return config.map((widget, index) => {
+            const Comp = App[widget.component];
+            return Comp && (
+                <Comp key={index} {...widget} canvasRect={canvasRect} designRect={designRect} groupRef={store.groupRef}>
+                    {widget.children && this.createWidget(widget.children)}
+                </Comp>
+            )
+        });
+    };
+
     _render() {
         const { store } = this.props;
         const { main } = store;
@@ -39,119 +107,7 @@ export class ViewGroup extends React.Component<Props, State> {
 
         return (
             <div className={classNames("group-list", designRect.type)} ref={store.groupRef}>
-                <StatusBar
-                    width={canvasRect.width}
-                    height={designRect.top}
-                />
-                <Header
-                    width={canvasRect.width}
-                    height={designRect.nav_height}
-                />
-                <IPhoneXOperateBar
-                    width={canvasRect.width}
-                    height={designRect.bottom}
-                    designHeight={canvasRect.height}
-                />
-                <Panel>
-                    <Text>
-                        刘亦菲
-                    </Text>
-                    <Text>
-                        李小璐不雅视频
-                    </Text>
-                </Panel>
-                <Text>
-                    杨幂
-                </Text>
-                <Text>
-                    <span>
-                        测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
-                    </span>
-                </Text>
-                <Text>
-                    <span>
-                        测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
-                    </span>
-                </Text>
-                <Text>
-                    <span>
-                        测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
-                    </span>
-                </Text>
-                <Text>
-                    <span>
-                        测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
-                    </span>
-                </Text>
-                <Text>
-                    <span>
-                        测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
-                    </span>
-                </Text>
-                <Text>
-                    <span>
-                        测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
-                    </span>
-                </Text>
-                <Text>
-                    <span>
-                        测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
-                    </span>
-                </Text>
-                <Text>
-                    <span>
-                        测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
-                    </span>
-                </Text>
-                <Text>
-                    <span>
-                        测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
-                    </span>
-                </Text>
-                <Text>
-                    <span>
-                        测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
-                    </span>
-                    <span>
-                        测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
-                    </span>
-                    <span>
-                        测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
-                    </span>
-                    <span>
-                        测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
-                    </span>
-                    <span>
-                        测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
-                    </span>
-                    <span>
-                        测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
-                    </span>
-                    <span>
-                        测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
-                    </span>
-                    <span>
-                        测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
-                    </span>
-                    <span>
-                        测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
-                    </span>
-                    <span>
-                        测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
-                    </span>
-                    <span>
-                        测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
-                    </span>
-                    <span>
-                        测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
-                    </span>
-                    <span>
-                        测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
-                    </span>
-                    <span>
-                        测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
-                    </span>
-                </Text>
+                {this.createWidget(GroupWidget)}
             </div>
         );
     }

@@ -17,9 +17,19 @@ type Props = {
 
 export class StatusBar extends BaseWidget<Props> {
 
+    isDisableHeight(): boolean {
+        return true;
+    }
+
+    isDisableWidth(): boolean {
+        return true;
+    }
+
     render() {
         const that = this;
-        const { width, height } = that.props;
+        const { canvasRect, designRect } = that.props;
+        const width = canvasRect.width;
+        const height = designRect.top;
         return (
             <div className="group-flow" style={{ width, height }} ref={that.widgetRef}>
                 <div className="status-bar" style={{ width, height }}>

@@ -7,19 +7,21 @@
 // @flow
 import React from "react";
 import "../assets/mobile/iphonex-operate-bar.pcss";
+import type {BaseWidgetProps} from "../base/BaseWidget";
 
 type Props = {
-    width: number,
-    height: number,
-    designHeight: number
+    ...BaseWidgetProps
 };
 
 /**
  * @return {null}
  */
-export function IPhoneXOperateBar(props: Props) {
-    const { width, height, designHeight, scale } = props;
-    if (height === 0) return null;
+export function BottomOperateBar(props: Props) {
+    const { canvasRect, designRect } = props;
+    if (designRect.bottom === 0) return null;
+    const width = canvasRect.width;
+    const height = designRect.bottom;
+    const designHeight = canvasRect.height;
 
     return (
         <div className="group-item" style={{ top: designHeight - height, width, height, zIndex: 99 }}>

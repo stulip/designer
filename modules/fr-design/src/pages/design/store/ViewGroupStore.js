@@ -90,7 +90,7 @@ export class ViewGroupStore extends BaseStore{
     handleWidgetMouseEnter (event: MouseEvent) {
         let that = this;
         // 鼠标选择状态
-        if (that.main.screens.rangeBoundRect) return;
+        if (that.main.screens.rangeBoundRect || ! that.group) return;
         const groupRect = that.group.getBoundingClientRect();
         const rect = event.currentTarget.getBoundingClientRect();
         const left = ((rect.left - groupRect.left) / groupRect.width) * 100;
@@ -122,6 +122,7 @@ export class ViewGroupStore extends BaseStore{
     @action.bound
     handleWidgetClick (event: MouseEvent, widget: BaseWidget) {
         let that = this;
+        if ( !that.group ) return;
         const groupRect = that.group.getBoundingClientRect();
         const rect = event.currentTarget.getBoundingClientRect();
         const left = ((rect.left - groupRect.left) / groupRect.width) * 100;

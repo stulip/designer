@@ -21,14 +21,22 @@ const backImage = require('fr-art/design/back_chevron.png');
 
 export class Header extends BasePanel<Props> {
 
+    getName(): string {
+        return "导航栏";
+    }
+
+    isDisableWidth(): boolean {
+        return true;
+    }
+
     widgetProps(): [] {
         const that = this;
         const config = super.widgetProps();
         return [
             ...config,
             {
-                form: 'name2',
-                type: Form.Const.Type.ConfirmInputNumber,
+                form: 'title',
+                type: Form.Const.Type.PanelInput,
             }
             // {
             //     name: '标题',
@@ -41,7 +49,10 @@ export class Header extends BasePanel<Props> {
 
     render() {
         const that = this;
-        const {height, width} = that.props;
+        const {designRect, canvasRect} = that.props;
+        const width = canvasRect.width;
+        const height = designRect.nav_height;
+        const {title} = that.formData || {};
         return (
             <div className="group-flow" style={{width, height}} ref={that.widgetRef}>
                 <div className="header-bar" style={{width, height}}>
@@ -49,7 +60,7 @@ export class Header extends BasePanel<Props> {
                         <img src={backImage} width={15}/>
                         <span className="text">返回</span>
                     </div>
-                    <span className="header-title">首页</span>
+                    <span className="header-title">{title}</span>
                     <div className={'header-right'}>
                         <span className="text">菜单</span>
                     </div>
