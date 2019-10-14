@@ -8,6 +8,13 @@ import {observable, action, computed} from 'mobx';
 import type {MainStore} from "../../../flow/Main.flow";
 import {BaseStore} from "./BaseStore";
 
-export class FooterStore extends BaseStore{
+export class FooterStore extends BaseStore {
+    @observable
+    showSetting: boolean = false;
+
+    @action
+    setPreferenceAction = () => {
+        this.showSetting = !this.showSetting;
+    }
 
 }
