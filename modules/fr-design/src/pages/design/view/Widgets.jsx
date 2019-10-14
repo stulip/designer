@@ -16,6 +16,15 @@ type State = {};
 
 @observer
 export class Widgets extends React.Component<Props, State> {
+
+    componentDidMount() {
+        this.props.store.mount();
+    }
+
+    componentWillUnmount() {
+        this.props.store.unmount();
+    }
+
     render() {
         let store = this.props.store;
         return (

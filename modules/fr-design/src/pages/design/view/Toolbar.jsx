@@ -43,8 +43,12 @@ const ZoomItem = ({handleZoom, value})=> (
 @observer
 export class Toolbar extends React.Component<Props, State> {
 
-    constructor(props) {
-        super(props);
+    componentDidMount() {
+        this.props.store.mount();
+    }
+
+    componentWillUnmount() {
+        this.props.store.unmount();
     }
 
     _render(){

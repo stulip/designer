@@ -10,8 +10,9 @@ import type {MainStore, Rect, Size} from "../../../flow/Main.flow";
 import {Form} from "fr-ui";
 import {ItemConst} from "../components/item";
 import {EventConst} from "../../../config/Attribute";
+import {BaseStore} from "./BaseStore";
 
-export class AttributeStore {
+export class AttributeStore extends BaseStore {
 
     // form
     formRef = React.createRef();
@@ -23,12 +24,6 @@ export class AttributeStore {
     formConfig = [];
     formData;
 
-    main: MainStore;
-    constructor(main: MainStore) {
-        let that = this;
-        that.main = main;
-    }
-
     /**
      * 初始化
      * @param {PageConfig} config 页面配置信息
@@ -38,10 +33,6 @@ export class AttributeStore {
         let that = this;
         that.formData = null;
         that.formConfig = that.createBasicConfig();
-    }
-
-    setFieldsValue (data){
-        this.form.setFormData(data, {isChange: false});
     }
 
     createBasicConfig (){
@@ -90,7 +81,6 @@ export class AttributeStore {
                         type: ItemConst.Type.Background,
                         form: "background",
                         value: pageData.backgroundColor,
-                        onChange: that.main.setBackgroundColor,
                         listener: EventConst.background,
                         handlePicker: that.main.handleBackgroundColor
                     },
@@ -100,7 +90,7 @@ export class AttributeStore {
                         type: ItemConst.Type.GridSetting,
                         form: "gridSize",
                         value: gridAttribute,
-                        onChange: section.setGridAttribute,
+                        listener: EventConst.designGrid,
                         grid: { max: 100 }
                     },
                     { type: Form.Const.Type.Line, top: 10 }

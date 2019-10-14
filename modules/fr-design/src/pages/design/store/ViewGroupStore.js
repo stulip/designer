@@ -8,8 +8,11 @@ import React from "react";
 import { action, observable } from "mobx";
 import type { MainStore } from "../../../flow/Main.flow";
 import { BaseWidget } from "../../../widget/base/BaseWidget";
+import {BaseStore} from "./BaseStore";
+import {DesignEvent} from "fr-web";
+import {EventConst} from "../../../config/Attribute";
 
-export class ViewGroupStore {
+export class ViewGroupStore extends BaseStore{
     groupRef = React.createRef();
 
     get group() {
@@ -23,13 +26,24 @@ export class ViewGroupStore {
     // 选中的widget
     widget: BaseWidget;
 
-    main: MainStore;
-    constructor(main: MainStore) {
-        this.main = main;
+    addListener() {
+        const that = this;
+        DesignEvent.addListener(EventConst.widgetMouseClick, that.handleWidgetClick);
+        DesignEvent.addListener(EventConst.widgetMouseExit, that.handleWidgetMouseExit);
+        DesignEvent.addListener(EventConst.widgetMouseEnter, that.handleWidgetMouseEnter);
+        DesignEvent.addListener(EventConst.widgetMouseDBLClick, that.handleWidgetDBLClick);
     }
 
-    @action
-    handleWidgetMouseExit = (event: MouseEvent) => {
+    removeListener() {
+        const that = this;
+        DesignEvent.removeListener(EventConst.widgetMouseClick, that.handleWidgetClick);
+        DesignEvent.removeListener(EventConst.widgetMouseExit, that.handleWidgetMouseExit);
+        DesignEvent.removeListener(EventConst.widgetMouseEnter, that.handleWidgetMouseEnter);
+        DesignEvent.removeListener(EventConst.widgetMouseDBLClick, that.handleWidgetDBLClick);
+    }
+
+    @action.bound
+    handleWidgetMouseExit (event: MouseEvent){
         this.cancelHove();
     };
 
@@ -72,8 +86,8 @@ export class ViewGroupStore {
      * widget获得鼠标焦点
      * @param event
      */
-    @action
-    handleWidgetMouseEnter = (event: MouseEvent) => {
+    @action.bound
+    handleWidgetMouseEnter (event: MouseEvent) {
         let that = this;
         // 鼠标选择状态
         if (that.main.screens.rangeBoundRect) return;
@@ -105,8 +119,8 @@ export class ViewGroupStore {
      * @param {MouseEvent} event
      * @param {BaseWidget} widget
      */
-    @action
-    handleWidgetClick = (event: MouseEvent, widget: BaseWidget) => {
+    @action.bound
+    handleWidgetClick (event: MouseEvent, widget: BaseWidget) {
         let that = this;
         const groupRect = that.group.getBoundingClientRect();
         const rect = event.currentTarget.getBoundingClientRect();
@@ -143,5 +157,6 @@ export class ViewGroupStore {
      * @param {MouseEvent} event
      * @param {BaseWidget} widget
      */
-    handleWidgetDBLClick = (event: MouseEvent, widget: BaseWidget) => {};
+    @action.bound
+    handleWidgetDBLClick (event: MouseEvent, widget: BaseWidget) {};
 }

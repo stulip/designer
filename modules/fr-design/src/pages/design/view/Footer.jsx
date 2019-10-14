@@ -16,6 +16,15 @@ type State = {
 };
 
 export class Footer extends React.Component<Props, State> {
+
+    componentWillUnmount() {
+        this.props.store.unmount();
+    }
+
+    componentDidMount() {
+        this.props.store.mount();
+    }
+
     render() {
         return (
             <div className={'ds-footer'}>

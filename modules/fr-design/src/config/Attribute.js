@@ -8,6 +8,7 @@
 export const EventConst = {
     canvasSize: "basic.canvas.size",
     background: "basic.background",
+    designGrid: "basic.design.grid",
 
     widgetMouseExit: "widget.mouse.exit",
     widgetMouseEnter: "widget.mouse.enter",

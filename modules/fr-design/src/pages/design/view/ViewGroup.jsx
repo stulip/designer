@@ -23,18 +23,12 @@ export class ViewGroup extends React.Component<Props, State> {
 
     componentDidMount() {
         const store = this.props.store;
-        DesignEvent.addListener(EventConst.widgetMouseClick, store.handleWidgetClick);
-        DesignEvent.addListener(EventConst.widgetMouseExit, store.handleWidgetMouseExit);
-        DesignEvent.addListener(EventConst.widgetMouseEnter, store.handleWidgetMouseEnter);
-        DesignEvent.addListener(EventConst.widgetMouseDBLClick, store.handleWidgetDBLClick);
+        store.mount();
     }
 
     componentWillUnmount() {
         const store = this.props.store;
-        DesignEvent.removeListener(EventConst.widgetMouseClick, store.handleWidgetClick);
-        DesignEvent.removeListener(EventConst.widgetMouseExit, store.handleWidgetMouseExit);
-        DesignEvent.removeListener(EventConst.widgetMouseEnter, store.handleWidgetMouseEnter);
-        DesignEvent.removeListener(EventConst.widgetMouseDBLClick, store.handleWidgetDBLClick);
+        store.unmount();
     }
 
     _render() {

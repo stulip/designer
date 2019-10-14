@@ -24,16 +24,24 @@ export class Section extends React.Component<Props, State> {
     componentDidMount() {
         let that = this;
         const store = this.props.store;
+        store.mount();
         let win = that.iframe.contentWindow;
         win.onresize = that.resize;
         that.setContentSize(win);
         // store.sectionRef.current.addEventListener()
     }
 
+    componentWillUnmount() {
+        let that = this;
+        const store = that.props.store;
+        store.unmount();
+    }
+
     setContentSize(win: window) {
         let that = this;
+        const store = that.props.store;
         const { innerWidth, innerHeight } = win;
-        that.props.store.setContentSize(innerWidth, innerHeight);
+        store.setContentSize(innerWidth, innerHeight);
     }
 
     _render() {

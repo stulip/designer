@@ -16,10 +16,13 @@ import {DesignEvent, EventEmitter} from 'fr-web'
 import {AttributeStore} from "./AttributeStore";
 import {EventConst} from "../../../config/Attribute";
 import {ViewGroupStore} from "./ViewGroupStore";
+import {BaseStore} from "./BaseStore";
 
 export class MainStore {
     // 配置
     config: PageConfig;
+
+    _storeList: Array<BaseStore> = [];
 
     // keyboard
     keyEvents: EventEmitter;
@@ -45,6 +48,7 @@ export class MainStore {
 
     constructor(props) {
         let that = this;
+        that._storeList = [];
         that.keyEvents = new EventEmitter();
         that.screens = new ScreensStore(that);
         that.toolbar = new ToolbarStore(that);
@@ -53,6 +57,9 @@ export class MainStore {
         that.section = new SectionStore(that);
         that.attribute = new AttributeStore(that);
         that.viewGroup = new ViewGroupStore(that);
+
+        that._storeList.forEach(da => da.classMount());
+
         that.addListener();
         that.init(props);
     }
@@ -60,13 +67,11 @@ export class MainStore {
     addListener (){
         let that = this;
         DesignEvent.addListener(EventConst.background, that.onListenerBackgroundColor);
-        DesignEvent.addListener(EventConst.canvasSize, that.section.onListenerCanvasSize);
     }
 
     removeListener (){
         let that = this;
         DesignEvent.removeListener(EventConst.background, that.onListenerBackgroundColor);
-        DesignEvent.removeListener(EventConst.canvasSize, that.section.onListenerCanvasSize);
     }
 
     /**
@@ -82,9 +87,10 @@ export class MainStore {
         const options = {
             data: that.pageData,
         };
-        that.section.init(config, options);
-        that.widgets.init(config, options);
-        that.attribute.init(config, options);
+
+        that._storeList.forEach(da => {
+            da.init(config, options);
+        });
     }
 
     /**
@@ -121,5 +127,9 @@ export class MainStore {
         that.colorPickProps.targetRect = event.target.getBoundingClientRect();
         that.colorPickProps.color = color;
         that.colorPickProps.onChange = onChange;
+    };
+
+    pushStore (store: BaseStore){
+        this._storeList.push(store);
     }
 }

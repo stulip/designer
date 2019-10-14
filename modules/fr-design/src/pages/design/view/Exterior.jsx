@@ -22,6 +22,15 @@ type State = {};
 
 @observer
 export class Exterior extends React.Component<Props, State> {
+
+    componentDidMount() {
+        this.props.store.mount();
+    }
+
+    componentWillUnmount() {
+        this.props.store.unmount();
+    }
+
     renderArrange = item => {
         return (
             <a className={"item"} key={item.type} disabled={item.disable}>

@@ -11,8 +11,9 @@ import React from "react";
 import { Types } from "@xt-web/core";
 import {DesignEvent} from "fr-web";
 import {EventConst} from "../../../config/Attribute";
+import {BaseStore} from "./BaseStore";
 
-export class SectionStore {
+export class SectionStore extends BaseStore{
     sectionRef = React.createRef();
     // 视区大小, 需要计算
     @observable _viewportSize = { width: viewMinSize.width, height: viewMinSize.height };
@@ -38,17 +39,6 @@ export class SectionStore {
     @observable
     gridAttribute = { size: 25, visible: true };
 
-    main: MainStore;
-    constructor(main: MainStore) {
-        let that = this;
-        that.main = main;
-        that.addKeyListener();
-    }
-
-    addKeyListener (){
-
-    }
-
     /**
      * 初始化
      * @param {PageConfig} config 页面配置信息
@@ -64,6 +54,18 @@ export class SectionStore {
         that.canvasScale = LocalData.getFloatItem(`${ENUM.DESIGN_SCALE}_${data.id}`, that.canvasScale);
         that.setCanvasSize(canvasSize.width, canvasSize.height);
         that.setViewportSize(canvasSize.width * viewportScale.x, canvasSize.height * viewportScale.y);
+    }
+
+    addListener() {
+        let that = this;
+        DesignEvent.addListener(EventConst.canvasSize, that.onListenerCanvasSize);
+        DesignEvent.addListener(EventConst.designGrid, that.onListenerDesignGrid);
+    }
+
+    removeListener() {
+        let that = this;
+        DesignEvent.removeListener(EventConst.canvasSize, that.onListenerCanvasSize);
+        DesignEvent.removeListener(EventConst.designGrid, that.onListenerDesignGrid);
     }
 
     /**
@@ -239,8 +241,8 @@ export class SectionStore {
      * 采用监听调用
      * @param size
      */
-    @action
-    onListenerCanvasSize = (size: Size) =>{
+    @action.bound
+    onListenerCanvasSize (size: Size){
         let that = this;
         const {width = that.canvasRect.width, height = that.canvasRect.height} = size;
         that.canvasRect.width = width;
@@ -396,14 +398,18 @@ export class SectionStore {
         }
     };
 
+    @action
+    onListenerDesignGrid = (attr: Object) => {
+        let that = this;
+        that.gridAttribute = attr;
+        LocalData.setItem(`${ENUM.DESIGN_GRID}_${that.main.pageData.id}`, attr)
+    };
+
     /**
      * 设置设计器背景表格
      * @param attr
      */
-    @action
     setGridAttribute = (attr: Object)=> {
-        let that = this;
-        that.gridAttribute = attr;
-        LocalData.setItem(`${ENUM.DESIGN_GRID}_${that.main.pageData.id}`, attr)
+        DesignEvent.emit(EventConst.designGrid, attr);
     }
 }

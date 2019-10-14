@@ -27,6 +27,7 @@ export class Screens extends React.Component<Props, State> {
         if (store.screensRef.current) {
             store.screensRef.current.addEventListener("mousewheel", store.main.section.handleWheel, { passive: false });
         }
+        store.mount();
     }
 
     componentWillUnmount(): * {
@@ -34,6 +35,7 @@ export class Screens extends React.Component<Props, State> {
         if (store.screensRef.current) {
             store.screensRef.current.removeEventListener("mousewheel", store.main.section.handleWheel);
         }
+        store.unmount();
     }
 
     renderBgArea() {

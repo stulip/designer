@@ -7,6 +7,7 @@
 import { observable, action, computed } from "mobx";
 import type { MainStore } from "../../../flow/Main.flow";
 import { status_widget } from "../../../assets/svg";
+import {BaseStore} from "./BaseStore";
 
 export const SlideBarConfig = [
     { name: "status", svg: status_widget, tip: "状态", keyboard: "`" },
@@ -17,7 +18,7 @@ export const SlideBarConfig = [
     { name: "trash", svgName: "recycle", className: "trash-button", tip: "回收站" }
 ];
 
-export class WidgetsStore {
+export class WidgetsStore extends BaseStore {
     // 左侧面板是否折叠
     @observable isLeftPanelOpen = false;
 
@@ -28,12 +29,6 @@ export class WidgetsStore {
     @observable _leftPanelWidth = 0;
     // 左侧面板实际大小
     @observable leftPanelVXWidth = 240;
-
-    main: MainStore;
-    constructor(main: MainStore) {
-        this.main = main;
-        this.addKeyListener();
-    }
 
     addKeyListener() {
         let that = this;

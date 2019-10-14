@@ -7,19 +7,15 @@
 import { observable, action, computed } from "mobx";
 import type {MainStore, Rect} from "../../../flow/Main.flow";
 import React from "react";
+import {BaseStore} from "./BaseStore";
 
-export class ScreensStore {
+export class ScreensStore extends BaseStore{
     screensRef = React.createRef();
     canvasRef: { current: Element } = React.createRef();
 
     // 选框矩阵
     @observable
     rangeBoundRect:Rect = null;
-
-    main: MainStore;
-    constructor(main: MainStore) {
-        this.main = main;
-    }
 
     /**
      * 获取canvas的Rect属性

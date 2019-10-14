@@ -6,10 +6,8 @@
  */
 import {observable, action, computed} from 'mobx';
 import type {MainStore} from "../../../flow/Main.flow";
+import {BaseStore} from "./BaseStore";
 
-export class FooterStore {
-    main: MainStore;
-    constructor (main: MainStore){
-        this.main = main;
-    }
+export class FooterStore extends BaseStore{
+
 }

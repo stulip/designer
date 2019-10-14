@@ -6,14 +6,9 @@
  */
 import type {MainStore} from "../../../flow/Main.flow";
 import {zoomScale, ENUM} from '../../../config/Config'
+import {BaseStore} from "./BaseStore";
 
-export class ToolbarStore {
-    main: MainStore;
-    constructor (main: MainStore){
-        let that = this;
-        that.main = main;
-        that.addKeyListener();
-    }
+export class ToolbarStore extends BaseStore{
 
     addKeyListener (){
         let that = this;
