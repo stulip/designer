@@ -218,18 +218,28 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
             ],
             [
                 {
-                    form: "widget.width",
+                    form: EventConst.widgetWidth,
                     type: Form.Const.Type.ConfirmInputNumber,
                     disabled: basic.widgetWidth.disabled,
                     input: { title: "宽", min: basic.widgetWidth.min, max: basic.widgetWidth.max },
-                    onChange: that.onWidgetWidthChange
+                    onChange: that.onWidgetWidthChange,
+                    listener: {
+                        key: EventConst.widgetSize,
+                        getValue: da => da.width,
+                        setValue: (width, data) => ({ width, height: data[EventConst.widgetHeight]})
+                    }
                 },
                 {
-                    form: "widget.height",
+                    form: EventConst.widgetHeight,
                     type: Form.Const.Type.ConfirmInputNumber,
                     disabled: basic.widgetHeight.disabled,
                     input: { title: "高", min: basic.widgetHeight.min, max: basic.widgetHeight.max },
-                    onChange: that.onWidgetHeightChange
+                    onChange: that.onWidgetHeightChange,
+                    listener: {
+                        key: EventConst.widgetSize,
+                        getValue: da => da.height,
+                        setValue: (height, data) => ({ height, width: data[EventConst.widgetWidth]})
+                    },
                 }
             ],
             { type: Form.Const.Type.Line }
