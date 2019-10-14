@@ -7,7 +7,7 @@
 import React from "react";
 import type { ItemProps } from "./../FormView";
 import { Types, Tools } from "@xt-web/core";
-import {DesignEvent} from "fr-web";
+import {DesignEvent, classNames} from "fr-web";
 
 type Props = {
     value: any,
@@ -223,10 +223,10 @@ class BaseItem extends React.Component<Props> {
         let that = this;
         let { index, item, childIndex } = that.props;
         let { visible } = that.state;
-        let { top} = item;
+        let { className, style } = item;
         if ( !that.state.visible) return null;
         return (
-            <div className={'form-item'}>
+            <div className={classNames('form-item', {[`ic-${className}`]: !!className})} style={style}>
                 {that.renderItem()}
             </div>
         )

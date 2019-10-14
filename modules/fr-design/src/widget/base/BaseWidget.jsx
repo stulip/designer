@@ -20,7 +20,7 @@ type State = {
 export class BaseWidget extends React.Component<BaseWidgetProps, State> {
 
     // 所有属性
-    formData: Object;
+    formData: Object = {};
     widgetRef = React.createRef();
     get widget (){
         return this.widgetRef.current;
@@ -105,7 +105,8 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
         return [
             {
                 form: 'name',
-                type: Form.Const.Type.ConfirmInputNumber,
+                type: Form.Const.Type.PanelInput,
+                className: 'widget-name',
             }
         ];
     }

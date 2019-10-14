@@ -1,5 +1,3 @@
-
-
 .group-list {
     .flex {
         display: flex;
@@ -22,28 +20,40 @@
     }
 
     .widget {
-
-
     }
 
-
-
-    .text_view .text, .rounded_rect .text, .circle_rect .text, .mtooltip .text{
+    .text_view .text,
+    .rounded_rect .text,
+    .circle_rect .text,
+    .mtooltip .text {
         width: 100%;
         white-space: pre-wrap;
         word-break: break-word;
         word-wrap: break-word;
     }
 
-    .label.vmiddle, .button.vmiddle, .text_view.vmiddle, .rounded_rect.vmiddle, .circle_rect.vmiddle, .operate_bar.vmiddle {
+    .label.vmiddle,
+    .button.vmiddle,
+    .text_view.vmiddle,
+    .rounded_rect.vmiddle,
+    .circle_rect.vmiddle,
+    .operate_bar.vmiddle {
         align-items: center;
     }
 
-    .label.hcenter, .button.hcenter, .text_view.hcenter, .rounded_rect.hcenter, .circle_rect.hcenter, .operate_bar.hcenter {
+    .label.hcenter,
+    .button.hcenter,
+    .text_view.hcenter,
+    .rounded_rect.hcenter,
+    .circle_rect.hcenter,
+    .operate_bar.hcenter {
         justify-content: center;
     }
 
-    .text_view .text p, .rounded_rect .text p, .circle_rect .text p, .mtooltip .text p {
+    .text_view .text p,
+    .rounded_rect .text p,
+    .circle_rect .text p,
+    .mtooltip .text p {
         padding: 0;
         margin-bottom: 5px;
         white-space: pre-wrap;
@@ -53,7 +63,40 @@
         }
     }
 
-    &.iphone_x, .iphone_xs_max {
-        clip-path:inset(0px 0px 0px 0px round 44px 44px 44px 44px);
+    &.iphone_x,
+    .iphone_xs_max {
+        clip-path: inset(0px 0px 0px 0px round 44px 44px 44px 44px);
+    }
+}
+
+.ds-attribute {
+    .ic-widget-name {
+        padding: 5px 12px;
+        background: #f2f2f2;
+        border-bottom: 1px solid #ebebeb;
+        .Input {
+            width: 100%;
+        }
+
+        input {
+            background: #f2f2f2;
+            transition: 0s !important;
+            border-width: 0;
+            border-bottom: 1px solid transparent;
+            padding: 0;
+            border-radius: 0;
+            &:enabled:not([readonly]):focus {
+                background-color: #f2f2f2;
+                border-width: 0;
+                border-bottom: 1px solid #ff6161 !important;
+                box-shadow: initial;
+            }
+
+            &:enabled:not([readonly]):hover {
+                background-color: #f2f2f2;
+                border-width: 0;
+                border-bottom: 1px dashed #ff6161;
+            }
+        }
     }
 }

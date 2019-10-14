@@ -1,26 +1,19 @@
 /**
- * 必填数字输入框
+ *
+ * @flow
  * @author tangzehua
- * @sine 2019-09-27 11:23
+ * @sine 2018-12-27 11:36
  */
-
-// @flow
-import * as React from 'react';
+import React from 'react';
 import {classNames, IBotForm} from 'fr-web';
-import {BaseItem} from "./../base/BaseItem";
 
-type Props = {
+import { BaseInputItem } from "../base/BaseInputItem";
 
-};
-type State = {
+class PanelInputItem extends BaseInputItem {
 
-};
-
-export class ConfirmInputNumberItem extends BaseItem<Props, State> {
-
-    renderItem() {
+    renderItem () {
         let that = this;
-        let { item } = that.props;
+        let {item} = that.props;
         let {value = '', error, disabled, required} = that.state;
         let input = item.input || {};
 
@@ -28,9 +21,13 @@ export class ConfirmInputNumberItem extends BaseItem<Props, State> {
             <>
                 { item.title && <span className={classNames('left-label', {error: error})}>{item.title}</span>}
                 <div className={'right-content'}>
-                    <IBotForm.PanelInputNumber {...input} value={value} onConfirm={that.onChange} disabled={disabled}/>
+                    <IBotForm.PanelInput {...input} value={value} onChange={that.onChange} disabled={disabled}/>
                 </div>
             </>
-        );
-    };
+        )
+    }
+}
+
+export {
+    PanelInputItem
 }

@@ -11,7 +11,8 @@ export const FormConst = {
         Line: 'o.line.1',
         Text: 'o.text.1',
         Input: 'o.input.1',
-        InputNumber: 'o.input.2',
-        ConfirmInputNumber: 'o.input.3',
+        PanelInput: 'o.input.2',
+        InputNumber: 'o.input.number.1',
+        ConfirmInputNumber: 'o.input.number.2',
     }
 };
