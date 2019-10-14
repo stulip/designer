@@ -61,9 +61,6 @@ export class ViewGroupStore extends BaseStore{
         that.main.section.setRulerShadow(0, 0, canvasRect.width, canvasRect.height);
         that.main.attribute.setConfig([]);
 
-        if (that.main.attribute.form && that.widget){
-            that.widget.formData = that.main.attribute.form.getFormData();
-        }
         that.selectRect = null;
         that.widget = null;
     };
@@ -75,9 +72,6 @@ export class ViewGroupStore extends BaseStore{
     @action
     setSelectWidget = (widget: BaseWidget) => {
         let that = this;
-        if (that.widget && that.main.attribute.form){
-            that.widget.formData = that.main.attribute.form.getFormData();
-        }
         that.main.attribute.setConfig(widget.widgetProps(), widget.formData);
         that.widget = widget;
     };

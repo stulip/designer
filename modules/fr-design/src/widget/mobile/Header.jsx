@@ -10,11 +10,10 @@ import '../assets/mobile/header.pcss'
 import type {BaseWidgetProps} from "../base/BaseWidget";
 import {BasePanel} from "../base/BasePanel";
 import {Form} from "fr-ui";
+import {observer} from "mobx-react";
 
 type Props = {
     ...BaseWidgetProps,
-    width: number,
-    height: number
 };
 
 const backImage = require('fr-art/design/back_chevron.png');
@@ -25,8 +24,20 @@ export class Header extends BasePanel<Props> {
         return "导航栏";
     }
 
-    isDisableWidth(): boolean {
-        return true;
+    getBasicConfig(): boolean {
+        let that = this;
+        const {canvasRect, designRect} = that.props;
+        const basic = super.getBasicConfig();
+        basic.widgetWidth.disabled = true;
+        return basic;
+    }
+
+    initWidgetFormData(): * {
+        const {canvasRect, designRect} = this.props;
+        const formData = super.initWidgetFormData();
+        formData['widget.width'] = canvasRect.width;
+        formData['widget.height'] = designRect.nav_height;
+        return formData;
     }
 
     widgetProps(): [] {
@@ -49,10 +60,9 @@ export class Header extends BasePanel<Props> {
 
     render() {
         const that = this;
-        const {designRect, canvasRect} = that.props;
-        const width = canvasRect.width;
-        const height = designRect.nav_height;
-        const {title} = that.formData || {};
+        const data = that.formData ;
+        const width = data['widget.width'];
+        const height = data['widget.height'];
         return (
             <div className="group-flow" style={{width, height}} ref={that.widgetRef}>
                 <div className="header-bar" style={{width, height}}>
@@ -60,7 +70,7 @@ export class Header extends BasePanel<Props> {
                         <img src={backImage} width={15}/>
                         <span className="text">返回</span>
                     </div>
-                    <span className="header-title">{title}</span>
+                    <span className="header-title">{data.title}</span>
                     <div className={'header-right'}>
                         <span className="text">菜单</span>
                     </div>

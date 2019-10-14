@@ -17,12 +17,15 @@ type Props = {
 
 export class StatusBar extends BaseWidget<Props> {
 
-    isDisableHeight(): boolean {
-        return true;
+    getName(): string {
+        return "状态栏";
     }
 
-    isDisableWidth(): boolean {
-        return true;
+    getBasicConfig(): boolean {
+        const basic = super.getBasicConfig();
+        basic.widgetWidth.disabled = true;
+        basic.widgetHeight.disabled = true;
+        return basic;
     }
 
     render() {

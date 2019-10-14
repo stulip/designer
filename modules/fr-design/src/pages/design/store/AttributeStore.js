@@ -57,7 +57,7 @@ export class AttributeStore extends BaseStore {
                             listener: {
                                 key: EventConst.canvasSize,
                                 getValue: da => da.width,
-                                setValue: da => ({width: da})
+                                setValue: (width, data) => ({ width, height: data['canvas.height']})
                             },
                         },
                         {
@@ -71,7 +71,7 @@ export class AttributeStore extends BaseStore {
                             listener: {
                                 key: EventConst.canvasSize,
                                 getValue: da => da.height,
-                                setValue: da => ({height: da})
+                                setValue: (height, data) => ({ height, width: data['canvas.width']})
                             },
                         }
                     ],

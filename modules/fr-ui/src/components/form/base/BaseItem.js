@@ -79,7 +79,7 @@ class BaseItem extends React.Component<Props> {
     listenerValueChange = (value)=> {
         let that = this;
         const {getValue} = that.getListener();
-        that._onChange(getValue ? getValue(value): value);
+        that._onChange(getValue ? getValue(value, that.props.formData): value);
     };
 
     UNSAFE_componentWillReceiveProps(nextProps) {
@@ -152,7 +152,7 @@ class BaseItem extends React.Component<Props> {
     onChange(data) {
         let that = this;
         const {key, setValue} = that.getListener();
-        DesignEvent.emit(key, setValue? setValue(data): data);
+        DesignEvent.emit(key, setValue? setValue(data, that.props.formData): data);
         that._onChange(data);
     };
 

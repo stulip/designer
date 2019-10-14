@@ -27,7 +27,7 @@ export class BaseText extends BaseWidget<BaseTextProps, State> {
 
     renderWidget() {
         const {children} = this.props;
-        const {value} = this.formData || {};
+        const {value} = this._formData || {};
         return (
             <div className={'rich-text'}>
                 <p>

@@ -9,8 +9,10 @@ import React, { Fragment } from "react";
 import { DesignEvent } from "fr-web";
 import { EventConst } from "../../config/Attribute";
 import { Form } from "fr-ui";
-import type {DesignType, Rect} from "../../flow/Main.flow";
-import {Types} from "@xt-web/core";
+import type { DesignType, Rect, Size } from "../../flow/Main.flow";
+import { Types } from "@xt-web/core";
+import {observable, action} from "mobx";
+import {observer} from "mobx-react";
 
 export type BaseWidgetProps = {
     canvasRect: Rect,
@@ -18,15 +20,15 @@ export type BaseWidgetProps = {
 };
 type State = {};
 
-export class BaseWidget extends React.Component<BaseWidgetProps, State> {
+export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
     // 所有属性
-    formData: Object;
+    _formData: Object = {};
     widgetRef = React.createRef();
     get widget() {
         return this.widgetRef.current;
     }
 
-    get group (){
+    get group() {
         return this.props.groupRef && this.props.groupRef.current;
     }
 
@@ -53,55 +55,59 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
     }
 
     // 可子类处理
-    formatValue (value){
-        return Types.isObject(value)? value: {value};
+    formatValue(value) {
+        return Types.isObject(value) ? value : { value };
     }
 
     /**
      * 初始化widget表单数据
      */
     initWidgetFormData() {
-        let  that = this;
+        let that = this;
         const { value } = that.props;
-        that.formData = {
-            ...that.formatValue(value)
-        };
+        const formData = that.formatValue(value);
+        return that._formData = Object.assign({}, formData);
     }
 
     // 初始化 widget 基础属性
-    initWidgetBasicData (){
+    initWidgetBasicData() {
         let that = this;
-        if (!that.widget || !that.group || !Types.isUndefined(that.formData['widget.name'])) return;
+        if (!that.widget || !that.group || !Types.isUndefined(that._formData["widget.name"])) return;
         const widgetRect = that.widget.getBoundingClientRect();
         const groupRect = that.group.getBoundingClientRect();
 
-        that.formData = {
-            ...that.formData,
+        that._formData = {
+            ...that._formData,
             "widget.name": that.getName(),
             "widget.width": widgetRect.width,
             "widget.height": widgetRect.height,
             "widget.x": widgetRect.x - groupRect.x,
-            "widget.y": widgetRect.y - groupRect.y,
+            "widget.y": widgetRect.y - groupRect.y
         };
     }
 
     addListener() {
         let that = this;
-        if (!that.widget) return;
-        that.widget.addEventListener("mouseleave", that.handleMouseLeave);
-        that.widget.addEventListener("mousedown", that.handleMouseDown);
-        that.widget.addEventListener("mouseover", that.handleMouseEnter);
-        that.widget.addEventListener("click", that.handleClick);
-        that.widget.addEventListener("dblclick", that.handleDBLClick);
+
+        if (that.widget) {
+            that.widget.addEventListener("mouseleave", that.handleMouseLeave);
+            that.widget.addEventListener("mousedown", that.handleMouseDown);
+            that.widget.addEventListener("mouseover", that.handleMouseEnter);
+            that.widget.addEventListener("click", that.handleClick);
+            that.widget.addEventListener("dblclick", that.handleDBLClick);
+        }
     }
 
     removeListener() {
-        if (!that.widget) return;
-        that.widget.removeEventListener("mouseleave", that.handleMouseLeave);
-        that.widget.removeEventListener("mousedown", that.handleMouseDown);
-        that.widget.removeEventListener("mouseover", that.handleMouseEnter);
-        that.widget.removeEventListener("click", that.handleClick);
-        that.widget.removeEventListener("dblclick", that.handleDBLClick);
+        let that = this;
+
+        if (that.widget) {
+            that.widget.removeEventListener("mouseleave", that.handleMouseLeave);
+            that.widget.removeEventListener("mousedown", that.handleMouseDown);
+            that.widget.removeEventListener("mouseover", that.handleMouseEnter);
+            that.widget.removeEventListener("click", that.handleClick);
+            that.widget.removeEventListener("dblclick", that.handleDBLClick);
+        }
     }
 
     handleMouseDown = (event: MouseEvent): void => {
@@ -148,19 +154,42 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
     };
 
     /**
+     * 设置widget尺寸
+     * @param size
+     */
+    setWidgetSize = (size: Size) => {
+        let that = this;
+
+        const oldWidth = that._formData["widget.width"];
+        const oldHeight = that._formData["widget.height"];
+
+        const width = Types.isEmpty(size.width) ? oldWidth : size.width;
+        const height = Types.isEmpty(size.height) ? oldHeight : size.height;
+
+        that._formData["widget.width"] = width;
+        that._formData["widget.height"] = height;
+        that.forceUpdate();
+    };
+
+    onWidgetWidthChange = width => {
+        this.setWidgetSize({width});
+    };
+
+    onWidgetHeightChange = height => {
+        this.setWidgetSize({height});
+    };
+
+    /**
      * 是否禁用宽度改变
      * @returns {boolean}
      */
-    isDisableWidth (){
-        return false;
-    }
-
-    /**
-     * 是否禁用高度改变
-     * @returns {boolean}
-     */
-    isDisableHeight(){
-        return false;
+    getBasicConfig() {
+        return {
+            widgetX: { min: 0, disabled: true },
+            widgetY: { min: 0, disabled: true },
+            widgetWidth: { min: 0, disabled: false },
+            widgetHeight: { min: 0, disabled: false }
+        };
     }
 
     /**
@@ -170,38 +199,49 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
     widgetProps() {
         const that = this;
         that.initWidgetBasicData();
+        const basic = that.getBasicConfig();
         return [
             { form: "widget.name", type: Form.Const.Type.PanelInput, className: "widget-name" },
             [
                 {
                     form: "widget.x",
                     type: Form.Const.Type.ConfirmInputNumber,
-                    disabled: true,
-                    input: { title: "X ", min: 0 }
+                    disabled: basic.widgetX.disabled,
+                    input: { title: "X ", min: basic.widgetX.min, max: basic.widgetX.max }
                 },
                 {
                     form: "widget.y",
                     type: Form.Const.Type.ConfirmInputNumber,
-                    disabled: true,
-                    input: { title: "Y ", min: 0 }
+                    disabled: basic.widgetY.disabled,
+                    input: { title: "Y ", min: basic.widgetY.min, max: basic.widgetY.max }
                 }
             ],
             [
                 {
                     form: "widget.width",
                     type: Form.Const.Type.ConfirmInputNumber,
-                    disabled: that.isDisableWidth(),
-                    input: { title: "宽", min: 0 }
+                    disabled: basic.widgetWidth.disabled,
+                    input: { title: "宽", min: basic.widgetWidth.min, max: basic.widgetWidth.max },
+                    onChange: that.onWidgetWidthChange
                 },
                 {
                     form: "widget.height",
                     type: Form.Const.Type.ConfirmInputNumber,
-                    disabled: that.isDisableHeight(),
-                    input: { title: "高", min: 0 }
+                    disabled: basic.widgetHeight.disabled,
+                    input: { title: "高", min: basic.widgetHeight.min, max: basic.widgetHeight.max },
+                    onChange: that.onWidgetHeightChange
                 }
             ],
-            {type: Form.Const.Type.Line}
+            { type: Form.Const.Type.Line }
         ];
+    }
+
+    set formData (data){
+        this._formData = data;
+    }
+
+    get formData (){
+        return this._formData;
     }
 
     // 子类实现
