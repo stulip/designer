@@ -6,11 +6,12 @@
  */
 import React from "react";
 import { action, observable } from "mobx";
-import type { MainStore } from "../../../flow/Main.flow";
+import type {MainStore, Size} from "../../../flow/Main.flow";
 import { BaseWidget } from "../../../widget/base/BaseWidget";
 import {BaseStore} from "./BaseStore";
 import {DesignEvent} from "fr-web";
 import {EventConst} from "../../../config/Attribute";
+import {Types} from "@xt-web/core";
 
 export class ViewGroupStore extends BaseStore{
     groupRef = React.createRef();
@@ -28,18 +29,27 @@ export class ViewGroupStore extends BaseStore{
 
     addListener() {
         const that = this;
+        // mouse
         DesignEvent.addListener(EventConst.widgetMouseClick, that.handleWidgetClick);
         DesignEvent.addListener(EventConst.widgetMouseExit, that.handleWidgetMouseExit);
         DesignEvent.addListener(EventConst.widgetMouseEnter, that.handleWidgetMouseEnter);
         DesignEvent.addListener(EventConst.widgetMouseDBLClick, that.handleWidgetDBLClick);
+
+        //widget basic
+        DesignEvent.addListener(EventConst.widgetSize, that.onWidgetSizeChange)
+
     }
 
     removeListener() {
         const that = this;
+        // mouse
         DesignEvent.removeListener(EventConst.widgetMouseClick, that.handleWidgetClick);
         DesignEvent.removeListener(EventConst.widgetMouseExit, that.handleWidgetMouseExit);
         DesignEvent.removeListener(EventConst.widgetMouseEnter, that.handleWidgetMouseEnter);
         DesignEvent.removeListener(EventConst.widgetMouseDBLClick, that.handleWidgetDBLClick);
+
+        //widget basic
+        DesignEvent.removeListener(EventConst.widgetSize, that.onWidgetSizeChange)
     }
 
     @action.bound
@@ -61,9 +71,6 @@ export class ViewGroupStore extends BaseStore{
         that.main.section.setRulerShadow(0, 0, canvasRect.width, canvasRect.height);
         that.main.attribute.setConfig([]);
 
-        if (that.main.attribute.form && that.widget){
-            that.widget.formData = that.main.attribute.form.getFormData();
-        }
         that.selectRect = null;
         that.widget = null;
     };
@@ -75,11 +82,18 @@ export class ViewGroupStore extends BaseStore{
     @action
     setSelectWidget = (widget: BaseWidget) => {
         let that = this;
-        if (that.widget && that.main.attribute.form){
-            that.widget.formData = that.main.attribute.form.getFormData();
-        }
         that.main.attribute.setConfig(widget.widgetProps(), widget.formData);
         that.widget = widget;
+    };
+
+    onWidgetSizeChange = (size: Size)=> {
+        let  that = this;
+        if (that.widget){
+            const rect = that.widget.widget.getBoundingClientRect();
+            rect.width = size.width;
+            rect.height = size.height;
+            that._handleWidgetSelect(rect);
+        }
     };
 
     /**
@@ -123,8 +137,17 @@ export class ViewGroupStore extends BaseStore{
     handleWidgetClick (event: MouseEvent, widget: BaseWidget) {
         let that = this;
         if ( !that.group ) return;
-        const groupRect = that.group.getBoundingClientRect();
         const rect = event.currentTarget.getBoundingClientRect();
+        that._handleWidgetSelect(rect);
+        that.setSelectWidget(widget);
+    };
+
+    @action
+    _handleWidgetSelect (rect){
+        let that = this;
+        if ( !that.group ) return;
+
+        const groupRect = that.group.getBoundingClientRect();
         const left = ((rect.left - groupRect.left) / groupRect.width) * 100;
         const top = ((rect.top - groupRect.top) / groupRect.height) * 100;
         const width = (rect.width / groupRect.width) * 100;
@@ -150,8 +173,8 @@ export class ViewGroupStore extends BaseStore{
             rect.width / canvasScale,
             rect.height / canvasScale
         );
-        that.setSelectWidget(widget);
-    };
+    }
+
 
     /**
      * widget 双击事件

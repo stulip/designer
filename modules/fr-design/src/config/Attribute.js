@@ -10,6 +10,13 @@ export const EventConst = {
     background: "basic.background",
     designGrid: "basic.design.grid",
 
+    //widget basic
+    widgetWidth: 'widget.width',
+    widgetHeight: 'widget.height',
+    widgetSize: "widget.size",
+    widgetPosition: "widget.position",
+
+    // widget mouse
     widgetMouseExit: "widget.mouse.exit",
     widgetMouseEnter: "widget.mouse.enter",
     widgetMouseClick: "widget.mouse.click",
