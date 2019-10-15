@@ -23,15 +23,88 @@
      .preference-setting:hover {
         color: #415058;
     }
+    .preference-setting.active,
+    .preference-setting.active svg {
+        color: #415058;
+    }
     .setting-plate {
         position: absolute;
         right: 10px;
         bottom: 35px;
         width: 300px;
-        height: 200px;
         padding: 0 16px;
         border-radius: 4px;
         box-shadow: 0 2px 10px 0 rgba(39, 54, 78, 0.08), 4px 12px 40px 0 rgba(39, 54, 78, 0.1);
         background-color: #fff;
+        span {
+            color: #415058;
+        }
+        span.sub-title {
+            color: #7d8694;
+        }
+        .plate {
+            margin: 8px 0;
+            height: 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .square {
+                display: inline-block;
+                width: 16px;
+                height: 16px;
+                border-radius: 1px;
+                margin-left: 10px;
+                cursor: pointer;
+                border: 1px solid rgba(0, 0, 0, 0.12);
+            }
+            square.white {
+                background-color: #C8CDD1;
+            }
+            .square.grey {
+                background-color: #c8cdd0;
+            }
+            .is-active {
+                box-shadow: rgb(50, 153, 255) 0 0 0 1px;
+            }
+            .switch {
+                position: relative;
+                display: inline-block;
+                margin: 0 0.125em;
+                width: 26px;
+                height: 10px;
+                vertical-align: baseline;
+                background-color: #c8cdd1;
+                border-radius: 8px;
+                cursor: pointer;
+                transition: all 0.2s ease-in;
+                transition-delay: 0.15s;
+                strong {
+                    position: absolute;
+                    top: 50%;
+                    left: 0;
+                    transform: translate(0px, -50%);;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 14px;
+                    height: 14px;
+                    font-size: 14px;
+                    border: 2px solid #d0d7dd;
+                    border-radius: 50%;
+                    background-color: #fff;
+                    box-shadow: 0 4px 4px 0 rgba(0,0,0,0.04);
+                    cursor: inherit;
+                    transition: all 0.2s cubic-bezier(0.55, 0.06, 0.68, 0.19);
+                }
+            }
+            .switch.is-checked {
+                background-color: #298df8;
+                strong {
+                    transform: translate(13px, -50%);;
+                }
+
+            }
+        }
     }
 }
