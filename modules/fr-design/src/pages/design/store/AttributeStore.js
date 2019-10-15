@@ -86,7 +86,7 @@ export class AttributeStore extends BaseStore {
                         form: "background",
                         value: pageData.backgroundColor,
                         listener: PropsConst.background,
-                        handlePicker: that.main.handleBackgroundColor
+                        handlePicker: PropsConst.widgetBackgroundHandle
                     },
                     { type: Form.Const.Type.Line, top: 10 },
                     {

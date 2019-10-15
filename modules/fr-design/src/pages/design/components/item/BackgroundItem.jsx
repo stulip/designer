@@ -8,21 +8,26 @@
 import React from "react";
 import "../assets/background.pcss";
 import { Form, Slider } from "fr-ui";
-import { IBotForm, ColorPicker } from "fr-web";
-import {Color, Tools} from "@xt-web/core";
+import { ColorPicker, DesignEvent, IBotForm } from "fr-web";
+import { Color, Tools, Types } from "@xt-web/core";
 
 type Props = {
     item: {
-        handlePicker: () => void
+        handlePicker: string | (() => void)
     }
 };
-type State = {};
+type State = {
+    value: {
+        rgba: string,
+        hex: string,
+        alpha: number,
+    }
+};
 
-export class BackgroundItem extends Form.BaseItem {
-
+export class BackgroundItem extends Form.BaseItem<Props, State> {
     getValue(value): * {
         const color = ColorPicker.parseColor(value || "#fff");
-        return {rgba: value, hex: color.hex, alpha: parseInt(color.alpha * 100)};
+        return { rgba: value, hex: color.hex, alpha: parseInt(color.alpha * 100) };
     }
 
     handleAlpha = (value: string) => {
@@ -31,10 +36,21 @@ export class BackgroundItem extends Form.BaseItem {
         this.onChange(Color.rgb2rgbaStr(color));
     };
 
+    handlePicker = (event: MouseEvent) => {
+        let that = this;
+        const { item } = that.props;
+        const { value } = that.state;
+        if (Types.isFunction(item.handlePicker)) {
+            item.handlePicker(event, value.hex, that.onChange);
+        } else {
+            DesignEvent.emit(item.handlePicker, event, value.hex, that.onChange);
+        }
+    };
+
     render() {
         let that = this;
         let { item } = that.props;
-        const { value = "" } = that.state;
+        const { value = {} } = that.state;
         return (
             <div className={"item-background"}>
                 <header>
@@ -42,12 +58,12 @@ export class BackgroundItem extends Form.BaseItem {
                 </header>
                 <section>
                     <div className={"bg-content"}>
-                        <div className="hwJxmv" onClick={item.handlePicker}>
+                        <div className="hwJxmv" onClick={that.handlePicker}>
                             <div className="thumbnail-wrapper">
                                 <div className="thumbnail" style={{ backgroundColor: value.rgba }} />
                             </div>
                         </div>
-                        <Slider value={value.alpha} onChange={that.handleAlpha}/>
+                        <Slider value={value.alpha} onChange={that.handleAlpha} />
                         <IBotForm.PanelInputNumber
                             min={0}
                             max={100}

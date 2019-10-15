@@ -12,6 +12,7 @@ import "../assets/panel.pcss";
 import { ItemConst } from "../../pages/design/components/item";
 import { PropsConst } from "../../config/Attribute";
 import { Form } from "fr-ui";
+import {DesignEvent} from "fr-web";
 
 export type BasePanelProps = {
     ...BaseWidgetProps
@@ -63,8 +64,8 @@ export class BasePanel extends BaseWidget<BasePanelProps, State> {
                 title: "背景颜色",
                 type: ItemConst.Type.Background,
                 form: PropsConst.widgetBackground,
-                listener: PropsConst.widgetBackground
-                // handlePicker: that.main.handleBackgroundColor
+                listener: PropsConst.widgetBackground,
+                handlePicker: PropsConst.widgetBackgroundHandle
             },
             { type: Form.Const.Type.Line, top: 10 },
             {

@@ -67,11 +67,13 @@ export class MainStore {
     addListener (){
         let that = this;
         DesignEvent.addListener(PropsConst.background, that.onListenerBackgroundColor);
+        DesignEvent.addListener(PropsConst.widgetBackgroundHandle, that.handleColorPicker);
     }
 
     removeListener (){
         let that = this;
         DesignEvent.removeListener(PropsConst.background, that.onListenerBackgroundColor);
+        DesignEvent.removeListener(PropsConst.widgetBackgroundHandle, that.handleColorPicker);
     }
 
     /**
@@ -94,15 +96,6 @@ export class MainStore {
     }
 
     /**
-     * 背景颜色设置(事件)
-     */
-    @action
-    handleBackgroundColor = (event: MouseEvent) => {
-        let that = this;
-        that.handleColorPicker(event, that.pageData.backgroundColor, that.setBackgroundColor);
-    };
-
-    /**
      * 设置背景颜色
      * @param color
      */
@@ -122,6 +115,7 @@ export class MainStore {
      * @param color
      * @param onChange
      */
+    @action
     handleColorPicker = (event, color, onChange)=> {
         let that = this;
         that.colorPickProps.targetRect = event.target.getBoundingClientRect();

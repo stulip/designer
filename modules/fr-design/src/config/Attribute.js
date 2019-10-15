@@ -18,6 +18,7 @@ export const PropsConst = {
     widgetSize: "widget.size",
     widgetPosition: "widget.position",
     widgetBackground: "widget.background",
+    widgetBackgroundHandle: "widget.background.handle",
 
     // widget layout
     widgetLayout: "widget.layout",
