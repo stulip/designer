@@ -72,17 +72,15 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
     // 初始化 widget 基础属性
     initWidgetBasicData() {
         let that = this;
-        if (!that.widget || !that.group || !Types.isUndefined(that._formData["widget.name"])) return;
-        const widgetRect = that.widget.getBoundingClientRect();
-        const groupRect = that.group.getBoundingClientRect();
+        if (!that.widget || !Types.isUndefined(that._formData["widget.name"])) return;
 
         that._formData = {
             ...that._formData,
             "widget.name": that.getName(),
-            "widget.width": widgetRect.width,
-            "widget.height": widgetRect.height,
-            "widget.x": widgetRect.x - groupRect.x,
-            "widget.y": widgetRect.y - groupRect.y
+            "widget.width": that.widget.offsetWidth,
+            "widget.height": that.widget.offsetHeight,
+            "widget.x": that.widget.offsetLeft,
+            "widget.y": that.widget.offsetTop
         };
     }
 

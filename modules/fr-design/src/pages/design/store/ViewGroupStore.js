@@ -90,8 +90,8 @@ export class ViewGroupStore extends BaseStore{
         let  that = this;
         if (that.widget){
             const rect = that.widget.widget.getBoundingClientRect();
-            rect.width = size.width;
-            rect.height = size.height;
+            rect.width = size.width * that.main.section.canvasScale;
+            rect.height = size.height* that.main.section.canvasScale;
             that._handleWidgetSelect(rect);
         }
     };
