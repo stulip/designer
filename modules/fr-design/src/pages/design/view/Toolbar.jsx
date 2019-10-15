@@ -21,19 +21,19 @@ type State = {
 
 };
 
-const ZoomItem = ({handleZoom, value})=> (
+const ZoomItem = ({handleZoom, value, showToolbar})=> (
     <div>
         <div className={'zoom'}>
-            <a onClick={()=> handleZoom(ENUM.ZOOM_M)} className={'icon'}>
+            <a onClick={()=> handleZoom(ENUM.ZOOM_M)} className={showToolbar ? 'icon': 'icon_line'}>
                 <IBotSVG name={'minus'} />
             </a>
             <a className={'icons'} onDoubleClick={()=> handleZoom(0)}>
                 <div className={'wrapper'}>
                     <span className={'scale-text'}>{value}%</span>
                 </div>
-                <span>缩放</span>
+                { showToolbar && <span>缩放</span> }
             </a>
-            <a onClick={()=> handleZoom(ENUM.ZOOM_P)}  className={'icon'}>
+            <a onClick={()=> handleZoom(ENUM.ZOOM_P)}  className={showToolbar ? 'icon': 'icon_line'}>
                 <IBotSVG name={'plus'}/>
             </a>
         </div>
@@ -56,6 +56,7 @@ export class Toolbar extends React.Component<Props, State> {
         const store = that.props.store;
         const {isApp} = store.main.config;
         const {canvasScale} = store.main.section;
+        const { showToolbar } = store;
         const scaleValue = parseInt(100 * canvasScale);
         return (
             <div className={'ds-toolbar'}>
@@ -69,34 +70,34 @@ export class Toolbar extends React.Component<Props, State> {
                             <div className={'wrapper'}>
                                 <IBotIcon type={'dora'} name={'save'}/>
                             </div>
-                            <span>保存</span>
+                            { showToolbar && <span>保存</span> }
                         </a>
                         <a className={'icons'}>
                             <div className={'wrapper'}>
                                 <IBotIcon type={'dora'} name={'undo'}/>
                             </div>
-                            <span>撤销</span>
+                            { showToolbar && <span>撤销</span> }
                         </a>
                         <a className={'icons'}>
                             <div className={'wrapper'}>
                                 <IBotIcon type={'dora'} name={'redo'}/>
                             </div>
-                            <span>重做</span>
+                            { showToolbar && <span>重做</span> }
                         </a>
                     </div>
-                    <ZoomItem handleZoom={store.handleZoom} value={scaleValue}/>
+                    <ZoomItem handleZoom={store.handleZoom} value={scaleValue} showToolbar={showToolbar}/>
                     <div>
                         <a className={'icons'}>
                             <div className={'wrapper'}>
                                 <IBotIcon type={'dora'} name={'export'}/>
                             </div>
-                            <span>下载</span>
+                            { showToolbar && <span>下载</span> }
                         </a>
                         <a className={'icons'}>
                             <div className={'wrapper'}>
                                 <IBotIcon type={'dora'} name={'share'}/>
                             </div>
-                            <span>分享</span>
+                            { showToolbar && <span>分享</span> }
                         </a>
                     </div>
                 </div>
@@ -106,13 +107,13 @@ export class Toolbar extends React.Component<Props, State> {
                             <div className={'wrapper'}>
                                 <IBotSVG name={'code'}/>
                             </div>
-                            <span>标注</span>
+                            { showToolbar && <span>标注</span> }
                         </a>
                         <a className={'icons'}>
                             <div className={'wrapper'}>
                                 <IBotSVG  name={'play'}/>
                             </div>
-                            <span>运行2</span>
+                            { showToolbar && <span>运行2</span> }
                         </a>
                     </div>
                 </div>

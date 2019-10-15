@@ -30,7 +30,7 @@ export class Footer extends React.Component<Props, State> {
     }
 
     render() {
-        const { themeColor, preferenceConfig, showSetting, setPreferenceAction, setPreferenceConfig } = this.props.store;
+        const { themeColor, preferenceConfig, showSetting, setPreferenceAction, setPreferenceConfig, setIsScale, setIsToolbar } = this.props.store;
         console.log(this.props.store, "---sdf");
         return (
             <div className={'ds-footer'}>
@@ -46,7 +46,7 @@ export class Footer extends React.Component<Props, State> {
                         </div>
                         <div className={"plate"}>
                             <span>标尺</span>
-                            <label className={`switch ${preferenceConfig.isScale ? "is-checked": ""}`} onClick={() => setPreferenceConfig("isScale", !preferenceConfig.isScale)}>
+                            <label className={`switch ${preferenceConfig.isScale ? "is-checked": ""}`} onClick={setIsScale}>
                                 <strong></strong>
                             </label>
                         </div>
@@ -54,7 +54,7 @@ export class Footer extends React.Component<Props, State> {
                         <span style={{ marginTop: "10px"}}>工具栏文字</span>
                         <div className={"plate"} style={{ marginTop: "-5px"}}>
                             <span className={"sub-title"}>显示工具栏工具标签文字</span>
-                            <label className={`switch ${preferenceConfig.isToolbar ? "is-checked": ""}`} onClick={() => setPreferenceConfig("isToolbar", !preferenceConfig.isToolbar)}>
+                            <label className={`switch ${preferenceConfig.isToolbar ? "is-checked": ""}`} onClick={setIsToolbar}>
                                 <strong></strong>
                             </label>
                         </div>

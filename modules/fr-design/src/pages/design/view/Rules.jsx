@@ -52,7 +52,7 @@ export class Rules extends Component<Props> {
                 shadow={rulerShadow}
                 horLineArr={h}
                 verLineArr={v}
-                isShowRuler={true}
+                isShowRuler={isShowRuler}
                 isShowReferLine={isShowReferLine}
                 handleLine={this.handleLine}
                 handleShowRuler={store.handleShowRuler}

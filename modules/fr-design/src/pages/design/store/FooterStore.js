@@ -30,8 +30,8 @@ export class FooterStore extends BaseStore {
     @observable
     _preferenceConfig: PreferenceConfig = {
         theme: "white",
-        isScale: true,
-        isToolbar: true
+        isScale: this.main.section.isShowRuler,
+        isToolbar: this.main.toolbar.showToolbar
     };
 
     @observable
@@ -40,6 +40,20 @@ export class FooterStore extends BaseStore {
     @action
     setPreferenceAction = () => {
         this.showSetting = !this.showSetting;
+    };
+
+    // 是否标尺
+    @action
+    setIsScale = () => {
+        this.main.section.handleShowRuler();
+        this._preferenceConfig["isScale"] = !this._preferenceConfig["isScale"];
+    };
+
+    // toolbar
+    @action
+    setIsToolbar = () => {
+        this.main.toolbar.showOrHideToolbar();
+        this._preferenceConfig["isToolbar"] = !this._preferenceConfig["isToolbar"];
     };
 
     @action

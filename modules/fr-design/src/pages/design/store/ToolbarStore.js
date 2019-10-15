@@ -7,8 +7,17 @@
 import type {MainStore} from "../../../flow/Main.flow";
 import {zoomScale, ENUM} from '../../../config/Config'
 import {BaseStore} from "./BaseStore";
+import {action, observable} from "mobx";
 
 export class ToolbarStore extends BaseStore{
+
+    @observable
+    showToolbar: boolean = true;
+
+    @action
+    showOrHideToolbar = () => {
+        this.showToolbar = !this.showToolbar;
+    };
 
     addKeyListener (){
         let that = this;
