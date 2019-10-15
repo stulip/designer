@@ -154,30 +154,13 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
     };
 
     /**
-     * 设置widget尺寸
-     * @param size
+     * 表单数据改变
+     * @param formData
      */
-    setWidgetSize = (size: Size) => {
+    handleChange (formData: Object){
         let that = this;
-
-        const oldWidth = that._formData["widget.width"];
-        const oldHeight = that._formData["widget.height"];
-
-        const width = Types.isEmpty(size.width) ? oldWidth : size.width;
-        const height = Types.isEmpty(size.height) ? oldHeight : size.height;
-
-        that._formData["widget.width"] = width;
-        that._formData["widget.height"] = height;
         that.forceUpdate();
-    };
-
-    onWidgetWidthChange = width => {
-        this.setWidgetSize({width});
-    };
-
-    onWidgetHeightChange = height => {
-        this.setWidgetSize({height});
-    };
+    }
 
     /**
      * 是否禁用宽度改变
@@ -222,7 +205,6 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
                     type: Form.Const.Type.ConfirmInputNumber,
                     disabled: basic.widgetWidth.disabled,
                     input: { title: "宽", min: basic.widgetWidth.min, max: basic.widgetWidth.max },
-                    onChange: that.onWidgetWidthChange,
                     listener: {
                         key: EventConst.widgetSize,
                         getValue: da => da.width,
@@ -234,7 +216,6 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
                     type: Form.Const.Type.ConfirmInputNumber,
                     disabled: basic.widgetHeight.disabled,
                     input: { title: "高", min: basic.widgetHeight.min, max: basic.widgetHeight.max },
-                    onChange: that.onWidgetHeightChange,
                     listener: {
                         key: EventConst.widgetSize,
                         getValue: da => da.height,

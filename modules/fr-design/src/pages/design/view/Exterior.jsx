@@ -47,7 +47,7 @@ export class Exterior extends React.Component<Props, State> {
             <>
                 <div className={"arrange"}>{ArrangeConfig.map(that.renderArrange)}</div>
                 <main className={'ds-attribute'}>
-                    <Form.View config={config} ref={store.formRef} formData={store.formData}/>
+                    <Form.View config={config} ref={store.formRef} formData={store.formData} onChange={store.onFormChange}/>
                 </main>
             </>
         );

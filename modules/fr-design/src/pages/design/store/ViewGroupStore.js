@@ -97,6 +97,17 @@ export class ViewGroupStore extends BaseStore{
     };
 
     /**
+     * widget props change
+     * @param formData
+     */
+    handleWidgetChange = (formData: Object)=> {
+        let  that = this;
+        if (that.widget){
+            that.widget.handleChange(formData);
+        }
+    };
+
+    /**
      * widget获得鼠标焦点
      * @param event
      */

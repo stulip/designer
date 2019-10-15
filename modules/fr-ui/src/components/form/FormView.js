@@ -147,7 +147,8 @@ const convertState = props => {
 type Props = {
     formData?: Object,
     config: Object,
-    ref?: { current: Object }
+    ref?: { current: Object },
+    onChange ?: (formData: Object)=> void, // 任意一个item触发onChange, 则会触发此onChange
 };
 
 class FormView extends React.Component<Props, State> {
@@ -160,6 +161,7 @@ class FormView extends React.Component<Props, State> {
     constructor(props) {
         super(props);
         let that = this;
+        that._onChangeTimeout = null;
         that.switchItem = that.switchItem.bind(that);
     }
 
@@ -222,13 +224,27 @@ class FormView extends React.Component<Props, State> {
      */
     onValueChange = (key: string, value: any) => {
         let that = this;
-        let { config } = that.state,
-            item = config[key];
+        let { config } = that.state, item = config[key];
 
-        this.state.formData[key] = value;
-        this.onChangeValidate(item, key, value);
-        this.changeUnion(item, key, value);
+        that.callbackChange();
+
+        that.state.formData[key] = value;
+        that.onChangeValidate(item, key, value);
+        that.changeUnion(item, key, value);
     };
+
+    /**
+     * 回调onChange
+     */
+    callbackChange () {
+        let that = this;
+        if(that.props.onChange){
+            clearTimeout(that._onChangeTimeout);
+            that._onChangeTimeout = setTimeout(()=> {
+                that.props.onChange && that.props.onChange(that.state.formData);
+            }, 0);
+        }
+    }
 
     onChangeValidate = (item, key, value) => {
         let that = this,
@@ -309,7 +325,7 @@ class FormView extends React.Component<Props, State> {
      * @param {Object} formData
      * @param {{isGet: boolean, isChange: boolean, config: [options]}} [options] 选项
      */
-    setFormData = (formData: Object = {}, options?: Object = {}) => {
+    setFormData = (formData: Object = {}, options: Object = {}) => {
         let that = this;
         const { isGet: pIsGet = false, isChange: pIsChange = true, config = {} } = options;
         for (const key in formData) {

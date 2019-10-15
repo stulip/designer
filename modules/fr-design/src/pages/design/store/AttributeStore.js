@@ -35,6 +35,10 @@ export class AttributeStore extends BaseStore {
         that.formConfig = that.createBasicConfig();
     }
 
+    /**
+     * 基础面板属性
+     * @returns {{className: string, config: *[]}[]}
+     */
     createBasicConfig (){
         let that = this;
         const { section } = that.main;
@@ -98,6 +102,15 @@ export class AttributeStore extends BaseStore {
             }
         ];
     }
+
+    /**
+     * 表单数据被改变
+     * @param formData
+     */
+    onFormChange = (formData: Object)=> {
+        let that = this;
+        that.main.viewGroup.handleWidgetChange(formData);
+    };
 
     /**
      *
