@@ -10,8 +10,9 @@ import {GridSettingItem} from "./GridSettingItem";
 
 export const ItemConst = {
     Type: {
-        Background: 'attr.background.0',
-        GridSetting: 'attr,grid_setting.0',
+        Background: 'widget.background.0',
+        GridSetting: 'widget.grid_setting.0',
+        Layout: 'widget.layout.0',
     }
 };
 

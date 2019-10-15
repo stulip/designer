@@ -5,7 +5,7 @@
  */
 
 // 设计器事件常量
-export const EventConst = {
+export const PropsConst = {
     canvasSize: "basic.canvas.size",
     background: "basic.background",
     designGrid: "basic.design.grid",
@@ -15,6 +15,12 @@ export const EventConst = {
     widgetHeight: 'widget.height',
     widgetSize: "widget.size",
     widgetPosition: "widget.position",
+    widgetBackground: "widget.background",
+
+    // widget layout
+    widgetFlexDirector: "widget.flex.director",
+    widgetFlexJustifyContent: "widget.flex.justify-content",
+    widgetFlexAlignItem: "widget.flex.align-item",
 
     // widget mouse
     widgetMouseExit: "widget.mouse.exit",
@@ -50,26 +56,32 @@ export const ArrangeConfig = [
     {
         type: ArrangeConst.alignLeft,
         icon: 'design/align_left',
+        disable: true,
     },
     {
         type: ArrangeConst.alignCenterV,
         icon: 'design/align_center_v',
+        disable: true,
     },
     {
         type: ArrangeConst.alignRight,
         icon: 'design/align_right',
+        disable: true,
     },
     {
         type: ArrangeConst.alignTop,
         icon: 'design/align_top',
+        disable: true,
     },
     {
         type: ArrangeConst.alignCenterH,
         icon: 'design/align_center_h',
+        disable: true,
     },
     {
         type: ArrangeConst.alignBottom,
         icon: 'design/align_bottom',
+        disable: true,
     },
 
 ];

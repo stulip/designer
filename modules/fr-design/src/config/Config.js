@@ -51,7 +51,6 @@ function createDevice (options){
         height: 0,
         top: 0,
         bottom: 0,
-        nav_height: 0,
         ...options,
     }
 }
@@ -64,14 +63,12 @@ const DEVICE_INFO = {
             type: 'iphone',
             width: 375,
             height: 667,
-            nav_height: 44,
         }),
         createDevice({
             name: "iPhone 6/7/8 Plus",
             type: 'iphone_plus',
             width: 414,
             height: 736,
-            nav_height: 44,
         }),
         createDevice({
             name: "iPhone X",
@@ -80,7 +77,6 @@ const DEVICE_INFO = {
             height: 812,
             top: 44,
             bottom: 34,
-            nav_height: 44,
         }),
         createDevice({
             name: "iPhone Xs Max",
@@ -89,7 +85,6 @@ const DEVICE_INFO = {
             height: 896,
             top: 44,
             bottom: 34,
-            nav_height: 44,
         })
     ],
     Web: [

@@ -11,7 +11,7 @@ import { observer } from "mobx-react";
 import {classNames, DesignEvent} from "fr-web";
 import "../../../widget/assets";
 import { ViewGroupStore } from "../store/ViewGroupStore";
-import {EventConst} from "../../../config/Attribute";
+import {PropsConst} from "../../../config/Attribute";
 import {WidgetConst} from "../../../widget/WidgetConfig";
 
 type Props = {

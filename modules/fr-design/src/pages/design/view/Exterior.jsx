@@ -22,7 +22,6 @@ type State = {};
 
 @observer
 export class Exterior extends React.Component<Props, State> {
-
     componentDidMount() {
         this.props.store.mount();
     }
@@ -32,8 +31,15 @@ export class Exterior extends React.Component<Props, State> {
     }
 
     renderArrange = item => {
+        const store = this.props.store;
         return (
-            <a className={"item"} key={item.type} disabled={item.disable}>
+            <a
+                className={"item"}
+                key={item.type}
+                disabled={item.disable}
+                onClick={store.onArrangeClick}
+                data-type={item.type}
+            >
                 <IBotSVG name={item.icon} />
             </a>
         );
@@ -46,8 +52,13 @@ export class Exterior extends React.Component<Props, State> {
         return (
             <>
                 <div className={"arrange"}>{ArrangeConfig.map(that.renderArrange)}</div>
-                <main className={'ds-attribute'}>
-                    <Form.View config={config} ref={store.formRef} formData={store.formData} onChange={store.onFormChange}/>
+                <main className={"ds-attribute"}>
+                    <Form.View
+                        config={config}
+                        ref={store.formRef}
+                        formData={store.formData}
+                        onChange={store.onFormChange}
+                    />
                 </main>
             </>
         );

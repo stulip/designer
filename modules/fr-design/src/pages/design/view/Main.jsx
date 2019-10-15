@@ -17,7 +17,7 @@ import { observer } from "mobx-react";
 import { MainStore } from "../store/MainStore";
 import { ColorPicker, PopupPanel } from "fr-ui";
 import {DesignEvent} from "fr-web";
-import {EventConst} from "../../../config/Attribute";
+import {PropsConst} from "../../../config/Attribute";
 
 @observer
 export class Main extends Component {

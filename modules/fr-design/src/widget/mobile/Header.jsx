@@ -11,6 +11,7 @@ import type {BaseWidgetProps} from "../base/BaseWidget";
 import {BasePanel} from "../base/BasePanel";
 import {Form} from "fr-ui";
 import {observer} from "mobx-react";
+import {PropsConst} from "../../config/Attribute";
 
 type Props = {
     ...BaseWidgetProps,
@@ -24,6 +25,15 @@ export class Header extends BasePanel<Props> {
         return "导航栏";
     }
 
+    // 导航栏高度
+    getHeight () {
+        return 44;
+    }
+
+    getBackground(): string {
+        return "#f8f8f8";
+    }
+
     getBasicConfig(): boolean {
         let that = this;
         const {canvasRect, designRect} = that.props;
@@ -35,8 +45,8 @@ export class Header extends BasePanel<Props> {
     initWidgetFormData(): * {
         const {canvasRect, designRect} = this.props;
         const formData = super.initWidgetFormData();
-        formData['widget.width'] = canvasRect.width;
-        formData['widget.height'] = designRect.nav_height;
+        formData[PropsConst.widgetWidth] = canvasRect.width;
+        formData[PropsConst.widgetHeight] = this.getHeight();
         return formData;
     }
 
@@ -47,35 +57,27 @@ export class Header extends BasePanel<Props> {
             ...config,
             {
                 form: 'title',
+                title: '标题',
                 type: Form.Const.Type.PanelInput,
             }
-            // {
-            //     name: '标题',
-            //     config: [
-            //
-            //     ]
-            // }
         ];
     }
 
-    render() {
+    renderWidget(): * {
         const that = this;
         const data = that.formData ;
-        const width = data['widget.width'];
-        const height = data['widget.height'];
+
         return (
-            <div className="group-flow" style={{width, height}} ref={that.widgetRef}>
-                <div className="header-bar" style={{width, height}}>
-                    <div className={'header-left flex middle'}>
-                        <img src={backImage} width={15}/>
-                        <span className="text">返回</span>
-                    </div>
-                    <span className="header-title">{data.title}</span>
-                    <div className={'header-right'}>
-                        <span className="text">菜单</span>
-                    </div>
+            <div className="header-bar">
+                <div className={'header-left flex middle'}>
+                    <img src={backImage} width={15}/>
+                    <span className="text">返回</span>
+                </div>
+                <span className="header-title">{data.title}</span>
+                <div className={'header-right'}>
+                    <span className="text">菜单</span>
                 </div>
             </div>
-        );
+        )
     }
 }

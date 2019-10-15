@@ -8,11 +8,11 @@
 export const FormConst = {
 
     Type: {
-        Line: 'o.line.1',
-        Text: 'o.text.1',
-        Input: 'o.input.1',
-        PanelInput: 'o.input.2',
-        InputNumber: 'o.input.number.1',
-        ConfirmInputNumber: 'o.input.number.2',
+        Line: 'form.line.1',
+        Text: 'form.text.1',
+        Input: 'form.input.1',
+        PanelInput: 'form.input.2',
+        InputNumber: 'form.input.number.1',
+        ConfirmInputNumber: 'form.input.number.2',
     }
 };

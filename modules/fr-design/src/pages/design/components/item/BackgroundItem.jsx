@@ -21,7 +21,7 @@ type State = {};
 export class BackgroundItem extends Form.BaseItem {
 
     getValue(value): * {
-        const color = ColorPicker.parseColor(value);
+        const color = ColorPicker.parseColor(value || "#fff");
         return {rgba: value, hex: color.hex, alpha: parseInt(color.alpha * 100)};
     }
 

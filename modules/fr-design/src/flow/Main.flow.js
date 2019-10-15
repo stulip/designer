@@ -23,7 +23,6 @@ export type DesignType = {
     top: number,
     bottom: number,
     name: string,
-    nav_height: number,
     type: string,// device 类型,
 }
 

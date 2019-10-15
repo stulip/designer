@@ -14,7 +14,7 @@ import { createConfig } from "../../../config/Config";
 import type {PageConfig, PageData} from "../../../flow/Main.flow";
 import {DesignEvent, EventEmitter} from 'fr-web'
 import {AttributeStore} from "./AttributeStore";
-import {EventConst} from "../../../config/Attribute";
+import {PropsConst} from "../../../config/Attribute";
 import {ViewGroupStore} from "./ViewGroupStore";
 import {BaseStore} from "./BaseStore";
 
@@ -66,12 +66,12 @@ export class MainStore {
 
     addListener (){
         let that = this;
-        DesignEvent.addListener(EventConst.background, that.onListenerBackgroundColor);
+        DesignEvent.addListener(PropsConst.background, that.onListenerBackgroundColor);
     }
 
     removeListener (){
         let that = this;
-        DesignEvent.removeListener(EventConst.background, that.onListenerBackgroundColor);
+        DesignEvent.removeListener(PropsConst.background, that.onListenerBackgroundColor);
     }
 
     /**
@@ -108,7 +108,7 @@ export class MainStore {
      */
     @action
     setBackgroundColor = (color)=> {
-        DesignEvent.emit(EventConst.background, color);
+        DesignEvent.emit(PropsConst.background, color);
     };
 
     @action

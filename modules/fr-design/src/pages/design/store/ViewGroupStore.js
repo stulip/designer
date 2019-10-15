@@ -10,7 +10,7 @@ import type {MainStore, Size} from "../../../flow/Main.flow";
 import { BaseWidget } from "../../../widget/base/BaseWidget";
 import {BaseStore} from "./BaseStore";
 import {DesignEvent} from "fr-web";
-import {EventConst} from "../../../config/Attribute";
+import {PropsConst} from "../../../config/Attribute";
 import {Types} from "@xt-web/core";
 
 export class ViewGroupStore extends BaseStore{
@@ -30,26 +30,26 @@ export class ViewGroupStore extends BaseStore{
     addListener() {
         const that = this;
         // mouse
-        DesignEvent.addListener(EventConst.widgetMouseClick, that.handleWidgetClick);
-        DesignEvent.addListener(EventConst.widgetMouseExit, that.handleWidgetMouseExit);
-        DesignEvent.addListener(EventConst.widgetMouseEnter, that.handleWidgetMouseEnter);
-        DesignEvent.addListener(EventConst.widgetMouseDBLClick, that.handleWidgetDBLClick);
+        DesignEvent.addListener(PropsConst.widgetMouseClick, that.handleWidgetClick);
+        DesignEvent.addListener(PropsConst.widgetMouseExit, that.handleWidgetMouseExit);
+        DesignEvent.addListener(PropsConst.widgetMouseEnter, that.handleWidgetMouseEnter);
+        DesignEvent.addListener(PropsConst.widgetMouseDBLClick, that.handleWidgetDBLClick);
 
         //widget basic
-        DesignEvent.addListener(EventConst.widgetSize, that.onWidgetSizeChange)
+        DesignEvent.addListener(PropsConst.widgetSize, that.onWidgetSizeChange)
 
     }
 
     removeListener() {
         const that = this;
         // mouse
-        DesignEvent.removeListener(EventConst.widgetMouseClick, that.handleWidgetClick);
-        DesignEvent.removeListener(EventConst.widgetMouseExit, that.handleWidgetMouseExit);
-        DesignEvent.removeListener(EventConst.widgetMouseEnter, that.handleWidgetMouseEnter);
-        DesignEvent.removeListener(EventConst.widgetMouseDBLClick, that.handleWidgetDBLClick);
+        DesignEvent.removeListener(PropsConst.widgetMouseClick, that.handleWidgetClick);
+        DesignEvent.removeListener(PropsConst.widgetMouseExit, that.handleWidgetMouseExit);
+        DesignEvent.removeListener(PropsConst.widgetMouseEnter, that.handleWidgetMouseEnter);
+        DesignEvent.removeListener(PropsConst.widgetMouseDBLClick, that.handleWidgetDBLClick);
 
         //widget basic
-        DesignEvent.removeListener(EventConst.widgetSize, that.onWidgetSizeChange)
+        DesignEvent.removeListener(PropsConst.widgetSize, that.onWidgetSizeChange)
     }
 
     @action.bound

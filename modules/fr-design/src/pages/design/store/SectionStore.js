@@ -10,7 +10,7 @@ import {viewMinSize, scrollbarMinWidth, scrollbarThick, zoomScale, viewportScale
 import React from "react";
 import { Types } from "@xt-web/core";
 import {DesignEvent} from "fr-web";
-import {EventConst} from "../../../config/Attribute";
+import {PropsConst} from "../../../config/Attribute";
 import {BaseStore} from "./BaseStore";
 
 export class SectionStore extends BaseStore{
@@ -58,14 +58,14 @@ export class SectionStore extends BaseStore{
 
     addListener() {
         let that = this;
-        DesignEvent.addListener(EventConst.canvasSize, that.onListenerCanvasSize);
-        DesignEvent.addListener(EventConst.designGrid, that.onListenerDesignGrid);
+        DesignEvent.addListener(PropsConst.canvasSize, that.onListenerCanvasSize);
+        DesignEvent.addListener(PropsConst.designGrid, that.onListenerDesignGrid);
     }
 
     removeListener() {
         let that = this;
-        DesignEvent.removeListener(EventConst.canvasSize, that.onListenerCanvasSize);
-        DesignEvent.removeListener(EventConst.designGrid, that.onListenerDesignGrid);
+        DesignEvent.removeListener(PropsConst.canvasSize, that.onListenerCanvasSize);
+        DesignEvent.removeListener(PropsConst.designGrid, that.onListenerDesignGrid);
     }
 
     /**
@@ -233,7 +233,7 @@ export class SectionStore extends BaseStore{
         const lastWidth = that.canvasRect.width;
         const lastHeight = that.canvasRect.height;
         if (nextWidth !== lastWidth || nextHeight !== lastHeight) {
-            DesignEvent.emit(EventConst.canvasSize, {width: nextWidth, height: nextHeight});
+            DesignEvent.emit(PropsConst.canvasSize, {width: nextWidth, height: nextHeight});
         }
     }
 
@@ -410,6 +410,6 @@ export class SectionStore extends BaseStore{
      * @param attr
      */
     setGridAttribute = (attr: Object)=> {
-        DesignEvent.emit(EventConst.designGrid, attr);
+        DesignEvent.emit(PropsConst.designGrid, attr);
     }
 }

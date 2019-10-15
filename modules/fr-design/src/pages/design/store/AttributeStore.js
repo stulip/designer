@@ -9,7 +9,7 @@ import {observable, action, computed} from 'mobx';
 import type {MainStore, Rect, Size} from "../../../flow/Main.flow";
 import {Form} from "fr-ui";
 import {ItemConst} from "../components/item";
-import {EventConst} from "../../../config/Attribute";
+import {PropsConst, ArrangeConst} from "../../../config/Attribute";
 import {BaseStore} from "./BaseStore";
 
 export class AttributeStore extends BaseStore {
@@ -59,7 +59,7 @@ export class AttributeStore extends BaseStore {
                                 min: config.designRect.width
                             },
                             listener: {
-                                key: EventConst.canvasSize,
+                                key: PropsConst.canvasSize,
                                 getValue: da => da.width,
                                 setValue: (width, data) => ({ width, height: data['canvas.height']})
                             },
@@ -73,7 +73,7 @@ export class AttributeStore extends BaseStore {
                                 min: config.designRect.height
                             },
                             listener: {
-                                key: EventConst.canvasSize,
+                                key: PropsConst.canvasSize,
                                 getValue: da => da.height,
                                 setValue: (height, data) => ({ height, width: data['canvas.width']})
                             },
@@ -85,7 +85,7 @@ export class AttributeStore extends BaseStore {
                         type: ItemConst.Type.Background,
                         form: "background",
                         value: pageData.backgroundColor,
-                        listener: EventConst.background,
+                        listener: PropsConst.background,
                         handlePicker: that.main.handleBackgroundColor
                     },
                     { type: Form.Const.Type.Line, top: 10 },
@@ -94,8 +94,8 @@ export class AttributeStore extends BaseStore {
                         type: ItemConst.Type.GridSetting,
                         form: "gridSize",
                         value: gridAttribute,
-                        listener: EventConst.designGrid,
-                        grid: { max: 100 }
+                        listener: PropsConst.designGrid,
+                        grid: { max: 100, min: 1 }
                     },
                     { type: Form.Const.Type.Line, top: 10 }
                 ]
@@ -110,6 +110,26 @@ export class AttributeStore extends BaseStore {
     onFormChange = (formData: Object)=> {
         let that = this;
         that.main.viewGroup.handleWidgetChange(formData);
+    };
+
+    onArrangeClick = (event: MouseEvent)=> {
+        const type = event.currentTarget.getAttribute('data-type');
+        switch (type) {
+            case ArrangeConst.alignTop:
+                break;
+            case ArrangeConst.alignRight:
+                break;
+            case ArrangeConst.alignBottom:
+                break;
+            case ArrangeConst.alignLeft:
+                break;
+            case ArrangeConst.alignCenterV:
+                break;
+            case ArrangeConst.alignCenterH:
+                break;
+            default:
+                break;
+        }
     };
 
     /**

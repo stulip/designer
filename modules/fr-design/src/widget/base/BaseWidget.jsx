@@ -7,7 +7,7 @@
 // @flow
 import React, { Fragment } from "react";
 import { DesignEvent } from "fr-web";
-import { EventConst } from "../../config/Attribute";
+import { PropsConst } from "../../config/Attribute";
 import { Form } from "fr-ui";
 import type { DesignType, Rect, Size } from "../../flow/Main.flow";
 import { Types } from "@xt-web/core";
@@ -122,7 +122,7 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
     handleMouseEnter = (event: MouseEvent): void => {
         event.preventDefault();
         event.stopPropagation();
-        DesignEvent.emit(EventConst.widgetMouseEnter, event, this);
+        DesignEvent.emit(PropsConst.widgetMouseEnter, event, this);
     };
 
     /**
@@ -132,7 +132,7 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
     handleMouseLeave = (event: MouseEvent): void => {
         event.preventDefault();
         event.stopPropagation();
-        DesignEvent.emit(EventConst.widgetMouseExit, event, this);
+        DesignEvent.emit(PropsConst.widgetMouseExit, event, this);
     };
 
     /**
@@ -142,7 +142,7 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
     handleClick = (event: MouseEvent): void => {
         event.preventDefault();
         event.stopPropagation();
-        DesignEvent.emit(EventConst.widgetMouseClick, event, this);
+        DesignEvent.emit(PropsConst.widgetMouseClick, event, this);
     };
 
     /**
@@ -150,7 +150,7 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
      * @param event
      */
     handleDBLClick = (event: MouseEvent): void => {
-        DesignEvent.emit(EventConst.widgetMouseDBLClick, event, this);
+        DesignEvent.emit(PropsConst.widgetMouseDBLClick, event, this);
     };
 
     /**
@@ -201,25 +201,25 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
             ],
             [
                 {
-                    form: EventConst.widgetWidth,
+                    form: PropsConst.widgetWidth,
                     type: Form.Const.Type.ConfirmInputNumber,
                     disabled: basic.widgetWidth.disabled,
                     input: { title: "宽", min: basic.widgetWidth.min, max: basic.widgetWidth.max },
                     listener: {
-                        key: EventConst.widgetSize,
+                        key: PropsConst.widgetSize,
                         getValue: da => da.width,
-                        setValue: (width, data) => ({ width, height: data[EventConst.widgetHeight]})
+                        setValue: (width, data) => ({ width, height: data[PropsConst.widgetHeight]})
                     }
                 },
                 {
-                    form: EventConst.widgetHeight,
+                    form: PropsConst.widgetHeight,
                     type: Form.Const.Type.ConfirmInputNumber,
                     disabled: basic.widgetHeight.disabled,
                     input: { title: "高", min: basic.widgetHeight.min, max: basic.widgetHeight.max },
                     listener: {
-                        key: EventConst.widgetSize,
+                        key: PropsConst.widgetSize,
                         getValue: da => da.height,
-                        setValue: (height, data) => ({ height, width: data[EventConst.widgetWidth]})
+                        setValue: (height, data) => ({ height, width: data[PropsConst.widgetWidth]})
                     },
                 }
             ],
