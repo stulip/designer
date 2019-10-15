@@ -7,6 +7,7 @@
 import {Form} from "fr-ui";
 import {BackgroundItem} from "./BackgroundItem";
 import {GridSettingItem} from "./GridSettingItem";
+import {LayoutItem} from "./LayoutItem";
 
 export const ItemConst = {
     Type: {
@@ -20,3 +21,5 @@ export const ItemConst = {
 Form.View.registerComponent(ItemConst.Type.Background, {component: BackgroundItem});
 // 网格设置
 Form.View.registerComponent(ItemConst.Type.GridSetting, {component: GridSettingItem});
+// Layout
+Form.View.registerComponent(ItemConst.Type.Layout, {component: LayoutItem});

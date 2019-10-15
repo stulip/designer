@@ -11,6 +11,8 @@ export const PropsConst = {
     designGrid: "basic.design.grid",
 
     //widget basic
+    widgetX: "widget.x",
+    widgetY: "widget.y",
     widgetWidth: 'widget.width',
     widgetHeight: 'widget.height',
     widgetSize: "widget.size",
@@ -18,6 +20,7 @@ export const PropsConst = {
     widgetBackground: "widget.background",
 
     // widget layout
+    widgetLayout: "widget.layout",
     widgetFlexDirector: "widget.flex.director",
     widgetFlexJustifyContent: "widget.flex.justify-content",
     widgetFlexAlignItem: "widget.flex.align-item",

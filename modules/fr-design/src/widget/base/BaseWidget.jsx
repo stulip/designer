@@ -170,8 +170,8 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
         return {
             widgetX: { min: 0, disabled: true },
             widgetY: { min: 0, disabled: true },
-            widgetWidth: { min: 0, disabled: false },
-            widgetHeight: { min: 0, disabled: false }
+            widgetWidth: { min: 0, disabled: true },
+            widgetHeight: { min: 0, disabled: true }
         };
     }
 

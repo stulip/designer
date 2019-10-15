@@ -34,20 +34,18 @@ export class Header extends BasePanel<Props> {
         return "#f8f8f8";
     }
 
-    getBasicConfig(): boolean {
-        let that = this;
-        const {canvasRect, designRect} = that.props;
+    getBasicConfig() {
         const basic = super.getBasicConfig();
-        basic.widgetWidth.disabled = true;
+        basic.widgetHeight.disabled = false;
         return basic;
     }
 
-    initWidgetFormData(): * {
+    getBoxRect(): { width: number, x: number, y: number, height: number } {
+        const rect = super.getBoxRect();
         const {canvasRect, designRect} = this.props;
-        const formData = super.initWidgetFormData();
-        formData[PropsConst.widgetWidth] = canvasRect.width;
-        formData[PropsConst.widgetHeight] = this.getHeight();
-        return formData;
+        rect.width = canvasRect.width;
+        rect.height = this.getHeight();
+        return rect;
     }
 
     widgetProps(): [] {
