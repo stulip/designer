@@ -79,14 +79,30 @@ export class BasePanel extends BaseWidget<BasePanelProps, State> {
                     },
                     [
                         {
-                            title: '主轴',
+                            title: '主轴空间',
                             titleDirection: Form.Const.Direction.Bottom,
                             form: PropsConst.widgetJustifyContent,
                             type: Form.Const.Type.Select,
                             select: {data: ItemConst.JustifyContent.options}
                         },
                         {
-                            title: '次轴',
+                            title: '次轴空间',
+                            titleDirection: Form.Const.Direction.Bottom,
+                            form: PropsConst.widgetAlignContent,
+                            type: Form.Const.Type.Select,
+                            select: {data: ItemConst.AlignContent.options}
+                        }
+                    ],
+                    [
+                        {
+                            title: '次轴对齐(self)',
+                            titleDirection: Form.Const.Direction.Bottom,
+                            form: PropsConst.widgetAlignSelf,
+                            type: Form.Const.Type.Select,
+                            select: {data: ItemConst.AlignSelf.options}
+                        },
+                        {
+                            title: '次轴对齐',
                             titleDirection: Form.Const.Direction.Bottom,
                             form: PropsConst.widgetAlignItem,
                             type: Form.Const.Type.Select,

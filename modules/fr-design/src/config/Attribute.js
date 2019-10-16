@@ -21,9 +21,11 @@ export const PropsConst = {
     widgetBackgroundHandle: "widget.background.handle",
 
     // widget layout
-    widgetDirection: "widget.layout.direction",
+    widgetDirection: "widget.layout.flex-direction",
     widgetJustifyContent: "widget.layout.justify-content",
+    widgetAlignContent: "widget.layout.align-content",
     widgetAlignItem: "widget.layout.align-item",
+    widgetAlignSelf: "widget.layout.align-self",
 
     // widget mouse
     widgetMouseExit: "widget.mouse.exit",
@@ -46,12 +48,30 @@ export const LayoutConst = {
         stretch: 'align-item.stretch', // app:default
         baseline: 'align-item.baseline',
     },
-    // 'flex-start', 'flex-end', 'center', 'stretch', 'space-between', 'space-around'
+    //'flex-start', 'flex-end', 'center', 'stretch', 'space-between', 'space-around'
+    alignContent: {
+        flexStart: 'align-content.flex-start',
+        flexEnd: 'align-content.flex-end',
+        center: 'align-content.center',
+        stretch: 'align-content.stretch',
+        spaceBetween: 'align-content.space-between',
+        spaceAround: 'align-content.space-around',
+    },
+    // 'auto', 'flex-start', 'flex-end', 'center', 'stretch', 'baseline'
+    alignSelf: {
+        auto: 'align-self.auto',
+        flexStart: 'align-self.flex-start',
+        flexEnd: 'align-self.flex-end',
+        center: 'align-self.center',
+        stretch: 'align-self.stretch',
+        baseline: 'align-self.baseline',
+    },
+    // 'flex-start', 'flex-end', 'center', 'space-between', 'space-around', 'space-evenly'
     justifyContent: {
         flexStart: 'justify-content.flex-start',
         flexEnd: 'justify-content.flex-end',
         center: 'justify-content.center',
-        stretch: 'justify-content.stretch',
+        spaceEvenly: 'justify-content.space-evenly',
         spaceBetween: 'justify-content.space-between',
         spaceAround: 'justify-content.space-around',
     }
