@@ -12,7 +12,7 @@ import {action, observable} from "mobx";
 export class ToolbarStore extends BaseStore{
 
     @observable
-    showToolbar: boolean = true;
+    showToolbar: boolean = false;
 
     @action
     showOrHideToolbar = () => {

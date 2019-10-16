@@ -6,7 +6,7 @@ import {ConfirmInputNumberItem} from './view/ConfirmInputNumberItem'
 import {BaseItem} from './base/BaseItem';
 import { BaseSelectItem } from "./base/BaseSelectItem";
 import {required} from './Required'
-import {LineItem} from "./view/LineItem";
+import {GapItem, LineItem} from "./view/LineItem";
 import {PanelInputItem} from "./view/PanelInputItem";
 
 //单选
@@ -50,6 +50,7 @@ View.registerComponent(Const.Type.PanelInput, {component: PanelInputItem});
 
 // 分隔线
 View.registerComponent(Const.Type.Line, {component: LineItem});
+View.registerComponent(Const.Type.Gap, {component: GapItem});
 
 
 export {

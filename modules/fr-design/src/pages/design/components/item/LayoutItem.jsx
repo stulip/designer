@@ -31,12 +31,26 @@ export class LayoutItem extends Form.BaseItem<Props, State> {
                 </header>
                 <section>
                     <div className={"bg-content"}>
-                        <div>
-                            <span>align-items</span>
-                            <div>
+                        <div className={'form-item'}>
+                            <span className={'left-label'}>方向</span>
+                            <div className={'right-content'}>
                                 <IBotForm.PanelSelect />
                             </div>
                         </div>
+                       <div className={'item-group'}>
+                           <div className={'form-item column'}>
+                               <div className={'right-content'}>
+                                   <IBotForm.PanelSelect />
+                               </div>
+                               <span>次轴</span>
+                           </div>
+                           <div className={'form-item column'}>
+                               <div className={'right-content'}>
+                                   <IBotForm.PanelSelect />
+                               </div>
+                               <span>主轴</span>
+                           </div>
+                       </div>
                     </div>
                 </section>
             </div>

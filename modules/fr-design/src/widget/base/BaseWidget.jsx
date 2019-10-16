@@ -221,7 +221,7 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
                     },
                 }
             ],
-            { type: Form.Const.Type.Line }
+            { type: Form.Const.Type.Gap }
         ];
     }
 

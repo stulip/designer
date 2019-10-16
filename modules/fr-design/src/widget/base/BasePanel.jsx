@@ -67,13 +67,12 @@ export class BasePanel extends BaseWidget<BasePanelProps, State> {
                 listener: PropsConst.widgetBackground,
                 handlePicker: PropsConst.widgetBackgroundHandle
             },
-            { type: Form.Const.Type.Line, top: 10 },
             {
                 title: "布局",
                 type: ItemConst.Type.Layout,
                 form: PropsConst.widgetLayout
             },
-            { type: Form.Const.Type.Line, top: 10 }
+            { type: Form.Const.Type.Line, top: 0, bottom: 8 },
         ];
     }
 

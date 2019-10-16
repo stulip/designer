@@ -79,7 +79,7 @@ export class AttributeStore extends BaseStore {
                             },
                         }
                     ],
-                    { type: Form.Const.Type.Line },
+                    {type: Form.Const.Type.Gap},
                     {
                         title: "背景颜色",
                         type: ItemConst.Type.Background,
@@ -88,7 +88,6 @@ export class AttributeStore extends BaseStore {
                         listener: PropsConst.background,
                         handlePicker: PropsConst.widgetBackgroundHandle
                     },
-                    { type: Form.Const.Type.Line, top: 10 },
                     {
                         title: "网格",
                         type: ItemConst.Type.GridSetting,
@@ -97,7 +96,7 @@ export class AttributeStore extends BaseStore {
                         listener: PropsConst.designGrid,
                         grid: { max: 100, min: 1 }
                     },
-                    { type: Form.Const.Type.Line, top: 10 }
+                    { type: Form.Const.Type.Line, top: 0 }
                 ]
             }
         ];
