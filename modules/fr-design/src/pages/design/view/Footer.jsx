@@ -31,7 +31,6 @@ export class Footer extends React.Component<Props, State> {
 
     render() {
         const { themeColor, preferenceConfig, showSetting, setPreferenceAction, setPreferenceConfig, setIsScale, setIsToolbar } = this.props.store;
-        console.log(this.props.store, "---sdf");
         return (
             <div className={'ds-footer'}>
                 <span>网页、App设计</span>

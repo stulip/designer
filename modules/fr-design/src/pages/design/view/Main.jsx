@@ -117,7 +117,7 @@ export class Main extends Component {
         const { color, targetRect, onChange: colorChange } = store.colorPickProps;
         return (
             <div id={"design"}>
-                <div className={"ds-design"}>
+                <div className={`ds-design ${store.footer.preferenceConfig.theme}`}>
                     <Toolbar store={store.toolbar} />
                     {this.renderContext()}
                     <div className={"fixed_area"}>
