@@ -8,7 +8,7 @@
 import React from 'react';
 import {Form} from "fr-ui";
 import {IBotForm, IBotSVG} from 'fr-web';
-import '../assets/grid-setting.pcss'
+import './assets/grid-setting.pcss'
 
 type Props = {
 

@@ -25,12 +25,9 @@ export class ConfirmInputNumberItem extends BaseItem<Props, State> {
         let input = item.input || {};
 
         return (
-            <>
-                { item.title && <span className={classNames('left-label', {error: error})}>{item.title}</span>}
-                <div className={'right-content'}>
-                    <IBotForm.PanelInputNumber {...input} value={value} onConfirm={that.onChange} disabled={disabled}/>
-                </div>
-            </>
+            <div className={'right-content'}>
+                <IBotForm.PanelInputNumber {...input} value={value} onConfirm={that.onChange} disabled={disabled}/>
+            </div>
         );
     };
 }

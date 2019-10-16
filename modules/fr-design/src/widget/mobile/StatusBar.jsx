@@ -9,7 +9,7 @@ import React, { Component } from "react";
 import { status_bar_battery, status_bar_signal, status_bar_wifi } from "../../assets/svg";
 import "../assets/mobile/status-bar.pcss";
 import { BaseWidget } from "../base/BaseWidget";
-import {ItemConst} from "../../pages/design/components/item";
+import {ItemConst} from "../../components";
 import {PropsConst} from "../../config/Attribute";
 
 type Props = {

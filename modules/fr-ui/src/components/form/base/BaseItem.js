@@ -8,6 +8,7 @@ import React from "react";
 import type { ItemProps } from "./../FormView";
 import { Types, Tools } from "@xt-web/core";
 import {DesignEvent, classNames} from "fr-web";
+import {FormConst} from "../FormConst";
 
 type Props = {
     value: any,
@@ -219,15 +220,45 @@ class BaseItem extends React.Component<Props> {
     //子类实现
     renderItem() {}
 
+    renderTitle (){
+        let that = this;
+        const { title, select = {}, titleDirection = FormConst.Direction.Left } = that.props.item;
+        let { error, required, disabled, value } = that.state;
+        const component = that.renderItem();
+        const children = [];
+        if (title){
+            switch (titleDirection) {
+                case FormConst.Direction.Bottom:
+                    return (
+                        <>
+                            {component}
+                            <span className={classNames("left-label", { error: error })}>{title}</span>
+                        </>
+                    );
+                case FormConst.Direction.Left:
+                case FormConst.Direction.Top:
+                default:
+                    return (
+                        <>
+                            <span className={classNames("left-label", { error: error })}>{title}</span>
+                            {component}
+                        </>
+                    )
+            }
+        }
+        return component;
+    }
+
     render() {
         let that = this;
-        let { index, item, childIndex } = that.props;
+        let { index, item } = that.props;
         let { visible } = that.state;
-        let { className, style } = item;
+        let { className, style, form, title, type, titleDirection = FormConst.Direction.Left } = item;
         if ( !that.state.visible) return null;
+        const key = `${form}-${title}-${type}`;
         return (
-            <div className={classNames('form-item', {[`ic-${className}`]: !!className})} style={style}>
-                {that.renderItem()}
+            <div key={key} className={classNames('form-item', titleDirection, {[`ic-${className}`]: !!className})} style={style}>
+                {that.renderTitle()}
             </div>
         )
     }

@@ -21,16 +21,41 @@ export const PropsConst = {
     widgetBackgroundHandle: "widget.background.handle",
 
     // widget layout
-    widgetLayout: "widget.layout",
-    widgetFlexDirector: "widget.flex.director",
-    widgetFlexJustifyContent: "widget.flex.justify-content",
-    widgetFlexAlignItem: "widget.flex.align-item",
+    widgetDirection: "widget.layout.direction",
+    widgetJustifyContent: "widget.layout.justify-content",
+    widgetAlignItem: "widget.layout.align-item",
 
     // widget mouse
     widgetMouseExit: "widget.mouse.exit",
     widgetMouseEnter: "widget.mouse.enter",
     widgetMouseClick: "widget.mouse.click",
     widgetMouseDBLClick: "widget.mouse.dblclick",
+};
+
+// 布局Layout常量
+export const LayoutConst = {
+    direction: {
+        row: 'direction.row',
+        column: 'direction.column',
+    },
+    // flex-start', 'flex-end', 'center', 'stretch', 'baseline'
+    alignItem: {
+        center: 'align-item.center',
+        flexStart: 'align-item.flex-start',
+        flexEnd: 'align-item.flex-end',
+        stretch: 'align-item.stretch', // app:default
+        baseline: 'align-item.baseline',
+    },
+    // 'flex-start', 'flex-end', 'center', 'stretch', 'space-between', 'space-around'
+    justifyContent: {
+        flexStart: 'justify-content.flex-start',
+        flexEnd: 'justify-content.flex-end',
+        center: 'justify-content.center',
+        stretch: 'justify-content.stretch',
+        spaceBetween: 'justify-content.space-between',
+        spaceAround: 'justify-content.space-around',
+    }
+
 };
 
 // 布局方向常量

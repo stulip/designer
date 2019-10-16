@@ -15,5 +15,12 @@ export const FormConst = {
         PanelInput: 'form.input.2',
         InputNumber: 'form.input.number.1',
         ConfirmInputNumber: 'form.input.number.2',
+        Select: 'form.select.1',
+    },
+
+    Direction: {
+        Top: 'direction-top',
+        Left: 'direction-left',
+        Bottom: 'direction-bottom',
     }
 };

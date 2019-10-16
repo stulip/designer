@@ -18,12 +18,9 @@ class PanelInputItem extends BaseInputItem {
         let input = item.input || {};
 
         return (
-            <>
-                { item.title && <span className={classNames('left-label', {error: error})}>{item.title}</span>}
-                <div className={'right-content'}>
-                    <IBotForm.PanelInput {...input} value={value} onChange={that.onChange} disabled={disabled}/>
-                </div>
-            </>
+            <div className={'right-content'}>
+                <IBotForm.PanelInput {...input} value={value} onChange={that.onChange} disabled={disabled}/>
+            </div>
         )
     }
 }

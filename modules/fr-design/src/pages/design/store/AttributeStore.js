@@ -8,7 +8,7 @@ import React from 'react';
 import {observable, action, computed} from 'mobx';
 import type {MainStore, Rect, Size} from "../../../flow/Main.flow";
 import {Form} from "fr-ui";
-import {ItemConst} from "../components/item";
+import {ItemConst} from "../../../components";
 import {PropsConst, ArrangeConst} from "../../../config/Attribute";
 import {BaseStore} from "./BaseStore";
 

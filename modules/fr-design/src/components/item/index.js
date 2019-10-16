@@ -7,19 +7,18 @@
 import {Form} from "fr-ui";
 import {BackgroundItem} from "./BackgroundItem";
 import {GridSettingItem} from "./GridSettingItem";
-import {LayoutItem} from "./LayoutItem";
-
-export const ItemConst = {
-    Type: {
-        Background: 'widget.background.0',
-        GridSetting: 'widget.grid_setting.0',
-        Layout: 'widget.layout.0',
-    }
-};
+import {ItemConst} from './ItemConfig';
+import {HeaderItem} from "./HeaderItem";
+import './assets/item.pcss'
 
 // 注册背景颜色组件
 Form.View.registerComponent(ItemConst.Type.Background, {component: BackgroundItem});
 // 网格设置
 Form.View.registerComponent(ItemConst.Type.GridSetting, {component: GridSettingItem});
-// Layout
-Form.View.registerComponent(ItemConst.Type.Layout, {component: LayoutItem});
+//Header
+Form.View.registerComponent(ItemConst.Type.Header, {component: HeaderItem});
+
+
+export {
+    ItemConst
+}

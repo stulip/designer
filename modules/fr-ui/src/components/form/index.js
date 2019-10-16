@@ -8,6 +8,7 @@ import { BaseSelectItem } from "./base/BaseSelectItem";
 import {required} from './Required'
 import {GapItem, LineItem} from "./view/LineItem";
 import {PanelInputItem} from "./view/PanelInputItem";
+import {SelectItem} from "./view/SelectItem";
 
 //单选
 // View.registerComponent("select", {
@@ -48,6 +49,9 @@ View.registerComponent(Const.Type.Text, {component: TextItem});
 View.registerComponent(Const.Type.ConfirmInputNumber, {component: ConfirmInputNumberItem});
 View.registerComponent(Const.Type.PanelInput, {component: PanelInputItem});
 
+//下拉框
+View.registerComponent(Const.Type.Select, {component: SelectItem});
+
 // 分隔线
 View.registerComponent(Const.Type.Line, {component: LineItem});
 View.registerComponent(Const.Type.Gap, {component: GapItem});
@@ -65,5 +69,6 @@ export {
     TextItem,
     BaseSelectItem,
     BaseItem,
+    SelectItem,
     required
 }

@@ -6,7 +6,7 @@
 
 // @flow
 import React from "react";
-import "../assets/background.pcss";
+import "./assets/background.pcss";
 import { Form, Slider } from "fr-ui";
 import { ColorPicker, DesignEvent, IBotForm } from "fr-web";
 import { Color, Tools, Types } from "@xt-web/core";

@@ -9,7 +9,7 @@ import React from "react";
 import { BaseWidget } from "./BaseWidget";
 import type { BaseWidgetProps } from "./BaseWidget";
 import "../assets/panel.pcss";
-import { ItemConst } from "../../pages/design/components/item";
+import { ItemConst } from "../../components";
 import { PropsConst } from "../../config/Attribute";
 import { Form } from "fr-ui";
 import {DesignEvent} from "fr-web";
@@ -50,7 +50,7 @@ export class BasePanel extends BaseWidget<BasePanelProps, State> {
         formData[PropsConst.widgetHeight] = rect.height;
         formData[PropsConst.widgetX] = rect.x;
         formData[PropsConst.widgetY] = rect.y;
-        formData[PropsConst.widgetLayout] = that.getLayoutConfig();
+        // formData[PropsConst.widgetLayout] = that.getLayoutConfig();
 
         return formData;
     }
@@ -69,8 +69,31 @@ export class BasePanel extends BaseWidget<BasePanelProps, State> {
             },
             {
                 title: "布局",
-                type: ItemConst.Type.Layout,
-                form: PropsConst.widgetLayout
+                type: ItemConst.Type.Header,
+                config: [
+                    {
+                        title: '方向',
+                        form: PropsConst.widgetDirection,
+                        type: Form.Const.Type.Select,
+                        select: {data: ItemConst.Direction.options}
+                    },
+                    [
+                        {
+                            title: '主轴',
+                            titleDirection: Form.Const.Direction.Bottom,
+                            form: PropsConst.widgetJustifyContent,
+                            type: Form.Const.Type.Select,
+                            select: {data: ItemConst.JustifyContent.options}
+                        },
+                        {
+                            title: '次轴',
+                            titleDirection: Form.Const.Direction.Bottom,
+                            form: PropsConst.widgetAlignItem,
+                            type: Form.Const.Type.Select,
+                            select: {data: ItemConst.AlignItems.options}
+                        }
+                    ]
+                ]
             },
             { type: Form.Const.Type.Line, top: 0, bottom: 8 },
         ];
