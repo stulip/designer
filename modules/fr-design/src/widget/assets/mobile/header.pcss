@@ -1,13 +1,6 @@
 
 
 .group-list {
-    .header-bar {
-        flex: 1;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        align-content: normal;
-    }
 
     .header-left, .header-right {
         padding: 10px;
@@ -29,13 +22,16 @@
     }
 
     .header-title {
-        font-size: 17px;
+        padding: 10px;
         position: absolute;
         width: 60%;
         left: 20%;
         text-align: center;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: nowrap;
+        .text {
+            font-size: 17px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
     }
 }

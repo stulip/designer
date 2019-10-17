@@ -81,7 +81,9 @@ export class Header extends BasePanel<Props> {
                     <img src={backImage} width={15}/>
                     <span className="text">返回</span>
                 </div>
-                <span className="header-title">{data.title}</span>
+                <div className={'header-title'}>
+                    <span className="text">{data.title}</span>
+                </div>
                 <div className={'header-right'}>
                     <span className="text">菜单</span>
                 </div>

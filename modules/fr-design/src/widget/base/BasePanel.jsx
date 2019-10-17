@@ -40,6 +40,7 @@ export class BasePanel extends BaseWidget<BasePanelProps, State> {
      */
     getLayoutConfig (){
         return {
+            [PropsConst.layoutDirection]: LayoutConst.direction.row,
             [PropsConst.layoutAlignItems]: LayoutConst.alignItem.stretch,
             [PropsConst.layoutAlignSelf]: LayoutConst.alignSelf.auto,
             [PropsConst.layoutJustifyContent]: LayoutConst.justifyContent.flexStart
