@@ -139,8 +139,9 @@ export class BasePanel extends BaseWidget<BasePanelProps, State> {
                             form: PropsConst.layoutPaddingBottom,
                             type: Form.Const.Type.ConfirmInputNumber,
                             input: {title: "B"},
-                            union: PropsConst.layoutPaddingTop,
-                            unionValue: da => da,
+                            disabled: data => !!data[PropsConst.layoutPaddingVL],
+                            union: data => [PropsConst.layoutPaddingVL, !!data[PropsConst.layoutPaddingVL] ? PropsConst.layoutPaddingTop: undefined] ,
+                            unionValue: (da, fd) => fd[PropsConst.layoutPaddingTop],
                         }
                     ],
                     [
@@ -160,8 +161,9 @@ export class BasePanel extends BaseWidget<BasePanelProps, State> {
                             form: PropsConst.layoutPaddingRight,
                             type: Form.Const.Type.ConfirmInputNumber,
                             input: {title: "R"},
-                            union: PropsConst.layoutPaddingLeft,
-                            unionValue: da => da,
+                            disabled: data => !!data[PropsConst.layoutPaddingHL],
+                            union: data => [PropsConst.layoutPaddingHL, !!data[PropsConst.layoutPaddingHL] ? PropsConst.layoutPaddingLeft: undefined] ,
+                            unionValue: (da, fd) => fd[PropsConst.layoutPaddingLeft],
                         }
                     ]
                 ],

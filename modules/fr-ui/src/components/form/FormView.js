@@ -45,7 +45,7 @@ export type ItemProps = {
     input?: InputProps, // type == input, 给input用的值
     switch?: SwitchProps, // type == switch
     api?: ApiProps,
-    union?: string | Array<string>, // 联动名称(对应联动的form值)(union="@name" @表示刷新联动, 默认值联动)
+    union?: string | Array<string> | (()=> string | Array<string>), // 联动名称(对应联动的form值)(union="@name" @表示刷新联动, 默认值联动)
     visible: boolean | ((formData: Object) => boolean), // 是否显示, 用于,getData会过滤掉
     disabled: boolean | ((formData: Object) => boolean), // 是否禁用
     onChange: (value: any) => void, // 值改变回调
@@ -194,16 +194,15 @@ class FormView extends React.Component<Props, State> {
 
         // 值联动
         let checkUnion = da => {
-            if (da.union && Array.isArray(da.union) ? da.union.includes(union) : da.union === union) {
+            const unionKeys = Types.isFunction(da.union) ? da.union(formData): da.union;
+            if (unionKeys && Array.isArray(unionKeys) ? unionKeys.includes(union) : unionKeys === union) {
                 // 如果isUpEquals则取联动默认值 item.value,否则去联动值item.unionValue
                 let unionValue = isUpEquals
                     ? that.getValue(da.value, formData)
-                    : Array.isArray(da.union)
-                    ? undefined
                     : that.getValue(da.unionValue, value || item._defaultValue, formData, da);
                 that.refs[da.form] && that.refs[da.form].onUnionChange(unionValue);
             } else if (
-                da.union && Array.isArray(da.union) ? da.union.includes(`@${union}`) : da.union === `@${union}`
+                unionKeys && Array.isArray(unionKeys) ? unionKeys.includes(`@${union}`) : unionKeys === `@${union}`
             ) {
                 that.refs[da.form] && that.refs[da.form].onUnionRefresh();
             }

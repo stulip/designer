@@ -7,8 +7,8 @@
 import React from "react";
 import type { ItemProps } from "./../FormView";
 import { Types, Tools } from "@xt-web/core";
-import {DesignEvent, classNames} from "fr-web";
-import {FormConst} from "../FormConst";
+import { DesignEvent, classNames } from "fr-web";
+import { FormConst } from "../FormConst";
 
 type Props = {
     value: any,
@@ -53,34 +53,36 @@ class BaseItem extends React.Component<Props> {
     }
 
     componentDidMount() {
-        const {key} = this.getListener();
-        key && DesignEvent.addListener(key, this.listenerValueChange)
+        const { key } = this.getListener();
+        key && DesignEvent.addListener(key, this.listenerValueChange);
     }
 
     componentWillUnmount() {
-        const {key} = this.getListener();
-        key && DesignEvent.removeListener(key, this.listenerValueChange)
+        const { key } = this.getListener();
+        key && DesignEvent.removeListener(key, this.listenerValueChange);
     }
 
-    getListener (){
-        const {listener} = this.props.item;
-        let key = listener, getValue, setValue;
-        if (key && Types.isObject(key)){
+    getListener() {
+        const { listener } = this.props.item;
+        let key = listener,
+            getValue,
+            setValue;
+        if (key && Types.isObject(key)) {
             getValue = key.getValue;
             setValue = key.setValue;
             key = key.key;
         }
-        return {key, getValue, setValue}
+        return { key, getValue, setValue };
     }
 
     /**
      * 监听值改变
      * @param value
      */
-    listenerValueChange = (value)=> {
+    listenerValueChange = value => {
         let that = this;
-        const {getValue} = that.getListener();
-        that._onChange(getValue ? getValue(value, that.props.formData): value);
+        const { getValue } = that.getListener();
+        that._onChange(getValue ? getValue(value, that.props.formData) : value);
     };
 
     UNSAFE_componentWillReceiveProps(nextProps) {
@@ -112,15 +114,11 @@ class BaseItem extends React.Component<Props> {
     isDisable = (props?: Object, state) => {
         let that = this;
         let { value } = state || that.state;
-        let { item, formData, config } = props || that.props;
-        let { union, disabled = false } = item;
+        let { item, formData } = props || that.props;
+        let { disabled = false } = item;
         disabled = disabled && Types.isFunction(disabled) ? disabled(formData, value) : disabled;
 
-        return !disabled && union
-            ? Array.isArray(union)
-                ? !union.every(da => !~da.indexOf("@") && !!that._getSubValue(formData[da], config[da].sub))
-                : !~union.indexOf("@") && !that._getSubValue(formData[union], config[union].sub)
-            : disabled;
+        return disabled;
     };
 
     /**
@@ -152,10 +150,10 @@ class BaseItem extends React.Component<Props> {
 
     onChange(data) {
         let that = this;
-        const {key, setValue} = that.getListener();
-        DesignEvent.emit(key, setValue? setValue(data, that.props.formData): data);
+        const { key, setValue } = that.getListener();
+        DesignEvent.emit(key, setValue ? setValue(data, that.props.formData) : data);
         that._onChange(data);
-    };
+    }
 
     _onChange(data) {
         let that = this;
@@ -166,7 +164,7 @@ class BaseItem extends React.Component<Props> {
             that.value = data;
             item.onChange && item.onChange(data);
         }
-    };
+    }
 
     setValue(data) {
         let that = this;
@@ -177,7 +175,7 @@ class BaseItem extends React.Component<Props> {
             that.setState({ value: that.getValue(data) });
         }
         that.refreshProps();
-    };
+    }
 
     refreshProps() {
         let that = this;
@@ -208,7 +206,7 @@ class BaseItem extends React.Component<Props> {
 
     _getSubValue = (value, sub) => {
         let sVal = Array.isArray(value) ? value[0] : value;
-        try{
+        try {
             return Tools.getItemValue(sVal, sub, Tools.getItemValue(sVal, "name"));
         } catch (e) {
             console.log(e);
@@ -220,13 +218,13 @@ class BaseItem extends React.Component<Props> {
     //子类实现
     renderItem() {}
 
-    renderTitle (){
+    renderTitle() {
         let that = this;
         const { title, select = {}, titleDirection = FormConst.Direction.Left } = that.props.item;
         let { error, required, disabled, value } = that.state;
         const component = that.renderItem();
         const children = [];
-        if (title){
+        if (title) {
             switch (titleDirection) {
                 case FormConst.Direction.Bottom:
                     return (
@@ -243,7 +241,7 @@ class BaseItem extends React.Component<Props> {
                             <span className={classNames("left-label", { error: error })}>{title}</span>
                             {component}
                         </>
-                    )
+                    );
             }
         }
         return component;
@@ -254,13 +252,17 @@ class BaseItem extends React.Component<Props> {
         let { index, item } = that.props;
         let { visible } = that.state;
         let { className, style, form, title, type, titleDirection = FormConst.Direction.Left } = item;
-        if ( !that.state.visible) return null;
+        if (!that.state.visible) return null;
         const key = `${form}-${title}-${type}`;
         return (
-            <div key={key} className={classNames('form-item', titleDirection, {[`ic-${className}`]: !!className})} style={style}>
+            <div
+                key={key}
+                className={classNames("form-item", titleDirection, { [`ic-${className}`]: !!className })}
+                style={style}
+            >
                 {that.renderTitle()}
             </div>
-        )
+        );
     }
 }
 
