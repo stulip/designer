@@ -39,11 +39,13 @@ export class BasePanel extends BaseWidget<BasePanelProps, State> {
      * @returns {{}}
      */
     getLayoutConfig (){
+        const {layout = {}} = this.props;
         return {
             [PropsConst.layoutDirection]: LayoutConst.direction.row,
             [PropsConst.layoutAlignItems]: LayoutConst.alignItem.stretch,
             [PropsConst.layoutAlignSelf]: LayoutConst.alignSelf.auto,
-            [PropsConst.layoutJustifyContent]: LayoutConst.justifyContent.flexStart
+            [PropsConst.layoutJustifyContent]: LayoutConst.justifyContent.flexStart,
+            ...layout
         }
     }
 
@@ -117,6 +119,87 @@ export class BasePanel extends BaseWidget<BasePanelProps, State> {
                     ]
                 ]
             },
+            {
+                title: "内边距",
+                type: ItemConst.Type.Header,
+                config: [
+                    [
+                        {
+                            titleDirection: Form.Const.Direction.Bottom,
+                            form: PropsConst.layoutPaddingTop,
+                            type: Form.Const.Type.ConfirmInputNumber,
+                            input: {title: "T"}
+                        },
+                        {
+                            type: ItemConst.Type.IconButton,
+                            form: PropsConst.layoutPaddingVL,
+                        },
+                        {
+                            titleDirection: Form.Const.Direction.Bottom,
+                            form: PropsConst.layoutPaddingBottom,
+                            type: Form.Const.Type.ConfirmInputNumber,
+                            input: {title: "B"},
+                            union: PropsConst.layoutPaddingTop,
+                            unionValue: da => da,
+                        }
+                    ],
+                    [
+
+                        {
+                            titleDirection: Form.Const.Direction.Bottom,
+                            form: PropsConst.layoutPaddingLeft,
+                            type: Form.Const.Type.ConfirmInputNumber,
+                            input: {title: "L"},
+                        },
+                        {
+                            type: ItemConst.Type.IconButton,
+                            form: PropsConst.layoutPaddingHL,
+                        },
+                        {
+                            titleDirection: Form.Const.Direction.Bottom,
+                            form: PropsConst.layoutPaddingRight,
+                            type: Form.Const.Type.ConfirmInputNumber,
+                            input: {title: "R"},
+                            union: PropsConst.layoutPaddingLeft,
+                            unionValue: da => da,
+                        }
+                    ]
+                ],
+            },
+            {
+                title: "外边距",
+                type: ItemConst.Type.Header,
+                config: [
+                    [
+                        {
+                            titleDirection: Form.Const.Direction.Bottom,
+                            form: PropsConst.layoutMarginTop,
+                            type: Form.Const.Type.ConfirmInputNumber,
+                            input: {title: "T"}
+                        },
+                        {
+                            titleDirection: Form.Const.Direction.Bottom,
+                            form: PropsConst.layoutMarginRight,
+                            type: Form.Const.Type.ConfirmInputNumber,
+                            input: {title: "R"}
+                        },
+                    ],
+                   [
+                       {
+                           titleDirection: Form.Const.Direction.Bottom,
+                           form: PropsConst.layoutMarginBottom,
+                           type: Form.Const.Type.ConfirmInputNumber,
+                           input: {title: "B"}
+                       },
+                       {
+                           titleDirection: Form.Const.Direction.Bottom,
+                           form: PropsConst.layoutMarginLeft,
+                           type: Form.Const.Type.ConfirmInputNumber,
+                           input: {title: "L"}
+                       }
+                   ]
+                ],
+            },
             { type: Form.Const.Type.Line, top: 0, bottom: 8 },
         ];
     }
@@ -127,10 +210,10 @@ export class BasePanel extends BaseWidget<BasePanelProps, State> {
 
     /**
      * 获取表单中布局style信息
-     * @returns {{layout: Object}}
+     * @returns {{flex: Object, margin: Object, padding: Object}}
      */
     getLayoutStyles (){
-        return this.formatFormData();
+        return this.formatFormData().layout;
     }
 
     render() {
@@ -141,9 +224,10 @@ export class BasePanel extends BaseWidget<BasePanelProps, State> {
         const backgroundColor = data[PropsConst.widgetBackground];
 
         const styles = that.getLayoutStyles();
+        const pStyle = {width, height, backgroundColor, ...styles.padding, ...styles.margin, ...styles.border};
         return (
-            <div className={"group-flow"} style={{width, height, backgroundColor}} ref={that.widgetRef}>
-                <div className={"view-panel"} style={styles.layout}>
+            <div className={"group-flow"} style={pStyle} ref={that.widgetRef}>
+                <div className={"view-panel"} style={styles.flex}>
                     {that.renderWidget()}
                 </div>
             </div>

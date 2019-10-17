@@ -61,7 +61,9 @@ export const ItemConst = {
     Type: {
         Background: "widget.background.0",
         GridSetting: "widget.grid_setting.0",
-        Header: "header.0"
+        Header: "widget.header.0",
+        Button: "widget.button.0",
+        IconButton: "widget.button.1",
     },
     Direction,
     JustifyContent,

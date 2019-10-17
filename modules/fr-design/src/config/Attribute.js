@@ -20,12 +20,34 @@ export const PropsConst = {
     widgetBackground: "widget.background",
     widgetBackgroundHandle: "widget.background.handle",
 
-    // widget layout
-    layoutDirection: "layout.flexDirection",
-    layoutJustifyContent: "layout.justifyContent",
-    layoutAlignContent: "layout.alignContent",
-    layoutAlignItems: "layout.alignItems",
-    layoutAlignSelf: "layout.alignSelf",
+    // widget layout flex
+    layoutDirection: "layout.flex.flexDirection",
+    layoutJustifyContent: "layout.flex.justifyContent",
+    layoutAlignContent: "layout.flex.alignContent",
+    layoutAlignItems: "layout.flex.alignItems",
+    layoutAlignSelf: "layout.flex.alignSelf",
+
+    // widget layout padding
+    layoutPaddingVL: "layout.setting.padding.vl",
+    layoutPaddingHL: "layout.setting.padding.hl",
+    layoutPaddingLeft: "layout.padding.paddingLeft",
+    layoutPaddingRight: "layout.padding.paddingRight",
+    layoutPaddingTop: "layout.padding.paddingTop",
+    layoutPaddingBottom: "layout.padding.paddingBottom",
+
+    // widget layout margin
+    layoutMarginVL: "layout.setting.margin.vl",
+    layoutMarginHL: "layout.setting.margin.hl",
+    layoutMarginLeft: "layout.margin.marginLeft",
+    layoutMarginRight: "layout.margin.marginRight",
+    layoutMarginTop: "layout.margin.marginTop",
+    layoutMarginBottom: "layout.margin.marginBottom",
+
+    // widget layout border
+    layoutBorderLeft: "layout.border.borderLeftWidth",
+    layoutBorderRight: "layout.border.borderRightWidth",
+    layoutBorderTop: "layout.border.borderTopWidth",
+    layoutBorderBottom: "layout.border.borderBottomWidth",
 
     // widget mouse
     widgetMouseExit: "widget.mouse.exit",

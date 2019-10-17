@@ -11,7 +11,7 @@ import { observer } from "mobx-react";
 import {classNames, DesignEvent} from "fr-web";
 import "../../../widget/assets";
 import { ViewGroupStore } from "../store/ViewGroupStore";
-import {PropsConst} from "../../../config/Attribute";
+import {LayoutConst, PropsConst} from "../../../config/Attribute";
 import {WidgetConst} from "../../../widget/WidgetConfig";
 
 type Props = {
@@ -37,6 +37,9 @@ const GroupWidget = [
     },
     {
         component: WidgetConst.App.Panel,
+        layout: {
+            [PropsConst.layoutJustifyContent]: LayoutConst.justifyContent.spaceBetween,
+        },
         children: [
             {
                 component: WidgetConst.App.Text,
