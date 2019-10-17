@@ -16,7 +16,7 @@ type State = {
 
 };
 
-export class IconButtonItem extends Form.BaseItem<Props, State> {
+export class LockButtonItem extends Form.BaseItem<Props, State> {
 
     handleClick = ()=> {
         this.onChange(!this.state.value);

@@ -131,7 +131,7 @@ export class BasePanel extends BaseWidget<BasePanelProps, State> {
                             input: {title: "T"}
                         },
                         {
-                            type: ItemConst.Type.IconButton,
+                            type: ItemConst.Type.LockIconButton,
                             form: PropsConst.layoutPaddingVL,
                         },
                         {
@@ -153,7 +153,7 @@ export class BasePanel extends BaseWidget<BasePanelProps, State> {
                             input: {title: "L"},
                         },
                         {
-                            type: ItemConst.Type.IconButton,
+                            type: ItemConst.Type.LockIconButton,
                             form: PropsConst.layoutPaddingHL,
                         },
                         {

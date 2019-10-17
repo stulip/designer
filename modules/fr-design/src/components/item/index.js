@@ -10,7 +10,7 @@ import {GridSettingItem} from "./GridSettingItem";
 import {ItemConst} from './ItemConfig';
 import {HeaderItem} from "./HeaderItem";
 import './assets/item.pcss'
-import {IconButtonItem} from "./IconButtonItem";
+import {LockButtonItem} from "./LockButtonItem";
 
 // 注册背景颜色组件
 Form.View.registerComponent(ItemConst.Type.Background, {component: BackgroundItem});
@@ -19,7 +19,7 @@ Form.View.registerComponent(ItemConst.Type.GridSetting, {component: GridSettingI
 //Header
 Form.View.registerComponent(ItemConst.Type.Header, {component: HeaderItem});
 //Icon Button
-Form.View.registerComponent(ItemConst.Type.IconButton, {component: IconButtonItem});
+Form.View.registerComponent(ItemConst.Type.LockIconButton, {component: LockButtonItem});
 
 
 export {
