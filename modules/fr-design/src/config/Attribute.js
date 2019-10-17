@@ -21,11 +21,11 @@ export const PropsConst = {
     widgetBackgroundHandle: "widget.background.handle",
 
     // widget layout
-    widgetDirection: "widget.layout.flex-direction",
-    widgetJustifyContent: "widget.layout.justify-content",
-    widgetAlignContent: "widget.layout.align-content",
-    widgetAlignItem: "widget.layout.align-item",
-    widgetAlignSelf: "widget.layout.align-self",
+    layoutDirection: "layout.flexDirection",
+    layoutJustifyContent: "layout.justifyContent",
+    layoutAlignContent: "layout.alignContent",
+    layoutAlignItems: "layout.alignItems",
+    layoutAlignSelf: "layout.alignSelf",
 
     // widget mouse
     widgetMouseExit: "widget.mouse.exit",
@@ -36,44 +36,47 @@ export const PropsConst = {
 
 // 布局Layout常量
 export const LayoutConst = {
+    css: {
+        normal: 'normal',
+    },
     direction: {
-        row: 'direction.row',
-        column: 'direction.column',
+        row: 'row',
+        column: 'column',
     },
     // flex-start', 'flex-end', 'center', 'stretch', 'baseline'
     alignItem: {
-        center: 'align-item.center',
-        flexStart: 'align-item.flex-start',
-        flexEnd: 'align-item.flex-end',
-        stretch: 'align-item.stretch', // app:default
-        baseline: 'align-item.baseline',
+        center: 'center',
+        flexStart: 'flex-start',
+        flexEnd: 'flex-end',
+        stretch: 'stretch', // app:default
+        baseline: 'baseline',
     },
     //'flex-start', 'flex-end', 'center', 'stretch', 'space-between', 'space-around'
     alignContent: {
-        flexStart: 'align-content.flex-start',
-        flexEnd: 'align-content.flex-end',
-        center: 'align-content.center',
-        stretch: 'align-content.stretch',
-        spaceBetween: 'align-content.space-between',
-        spaceAround: 'align-content.space-around',
+        flexStart: 'flex-start',
+        flexEnd: 'flex-end',
+        center: 'center',
+        stretch: 'stretch',
+        spaceBetween: 'space-between',
+        spaceAround: 'space-around',
     },
     // 'auto', 'flex-start', 'flex-end', 'center', 'stretch', 'baseline'
     alignSelf: {
-        auto: 'align-self.auto',
-        flexStart: 'align-self.flex-start',
-        flexEnd: 'align-self.flex-end',
-        center: 'align-self.center',
-        stretch: 'align-self.stretch',
-        baseline: 'align-self.baseline',
+        auto: 'auto',
+        flexStart: 'flex-start',
+        flexEnd: 'flex-end',
+        center: 'center',
+        stretch: 'stretch',
+        baseline: 'baseline',
     },
     // 'flex-start', 'flex-end', 'center', 'space-between', 'space-around', 'space-evenly'
     justifyContent: {
-        flexStart: 'justify-content.flex-start',
-        flexEnd: 'justify-content.flex-end',
-        center: 'justify-content.center',
-        spaceEvenly: 'justify-content.space-evenly',
-        spaceBetween: 'justify-content.space-between',
-        spaceAround: 'justify-content.space-around',
+        flexStart: 'flex-start',
+        flexEnd: 'flex-end',
+        center: 'center',
+        spaceEvenly: 'space-evenly',
+        spaceBetween: 'space-between',
+        spaceAround: 'space-around',
     }
 
 };

@@ -10,9 +10,10 @@ import { BaseWidget } from "./BaseWidget";
 import type { BaseWidgetProps } from "./BaseWidget";
 import "../assets/panel.pcss";
 import { ItemConst } from "../../components";
-import { PropsConst } from "../../config/Attribute";
+import {LayoutConst, PropsConst} from "../../config/Attribute";
 import { Form } from "fr-ui";
 import {DesignEvent} from "fr-web";
+import {Tools} from "@xt-web/core";
 
 export type BasePanelProps = {
     ...BaseWidgetProps
@@ -38,7 +39,11 @@ export class BasePanel extends BaseWidget<BasePanelProps, State> {
      * @returns {{}}
      */
     getLayoutConfig (){
-        return {}
+        return {
+            [PropsConst.layoutAlignItems]: LayoutConst.alignItem.stretch,
+            [PropsConst.layoutAlignSelf]: LayoutConst.alignSelf.auto,
+            [PropsConst.layoutJustifyContent]: LayoutConst.justifyContent.flexStart
+        }
     }
 
     initWidgetFormData() {
@@ -50,8 +55,8 @@ export class BasePanel extends BaseWidget<BasePanelProps, State> {
         formData[PropsConst.widgetHeight] = rect.height;
         formData[PropsConst.widgetX] = rect.x;
         formData[PropsConst.widgetY] = rect.y;
-        // formData[PropsConst.widgetLayout] = that.getLayoutConfig();
 
+        Object.assign(formData, that.getLayoutConfig());
         return formData;
     }
 
@@ -73,7 +78,7 @@ export class BasePanel extends BaseWidget<BasePanelProps, State> {
                 config: [
                     {
                         title: '方向',
-                        form: PropsConst.widgetDirection,
+                        form: PropsConst.layoutDirection,
                         type: Form.Const.Type.Select,
                         select: {data: ItemConst.Direction.options}
                     },
@@ -81,32 +86,32 @@ export class BasePanel extends BaseWidget<BasePanelProps, State> {
                         {
                             title: '主轴空间',
                             titleDirection: Form.Const.Direction.Bottom,
-                            form: PropsConst.widgetJustifyContent,
+                            form: PropsConst.layoutJustifyContent,
                             type: Form.Const.Type.Select,
                             select: {data: ItemConst.JustifyContent.options}
                         },
                         {
                             title: '次轴空间',
                             titleDirection: Form.Const.Direction.Bottom,
-                            form: PropsConst.widgetAlignContent,
+                            form: PropsConst.layoutAlignContent,
                             type: Form.Const.Type.Select,
                             select: {data: ItemConst.AlignContent.options}
                         }
                     ],
                     [
                         {
-                            title: '次轴对齐(self)',
-                            titleDirection: Form.Const.Direction.Bottom,
-                            form: PropsConst.widgetAlignSelf,
-                            type: Form.Const.Type.Select,
-                            select: {data: ItemConst.AlignSelf.options}
-                        },
-                        {
                             title: '次轴对齐',
                             titleDirection: Form.Const.Direction.Bottom,
-                            form: PropsConst.widgetAlignItem,
+                            form: PropsConst.layoutAlignItems,
                             type: Form.Const.Type.Select,
                             select: {data: ItemConst.AlignItems.options}
+                        },
+                        {
+                            title: '次轴对齐(self)',
+                            titleDirection: Form.Const.Direction.Bottom,
+                            form: PropsConst.layoutAlignSelf,
+                            type: Form.Const.Type.Select,
+                            select: {data: ItemConst.AlignSelf.options}
                         }
                     ]
                 ]
@@ -116,8 +121,15 @@ export class BasePanel extends BaseWidget<BasePanelProps, State> {
     }
 
     renderWidget() {
-        const { children } = this.props;
-        return <div className={"view-panel"}>{children}</div>;
+        return this.props.children;
+    }
+
+    /**
+     * 获取表单中布局style信息
+     * @returns {{layout: Object}}
+     */
+    getLayoutStyles (){
+        return this.formatFormData();
     }
 
     render() {
@@ -127,9 +139,12 @@ export class BasePanel extends BaseWidget<BasePanelProps, State> {
         const height = data[PropsConst.widgetHeight];
         const backgroundColor = data[PropsConst.widgetBackground];
 
+        const styles = that.getLayoutStyles();
         return (
-            <div className={"group-flow"} style={{ width, height, backgroundColor }} ref={that.widgetRef}>
-                {that.renderWidget()}
+            <div className={"group-flow"} style={{width, height, backgroundColor}} ref={that.widgetRef}>
+                <div className={"view-panel"} style={styles.layout}>
+                    {that.renderWidget()}
+                </div>
             </div>
         );
     }

@@ -11,7 +11,7 @@ import type {BaseWidgetProps} from "../base/BaseWidget";
 import {BasePanel} from "../base/BasePanel";
 import {Form} from "fr-ui";
 import {observer} from "mobx-react";
-import {PropsConst} from "../../config/Attribute";
+import {LayoutConst, PropsConst} from "../../config/Attribute";
 
 type Props = {
     ...BaseWidgetProps,
@@ -40,6 +40,15 @@ export class Header extends BasePanel<Props> {
         return basic;
     }
 
+    getLayoutConfig(): {} {
+        const layout = super.getLayoutConfig();
+        return {
+            ...layout,
+            [PropsConst.layoutAlignItems]: LayoutConst.alignItem.center,
+            [PropsConst.layoutJustifyContent]: LayoutConst.justifyContent.spaceBetween
+        }
+    }
+
     getBoxRect(): { width: number, x: number, y: number, height: number } {
         const rect = super.getBoxRect();
         const {canvasRect, designRect} = this.props;
@@ -57,7 +66,8 @@ export class Header extends BasePanel<Props> {
                 form: 'title',
                 title: '标题',
                 type: Form.Const.Type.PanelInput,
-            }
+            },
+            {Type: Form.Const.Type.Line}
         ];
     }
 
@@ -66,7 +76,7 @@ export class Header extends BasePanel<Props> {
         const data = that.formData ;
 
         return (
-            <div className="header-bar">
+            <>
                 <div className={'header-left flex middle'}>
                     <img src={backImage} width={15}/>
                     <span className="text">返回</span>
@@ -75,7 +85,7 @@ export class Header extends BasePanel<Props> {
                 <div className={'header-right'}>
                     <span className="text">菜单</span>
                 </div>
-            </div>
+            </>
         )
     }
 }

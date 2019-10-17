@@ -12,7 +12,7 @@ import { FormConst } from "../FormConst";
 
 class SelectItem extends BaseSelectItem {
     static defaultProps = {
-        single: false
+        single: true
     };
 
     onChange(data) {

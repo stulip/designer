@@ -10,7 +10,7 @@ import { DesignEvent } from "fr-web";
 import { PropsConst } from "../../config/Attribute";
 import { Form } from "fr-ui";
 import type { DesignType, Rect, Size } from "../../flow/Main.flow";
-import { Types } from "@xt-web/core";
+import {Tools, Types} from "@xt-web/core";
 import {observable, action} from "mobx";
 import {observer} from "mobx-react";
 
@@ -225,12 +225,24 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
         ];
     }
 
-    set formData (data){
-        this._formData = data;
-    }
-
+    /**
+     * 原始表单数据
+     * @returns {Object}
+     */
     get formData (){
         return this._formData;
+    }
+
+    /**
+     * 获取格式化后的表单数据
+     * @returns {{}}
+     */
+    formatFormData (){
+        const data = {};
+        for (const [field, value] of Object.entries(this.formData)){
+            Tools.parseFieldData(data, field, value);
+        }
+        return data;
     }
 
     // 子类实现

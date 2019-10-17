@@ -7,7 +7,6 @@ import { LayoutConst } from "../../config/Attribute";
  */
 
 export const Direction = {
-    value: LayoutConst.direction.row,
     options: [
         { label: "横向", value: LayoutConst.direction.row },
         { label: "纵向", value: LayoutConst.direction.column }
@@ -15,7 +14,6 @@ export const Direction = {
 };
 
 export const JustifyContent = {
-    value: undefined,
     options: [
         { label: "center", value: LayoutConst.justifyContent.center },
         { label: "flex-start", value: LayoutConst.justifyContent.flexStart },
@@ -27,8 +25,8 @@ export const JustifyContent = {
 };
 
 export const AlignContent = {
-    value: undefined,
     options: [
+        { label: "", value: undefined },
         { label: "center", value: LayoutConst.alignContent.center },
         { label: "flex-start", value: LayoutConst.alignContent.flexStart },
         { label: "flex-end", value: LayoutConst.alignContent.flexEnd },
@@ -39,7 +37,6 @@ export const AlignContent = {
 };
 
 export const AlignItems = {
-    value: LayoutConst.alignItem.stretch,
     options: [
         { label: "center", value: LayoutConst.alignItem.center },
         { label: "flex-start", value: LayoutConst.alignItem.flexStart },
@@ -50,7 +47,6 @@ export const AlignItems = {
 };
 
 export const AlignSelf = {
-    value: undefined,
     options: [
         { label: "auto", value: LayoutConst.alignSelf.auto },
         { label: "flex-start", value: LayoutConst.alignSelf.flexStart },
