@@ -86,9 +86,14 @@ export class ViewGroupStore extends BaseStore{
         that.widget = widget;
     };
 
+    /**
+     * 组件尺寸改变
+     * @param size
+     */
     onWidgetSizeChange = (size: Size)=> {
         let  that = this;
         if (that.widget){
+            // 改变一下选框
             const rect = that.widget.widget.getBoundingClientRect();
             rect.width = size.width * that.main.section.canvasScale;
             rect.height = size.height* that.main.section.canvasScale;

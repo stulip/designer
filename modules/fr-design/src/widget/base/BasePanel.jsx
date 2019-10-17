@@ -180,25 +180,40 @@ export class BasePanel extends BaseWidget<BasePanelProps, State> {
                             input: {title: "T"}
                         },
                         {
+                            type: ItemConst.Type.LockIconButton,
+                            form: PropsConst.layoutMarginVL,
+                        },
+                        {
                             titleDirection: Form.Const.Direction.Bottom,
-                            form: PropsConst.layoutMarginRight,
+                            form: PropsConst.layoutMarginBottom,
                             type: Form.Const.Type.ConfirmInputNumber,
-                            input: {title: "R"}
+                            input: {title: "B"},
+                            disabled: data => !!data[PropsConst.layoutMarginVL],
+                            union: data => [PropsConst.layoutMarginVL, !!data[PropsConst.layoutMarginVL] ? PropsConst.layoutMarginTop: undefined] ,
+                            unionValue: (da, fd) => fd[PropsConst.layoutMarginTop],
                         },
                     ],
                    [
-                       {
-                           titleDirection: Form.Const.Direction.Bottom,
-                           form: PropsConst.layoutMarginBottom,
-                           type: Form.Const.Type.ConfirmInputNumber,
-                           input: {title: "B"}
-                       },
+
                        {
                            titleDirection: Form.Const.Direction.Bottom,
                            form: PropsConst.layoutMarginLeft,
                            type: Form.Const.Type.ConfirmInputNumber,
-                           input: {title: "L"}
-                       }
+                           input: {title: "L"},
+                       },
+                       {
+                           type: ItemConst.Type.LockIconButton,
+                           form: PropsConst.layoutMarginHL,
+                       },
+                       {
+                           titleDirection: Form.Const.Direction.Bottom,
+                           form: PropsConst.layoutMarginRight,
+                           type: Form.Const.Type.ConfirmInputNumber,
+                           input: {title: "R"},
+                           disabled: data => !!data[PropsConst.layoutMarginHL],
+                           union: data => [PropsConst.layoutMarginHL, !!data[PropsConst.layoutMarginHL] ? PropsConst.layoutMarginLeft: undefined] ,
+                           unionValue: (da, fd) => fd[PropsConst.layoutMarginLeft],
+                       },
                    ]
                 ],
             },
