@@ -67,13 +67,13 @@ export class MainStore {
     addListener (){
         let that = this;
         DesignEvent.addListener(PropsConst.background, that.onListenerBackgroundColor);
-        DesignEvent.addListener(PropsConst.widgetBackgroundHandle, that.handleColorPicker);
+        DesignEvent.addListener(PropsConst.widgetColorHandle, that.handleColorPicker);
     }
 
     removeListener (){
         let that = this;
         DesignEvent.removeListener(PropsConst.background, that.onListenerBackgroundColor);
-        DesignEvent.removeListener(PropsConst.widgetBackgroundHandle, that.handleColorPicker);
+        DesignEvent.removeListener(PropsConst.widgetColorHandle, that.handleColorPicker);
     }
 
     /**

@@ -38,7 +38,7 @@ export class StatusBar extends BaseWidget<Props> {
                 type: ItemConst.Type.Background,
                 form: PropsConst.widgetBackground,
                 listener: PropsConst.widgetBackground,
-                handlePicker: PropsConst.widgetBackgroundHandle,
+                handlePicker: PropsConst.widgetColorHandle,
             },
         ]
     }

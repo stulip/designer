@@ -25,10 +25,13 @@ export class LockButtonItem extends Form.BaseItem<Props, State> {
     render() {
         const {value} = this.state;
         const name = !value ? "unlock": "lock";
+        const {style} = this.props.item;
         return (
-            <a onClick={this.handleClick}>
-                <IBotIcon name={name} type={'dora'}/>
-            </a>
+            <div style={{textAlign: 'center', ...style}}>
+                <a onClick={this.handleClick}>
+                    <IBotIcon name={name} type={'dora'}/>
+                </a>
+            </div>
         );
     };
 }

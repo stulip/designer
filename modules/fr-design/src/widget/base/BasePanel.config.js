@@ -42,7 +42,7 @@ export const BasePanelConfig = [
         type: ItemConst.Type.Background,
         form: PropsConst.widgetBackground,
         listener: PropsConst.widgetBackground,
-        handlePicker: PropsConst.widgetBackgroundHandle
+        handlePicker: PropsConst.widgetColorHandle
     },
     {
         title: "布局",
@@ -134,6 +134,92 @@ export const BasePanelConfig = [
                 center: { key: PropsConst.layoutRadiusHL },
                 right: { key: PropsConst.layoutRadiusBottomRight, title: "BR" }
             }),
+        ]
+    },
+    {
+        title: "边框",
+        type: ItemConst.Type.Header,
+        config: [
+            {
+                title: '样式',
+                form: PropsConst.layoutBorderStyle,
+                type: Form.Const.Type.Select,
+                select: {data: ItemConst.BorderStyles.options}
+            },
+            {
+                form: PropsConst.layoutBorderVL,
+                type: ItemConst.Type.LockIconButton,
+                value: true
+            },
+            [
+                {
+                    form: PropsConst.layoutBorderTopColor,
+                    type: ItemConst.Type.Color,
+                    value: '#fff',
+                    handlePicker: PropsConst.widgetColorHandle
+                },
+                {
+                    form: PropsConst.layoutBorderBottomColor,
+                    type: ItemConst.Type.Color,
+                    value: '#fff',
+                    handlePicker: PropsConst.widgetColorHandle,
+                    disabled: data => !!data[PropsConst.layoutBorderVL],
+                    union: data => [PropsConst.layoutBorderVL, !!data[PropsConst.layoutBorderVL] ? PropsConst.layoutBorderTopColor : undefined],
+                    unionValue: (da, fd) => fd[PropsConst.layoutBorderTopColor]
+                },
+            ],
+            [
+                {
+                    form: PropsConst.layoutBorderTop,
+                    type: Form.Const.Type.ConfirmInputNumber,
+                    input: { title: "T" }
+                },
+                {
+                    form: PropsConst.layoutBorderBottom,
+                    type: Form.Const.Type.ConfirmInputNumber,
+                    input: { title: "B"},
+                    disabled: data => !!data[PropsConst.layoutBorderVL],
+                    union: data => [PropsConst.layoutBorderVL, !!data[PropsConst.layoutBorderVL] ? PropsConst.layoutBorderTop : undefined],
+                    unionValue: (da, fd) => console.log(fd, fd[PropsConst.layoutBorderTop]) && fd[PropsConst.layoutBorderTop]
+                },
+            ],
+            {
+                form: PropsConst.layoutBorderHL,
+                type: ItemConst.Type.LockIconButton,
+                // value: true
+            },
+            [
+                {
+                    form: PropsConst.layoutBorderLeftColor,
+                    type: ItemConst.Type.Color,
+                    value: '#fff',
+                    handlePicker: PropsConst.widgetColorHandle
+                },
+                {
+                    form: PropsConst.layoutBorderRightColor,
+                    type: ItemConst.Type.Color,
+                    value: '#fff',
+                    handlePicker: PropsConst.widgetColorHandle,
+                    disabled: data => !!data[PropsConst.layoutBorderHL],
+                    union: data => [PropsConst.layoutBorderHL, !!data[PropsConst.layoutBorderHL] ? PropsConst.layoutBorderLeftColor : undefined],
+                    unionValue: (da, fd) => fd[PropsConst.layoutBorderLeftColor]
+                },
+            ],
+            [
+                {
+                    form: PropsConst.layoutBorderLeft,
+                    type: Form.Const.Type.ConfirmInputNumber,
+                    input: { title: "L" }
+                },
+                {
+                    form: PropsConst.layoutBorderRight,
+                    type: Form.Const.Type.ConfirmInputNumber,
+                    input: { title: "R"},
+                    disabled: data => !!data[PropsConst.layoutBorderHL],
+                    union: data => [PropsConst.layoutBorderHL, !!data[PropsConst.layoutBorderHL] ? PropsConst.layoutBorderLeft : undefined],
+                    unionValue: (da, fd) => console.log(fd[PropsConst.layoutBorderLeft]) || fd[PropsConst.layoutBorderLeft]
+                },
+            ],
         ]
     },
     { type: Form.Const.Type.Line, top: 0, bottom: 8 }

@@ -86,7 +86,7 @@ export class AttributeStore extends BaseStore {
                         form: "background",
                         value: pageData.backgroundColor,
                         listener: PropsConst.background,
-                        handlePicker: PropsConst.widgetBackgroundHandle
+                        handlePicker: PropsConst.widgetColorHandle
                     },
                     {
                         title: "网格",

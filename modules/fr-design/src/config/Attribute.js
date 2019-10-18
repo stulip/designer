@@ -18,7 +18,7 @@ export const PropsConst = {
     widgetSize: "widget.size",
     widgetPosition: "widget.position",
     widgetBackground: "widget.background",
-    widgetBackgroundHandle: "widget.background.handle",
+    widgetColorHandle: "widget.background.handle",
 
     // widget layout flex
     layoutDirection: "layout.flex.flexDirection",
@@ -52,10 +52,19 @@ export const PropsConst = {
     layoutRadiusBottomRight: "layout.radius.borderBottomRightRadius",
 
     // widget layout border
+    layoutBorderVL: "layout.setting.border.vl",
+    layoutBorderHL: "layout.setting.border.hl",
+    layoutBorderStyle: "layout.border.borderStyle",
+
     layoutBorderLeft: "layout.border.borderLeftWidth",
     layoutBorderRight: "layout.border.borderRightWidth",
     layoutBorderTop: "layout.border.borderTopWidth",
     layoutBorderBottom: "layout.border.borderBottomWidth",
+
+    layoutBorderLeftColor: "layout.border.borderLeftColor",
+    layoutBorderRightColor: "layout.border.borderRightColor",
+    layoutBorderTopColor: "layout.border.borderTopColor",
+    layoutBorderBottomColor: "layout.border.borderBottomColor",
 
     // widget mouse
     widgetMouseExit: "widget.mouse.exit",
@@ -107,6 +116,12 @@ export const LayoutConst = {
         spaceEvenly: 'space-evenly',
         spaceBetween: 'space-between',
         spaceAround: 'space-around',
+    },
+    // 'solid', 'dotted', 'dashed'
+    borderStyle: {
+        solid: 'solid',
+        dotted: 'dotted',
+        dashed: 'dashed',
     }
 
 };

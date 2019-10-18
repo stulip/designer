@@ -56,18 +56,28 @@ export const AlignSelf = {
         { label: "baseline", value: LayoutConst.alignSelf.baseline }
     ]
 };
+export const BorderStyles = {
+    options: [
+        { label: "", value: undefined },
+        { label: "实线", value: LayoutConst.borderStyle.solid },
+        { label: "虚线", value: LayoutConst.borderStyle.dashed },
+        { label: "圆点", value: LayoutConst.borderStyle.dotted }
+    ]
+};
 
 export const ItemConst = {
     Type: {
+        Color: "widget.color.0",
         Background: "widget.background.0",
         GridSetting: "widget.grid_setting.0",
         Header: "widget.header.0",
         Button: "widget.button.0",
-        LockIconButton: "widget.button.1",
+        LockIconButton: "widget.button.1"
     },
     Direction,
     JustifyContent,
     AlignItems,
     AlignContent,
-    AlignSelf
+    AlignSelf,
+    BorderStyles
 };
