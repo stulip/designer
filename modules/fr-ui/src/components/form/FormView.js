@@ -51,6 +51,7 @@ export type ItemProps = {
     onChange: (value: any) => void, // 值改变回调
     value: any | ((formData: Object) => any), // 默认值
     unionValue: any | ((unionValue: any, formData: Object) => any), //联动时取值信息, union 为数组时,此值无效.
+    config: Array<Array<ItemProps> | ItemProps>, // 有父节点的, 配置
     _defaultValue?: any, // 根据类型自动生成默认值, 最后处理Form数据的时候使用
     _visible?: boolean, // 是否隐藏
     _disabled?: boolean, // 是否禁用
