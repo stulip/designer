@@ -58,10 +58,10 @@ export const AlignSelf = {
 };
 export const BorderStyles = {
     options: [
-        { label: "", value: undefined },
-        { label: "实线", value: LayoutConst.borderStyle.solid },
-        { label: "虚线", value: LayoutConst.borderStyle.dashed },
-        { label: "圆点", value: LayoutConst.borderStyle.dotted }
+      { label: "", value: "" },
+      { label: "实线", value: LayoutConst.borderStyle.solid },
+      { label: "虚线", value: LayoutConst.borderStyle.dashed },
+      { label: "圆点", value: LayoutConst.borderStyle.dotted }
     ]
 };
 

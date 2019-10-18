@@ -51,26 +51,29 @@ export const PropsConst = {
     layoutRadiusBottomLeft: "layout.radius.borderBottomLeftRadius",
     layoutRadiusBottomRight: "layout.radius.borderBottomRightRadius",
 
-    // widget layout border
-    layoutBorderVL: "layout.setting.border.vl",
-    layoutBorderHL: "layout.setting.border.hl",
-    layoutBorderStyle: "layout.border.borderStyle",
+  // widget layout border
+  layoutBorderVL: "layout.setting.border.vl",
+  layoutBorderHL: "layout.setting.border.hl",
+  layoutBorderStyle: "layout.border.borderStyle",
 
-    layoutBorderLeft: "layout.border.borderLeftWidth",
-    layoutBorderRight: "layout.border.borderRightWidth",
-    layoutBorderTop: "layout.border.borderTopWidth",
-    layoutBorderBottom: "layout.border.borderBottomWidth",
+  layoutBorderLeft: "layout.border.borderLeftWidth",
+  layoutBorderRight: "layout.border.borderRightWidth",
+  layoutBorderTop: "layout.border.borderTopWidth",
+  layoutBorderBottom: "layout.border.borderBottomWidth",
 
-    layoutBorderLeftColor: "layout.border.borderLeftColor",
-    layoutBorderRightColor: "layout.border.borderRightColor",
-    layoutBorderTopColor: "layout.border.borderTopColor",
-    layoutBorderBottomColor: "layout.border.borderBottomColor",
+  //widget layout border color
+  layoutBorderColorVL: "layout.setting.border.color.vl",
+  layoutBorderColorHL: "layout.setting.border.color.hl",
+  layoutBorderLeftColor: "layout.border.borderLeftColor",
+  layoutBorderRightColor: "layout.border.borderRightColor",
+  layoutBorderTopColor: "layout.border.borderTopColor",
+  layoutBorderBottomColor: "layout.border.borderBottomColor",
 
-    // widget mouse
-    widgetMouseExit: "widget.mouse.exit",
-    widgetMouseEnter: "widget.mouse.enter",
-    widgetMouseClick: "widget.mouse.click",
-    widgetMouseDBLClick: "widget.mouse.dblclick",
+  // widget mouse
+  widgetMouseExit: "widget.mouse.exit",
+  widgetMouseEnter: "widget.mouse.enter",
+  widgetMouseClick: "widget.mouse.click",
+  widgetMouseDBLClick: "widget.mouse.dblclick"
 };
 
 // 布局Layout常量

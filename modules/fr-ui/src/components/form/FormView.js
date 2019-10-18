@@ -198,8 +198,8 @@ class FormView extends React.Component<Props, State> {
             const unionKeys = Types.isFunction(da.union) ? da.union(formData) : da.union;
             if (unionKeys && Array.isArray(unionKeys) ? unionKeys.includes(union) : unionKeys === union) {
                 // 如果isUpEquals则取联动默认值 item.value,否则去联动值item.unionValue
-                let unionValue = isUpEquals
-                    ? that.getValue(da.value, formData)
+                let unionValue = isUpEquals && !da.unionValue
+                    ? (da.getValue ? that.getValue(da.getValue, da.value) : da.value)
                     : that.getValue(da.unionValue, value || item._defaultValue, formData, da);
                 that.refs[da.form] && that.refs[da.form].onUnionChange(unionValue);
             } else if (

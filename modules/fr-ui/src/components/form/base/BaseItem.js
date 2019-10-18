@@ -169,7 +169,7 @@ class BaseItem extends React.Component<Props> {
     setValue(data) {
         let that = this;
         let { change, item } = that.props;
-        if (data !== that.state.value && data !== that.value2) {
+        if (data !== that.state.value) {
             const value = that.value2 = that.getValue(data);
             change && change(item.form, data);
             that.setState({ value });
