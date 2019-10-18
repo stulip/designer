@@ -230,7 +230,7 @@ export class BasePanel extends BaseWidget<BasePanelProps, State> {
      * @returns {{flex: Object, margin: Object, padding: Object}}
      */
     getLayoutStyles (){
-        return this.formatFormData().layout;
+        return Form.View.getFormatFormData(this.formData).layout;
     }
 
     render() {

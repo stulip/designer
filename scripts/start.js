@@ -5,6 +5,7 @@ process.env.NODE_ENV = "development";
 const fs = require('fs-extra');
 const path = require('path');
 const http = require("http");
+const http2 = require("http2");
 const detect = require('detect-port');
 const Koa = require("koa");
 const koaStatic = require('koa-static');

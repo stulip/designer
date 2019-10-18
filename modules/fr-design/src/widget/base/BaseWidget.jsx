@@ -233,18 +233,6 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
         return this._formData;
     }
 
-    /**
-     * 获取格式化后的表单数据
-     * @returns {{}}
-     */
-    formatFormData (){
-        const data = {};
-        for (const [field, value] of Object.entries(this.formData)){
-            Tools.parseFieldData(data, field, value);
-        }
-        return data;
-    }
-
     // 子类实现
     renderWidget() {
         return this.props.children;

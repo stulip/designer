@@ -549,6 +549,18 @@ class FormView extends React.Component<Props, State> {
 }
 
 FormView.label = "label";
+/**
+ * 转换表单数据为对象格式
+ * @param formData
+ * @returns {{}}
+ */
+FormView.getFormatFormData = formData => {
+    const data = {};
+    for (const [field, value] of Object.entries(formData)){
+        Tools.parseFieldData(data, field, value);
+    }
+    return data;
+};
 
 /**
  * 注册组件

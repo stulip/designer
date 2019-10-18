@@ -6,14 +6,15 @@
  */
 import React from "react";
 import { action, observable } from "mobx";
-import type {MainStore, Size} from "../../../flow/Main.flow";
+import type { MainStore, Size } from "../../../flow/Main.flow";
 import { BaseWidget } from "../../../widget/base/BaseWidget";
-import {BaseStore} from "./BaseStore";
-import {DesignEvent} from "fr-web";
-import {PropsConst} from "../../../config/Attribute";
-import {Types} from "@xt-web/core";
+import { BaseStore } from "./BaseStore";
+import { DesignEvent } from "fr-web";
+import { Form } from "fr-ui";
+import { PropsConst } from "../../../config/Attribute";
+import { Types } from "@xt-web/core";
 
-export class ViewGroupStore extends BaseStore{
+export class ViewGroupStore extends BaseStore {
     groupRef = React.createRef();
 
     get group() {
@@ -36,8 +37,6 @@ export class ViewGroupStore extends BaseStore{
         DesignEvent.addListener(PropsConst.widgetMouseDBLClick, that.handleWidgetDBLClick);
 
         //widget basic
-        DesignEvent.addListener(PropsConst.widgetSize, that.onWidgetSizeChange)
-
     }
 
     removeListener() {
@@ -49,13 +48,12 @@ export class ViewGroupStore extends BaseStore{
         DesignEvent.removeListener(PropsConst.widgetMouseDBLClick, that.handleWidgetDBLClick);
 
         //widget basic
-        DesignEvent.removeListener(PropsConst.widgetSize, that.onWidgetSizeChange)
     }
 
     @action.bound
-    handleWidgetMouseExit (event: MouseEvent){
+    handleWidgetMouseExit(event: MouseEvent) {
         this.cancelHove();
-    };
+    }
 
     @action
     cancelHove = () => {
@@ -87,40 +85,68 @@ export class ViewGroupStore extends BaseStore{
     };
 
     /**
-     * 组件尺寸改变
-     * @param size
+     * widget props change
+     * @param formData
      */
-    onWidgetSizeChange = (size: Size)=> {
-        let  that = this;
-        if (that.widget){
-            // 改变一下选框
-            const rect = that.widget.widget.getBoundingClientRect();
-            rect.width = size.width * that.main.section.canvasScale;
-            rect.height = size.height* that.main.section.canvasScale;
-            that._handleWidgetSelect(rect);
+    handleWidgetChange = (formData: Object) => {
+        let that = this;
+        if (that.widget) {
+            that._reWidgetSelectBox(formData);
+            that.widget.handleChange(formData);
         }
     };
 
     /**
-     * widget props change
+     * 修改选框
      * @param formData
+     * @private
      */
-    handleWidgetChange = (formData: Object)=> {
-        let  that = this;
-        if (that.widget){
-            that.widget.handleChange(formData);
-        }
-    };
+    _reWidgetSelectBox(formData) {
+        let that = this;
+        const rect = that.widget.widget.getBoundingClientRect();
+        const canvasScale = that.main.section.canvasScale;
+        // 改变一下选框
+        const {
+            widget: { width, height },
+            layout: {
+                margin: {
+                    marginLeft,
+                    marginTop,
+                    marginBottom,
+                    marginRight
+                }
+            }
+        } = Form.View.getFormatFormData(formData);
+
+        const margin = {}, padding = {};
+        ({
+            marginTop: margin.top,
+            marginBottom: margin.bottom,
+            marginLeft: margin.left,
+            marginRight: margin.right,
+            paddingLeft: padding.left,
+            paddingBottom: padding.bottom,
+            paddingRight: padding.right,
+            paddingTop: padding.top
+        } = that.widget.widget.style);
+        const newRect = {
+            width: width * canvasScale  + parseInt(marginRight || 0) + parseInt(marginLeft || 0),
+            height: height * canvasScale + parseInt(marginBottom || 0) + parseInt(marginTop || 0),
+            left: rect.left - parseInt(margin.left || 0),
+            top: rect.top - parseInt(margin.top || 0)
+        };
+        that._handleWidgetSelect(newRect);
+    }
 
     /**
      * widget获得鼠标焦点
      * @param event
      */
     @action.bound
-    handleWidgetMouseEnter (event: MouseEvent) {
+    handleWidgetMouseEnter(event: MouseEvent) {
         let that = this;
         // 鼠标选择状态
-        if (that.main.screens.rangeBoundRect || ! that.group) return;
+        if (that.main.screens.rangeBoundRect || !that.group) return;
         const groupRect = that.group.getBoundingClientRect();
         const rect = event.currentTarget.getBoundingClientRect();
         const left = ((rect.left - groupRect.left) / groupRect.width) * 100;
@@ -142,7 +168,7 @@ export class ViewGroupStore extends BaseStore{
         } else {
             that.hoveRect = { left, top, width, height };
         }
-    };
+    }
 
     /**
      * widget 单击事件
@@ -150,18 +176,31 @@ export class ViewGroupStore extends BaseStore{
      * @param {BaseWidget} widget
      */
     @action.bound
-    handleWidgetClick (event: MouseEvent, widget: BaseWidget) {
+    handleWidgetClick(event: MouseEvent, widget: BaseWidget) {
         let that = this;
-        if ( !that.group ) return;
+        if (!that.group) return;
         const rect = event.currentTarget.getBoundingClientRect();
-        that._handleWidgetSelect(rect);
+        const margin = {};
+        ({
+            marginTop: margin.top,
+            marginBottom: margin.bottom,
+            marginLeft: margin.left,
+            marginRight: margin.right
+        } = event.currentTarget.style);
+        // 设置选框
+        that._handleWidgetSelect({
+            width: rect.width + parseInt(margin.left || 0) + parseInt(margin.right || 0),
+            height: rect.height + parseInt(margin.top || 0) + parseInt(margin.bottom || 0),
+            left: rect.left - parseInt(margin.left || 0),
+            top: rect.top - parseInt(margin.top || 0),
+        });
         that.setSelectWidget(widget);
-    };
+    }
 
     @action
-    _handleWidgetSelect (rect){
+    _handleWidgetSelect(rect) {
         let that = this;
-        if ( !that.group ) return;
+        if (!that.group) return;
 
         const groupRect = that.group.getBoundingClientRect();
         const left = ((rect.left - groupRect.left) / groupRect.width) * 100;
@@ -191,12 +230,11 @@ export class ViewGroupStore extends BaseStore{
         );
     }
 
-
     /**
      * widget 双击事件
      * @param {MouseEvent} event
      * @param {BaseWidget} widget
      */
     @action.bound
-    handleWidgetDBLClick (event: MouseEvent, widget: BaseWidget) {};
+    handleWidgetDBLClick(event: MouseEvent, widget: BaseWidget) {}
 }
