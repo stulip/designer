@@ -8,7 +8,8 @@ import { BaseSelectItem } from "./base/BaseSelectItem";
 import {required} from './Required'
 import {GapItem, LineItem} from "./view/LineItem";
 import {PanelInputItem} from "./view/PanelInputItem";
-import {SelectItem} from "./view/SelectItem";
+import { SelectItem } from "./view/SelectItem";
+import { IBotSelectItem } from "./view/IBotSelectItem";
 
 //单选
 // View.registerComponent("select", {
@@ -50,7 +51,8 @@ View.registerComponent(Const.Type.ConfirmInputNumber, {component: ConfirmInputNu
 View.registerComponent(Const.Type.PanelInput, {component: PanelInputItem});
 
 //下拉框
-View.registerComponent(Const.Type.Select, {component: SelectItem});
+View.registerComponent(Const.Type.Select, { component: SelectItem });
+View.registerComponent(Const.Type.SelectIBot, { component: IBotSelectItem });
 
 // 分隔线
 View.registerComponent(Const.Type.Line, {component: LineItem});

@@ -55,7 +55,7 @@ export const BasePanelConfig = [
             {
                 title: "方向",
                 form: PropsConst.layoutDirection,
-                type: Form.Const.Type.Select,
+                type: Form.Const.Type.SelectIBot,
                 select: { data: ItemConst.Direction.options }
             },
             [
@@ -63,14 +63,14 @@ export const BasePanelConfig = [
                     title: "主轴空间",
                     titleDirection: Form.Const.Direction.Bottom,
                     form: PropsConst.layoutJustifyContent,
-                    type: Form.Const.Type.Select,
+                    type: Form.Const.Type.SelectIBot,
                     select: { data: ItemConst.JustifyContent.options }
                 },
                 {
                     title: "次轴空间",
                     titleDirection: Form.Const.Direction.Bottom,
                     form: PropsConst.layoutAlignContent,
-                    type: Form.Const.Type.Select,
+                    type: Form.Const.Type.SelectIBot,
                     select: { data: ItemConst.AlignContent.options }
                 }
             ],
@@ -79,14 +79,14 @@ export const BasePanelConfig = [
                     title: "次轴对齐",
                     titleDirection: Form.Const.Direction.Bottom,
                     form: PropsConst.layoutAlignItems,
-                    type: Form.Const.Type.Select,
+                    type: Form.Const.Type.SelectIBot,
                     select: { data: ItemConst.AlignItems.options }
                 },
                 {
                     title: "次轴对齐(self)",
                     titleDirection: Form.Const.Direction.Bottom,
                     form: PropsConst.layoutAlignSelf,
-                    type: Form.Const.Type.Select,
+                    type: Form.Const.Type.SelectIBot,
                     select: { data: ItemConst.AlignSelf.options }
                 }
             ]
@@ -147,7 +147,7 @@ export const BasePanelConfig = [
             {
                 title: "样式",
                 form: PropsConst.layoutBorderStyle,
-                type: Form.Const.Type.Select,
+                type: Form.Const.Type.SelectIBot,
                 select: { data: ItemConst.BorderStyles.options }
             },
             getNumberLockItems({
