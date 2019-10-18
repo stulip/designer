@@ -43,6 +43,14 @@ export const PropsConst = {
     layoutMarginTop: "layout.margin.marginTop",
     layoutMarginBottom: "layout.margin.marginBottom",
 
+    // widget layout border radius
+    layoutRadiusVL: "layout.setting.radius.vl",
+    layoutRadiusHL: "layout.setting.radius.hl",
+    layoutRadiusTopLeft: "layout.radius.borderTopLeftRadius",
+    layoutRadiusTopRight: "layout.radius.borderTopRightRadius",
+    layoutRadiusBottomLeft: "layout.radius.borderBottomLeftRadius",
+    layoutRadiusBottomRight: "layout.radius.borderBottomRightRadius",
+
     // widget layout border
     layoutBorderLeft: "layout.border.borderLeftWidth",
     layoutBorderRight: "layout.border.borderRightWidth",

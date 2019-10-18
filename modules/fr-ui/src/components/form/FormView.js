@@ -45,7 +45,7 @@ export type ItemProps = {
     input?: InputProps, // type == input, 给input用的值
     switch?: SwitchProps, // type == switch
     api?: ApiProps,
-    union?: string | Array<string> | (()=> string | Array<string>), // 联动名称(对应联动的form值)(union="@name" @表示刷新联动, 默认值联动)
+    union?: string | Array<string> | (() => string | Array<string>), // 联动名称(对应联动的form值)(union="@name" @表示刷新联动, 默认值联动)
     visible: boolean | ((formData: Object) => boolean), // 是否显示, 用于,getData会过滤掉
     disabled: boolean | ((formData: Object) => boolean), // 是否禁用
     onChange: (value: any) => void, // 值改变回调
@@ -194,7 +194,7 @@ class FormView extends React.Component<Props, State> {
 
         // 值联动
         let checkUnion = da => {
-            const unionKeys = Types.isFunction(da.union) ? da.union(formData): da.union;
+            const unionKeys = Types.isFunction(da.union) ? da.union(formData) : da.union;
             if (unionKeys && Array.isArray(unionKeys) ? unionKeys.includes(union) : unionKeys === union) {
                 // 如果isUpEquals则取联动默认值 item.value,否则去联动值item.unionValue
                 let unionValue = isUpEquals
@@ -496,7 +496,8 @@ class FormView extends React.Component<Props, State> {
     }
 
     switchItem(item, index) {
-        let that = this, component;
+        let that = this,
+            component;
         const key = `${item.form}-${item.title}-${item.type}-${index}`;
         if (Array.isArray(item)) {
             component = (
@@ -526,7 +527,8 @@ class FormView extends React.Component<Props, State> {
         const { index, children, key } = props;
         let required = that.getRequired(item);
         let { formData, config } = that.state;
-        let value = formData[item.form], change = that.onValueChange;
+        let value = formData[item.form],
+            change = that.onValueChange;
 
         let compsProps = {
             item,
@@ -556,7 +558,7 @@ FormView.label = "label";
  */
 FormView.getFormatFormData = formData => {
     const data = {};
-    for (const [field, value] of Object.entries(formData)){
+    for (const [field, value] of Object.entries(formData)) {
         Tools.parseFieldData(data, field, value);
     }
     return data;

@@ -103,19 +103,20 @@ export class ViewGroupStore extends BaseStore {
      */
     _reWidgetSelectBox(formData) {
         let that = this;
+        if ( ! that.widget) return;
         const rect = that.widget.widget.getBoundingClientRect();
         const canvasScale = that.main.section.canvasScale;
         // 改变一下选框
         const {
-            widget: { width, height },
+            widget: { width, height } = {},
             layout: {
                 margin: {
                     marginLeft,
                     marginTop,
                     marginBottom,
                     marginRight
-                }
-            }
+                } = {}
+            }  ={}
         } = Form.View.getFormatFormData(formData);
 
         const margin = {}, padding = {};

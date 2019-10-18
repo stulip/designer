@@ -5,10 +5,10 @@
  * @sine 2018-12-27 10:25
  */
 import React from "react";
-import type { ItemProps } from "./../FormView";
-import { Types, Tools } from "@xt-web/core";
-import { DesignEvent, classNames } from "fr-web";
-import { FormConst } from "../FormConst";
+import type {ItemProps} from "./../FormView";
+import {Tools, Types} from "@xt-web/core";
+import {classNames, DesignEvent} from "fr-web";
+import {FormConst} from "../FormConst";
 
 type Props = {
     value: any,
@@ -169,10 +169,10 @@ class BaseItem extends React.Component<Props> {
     setValue(data) {
         let that = this;
         let { change, item } = that.props;
-        if (data !== that.state.value) {
-            // item.onChange && item.onChange(data);
+        if (data !== that.state.value && data !== that.value2) {
+            const value = that.value2 = that.getValue(data);
             change && change(item.form, data);
-            that.setState({ value: that.getValue(data) });
+            that.setState({ value });
         }
         that.refreshProps();
     }
