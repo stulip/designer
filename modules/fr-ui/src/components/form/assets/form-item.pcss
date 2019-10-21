@@ -1,27 +1,31 @@
 
 
 .ds-attribute {
-    .appearance-panel {
-        color: #5b6b73;
-        padding: 0 0 12px 0;
-
-        &:first-child{
-            padding-top: 6px;
-        }
-    }
 
     .item-group {
         display: flex;
         flex-direction: row;
         align-items: center;
+        flex: 1;
 
-        >.form-item:first-child{
+        > .item-group:first-child {
             padding-right: 5px;
         }
-        >.form-item:last-child {
+
+        > .item-group:last-child {
             padding-left: 5px;
         }
-        .form-item:not(:first-of-type):not(:last-of-type){
+
+
+        > .form-item:first-child {
+            padding-right: 5px;
+        }
+
+        > .form-item:last-child {
+            padding-left: 5px;
+        }
+
+        .form-item:not(:first-of-type):not(:last-of-type) {
             padding: 0 5px;
         }
 

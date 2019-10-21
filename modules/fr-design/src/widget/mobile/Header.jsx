@@ -29,6 +29,12 @@ export class Header extends BasePanel<Props> {
         return "#f8f8f8";
     }
 
+    getBasicConfig() {
+        const basic = super.getBasicConfig();
+        basic.widgetHeight.disabled = false;
+        return basic;
+    }
+
     getLayoutConfig(): {} {
         const layout = super.getLayoutConfig();
         return {

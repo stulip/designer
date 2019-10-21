@@ -5,8 +5,8 @@
  * @sine 2018-12-27 10:16
  */
 import React from "react";
-import { Types, Tools } from "@xt-web/core";
-import { Required } from "./Required";
+import {Tools, Types} from "@xt-web/core";
+import {Required} from "./Required";
 import "./assets/form-item.pcss";
 
 // 接口请求参数,具体数据参考Paging.js
@@ -120,14 +120,16 @@ const convertState = props => {
     let formData = props.formData || {},
         config = {};
     try {
+
+        let eachConfig = cfg => {
+            Array.isArray(cfg) ? cfg.forEach(eachConfig) : setConfig(cfg);
+        };
         let setConfig = da => {
             if (Array.isArray(da.config)) {
-                da.config.forEach(da => {
-                    Array.isArray(da) ? da.forEach(setConfig) : setConfig(da);
-                });
+                da.config.forEach(eachConfig);
             } else {
                 if (!da.form) return;
-                // console.log(da);
+                console.log(da);
                 da.sub = da.sub || FormView.label;
                 config[da.form] = da;
                 if (!props.formData || (props.formData && Types.isUndefined(props.formData[da.form]))) {
@@ -135,11 +137,9 @@ const convertState = props => {
                 }
             }
         };
-        // console.groupCollapsed("%c-> Init Fields", "color:#0066CC;");
-        props.config.forEach(da => {
-            Array.isArray(da) ? da.forEach(setConfig) : setConfig(da);
-        });
-        // console.groupEnd();
+        console.groupCollapsed("%c-> Init Fields", "color:#0066CC;");
+        props.config.forEach(eachConfig);
+        console.groupEnd();
     } catch (e) {
         console.error(e);
     }
@@ -225,14 +225,17 @@ class FormView extends React.Component<Props, State> {
      */
     onValueChange = (key: string, value: any) => {
         let that = this;
-        let { config } = that.state,
-            item = config[key];
+        let {config} = that.state, item = config[key];
 
-        that.callbackChange();
+        if (item) {
+            that.callbackChange();
 
-        that.state.formData[key] = value;
-        that.onChangeValidate(item, key, value);
-        that.changeUnion(item, key, value);
+            that.state.formData[key] = value;
+            that.onChangeValidate(item, key, value);
+            that.changeUnion(item, key, value);
+        } else {
+            console.trace("not found item", key);
+        }
     };
 
     /**

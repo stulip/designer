@@ -58,8 +58,8 @@ export class BasePanel extends BaseWidget<BasePanelProps, State> {
         data[PropsConst.widgetHeight] = rect.height;
         data[PropsConst.widgetX] = rect.x;
         data[PropsConst.widgetY] = rect.y;
-        data[PropsConst.widgetInitialWidth] = rect.width === 'initial';
-        data[PropsConst.widgetInitialHeight] = rect.height === 'initial';
+        data[PropsConst.widgetInitialWidth] = rect.width !== 'initial';
+        data[PropsConst.widgetInitialHeight] = rect.height !== 'initial';
 
         return Object.assign(data, that.getLayoutConfig());
     }
@@ -92,8 +92,8 @@ export class BasePanel extends BaseWidget<BasePanelProps, State> {
 
         const styles = that.getLayoutStyles();
         const pStyle = {
-            [initialWidth ? "width" : "maxWidth"]: width,
-            [initialHeight ? "height" : "maxHeight"]: height,
+            [!initialWidth ? "width" : "maxWidth"]: width,
+            [!initialHeight ? "height" : "maxHeight"]: height,
             backgroundColor,
             ...styles.padding,
             ...styles.margin,

@@ -16,7 +16,8 @@ export const FormConst = {
         InputNumber: "form.input.number.1",
         ConfirmInputNumber: "form.input.number.2",
         Select: "form.select.1",
-        SelectIBot: "form.select.2"
+        SelectIBot: "form.select.2",
+        Switch: "form.switch.1",
     },
 
     Direction: {
