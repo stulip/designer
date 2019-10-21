@@ -163,6 +163,7 @@ class FormView extends React.Component<Props, State> {
     constructor(props) {
         super(props);
         let that = this;
+        that.dt = Date.now();
         that._onChangeTimeout = null;
         that.switchItem = that.switchItem.bind(that);
     }
@@ -515,7 +516,7 @@ class FormView extends React.Component<Props, State> {
                 component = that.renderComponent(item, { index, children, key });
             } else {
                 component = (
-                    <div className={item.className} key={key}>
+                    <div className={item.className} key={key} style={item.style}>
                         {children}
                     </div>
                 );
@@ -546,10 +547,15 @@ class FormView extends React.Component<Props, State> {
 
         let Comps = that.switchComps(item, props);
 
-        return Comps ? <Comps key={key} {...compsProps} index={index} children={children} /> : null;
+        return Comps ? <Comps key={key} {...compsProps} index={index} children={children}/> : null;
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        console.log(Date.now() - this.dt);
     }
 
     render() {
+        this.dt = Date.now();
         return this.props.config.map(this.switchItem);
     }
 }

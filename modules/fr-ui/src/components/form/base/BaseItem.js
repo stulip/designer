@@ -32,6 +32,8 @@ class BaseItem extends React.Component<Props> {
         super(props);
         let that = this;
         let { item } = props;
+        that.value = null;
+        that.value2 = null;
         that.onChange = that.onChange.bind(that);
         that.setValue = that.setValue.bind(that);
         that.state = that.valueOfProps(props);
@@ -41,7 +43,7 @@ class BaseItem extends React.Component<Props> {
         let that = this;
         let { item } = props;
         let state = { error: false, required: props.required };
-        state.value = that.getValue(props.value);
+        state.value = that.value2 = that.getValue(props.value);
         state.disabled = item._disabled = that.isDisable(props, state);
         state.visible = item._visible = that.isVisible(props, state);
         return state;

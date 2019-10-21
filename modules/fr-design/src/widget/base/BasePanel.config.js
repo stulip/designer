@@ -4,48 +4,53 @@
  * @sine 2019-10-18 16:53
  */
 
-import {ItemConst} from "../../components/item";
-import {PropsConst} from "../../config/Attribute";
-import {Form} from "fr-ui";
+import { ItemConst } from "../../components/item";
+import { PropsConst } from "../../config/Attribute";
+import { Form } from "fr-ui";
 
-const configLock = function ([left, center, right]) {
+const configLock = function([left, center, right]) {
     right.disabled = data => !!data[center.form];
     right.union = data => [center.form, !!data[center.form] ? left.form : undefined];
     right.unionValue = (da, fd) => fd[left.form];
     return [left, center, right];
 };
 
-const getNumberLockItems = function (options, all = {}) {
+const getNumberLockItems = function(options, all = {}, first = {}) {
     const {
-        center: {key: centerKey, value: centerValue = true},
+        center: { key: centerKey, value: centerValue = true },
         left,
         right
     } = options;
     return configLock([
         {
             form: left.key,
-            type: Form.Const.Type.ConfirmInputNumber,
-            input: {title: left.title}
+            type: left.type || Form.Const.Type.ConfirmInputNumber,
+            value: left.value,
+            input: { title: left.title },
+            handlePicker: left.handlePicker
         },
         {
             form: centerKey,
             type: ItemConst.Type.LockIconButton,
             value: centerValue,
             union: all.key,
-            unionValue: (dx, data) => dx ? dx : data[centerKey],
+            unionValue: (dx, data) => (dx ? dx : data[centerKey])
         },
         {
             form: right.key,
-            type: Form.Const.Type.ConfirmInputNumber,
-            input: {title: right.title}
+            type: right.type || Form.Const.Type.ConfirmInputNumber,
+            value: right.value,
+            input: { title: right.title },
+            handlePicker: right.handlePicker
         }
     ]);
 };
 
-const groupNumberLockItems = function (options) {
+const groupNumberLockItems = function(options) {
     const {
-        all: {key: allKey, value: allValue = true},
-        top, bottom,
+        all: { key: allKey, value: allValue = true },
+        top,
+        bottom
     } = options;
 
     if (allValue) {
@@ -53,33 +58,30 @@ const groupNumberLockItems = function (options) {
         bottom.center.value = allValue;
     }
 
-    const all = {key: allKey, value: allValue};
+    const aLock = {
+        form: allKey,
+        type: ItemConst.Type.LockIconButton,
+        className: "lock",
+        value: allValue,
+        union: [top.center.key, bottom.center.key],
+
+        unionValue: (fc, data) => {
+            const topLk = data[top.center.key];
+            const bottomLk = data[bottom.center.key];
+            const bcLk = data[allKey];
+
+            return bcLk ? topLk && bottomLk : bcLk;
+        }
+    };
+
+    const all = { key: allKey, value: allValue };
+    const topInput = getNumberLockItems(top, all);
+    const bottomInput = getNumberLockItems(bottom, all);
+    bottomInput[0] = configLock([topInput[0], aLock, bottomInput[0]])[2];
     return {
-        className: 'lock-hv-view',
-        config: [
-            {
-                form: allKey,
-                type: ItemConst.Type.LockIconButton,
-                className: 'lock',
-                value: allValue,
-                union: [top.center.key, bottom.center.key],
-
-                unionValue: (fc, data) => {
-                    const topLk = data[top.center.key];
-                    const bottomLk = data[bottom.center.key];
-                    const bcLk = data[allKey];
-
-                    return bcLk ? (topLk && bottomLk) : bcLk;
-                }
-            },
-            {
-                config: [
-                    getNumberLockItems(top, all),
-                    getNumberLockItems(bottom, all)
-                ]
-            }
-        ]
-    }
+        className: "lock-hv-view",
+        config: [aLock, { style: { flex: 1 }, config: [topInput, bottomInput] }]
+    };
 };
 
 export const BasePanelConfig = [
@@ -98,26 +100,26 @@ export const BasePanelConfig = [
                 title: "方向",
                 form: PropsConst.layoutDirection,
                 type: Form.Const.Type.SelectIBot,
-                select: {data: ItemConst.Direction.options}
+                select: { data: ItemConst.Direction.options }
             },
             [
                 {
                     title: "拉伸",
                     titleDirection: Form.Const.Direction.Bottom,
                     form: PropsConst.layoutFlexGrow,
-                    type: Form.Const.Type.ConfirmInputNumber,
+                    type: Form.Const.Type.ConfirmInputNumber
                 },
                 {
                     title: "收缩",
                     titleDirection: Form.Const.Direction.Bottom,
                     form: PropsConst.layoutFlexShrink,
-                    type: Form.Const.Type.ConfirmInputNumber,
+                    type: Form.Const.Type.ConfirmInputNumber
                 },
                 {
                     title: "尺寸",
                     titleDirection: Form.Const.Direction.Bottom,
                     form: PropsConst.layoutFlexBasis,
-                    type: Form.Const.Type.ConfirmInputNumber,
+                    type: Form.Const.Type.ConfirmInputNumber
                 }
             ],
             [
@@ -126,7 +128,7 @@ export const BasePanelConfig = [
                     titleDirection: Form.Const.Direction.Bottom,
                     form: PropsConst.layoutJustifyContent,
                     type: Form.Const.Type.SelectIBot,
-                    select: {data: ItemConst.JustifyContent.options}
+                    select: { data: ItemConst.JustifyContent.options }
                 },
                 {
                     title: "次轴空间",
@@ -159,18 +161,16 @@ export const BasePanelConfig = [
         type: ItemConst.Type.Header,
         config: [
             groupNumberLockItems({
-                all: {
-                    key: PropsConst.layoutPaddingVH,
-                },
+                all: { key: PropsConst.layoutPaddingVH, value: false },
                 top: {
-                    left: {key: PropsConst.layoutPaddingTop, title: "T"},
-                    center: {key: PropsConst.layoutPaddingVL},
-                    right: {key: PropsConst.layoutPaddingBottom, title: "B"}
+                    left: { key: PropsConst.layoutPaddingTop, title: "T" },
+                    center: { key: PropsConst.layoutPaddingVL },
+                    right: { key: PropsConst.layoutPaddingBottom, title: "B" }
                 },
                 bottom: {
-                    left: {key: PropsConst.layoutPaddingLeft, title: "T"},
-                    center: {key: PropsConst.layoutPaddingHL},
-                    right: {key: PropsConst.layoutPaddingRight, title: "B"}
+                    left: { key: PropsConst.layoutPaddingLeft, title: "L" },
+                    center: { key: PropsConst.layoutPaddingHL },
+                    right: { key: PropsConst.layoutPaddingRight, title: "R" }
                 }
             })
         ]
@@ -179,15 +179,18 @@ export const BasePanelConfig = [
         title: "外边距",
         type: ItemConst.Type.Header,
         config: [
-            getNumberLockItems({
-                left: { key: PropsConst.layoutMarginTop, title: "T" },
-                center: { key: PropsConst.layoutMarginVL },
-                right: { key: PropsConst.layoutMarginBottom, title: "B" }
-            }),
-            getNumberLockItems({
-                left: { key: PropsConst.layoutMarginLeft, title: "T" },
-                center: { key: PropsConst.layoutMarginHL },
-                right: { key: PropsConst.layoutMarginRight, title: "B" }
+            groupNumberLockItems({
+                all: { key: PropsConst.layoutMarginVH, value: false },
+                top: {
+                    left: { key: PropsConst.layoutMarginTop, title: "T" },
+                    center: { key: PropsConst.layoutMarginVL },
+                    right: { key: PropsConst.layoutMarginBottom, title: "B" }
+                },
+                bottom: {
+                    left: { key: PropsConst.layoutMarginLeft, title: "T" },
+                    center: { key: PropsConst.layoutMarginHL },
+                    right: { key: PropsConst.layoutMarginRight, title: "B" }
+                }
             })
         ]
     },
@@ -195,15 +198,18 @@ export const BasePanelConfig = [
         title: "圆角",
         type: ItemConst.Type.Header,
         config: [
-            getNumberLockItems({
-                left: { key: PropsConst.layoutRadiusTopLeft, title: "TL" },
-                center: { key: PropsConst.layoutRadiusVL },
-                right: { key: PropsConst.layoutRadiusTopRight, title: "BR" }
-            }),
-            getNumberLockItems({
-                left: { key: PropsConst.layoutRadiusBottomLeft, title: "BL" },
-                center: { key: PropsConst.layoutRadiusHL },
-                right: { key: PropsConst.layoutRadiusBottomRight, title: "BR" }
+            groupNumberLockItems({
+                all: { key: PropsConst.layoutRadiusVH },
+                top: {
+                    left: { key: PropsConst.layoutRadiusTopLeft, title: "TL" },
+                    center: { key: PropsConst.layoutRadiusVL },
+                    right: { key: PropsConst.layoutRadiusTopRight, title: "BR" }
+                },
+                bottom: {
+                    left: { key: PropsConst.layoutRadiusBottomLeft, title: "BL" },
+                    center: { key: PropsConst.layoutRadiusHL },
+                    right: { key: PropsConst.layoutRadiusBottomRight, title: "BR" }
+                }
             })
         ]
     },
@@ -217,54 +223,52 @@ export const BasePanelConfig = [
                 type: Form.Const.Type.SelectIBot,
                 select: { data: ItemConst.BorderStyles.options }
             },
-            getNumberLockItems({
-                left: { key: PropsConst.layoutBorderTop, title: "T" },
-                center: { key: PropsConst.layoutBorderVL },
-                right: { key: PropsConst.layoutBorderBottom, title: "B" }
-            }),
-            configLock([
-                {
-                    form: PropsConst.layoutBorderTopColor,
-                    type: ItemConst.Type.Color,
-                    value: "#fff",
-                    handlePicker: PropsConst.widgetColorHandle
+            groupNumberLockItems({
+                all: { key: PropsConst.layoutBorderVH },
+                top: {
+                    left: { key: PropsConst.layoutBorderTop, title: "T" },
+                    center: { key: PropsConst.layoutBorderVL },
+                    right: { key: PropsConst.layoutBorderBottom, title: "B" }
                 },
-                {
-                    form: PropsConst.layoutBorderColorVL,
-                    type: ItemConst.Type.LockIconButton,
-                    value: true
-                },
-                {
-                    form: PropsConst.layoutBorderBottomColor,
-                    type: ItemConst.Type.Color,
-                    value: "#fff",
-                    handlePicker: PropsConst.widgetColorHandle
+                bottom: {
+                    left: { key: PropsConst.layoutBorderLeft, title: "L" },
+                    center: { key: PropsConst.layoutBorderHL },
+                    right: { key: PropsConst.layoutBorderRight, title: "R" }
                 }
-            ]),
-            getNumberLockItems({
-                left: { key: PropsConst.layoutBorderLeft, title: "L" },
-                center: { key: PropsConst.layoutBorderHL },
-                right: { key: PropsConst.layoutBorderRight, title: "R" }
             }),
-            configLock([
-                {
-                    form: PropsConst.layoutBorderLeftColor,
-                    type: ItemConst.Type.Color,
-                    value: "#fff",
-                    handlePicker: PropsConst.widgetColorHandle
+            groupNumberLockItems({
+                all: { key: PropsConst.layoutBorderColorVH, value: true },
+                top: {
+                    left: {
+                        key: PropsConst.layoutBorderTopColor,
+                        type: ItemConst.Type.Color,
+                        value: "#fff",
+                        handlePicker: PropsConst.widgetColorHandle
+                    },
+                    center: { key: PropsConst.layoutBorderColorVL },
+                    right: {
+                        key: PropsConst.layoutBorderBottomColor,
+                        type: ItemConst.Type.Color,
+                        value: "#fff",
+                        handlePicker: PropsConst.widgetColorHandle
+                    }
                 },
-                {
-                    form: PropsConst.layoutBorderColorHL,
-                    type: ItemConst.Type.LockIconButton,
-                    value: true
-                },
-                {
-                    form: PropsConst.layoutBorderRightColor,
-                    type: ItemConst.Type.Color,
-                    value: "#fff",
-                    handlePicker: PropsConst.widgetColorHandle
+                bottom: {
+                    left: {
+                        key: PropsConst.layoutBorderLeftColor,
+                        type: ItemConst.Type.Color,
+                        value: "#fff",
+                        handlePicker: PropsConst.widgetColorHandle
+                    },
+                    center: { key: PropsConst.layoutBorderColorHL },
+                    right: {
+                        key: PropsConst.layoutBorderRightColor,
+                        type: ItemConst.Type.Color,
+                        value: "#fff",
+                        handlePicker: PropsConst.widgetColorHandle
+                    }
                 }
-            ])
+            })
         ]
     },
     { type: Form.Const.Type.Line, top: 0, bottom: 8 }

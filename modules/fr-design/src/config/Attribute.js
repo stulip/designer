@@ -46,6 +46,7 @@ export const PropsConst = {
     layoutPaddingBottom: "layout.padding.paddingBottom",
 
     // widget layout margin
+    layoutMarginVH: "layout.setting.margin.vh",
     layoutMarginVL: "layout.setting.margin.vl",
     layoutMarginHL: "layout.setting.margin.hl",
     layoutMarginLeft: "layout.margin.marginLeft",
@@ -54,6 +55,7 @@ export const PropsConst = {
     layoutMarginBottom: "layout.margin.marginBottom",
 
     // widget layout border radius
+    layoutRadiusVH: "layout.setting.radius.vh",
     layoutRadiusVL: "layout.setting.radius.vl",
     layoutRadiusHL: "layout.setting.radius.hl",
     layoutRadiusTopLeft: "layout.radius.borderTopLeftRadius",
@@ -61,82 +63,83 @@ export const PropsConst = {
     layoutRadiusBottomLeft: "layout.radius.borderBottomLeftRadius",
     layoutRadiusBottomRight: "layout.radius.borderBottomRightRadius",
 
-  // widget layout border
-  layoutBorderVL: "layout.setting.border.vl",
-  layoutBorderHL: "layout.setting.border.hl",
-  layoutBorderStyle: "layout.border.borderStyle",
+    // widget layout border
+    layoutBorderVH: "layout.setting.border.vh",
+    layoutBorderVL: "layout.setting.border.vl",
+    layoutBorderHL: "layout.setting.border.hl",
+    layoutBorderStyle: "layout.border.borderStyle",
 
-  layoutBorderLeft: "layout.border.borderLeftWidth",
-  layoutBorderRight: "layout.border.borderRightWidth",
-  layoutBorderTop: "layout.border.borderTopWidth",
-  layoutBorderBottom: "layout.border.borderBottomWidth",
+    layoutBorderLeft: "layout.border.borderLeftWidth",
+    layoutBorderRight: "layout.border.borderRightWidth",
+    layoutBorderTop: "layout.border.borderTopWidth",
+    layoutBorderBottom: "layout.border.borderBottomWidth",
 
-  //widget layout border color
-  layoutBorderColorVL: "layout.setting.border.color.vl",
-  layoutBorderColorHL: "layout.setting.border.color.hl",
-  layoutBorderLeftColor: "layout.border.borderLeftColor",
-  layoutBorderRightColor: "layout.border.borderRightColor",
-  layoutBorderTopColor: "layout.border.borderTopColor",
-  layoutBorderBottomColor: "layout.border.borderBottomColor",
+    //widget layout border color
+    layoutBorderColorVH: "layout.setting.border.color.vh",
+    layoutBorderColorVL: "layout.setting.border.color.vl",
+    layoutBorderColorHL: "layout.setting.border.color.hl",
+    layoutBorderLeftColor: "layout.border.borderLeftColor",
+    layoutBorderRightColor: "layout.border.borderRightColor",
+    layoutBorderTopColor: "layout.border.borderTopColor",
+    layoutBorderBottomColor: "layout.border.borderBottomColor",
 
-  // widget mouse
-  widgetMouseExit: "widget.mouse.exit",
-  widgetMouseEnter: "widget.mouse.enter",
-  widgetMouseClick: "widget.mouse.click",
-  widgetMouseDBLClick: "widget.mouse.dblclick"
+    // widget mouse
+    widgetMouseExit: "widget.mouse.exit",
+    widgetMouseEnter: "widget.mouse.enter",
+    widgetMouseClick: "widget.mouse.click",
+    widgetMouseDBLClick: "widget.mouse.dblclick"
 };
 
 // 布局Layout常量
 export const LayoutConst = {
     css: {
-        normal: 'normal',
+        normal: "normal"
     },
     direction: {
-        row: 'row',
-        column: 'column',
+        row: "row",
+        column: "column"
     },
     // flex-start', 'flex-end', 'center', 'stretch', 'baseline'
     alignItem: {
-        center: 'center',
-        flexStart: 'flex-start',
-        flexEnd: 'flex-end',
-        stretch: 'stretch', // app:default
-        baseline: 'baseline',
+        center: "center",
+        flexStart: "flex-start",
+        flexEnd: "flex-end",
+        stretch: "stretch", // app:default
+        baseline: "baseline"
     },
     //'flex-start', 'flex-end', 'center', 'stretch', 'space-between', 'space-around'
     alignContent: {
-        flexStart: 'flex-start',
-        flexEnd: 'flex-end',
-        center: 'center',
-        stretch: 'stretch',
-        spaceBetween: 'space-between',
-        spaceAround: 'space-around',
+        flexStart: "flex-start",
+        flexEnd: "flex-end",
+        center: "center",
+        stretch: "stretch",
+        spaceBetween: "space-between",
+        spaceAround: "space-around"
     },
     // 'auto', 'flex-start', 'flex-end', 'center', 'stretch', 'baseline'
     alignSelf: {
-        auto: 'auto',
-        flexStart: 'flex-start',
-        flexEnd: 'flex-end',
-        center: 'center',
-        stretch: 'stretch',
-        baseline: 'baseline',
+        auto: "auto",
+        flexStart: "flex-start",
+        flexEnd: "flex-end",
+        center: "center",
+        stretch: "stretch",
+        baseline: "baseline"
     },
     // 'flex-start', 'flex-end', 'center', 'space-between', 'space-around', 'space-evenly'
     justifyContent: {
-        flexStart: 'flex-start',
-        flexEnd: 'flex-end',
-        center: 'center',
-        spaceEvenly: 'space-evenly',
-        spaceBetween: 'space-between',
-        spaceAround: 'space-around',
+        flexStart: "flex-start",
+        flexEnd: "flex-end",
+        center: "center",
+        spaceEvenly: "space-evenly",
+        spaceBetween: "space-between",
+        spaceAround: "space-around"
     },
     // 'solid', 'dotted', 'dashed'
     borderStyle: {
-        solid: 'solid',
-        dotted: 'dotted',
-        dashed: 'dashed',
+        solid: "solid",
+        dotted: "dotted",
+        dashed: "dashed"
     }
-
 };
 
 // 布局方向常量
@@ -148,50 +151,49 @@ export const ArrangeConst = {
     evenlyH: 5,
     evenlyV: 6,
     alignCenterV: 7,
-    alignCenterH: 8,
+    alignCenterH: 8
 };
 
 // 布局按钮配置
 export const ArrangeConfig = [
     {
         type: ArrangeConst.evenlyH,
-        icon: 'design/dist_evenly_h',
-        disable: true,
+        icon: "design/dist_evenly_h",
+        disable: true
     },
     {
         type: ArrangeConst.evenlyV,
-        icon: 'design/dist_evenly_v',
-        disable: true,
+        icon: "design/dist_evenly_v",
+        disable: true
     },
     {
         type: ArrangeConst.alignLeft,
-        icon: 'design/align_left',
-        disable: true,
+        icon: "design/align_left",
+        disable: true
     },
     {
         type: ArrangeConst.alignCenterV,
-        icon: 'design/align_center_v',
-        disable: true,
+        icon: "design/align_center_v",
+        disable: true
     },
     {
         type: ArrangeConst.alignRight,
-        icon: 'design/align_right',
-        disable: true,
+        icon: "design/align_right",
+        disable: true
     },
     {
         type: ArrangeConst.alignTop,
-        icon: 'design/align_top',
-        disable: true,
+        icon: "design/align_top",
+        disable: true
     },
     {
         type: ArrangeConst.alignCenterH,
-        icon: 'design/align_center_h',
-        disable: true,
+        icon: "design/align_center_h",
+        disable: true
     },
     {
         type: ArrangeConst.alignBottom,
-        icon: 'design/align_bottom',
-        disable: true,
-    },
-
+        icon: "design/align_bottom",
+        disable: true
+    }
 ];
