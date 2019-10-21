@@ -43,7 +43,7 @@ def parse_args(argv):
     parser.add_argument("-r", "--release", dest="release", action="store_true", help="编译正式版(ZIP)",
                         default=0)
     parser.add_argument("-a", "--all", dest="all", action="store_true", help="编译所有模块")
-    parser.add_argument("-d", "--dev", dest="dev", action="store_true", help="编译DEV版本")
+    parser.add_argument("-d", "--dev", dest="dev", action="store_true", default=0, help="编译DEV版本")
     parser.add_argument("-b", "--block", dest="block", action="store", default="dev",
                         help="模块配置名称(默认:base), 编译CORE的时候需要")
     parser.add_argument("-yu", "--yarn_upgrade", dest="yarn_upgrade", action="store_true",
