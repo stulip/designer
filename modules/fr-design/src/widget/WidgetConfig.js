@@ -5,6 +5,7 @@
  */
 
 export const WidgetConst = {
+    INITIAL: "initial",
     App: {
         StatusBar: "app.status.bar.1",
         Header: "app.header.1",

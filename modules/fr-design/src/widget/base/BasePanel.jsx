@@ -29,7 +29,14 @@ export class BasePanel extends BaseWidget<BasePanelProps, State> {
     }
 
     getBoxRect() {
-        return { width: "initial", height: "initial", x: "initial", y: "initial" };
+        return {width: "initial", height: "initial", x: "initial", y: "initial"};
+    }
+
+    getBasicConfig() {
+        const basic = super.getBasicConfig();
+        basic.widgetHeight.disabled = false;
+        basic.widgetWidth.disabled = false;
+        return basic;
     }
 
     /**
@@ -37,7 +44,7 @@ export class BasePanel extends BaseWidget<BasePanelProps, State> {
      * @returns {{}}
      */
     getLayoutConfig() {
-        const { layout = {} } = this.props;
+        const {layout = {}} = this.props;
         return {
             [PropsConst.layoutDirection]: LayoutConst.direction.row,
             [PropsConst.layoutAlignItems]: LayoutConst.alignItem.stretch,

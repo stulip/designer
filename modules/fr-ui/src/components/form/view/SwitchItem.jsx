@@ -19,7 +19,7 @@ export class SwitchItem extends BaseItem<Props, State> {
         const {value = false, disabled} = that.state;
 
         return (
-            <IBotForm.Check isChecked={value} onChange={that.onChange} disabled={disabled}/>
+            <IBotForm.Check isChecked={value} onToggle={that.onChange} disabled={disabled}/>
         );
     };
 }

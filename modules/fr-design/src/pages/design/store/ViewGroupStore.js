@@ -5,14 +5,11 @@
  * @sine 2019-10-10 10:25
  */
 import React from "react";
-import { action, observable } from "mobx";
-import type { MainStore, Size } from "../../../flow/Main.flow";
-import { BaseWidget } from "../../../widget/base/BaseWidget";
-import { BaseStore } from "./BaseStore";
-import { DesignEvent } from "fr-web";
-import { Form } from "fr-ui";
-import { PropsConst } from "../../../config/Attribute";
-import { Types } from "@xt-web/core";
+import {action, observable} from "mobx";
+import {BaseWidget} from "../../../widget/base/BaseWidget";
+import {BaseStore} from "./BaseStore";
+import {DesignEvent} from "fr-web";
+import {PropsConst} from "../../../config/Attribute";
 
 export class ViewGroupStore extends BaseStore {
     groupRef = React.createRef();
@@ -68,6 +65,7 @@ export class ViewGroupStore extends BaseStore {
         const { canvasRect } = that.main.section;
         that.main.section.setRulerShadow(0, 0, canvasRect.width, canvasRect.height);
         that.main.attribute.setConfig([]);
+        that.widget.onUpdate = null;
 
         that.selectRect = null;
         that.widget = null;
@@ -75,11 +73,12 @@ export class ViewGroupStore extends BaseStore {
 
     /**
      * 设置选中widget
-     * @param widget
+     * @param {BaseWidget} [widget]
      */
     @action
-    setSelectWidget = (widget: BaseWidget) => {
+    setSelectWidget = (widget ?: BaseWidget) => {
         let that = this;
+        widget.onUpdate = that._reWidgetSelectBox;
         that.main.attribute.setConfig(widget.widgetProps(), widget.formData);
         that.widget = widget;
     };
@@ -91,53 +90,20 @@ export class ViewGroupStore extends BaseStore {
     handleWidgetChange = (formData: Object) => {
         let that = this;
         if (that.widget) {
-            that._reWidgetSelectBox(formData);
             that.widget.handleChange(formData);
         }
     };
 
     /**
      * 修改选框
-     * @param formData
      * @private
      */
-    _reWidgetSelectBox(formData) {
+    _reWidgetSelectBox = () => {
         let that = this;
-        if ( ! that.widget) return;
+        if (!that.widget) return;
         const rect = that.widget.widget.getBoundingClientRect();
-        const canvasScale = that.main.section.canvasScale;
-        // 改变一下选框
-        const {
-            widget: { width, height } = {},
-            layout: {
-                margin: {
-                    marginLeft,
-                    marginTop,
-                    marginBottom,
-                    marginRight
-                } = {}
-            }  ={}
-        } = Form.View.getFormatFormData(formData);
-
-        const margin = {}, padding = {};
-        ({
-            marginTop: margin.top,
-            marginBottom: margin.bottom,
-            marginLeft: margin.left,
-            marginRight: margin.right,
-            paddingLeft: padding.left,
-            paddingBottom: padding.bottom,
-            paddingRight: padding.right,
-            paddingTop: padding.top
-        } = that.widget.widget.style);
-        const newRect = {
-            width: width * canvasScale  + parseInt(marginRight || 0) + parseInt(marginLeft || 0),
-            height: height * canvasScale + parseInt(marginBottom || 0) + parseInt(marginTop || 0),
-            left: rect.left - parseInt(margin.left || 0),
-            top: rect.top - parseInt(margin.top || 0)
-        };
-        that._handleWidgetSelect(newRect);
-    }
+        that._handleWidgetSelect(rect);
+    };
 
     /**
      * widget获得鼠标焦点

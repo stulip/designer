@@ -34,6 +34,8 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
         super(props);
         let that = this;
         that.state = {};
+        // 更新回调
+        that.onUpdate = null;
         that.initWidgetFormData();
     }
 
@@ -52,9 +54,14 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
         that.removeListener();
     }
 
+    componentDidUpdate(prevProps, prevState) {
+        let that = this;
+        that.onUpdate && that.onUpdate();
+    }
+
     // 可子类处理
     formatValue(value) {
-        return Types.isObject(value) ? value : { value };
+        return Types.isObject(value) ? value : {value};
     }
 
     /**

@@ -31,7 +31,7 @@ export class Header extends BasePanel<Props> {
 
     getBasicConfig() {
         const basic = super.getBasicConfig();
-        basic.widgetHeight.disabled = false;
+        basic.widgetWidth.disabled = true;
         return basic;
     }
 
@@ -47,6 +47,7 @@ export class Header extends BasePanel<Props> {
     getBoxRect(): { width: number, x: number, y: number, height: number } {
         const rect = super.getBoxRect();
         rect.height = WidgetConst.App.HeaderHeight;
+        rect.width = WidgetConst.INITIAL;
         return rect;
     }
 
