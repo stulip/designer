@@ -5,14 +5,12 @@
  */
 
 // @flow
-import React, { Fragment } from "react";
-import { DesignEvent } from "fr-web";
-import { PropsConst } from "../../config/Attribute";
-import { Form } from "fr-ui";
-import type { DesignType, Rect, Size } from "../../flow/Main.flow";
-import {Tools, Types} from "@xt-web/core";
-import {observable, action} from "mobx";
-import {observer} from "mobx-react";
+import React from "react";
+import {DesignEvent} from "fr-web";
+import {PropsConst} from "../../config/Attribute";
+import {Form} from "fr-ui";
+import type {DesignType, Rect} from "../../flow/Main.flow";
+import {Types} from "@xt-web/core";
 
 export type BaseWidgetProps = {
     canvasRect: Rect,
@@ -64,24 +62,26 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
      */
     initWidgetFormData() {
         let that = this;
-        const { value } = that.props;
-        const formData = that.formatValue(value);
-        return that._formData = Object.assign({}, formData);
+        const {value} = that.props;
+        const data = that.formatValue(value);
+        const formData = {};
+        formData[PropsConst.widgetInitialWidth] = false;
+        formData[PropsConst.widgetInitialHeight] = false;
+
+        return that._formData = Object.assign(formData, data);
     }
 
     // 初始化 widget 基础属性
     initWidgetBasicData() {
         let that = this;
         if (!that.widget || !Types.isUndefined(that._formData["widget.name"])) return;
+        const data = that.formData;
 
-        that._formData = {
-            ...that._formData,
-            "widget.name": that.getName(),
-            "widget.width": that.widget.offsetWidth,
-            "widget.height": that.widget.offsetHeight,
-            "widget.x": that.widget.offsetLeft,
-            "widget.y": that.widget.offsetTop
-        };
+        data[PropsConst.widgetName] = that.getName();
+        data[PropsConst.widgetX] = that.widget.offsetLeft;
+        data[PropsConst.widgetY] = that.widget.offsetTop;
+        data[PropsConst.widgetWidth] = that.widget.offsetWidth;
+        data[PropsConst.widgetHeight] = that.widget.offsetHeight;
     }
 
     addListener() {
@@ -161,63 +161,49 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
     }
 
     /**
-     * 是否禁用宽度改变
-     * @returns {boolean}
-     */
-    getBasicConfig() {
-        return {
-            widgetX: { min: 0, disabled: true },
-            widgetY: { min: 0, disabled: true },
-            widgetWidth: { min: 0, disabled: true },
-            widgetHeight: { min: 0, disabled: true }
-        };
-    }
-
-    /**
      * widget 属性, 子类实现
      * @returns Array<Object>
      */
     widgetProps() {
         const that = this;
         that.initWidgetBasicData();
-        const basic = that.getBasicConfig();
         return [
             { form: "widget.name", type: Form.Const.Type.PanelInput, className: "widget-name" },
             [
                 {
                     form: "widget.x",
                     type: Form.Const.Type.ConfirmInputNumber,
-                    disabled: basic.widgetX.disabled,
-                    input: { title: "X ", min: basic.widgetX.min, max: basic.widgetX.max }
+                    disabled: true,
+                    input: {title: "X ", min: 0}
                 },
                 {
                     form: "widget.y",
                     type: Form.Const.Type.ConfirmInputNumber,
-                    disabled: basic.widgetY.disabled,
-                    input: { title: "Y ", min: basic.widgetY.min, max: basic.widgetY.max }
+                    disabled: true,
+                    input: {title: "Y ", min: 0}
                 }
             ],
             [
                 {
                     form: PropsConst.widgetWidth,
                     type: Form.Const.Type.ConfirmInputNumber,
-                    disabled: basic.widgetWidth.disabled,
-                    input: { title: "宽", min: basic.widgetWidth.min, max: basic.widgetWidth.max },
+                    disabled: data => !!data[PropsConst.widgetInitialWidth],
+                    input: {title: "宽", min: 0},
                     listener: {
                         key: PropsConst.widgetSize,
                         getValue: da => da.width,
-                        setValue: (width, data) => ({ width, height: data[PropsConst.widgetHeight]})
+                        setValue: (width, data) => ({width, height: data[PropsConst.widgetHeight]})
                     }
                 },
                 {
                     form: PropsConst.widgetHeight,
                     type: Form.Const.Type.ConfirmInputNumber,
-                    disabled: basic.widgetHeight.disabled,
-                    input: { title: "高", min: basic.widgetHeight.min, max: basic.widgetHeight.max },
+                    disabled: data => !!data[PropsConst.widgetInitialHeight],
+                    input: {title: "高", min: 0},
                     listener: {
                         key: PropsConst.widgetSize,
                         getValue: da => da.height,
-                        setValue: (height, data) => ({ height, width: data[PropsConst.widgetWidth]})
+                        setValue: (height, data) => ({height, width: data[PropsConst.widgetWidth]})
                     },
                 }
             ],

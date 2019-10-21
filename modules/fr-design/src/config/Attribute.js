@@ -11,21 +11,30 @@ export const PropsConst = {
     designGrid: "basic.design.grid",
 
     //widget basic
+    widgetName: "widget.name",
     widgetX: "widget.x",
     widgetY: "widget.y",
-    widgetWidth: 'widget.width',
-    widgetHeight: 'widget.height',
     widgetSize: "widget.size",
     widgetPosition: "widget.position",
     widgetBackground: "widget.background",
     widgetColorHandle: "widget.background.handle",
 
+    // widget size
+    widgetWidth: "widget.size.width",
+    widgetHeight: "widget.size.height",
+    widgetInitialWidth: "widget.initial.width",
+    widgetInitialHeight: "widget.initial.height",
+
     // widget layout flex
-    layoutDirection: "layout.flex.flexDirection",
-    layoutJustifyContent: "layout.flex.justifyContent",
-    layoutAlignContent: "layout.flex.alignContent",
-    layoutAlignItems: "layout.flex.alignItems",
-    layoutAlignSelf: "layout.flex.alignSelf",
+    layoutDirection: "layout.flex.child.flexDirection",
+    layoutJustifyContent: "layout.flex.child.justifyContent",
+    layoutAlignContent: "layout.flex.child.alignContent",
+    layoutAlignItems: "layout.flex.child.alignItems",
+    layoutAlignSelf: "layout.flex.self.alignSelf",
+    // 尺寸
+    layoutFlexGrow: "layout.flex.self.flexGrow",
+    layoutFlexShrink: "layout.flex.self.flexShrink",
+    layoutFlexBasis: "layout.flex.self.flexBasis",
 
     // widget layout padding
     layoutPaddingVL: "layout.setting.padding.vl",

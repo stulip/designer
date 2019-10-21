@@ -6,12 +6,12 @@
 
 // @flow
 import React from "react";
-import type { BaseWidgetProps } from "./BaseWidget";
-import { BaseWidget } from "./BaseWidget";
+import type {BaseWidgetProps} from "./BaseWidget";
+import {BaseWidget} from "./BaseWidget";
 import "../assets/panel.pcss";
-import { LayoutConst, PropsConst } from "../../config/Attribute";
-import { Form } from "fr-ui";
-import { BasePanelConfig } from "./BasePanel.config";
+import {LayoutConst, PropsConst} from "../../config/Attribute";
+import {Form} from "fr-ui";
+import {BasePanelConfig} from "./BasePanel.config";
 
 export type BasePanelProps = {
     ...BaseWidgetProps
@@ -43,22 +43,25 @@ export class BasePanel extends BaseWidget<BasePanelProps, State> {
             [PropsConst.layoutAlignItems]: LayoutConst.alignItem.stretch,
             [PropsConst.layoutAlignSelf]: LayoutConst.alignSelf.auto,
             [PropsConst.layoutJustifyContent]: LayoutConst.justifyContent.flexStart,
+            [PropsConst.layoutFlexGrow]: 1,
+            [PropsConst.layoutFlexShrink]: 0,
             ...layout
         };
     }
 
     initWidgetFormData() {
         const that = this;
-        const formData = super.initWidgetFormData();
+        const data = super.initWidgetFormData();
         const rect = that.getBoxRect();
-        formData[PropsConst.widgetBackground] = that.getBackground();
-        formData[PropsConst.widgetWidth] = rect.width;
-        formData[PropsConst.widgetHeight] = rect.height;
-        formData[PropsConst.widgetX] = rect.x;
-        formData[PropsConst.widgetY] = rect.y;
+        data[PropsConst.widgetBackground] = that.getBackground();
+        data[PropsConst.widgetWidth] = rect.width;
+        data[PropsConst.widgetHeight] = rect.height;
+        data[PropsConst.widgetX] = rect.x;
+        data[PropsConst.widgetY] = rect.y;
+        data[PropsConst.widgetInitialWidth] = rect.width === 'initial';
+        data[PropsConst.widgetInitialHeight] = rect.height === 'initial';
 
-        Object.assign(formData, that.getLayoutConfig());
-        return formData;
+        return Object.assign(data, that.getLayoutConfig());
     }
 
     widgetProps(): Array<Object> {
@@ -83,21 +86,24 @@ export class BasePanel extends BaseWidget<BasePanelProps, State> {
         const data = that.formData;
         const width = data[PropsConst.widgetWidth];
         const height = data[PropsConst.widgetHeight];
+        const initialWidth = data[PropsConst.widgetInitialWidth];
+        const initialHeight = data[PropsConst.widgetInitialHeight];
         const backgroundColor = data[PropsConst.widgetBackground];
 
         const styles = that.getLayoutStyles();
         const pStyle = {
-            width,
-            height,
+            [initialWidth ? "width" : "maxWidth"]: width,
+            [initialHeight ? "height" : "maxHeight"]: height,
             backgroundColor,
             ...styles.padding,
             ...styles.margin,
             ...styles.border,
-            ...styles.radius
+            ...styles.radius,
+            ...styles.flex.self
         };
         return (
             <div className={"group-flow"} style={pStyle} ref={that.widgetRef}>
-                <div className={"view-panel"} style={styles.flex}>
+                <div className={"view-panel"} style={styles.flex.child}>
                     {that.renderWidget()}
                 </div>
             </div>

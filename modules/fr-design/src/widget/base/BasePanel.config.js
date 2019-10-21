@@ -4,18 +4,18 @@
  * @sine 2019-10-18 16:53
  */
 
-import { ItemConst } from "../../components/item";
-import { PropsConst } from "../../config/Attribute";
-import { Form } from "fr-ui";
+import {ItemConst} from "../../components/item";
+import {PropsConst} from "../../config/Attribute";
+import {Form} from "fr-ui";
 
-const configLock = function([left, center, right]) {
+const configLock = function ([left, center, right]) {
     right.disabled = data => !!data[center.form];
     right.union = data => [center.form, !!data[center.form] ? left.form : undefined];
     right.unionValue = (da, fd) => fd[left.form];
     return [left, center, right];
 };
 
-const getNumberLockItems = function(options) {
+const getNumberLockItems = function (options) {
     const {
         center: { key: centerKey, value: centerValue = true },
         left,
@@ -56,15 +56,35 @@ export const BasePanelConfig = [
                 title: "方向",
                 form: PropsConst.layoutDirection,
                 type: Form.Const.Type.SelectIBot,
-                select: { data: ItemConst.Direction.options }
+                select: {data: ItemConst.Direction.options}
             },
+            [
+                {
+                    title: "拉伸",
+                    titleDirection: Form.Const.Direction.Bottom,
+                    form: PropsConst.layoutFlexGrow,
+                    type: Form.Const.Type.ConfirmInputNumber,
+                },
+                {
+                    title: "收缩",
+                    titleDirection: Form.Const.Direction.Bottom,
+                    form: PropsConst.layoutFlexShrink,
+                    type: Form.Const.Type.ConfirmInputNumber,
+                },
+                {
+                    title: "尺寸",
+                    titleDirection: Form.Const.Direction.Bottom,
+                    form: PropsConst.layoutFlexBasis,
+                    type: Form.Const.Type.ConfirmInputNumber,
+                }
+            ],
             [
                 {
                     title: "主轴空间",
                     titleDirection: Form.Const.Direction.Bottom,
                     form: PropsConst.layoutJustifyContent,
                     type: Form.Const.Type.SelectIBot,
-                    select: { data: ItemConst.JustifyContent.options }
+                    select: {data: ItemConst.JustifyContent.options}
                 },
                 {
                     title: "次轴空间",

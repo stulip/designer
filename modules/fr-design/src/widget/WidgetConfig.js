@@ -10,6 +10,8 @@ export const WidgetConst = {
         Header: "app.header.1",
         BottomOperateBar: "app.bottom.operate.bar.1",
         Text: "app.text.1",
-        Panel: "app.panel.1"
+        Panel: "app.panel.1",
+
+        HeaderHeight: 44,// 默认导航栏高度
     }
 };

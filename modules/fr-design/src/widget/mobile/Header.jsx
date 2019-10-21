@@ -10,8 +10,8 @@ import '../assets/mobile/header.pcss'
 import type {BaseWidgetProps} from "../base/BaseWidget";
 import {BasePanel} from "../base/BasePanel";
 import {Form} from "fr-ui";
-import {observer} from "mobx-react";
 import {LayoutConst, PropsConst} from "../../config/Attribute";
+import {WidgetConst} from "../WidgetConfig";
 
 type Props = {
     ...BaseWidgetProps,
@@ -25,19 +25,8 @@ export class Header extends BasePanel<Props> {
         return "导航栏";
     }
 
-    // 导航栏高度
-    getHeight () {
-        return 44;
-    }
-
     getBackground(): string {
         return "#f8f8f8";
-    }
-
-    getBasicConfig() {
-        const basic = super.getBasicConfig();
-        basic.widgetHeight.disabled = false;
-        return basic;
     }
 
     getLayoutConfig(): {} {
@@ -51,9 +40,7 @@ export class Header extends BasePanel<Props> {
 
     getBoxRect(): { width: number, x: number, y: number, height: number } {
         const rect = super.getBoxRect();
-        const {canvasRect, designRect} = this.props;
-        rect.width = canvasRect.width;
-        rect.height = this.getHeight();
+        rect.height = WidgetConst.App.HeaderHeight;
         return rect;
     }
 
