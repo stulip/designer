@@ -15,9 +15,9 @@ const configLock = function ([left, center, right]) {
     return [left, center, right];
 };
 
-const getNumberLockItems = function (options) {
+const getNumberLockItems = function (options, all = {}) {
     const {
-        center: { key: centerKey, value: centerValue = true },
+        center: {key: centerKey, value: centerValue = true},
         left,
         right
     } = options;
@@ -25,19 +25,61 @@ const getNumberLockItems = function (options) {
         {
             form: left.key,
             type: Form.Const.Type.ConfirmInputNumber,
-            input: { title: left.title }
+            input: {title: left.title}
         },
         {
             form: centerKey,
             type: ItemConst.Type.LockIconButton,
-            value: centerValue
+            value: centerValue,
+            union: all.key,
+            unionValue: (dx, data) => dx ? dx : data[centerKey],
         },
         {
             form: right.key,
             type: Form.Const.Type.ConfirmInputNumber,
-            input: { title: right.title }
+            input: {title: right.title}
         }
     ]);
+};
+
+const groupNumberLockItems = function (options) {
+    const {
+        all: {key: allKey, value: allValue = true},
+        top, bottom,
+    } = options;
+
+    if (allValue) {
+        top.center.value = allValue;
+        bottom.center.value = allValue;
+    }
+
+    const all = {key: allKey, value: allValue};
+    return {
+        className: 'lock-hv-view',
+        config: [
+            {
+                form: allKey,
+                type: ItemConst.Type.LockIconButton,
+                className: 'lock',
+                value: allValue,
+                union: [top.center.key, bottom.center.key],
+
+                unionValue: (fc, data) => {
+                    const topLk = data[top.center.key];
+                    const bottomLk = data[bottom.center.key];
+                    const bcLk = data[allKey];
+
+                    return bcLk ? (topLk && bottomLk) : bcLk;
+                }
+            },
+            {
+                config: [
+                    getNumberLockItems(top, all),
+                    getNumberLockItems(bottom, all)
+                ]
+            }
+        ]
+    }
 };
 
 export const BasePanelConfig = [
@@ -116,15 +158,20 @@ export const BasePanelConfig = [
         title: "内边距",
         type: ItemConst.Type.Header,
         config: [
-            getNumberLockItems({
-                left: { key: PropsConst.layoutPaddingTop, title: "T" },
-                center: { key: PropsConst.layoutPaddingVL },
-                right: { key: PropsConst.layoutPaddingBottom, title: "B" }
-            }),
-            getNumberLockItems({
-                left: { key: PropsConst.layoutPaddingLeft, title: "T" },
-                center: { key: PropsConst.layoutPaddingHL },
-                right: { key: PropsConst.layoutPaddingRight, title: "B" }
+            groupNumberLockItems({
+                all: {
+                    key: PropsConst.layoutPaddingVH,
+                },
+                top: {
+                    left: {key: PropsConst.layoutPaddingTop, title: "T"},
+                    center: {key: PropsConst.layoutPaddingVL},
+                    right: {key: PropsConst.layoutPaddingBottom, title: "B"}
+                },
+                bottom: {
+                    left: {key: PropsConst.layoutPaddingLeft, title: "T"},
+                    center: {key: PropsConst.layoutPaddingHL},
+                    right: {key: PropsConst.layoutPaddingRight, title: "B"}
+                }
             })
         ]
     },

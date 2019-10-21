@@ -65,7 +65,7 @@ export class ViewGroupStore extends BaseStore {
         const { canvasRect } = that.main.section;
         that.main.section.setRulerShadow(0, 0, canvasRect.width, canvasRect.height);
         that.main.attribute.setConfig([]);
-        that.widget.onUpdate = null;
+        that.widget && (that.widget.onUpdate = null);
 
         that.selectRect = null;
         that.widget = null;

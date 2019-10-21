@@ -158,22 +158,22 @@ class BaseItem extends React.Component<Props> {
     _onChange(data) {
         let that = this;
         let { item } = that.props;
-        // that.setValue(data);
+        that.setValue(data);
         // 先设置表单数据
         if (data !== that.value) {
             that.value = data;
-            that.setValue(data);// 换个位置
             item.onChange && item.onChange(data);
         }
     }
 
     setValue(data) {
         let that = this;
-        let { change, item } = that.props;
-        if (data !== that.state.value) {
+        let {change, item} = that.props;
+        if (data !== that.state.value && data !== that.value2) {
+            that.value2 = data;
             const value = that.getValue(data);
             change && change(item.form, data);
-            that.setState({ value });
+            that.setState({value});
         }
         that.refreshProps();
     }

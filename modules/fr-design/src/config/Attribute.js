@@ -37,6 +37,7 @@ export const PropsConst = {
     layoutFlexBasis: "layout.flex.self.flexBasis",
 
     // widget layout padding
+    layoutPaddingVH: "layout.setting.padding.vh",
     layoutPaddingVL: "layout.setting.padding.vl",
     layoutPaddingHL: "layout.setting.padding.hl",
     layoutPaddingLeft: "layout.padding.paddingLeft",

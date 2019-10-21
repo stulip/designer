@@ -1,4 +1,4 @@
-import { LayoutConst } from "../../config/Attribute";
+import {LayoutConst} from "../../../config/Attribute";
 
 /**
  *
@@ -72,7 +72,7 @@ export const ItemConst = {
         GridSetting: "widget.grid_setting.0",
         Header: "widget.header.0",
         Button: "widget.button.0",
-        LockIconButton: "widget.button.1"
+        LockIconButton: "widget.lock.button.1",
     },
     Direction,
     JustifyContent,
