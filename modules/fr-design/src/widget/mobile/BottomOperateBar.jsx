@@ -21,16 +21,15 @@ export function BottomOperateBar(props: Props) {
     if (designRect.bottom === 0) return null;
     const width = canvasRect.width;
     const height = designRect.bottom;
-    const designHeight = canvasRect.height;
 
     return (
-        <div className="group-item" style={{ top: designHeight - height, width, height, zIndex: 99 }}>
+        <div className="group-item" style={{bottom: 0, width, height, zIndex: 99}}>
             <div
                 className="widget operate_bar hcenter vmiddle iphone_x_operate_bar"
-                style={{ width, height }}
+                style={{width, height}}
             >
                 <div className="rounded-bar">
-                    <div className="text" style={{ padding: 0 }}>
+                    <div className="text" style={{padding: 0}}>
                         <p>&nbsp;</p>
                     </div>
                 </div>

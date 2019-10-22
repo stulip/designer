@@ -5,10 +5,10 @@
  */
 
 // @flow
-import React, { Component } from "react";
-import { status_bar_battery, status_bar_signal, status_bar_wifi } from "../../assets/svg";
+import React from "react";
+import {status_bar_battery, status_bar_signal, status_bar_wifi} from "../../assets/svg";
 import "../assets/mobile/status-bar.pcss";
-import { BaseWidget } from "../base/BaseWidget";
+import {BaseWidget} from "../base/BaseWidget";
 import {ItemConst} from "../../components";
 import {PropsConst} from "../../config/Attribute";
 
@@ -45,15 +45,17 @@ export class StatusBar extends BaseWidget<Props> {
 
     render() {
         const that = this;
-        const { canvasRect, designRect } = that.props;
+        const {canvasRect, designRect} = that.props;
+        if (designRect.bottom === 0) return null;
+
         const data = that.formData;
         const width = canvasRect.width;
         const height = designRect.top;
         const backgroundColor = data[PropsConst.widgetBackground];
 
         return (
-            <div className="group-flow" style={{ width, height, backgroundColor}} ref={that.widgetRef}>
-                <div className="status-bar" style={{ width, height }}>
+            <div className="group-flow" style={{width, height, backgroundColor}} ref={that.widgetRef}>
+                <div className="status-bar" style={{width, height}}>
                     <div className="mobile-status-bar">
                         <div className="time">12:00</div>
                         <div className="signal">{status_bar_signal()}</div>
