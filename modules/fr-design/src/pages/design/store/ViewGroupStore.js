@@ -64,7 +64,7 @@ export class ViewGroupStore extends BaseStore {
         // 还原标尺刻度
         const { canvasRect } = that.main.section;
         that.main.section.setRulerShadow(0, 0, canvasRect.width, canvasRect.height);
-        that.main.attribute.setConfig([]);
+        that.main.attribute.setConfig();
         that.widget && (that.widget.onUpdate = null);
 
         that.selectRect = null;
@@ -145,7 +145,7 @@ export class ViewGroupStore extends BaseStore {
     @action.bound
     handleWidgetClick(event: MouseEvent, widget: BaseWidget) {
         let that = this;
-        if (!that.group) return;
+        if (!that.group || widget === that.widget) return;
         const rect = event.currentTarget.getBoundingClientRect();
         const margin = {};
         ({

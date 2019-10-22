@@ -5,23 +5,25 @@
  * @sine 2019-09-29 11:11
  */
 import React from 'react';
-import {observable, action, computed} from 'mobx';
-import type {MainStore, Rect, Size} from "../../../flow/Main.flow";
+import {action, observable} from 'mobx';
 import {Form} from "fr-ui";
 import {ItemConst} from "../../../components";
-import {PropsConst, ArrangeConst} from "../../../config/Attribute";
+import {ArrangeConst, PropsConst} from "../../../config/Attribute";
 import {BaseStore} from "./BaseStore";
 
 export class AttributeStore extends BaseStore {
 
     // form
     formRef = React.createRef();
-    get form (){
+
+    get form() {
         return this.formRef.current;
     }
 
     @observable
     formConfig = [];
+    @observable
+    _baseConfig = [];
     formData;
 
     /**
@@ -32,7 +34,7 @@ export class AttributeStore extends BaseStore {
     init(config, options = {}) {
         let that = this;
         that.formData = null;
-        that.formConfig = that.createBasicConfig();
+        that.formConfig = that._baseConfig = that.createBasicConfig();
     }
 
     /**
@@ -133,14 +135,14 @@ export class AttributeStore extends BaseStore {
 
     /**
      *
-     * @param {Array} config
+     * @param {Array} [config]
      * @param {Object} [formData]
      */
     @action
     setConfig = (config, formData) =>{
         let that = this;
         if ( !config || !config.length){
-            that.formConfig = that.createBasicConfig();
+            that.formConfig = that._baseConfig;
             that.formData = null;
         } else {
             that.formConfig = config;
