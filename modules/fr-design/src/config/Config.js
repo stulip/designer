@@ -3,7 +3,6 @@
  * @author tangzehua
  * @sine 2019-09-24 10:26
  */
-import {Types} from "@xt-web/core";
 import type {ConfigOption, PageConfig} from "../flow/Main.flow";
 
 // 视口最小尺寸
@@ -119,74 +118,3 @@ export const createConfig = (options: ConfigOption): PageConfig => {
     config.canvasSize = config.designRect;
     return config;
 };
-
-export class LocalData {
-
-    /**
-     * 获取存储本地的值
-     * @param {string} key
-     * @param {*} [defaultValue]
-     * @returns {string}
-     */
-    static getItem (key, defaultValue){
-        const value = localStorage.getItem(key);
-        return Types.isEmpty(value) ? defaultValue: value;
-    }
-
-    /**
-     * 获取存储本地的Int值
-     * @param key
-     * @param defaultValue
-     * @returns {*}
-     */
-    static getIntItem (key, defaultValue){
-        const value = this.getItem(key, defaultValue);
-        return Types.isEmpty(value) ? value: parseInt(value);
-    }
-
-    /**
-     * 获取存储本地的Float值
-     * @param key
-     * @param defaultValue
-     * @returns {*}
-     */
-    static getFloatItem (key, defaultValue){
-        const value = this.getItem(key, defaultValue);
-        return Types.isEmpty(value) ? value: parseFloat(value);
-    }
-
-    /**
-     * 获取存储本地的对象值
-     * @param {string} key
-     * @param {Object|Array} [defaultValue]
-     * @returns {Object}
-     */
-    static getObjectItem (key, defaultValue){
-        const value = this.getItem(key);
-        return Types.isEmpty(value) ? defaultValue: JSON.parse(value);
-    }
-
-    /**
-     * 保存数据到本地
-     * @param {string} key
-     * @param {*} [value]
-     */
-    static setItem (key, value){
-        if (Types.isEmpty(value)){
-            this.removeItem(key);
-        } else {
-            if ( !Types.isNumber(value) || !Types.isString(value)) {
-                value = JSON.stringify(value);
-            }
-            localStorage.setItem(key, String(value));
-        }
-    }
-
-    /**
-     * 删除本地数据
-     * @param key
-     */
-    static removeItem (key){
-        localStorage.removeItem(key);
-    }
-}

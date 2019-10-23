@@ -12,6 +12,9 @@ import {DesignEvent} from "fr-web";
 import {PropsConst} from "../../../config/Attribute";
 
 export class ViewGroupStore extends BaseStore {
+
+    // 组件布局
+    _groupConfig = [];
     groupRef = React.createRef();
 
     get group() {
@@ -203,5 +206,16 @@ export class ViewGroupStore extends BaseStore {
      * @param {BaseWidget} widget
      */
     @action.bound
-    handleWidgetDBLClick(event: MouseEvent, widget: BaseWidget) {}
+    handleWidgetDBLClick(event: MouseEvent, widget: BaseWidget) {
+        const that = this;
+        console.log(event.target, event.currentTarget, widget)
+    }
+
+    get groupConfig(): [] {
+        return this._groupConfig;
+    }
+
+    set groupConfig(value: Array) {
+        this._groupConfig = value;
+    }
 }

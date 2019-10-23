@@ -10,6 +10,7 @@ import '../assets/mobile/header.pcss'
 import type {BaseWidgetProps} from "../base/BaseWidget";
 import {BasePanel} from "../base/BasePanel";
 import {Form} from "fr-ui";
+import {Panel} from './Panel'
 import {LayoutConst, PropsConst} from "../../config/Attribute";
 import {WidgetConst} from "../WidgetConfig";
 
@@ -67,7 +68,8 @@ export class Header extends BasePanel<Props> {
 
     renderWidget(): * {
         const that = this;
-        const data = that.formData ;
+        const data = that.formData;
+        const {children} = that.props;
 
         return (
             <>
@@ -79,7 +81,7 @@ export class Header extends BasePanel<Props> {
                     <span className="text">{data.title}</span>
                 </div>
                 <div className={'header-right'}>
-                    <span className="text">菜单</span>
+                    <Panel>{children}</Panel>
                 </div>
             </>
         )

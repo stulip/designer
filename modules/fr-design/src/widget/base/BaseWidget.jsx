@@ -95,11 +95,11 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
         let that = this;
 
         if (that.widget) {
-            that.widget.addEventListener("mouseleave", that.handleMouseLeave);
-            that.widget.addEventListener("mousedown", that.handleMouseDown);
-            that.widget.addEventListener("mouseover", that.handleMouseEnter);
-            that.widget.addEventListener("click", that.handleClick);
-            that.widget.addEventListener("dblclick", that.handleDBLClick);
+            that.widget.addEventListener("mouseleave", that.handleMouseLeave, true);
+            that.widget.addEventListener("mousedown", that.handleMouseDown, true);
+            that.widget.addEventListener("mouseover", that.handleMouseEnter, true);
+            that.widget.addEventListener("click", that.handleClick, true);
+            that.widget.addEventListener("dblclick", that.handleDBLClick, true);
         }
     }
 
@@ -272,8 +272,9 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
 
     render() {
         let that = this;
+        const {cid} = that.props;
         return (
-            <div className={"group-flow"} ref={that.widgetRef}>
+            <div className={"group-flow"} ref={that.widgetRef} data-cid={cid}>
                 {that.renderWidget()}
             </div>
         );

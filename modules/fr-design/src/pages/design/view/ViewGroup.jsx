@@ -6,13 +6,14 @@
 
 // @flow
 import React from "react";
-import { App } from "../../../widget/mobile";
-import { observer } from "mobx-react";
-import {classNames, DesignEvent} from "fr-web";
+import {App} from "../../../widget/mobile";
+import {observer} from "mobx-react";
+import {classNames} from "fr-web";
 import "../../../widget/assets";
-import { ViewGroupStore } from "../store/ViewGroupStore";
+import {ViewGroupStore} from "../store/ViewGroupStore";
 import {LayoutConst, PropsConst} from "../../../config/Attribute";
 import {WidgetConst} from "../../../widget/WidgetConfig";
+import {XMath} from "@xt-web/core";
 
 type Props = {
     store: ViewGroupStore
@@ -29,7 +30,14 @@ const GroupWidget = [
             title: '采购中心'
         },
         children: [
-
+            {
+                component: WidgetConst.App.Text,
+                value: '菜单1'
+            },
+            {
+                component: WidgetConst.App.Text,
+                value: '菜单2'
+            }
         ]
     },
     {
@@ -73,9 +81,13 @@ const GroupWidget = [
     }
 ];
 
-
 @observer
 export class ViewGroup extends React.Component<Props, State> {
+
+    constructor(props) {
+        super(props);
+        props.store.groupConfig = GroupWidget;
+    }
 
     componentDidMount() {
         const store = this.props.store;
@@ -94,6 +106,7 @@ export class ViewGroup extends React.Component<Props, State> {
         const { designRect } = main.config;
         return config.map((widget, index) => {
             const Comp = App[widget.component];
+            widget.cid = XMath.guid(16);
             return Comp && (
                 <Comp key={index} {...widget} canvasRect={canvasRect} designRect={designRect} groupRef={store.groupRef}>
                     {widget.children && this.createWidget(widget.children)}
@@ -110,7 +123,7 @@ export class ViewGroup extends React.Component<Props, State> {
 
         return (
             <div className={classNames("group-list", designRect.type)} ref={store.groupRef}>
-                {this.createWidget(GroupWidget)}
+                {this.createWidget(store.groupConfig)}
             </div>
         );
     }

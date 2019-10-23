@@ -4,19 +4,19 @@
  * @author tangzehua
  * @sine 2019-09-05 10:56
  */
-import {observable, action, computed, toJS} from "mobx";
-import type {MainStore, Rect, Size} from "../../../flow/Main.flow";
-import {viewMinSize, scrollbarMinWidth, scrollbarThick, zoomScale, viewportScale, LocalData, ENUM} from "../../../config/Config";
+import {action, computed, observable, toJS} from "mobx";
+import type {Rect, Size} from "../../../flow/Main.flow";
+import {ENUM, scrollbarMinWidth, scrollbarThick, viewMinSize, viewportScale, zoomScale} from "../../../config/Config";
 import React from "react";
-import { Types } from "@xt-web/core";
+import {Storage, Types} from "@xt-web/core";
 import {DesignEvent} from "fr-web";
 import {PropsConst} from "../../../config/Attribute";
 import {BaseStore} from "./BaseStore";
 
-export class SectionStore extends BaseStore{
+export class SectionStore extends BaseStore {
     sectionRef = React.createRef();
     // 视区大小, 需要计算
-    @observable _viewportSize = { width: viewMinSize.width, height: viewMinSize.height };
+    @observable _viewportSize = {width: viewMinSize.width, height: viewMinSize.height};
     // content 缩放倍数
     @observable canvasScale = zoomScale.normal;
     // 画布矩阵
@@ -46,12 +46,12 @@ export class SectionStore extends BaseStore{
      */
     init(config, options = {}) {
         let that = this;
-        const { canvasSize } = config;
+        const {canvasSize} = config;
         const {data} = options;
 
         // 取出保存在本地的 缩放大小
-        that.gridAttribute = LocalData.getObjectItem(`${ENUM.DESIGN_GRID}_${data.id}`, toJS(that.gridAttribute));
-        that.canvasScale = LocalData.getFloatItem(`${ENUM.DESIGN_SCALE}_${data.id}`, that.canvasScale);
+        that.gridAttribute = Storage.local.getItem(`${ENUM.DESIGN_GRID}_${data.id}`, toJS(that.gridAttribute));
+        that.canvasScale = Storage.local.getItem(`${ENUM.DESIGN_SCALE}_${data.id}`, that.canvasScale);
         that.setCanvasSize(canvasSize.width, canvasSize.height);
         that.setViewportSize(canvasSize.width * viewportScale.x, canvasSize.height * viewportScale.y);
     }
@@ -134,7 +134,7 @@ export class SectionStore extends BaseStore{
             that.canvasScale = nextScale;
             that.handleRulerPosition();
 
-            LocalData.setItem(`${ENUM.DESIGN_SCALE}_${that.main.pageData.id}`, that.canvasScale);
+            Storage.local.setItem(`${ENUM.DESIGN_SCALE}_${that.main.pageData.id}`, that.canvasScale);
         }
     }
 
@@ -402,7 +402,7 @@ export class SectionStore extends BaseStore{
     onListenerDesignGrid = (attr: Object) => {
         let that = this;
         that.gridAttribute = attr;
-        LocalData.setItem(`${ENUM.DESIGN_GRID}_${that.main.pageData.id}`, attr)
+        Storage.local.setItem(`${ENUM.DESIGN_GRID}_${that.main.pageData.id}`, attr)
     };
 
     /**
