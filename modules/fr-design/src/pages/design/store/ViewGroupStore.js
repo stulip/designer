@@ -29,6 +29,7 @@ export class ViewGroupStore extends BaseStore {
     // 选中的widget
     widget: BaseWidget;
     widgetList: [BaseWidget] = [];
+    widgetList2: [BaseWidget] = [];
 
     addListener() {
         const that = this;
@@ -82,6 +83,7 @@ export class ViewGroupStore extends BaseStore {
         that.selectRect = null;
         that.widget = null;
         that.widgetList = [];
+        that.widgetList2 = [];
     };
 
     /**
@@ -124,26 +126,39 @@ export class ViewGroupStore extends BaseStore {
      */
     handleWidgetMouseEnter = (event: MouseEvent, widget: BaseWidget) => {
         let that = this;
-
-        // 鼠标选择状态
-        if (widget === that.widget) {
-            event.stopPropagation();
-            return;
-        }
-
-        let target = event.currentTarget;
+        that.widgetList2.push(widget);
         clearTimeout(that._widgetEnterTimer);
-        that._widgetEnterTimer = setTimeout(function () {
-            that._handleMouseEnter(target, widget);
-        }, 0);
+        that._widgetEnterTimer = setTimeout(that._eachWidgetEnter, 0);
     };
 
+    _eachWidgetEnter = () => {
+        const that = this;
+        let lastWidget = that.getMouseWidgetSelect(that.widgetList2);
+        lastWidget && that._handleMouseEnter(lastWidget);
+        that.widgetList2 = [];
+    };
+
+    getMouseWidgetSelect(widgets) {
+        const that = this;
+        // text panel header
+        let lastWidget = widgets[0];
+        const parentWidget = that.widget && that.widget.parentWidget;
+        for (const widget of widgets) {
+            const parent = widget.parentWidget;
+            if (widget === that.widget || (!Types.isEmpty(parent) && parent === parentWidget)) {
+                break;
+            }
+            lastWidget = widget;
+        }
+        return lastWidget;
+    }
+
     @action
-    _handleMouseEnter = (target: Element, widget: BaseWidget) => {
+    _handleMouseEnter = (widget: BaseWidget) => {
         const that = this;
         if (!that.group) return;
         const groupRect = that.group.getBoundingClientRect();
-        const rect = target.getBoundingClientRect();
+        const rect = widget.widget.getBoundingClientRect();
         const left = (rect.left - groupRect.left) / groupRect.width * 100;
         const top = ((rect.top - groupRect.top) / groupRect.height) * 100;
         const width = (rect.width / groupRect.width) * 100;
@@ -182,15 +197,7 @@ export class ViewGroupStore extends BaseStore {
     _eachWidgetClickEvent = () => {
         const that = this;
         // text panel header
-        let lastWidget = that.widgetList[0];
-        const parentWidget = that.widget && that.widget.parentWidget;
-        for (const widget of that.widgetList) {
-            const parent = widget.parentWidget;
-            if (widget === that.widget || (!Types.isEmpty(parent) && parent === parentWidget)) {
-                break;
-            }
-            lastWidget = widget;
-        }
+        let lastWidget = that.getMouseWidgetSelect(that.widgetList);
         if (lastWidget) {
             // 设置选框
             that.setSelectBox(lastWidget.widget);

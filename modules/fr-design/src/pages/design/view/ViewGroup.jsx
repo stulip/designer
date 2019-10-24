@@ -6,6 +6,7 @@
 
 // @flow
 import React from "react";
+import ReactDOM from "react-dom";
 import { App } from "../../../widget/mobile";
 import { observer } from "mobx-react";
 import { classNames } from "fr-web";
