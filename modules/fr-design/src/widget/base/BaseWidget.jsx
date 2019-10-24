@@ -36,7 +36,7 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
         that.state = {};
         // 更新回调
         that.onUpdate = null;
-        that.initWidgetFormData();
+        that.formData = that.getConfig(props.config);
     }
 
     //子类实现
@@ -59,23 +59,17 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
         that.onUpdate && that.onUpdate();
     }
 
-    // 可子类处理
-    formatValue(value) {
-        return Types.isObject(value) ? value : {value};
+    // 子类实现, 默认值
+    getDefaultConfig() {
+        return {
+            [PropsConst.widgetInitialWidth]: false,
+            [PropsConst.widgetInitialHeight]: false,
+        };
     }
 
-    /**
-     * 初始化widget表单数据
-     */
-    initWidgetFormData() {
-        let that = this;
-        const {value} = that.props;
-        const data = that.formatValue(value);
-        const formData = {};
-        formData[PropsConst.widgetInitialWidth] = false;
-        formData[PropsConst.widgetInitialHeight] = false;
-
-        return that._formData = Object.assign(formData, data);
+    // 子类可继承
+    getConfig(config) {
+        return Object.assign({}, this.getDefaultConfig(), config);
     }
 
     // 初始化 widget 基础属性
@@ -261,8 +255,12 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
      * 原始表单数据
      * @returns {Object}
      */
-    get formData (){
+    get formData() {
         return this._formData;
+    }
+
+    set formData(fromData) {
+        this._formData = fromData;
     }
 
     // 子类实现

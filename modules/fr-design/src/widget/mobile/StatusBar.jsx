@@ -23,10 +23,11 @@ export class StatusBar extends BaseWidget<Props> {
         return "状态栏";
     }
 
-    initWidgetFormData(): * {
-        const formData = super.initWidgetFormData();
-        formData[PropsConst.widgetBackground] = "#f8f8f8";
-        return formData;
+    getDefaultConfig(): {} {
+        return {
+            ...super.getDefaultConfig(),
+            [PropsConst.widgetBackground]: "#f8f8f8"
+        }
     }
 
     widgetProps(): Array<Object> {

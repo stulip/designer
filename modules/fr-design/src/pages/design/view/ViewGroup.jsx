@@ -13,7 +13,7 @@ import "../../../widget/assets";
 import {ViewGroupStore} from "../store/ViewGroupStore";
 import {LayoutConst, PropsConst} from "../../../config/Attribute";
 import {WidgetConst} from "../../../widget/WidgetConfig";
-import {XMath} from "@xt-web/core";
+import {Types, XMath} from "@xt-web/core";
 
 type Props = {
     store: ViewGroupStore
@@ -26,17 +26,17 @@ const GroupWidget = [
     },
     {
         component: WidgetConst.App.Header,
-        value: {
-            title: '采购中心'
+        config: {
+            "header.title": "设计中心"
         },
         children: [
             {
                 component: WidgetConst.App.Text,
-                value: '菜单1'
+                children: "菜单1",
             },
             {
                 component: WidgetConst.App.Text,
-                value: '菜单2'
+                children: '菜单2'
             }
         ]
     },
@@ -45,35 +45,35 @@ const GroupWidget = [
     },
     {
         component: WidgetConst.App.Panel,
-        layout: {
+        config: {
             [PropsConst.layoutJustifyContent]: LayoutConst.justifyContent.spaceBetween,
         },
         children: [
             {
                 component: WidgetConst.App.Text,
-                value: '刘亦菲'
+                children: '刘亦菲'
             },
             {
                 component: WidgetConst.App.Text,
-                value: '李小璐果照'
+                children: '李小璐果照'
             }
         ]
     },
     {
         component: WidgetConst.App.Text,
-        value: '测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试'
+        children: '测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试'
     },
     {
         component: WidgetConst.App.Text,
-        value: '测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试'
+        children: '测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试'
     },
     {
         component: WidgetConst.App.Text,
-        value: '测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试'
+        children: '测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试'
     },
     {
         component: WidgetConst.App.Text,
-        value: '测试测试测试测试测试测试测试测试测试测试测试测试测试测试' +
+        children: '测试测试测试测试测试测试测试测试测试测试测试测试测试测试' +
             '测测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测' +
             '试测试测试测试测试测试测试测试测试测试测试测试测试测试' +
             '测试测试测试测试测试测试测试测试试测试测试测' +
@@ -99,31 +99,40 @@ export class ViewGroup extends React.Component<Props, State> {
         store.unmount();
     }
 
-    createWidget = (config) =>{
-        const { store } = this.props;
-        const { main } = store;
-        const { canvasRect, canvasScale } = main.section;
-        const { designRect } = main.config;
-        return config.map((widget, index) => {
-            const Comp = App[widget.component];
-            widget.cid = XMath.guid(16);
-            return Comp && (
-                <Comp key={index} {...widget} canvasRect={canvasRect} designRect={designRect} groupRef={store.groupRef}>
-                    {widget.children && this.createWidget(widget.children)}
-                </Comp>
-            )
-        });
+    createWidget = (widget) => {
+        let children = widget.children;
+        if (Types.isArray(children)) {
+            children = this.eachWidget(children);
+        } else if (Types.isObject(children)) {
+            children = this.createWidget();
+        }
+
+        const {main, groupRef} = this.props.store;
+        const {canvasRect, canvasScale} = main.section;
+        const {designRect} = main.config;
+
+        const Comp = App[widget.component];
+        widget.cid = XMath.guid(16);
+        return Comp && (
+            <Comp key={widget.cid} {...widget} canvasRect={canvasRect} designRect={designRect} groupRef={groupRef}>
+                {children}
+            </Comp>
+        )
+    };
+
+    eachWidget = (config) => {
+        return config.map(this.createWidget);
     };
 
     _render() {
-        const { store } = this.props;
-        const { main } = store;
-        const { canvasRect, canvasScale } = main.section;
-        const { designRect } = main.config;
+        const {store} = this.props;
+        const {main} = store;
+        const {canvasRect, canvasScale} = main.section;
+        const {designRect} = main.config;
 
         return (
             <div className={classNames("group-list", designRect.type)} ref={store.groupRef}>
-                {this.createWidget(store.groupConfig)}
+                {this.eachWidget(store.groupConfig)}
             </div>
         );
     }

@@ -6,8 +6,8 @@
 
 // @flow
 import React from 'react';
-import {BaseWidget} from "./BaseWidget";
 import type {BaseWidgetProps} from "./BaseWidget";
+import {BaseWidget} from "./BaseWidget";
 import '../assets/text.pcss'
 
 export type BaseTextProps = {
@@ -27,11 +27,10 @@ export class BaseText extends BaseWidget<BaseTextProps, State> {
 
     renderWidget() {
         const {children} = this.props;
-        const {value} = this._formData || {};
         return (
             <div className={'rich-text'}>
                 <p>
-                    <span>{value}</span>
+                    <span>{children}</span>
                 </p>
             </div>
         );

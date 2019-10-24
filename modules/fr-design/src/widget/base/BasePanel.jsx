@@ -25,7 +25,7 @@ export class BasePanel extends BaseWidget<BasePanelProps, State> {
      * @returns {string}
      */
     getBackground() {
-        return "#fff";
+        return "";//"#fff";
     }
 
     getBoxRect() {
@@ -39,36 +39,31 @@ export class BasePanel extends BaseWidget<BasePanelProps, State> {
         return basic;
     }
 
-    /**
-     * 布局信息
-     * @returns {{}}
-     */
-    getLayoutConfig() {
-        const {layout = {}} = this.props;
+    getDefaultConfig() {
+        const that = this;
+        const spCfg = super.getDefaultConfig();
+        const rect = that.getBoxRect();
         return {
+            ...spCfg,
             [PropsConst.layoutDirection]: LayoutConst.direction.row,
             [PropsConst.layoutAlignItems]: LayoutConst.alignItem.stretch,
             [PropsConst.layoutAlignSelf]: LayoutConst.alignSelf.auto,
             [PropsConst.layoutJustifyContent]: LayoutConst.justifyContent.flexStart,
             [PropsConst.layoutFlexGrow]: 1,
             [PropsConst.layoutFlexShrink]: 0,
-            ...layout
+            [PropsConst.widgetWidth]: rect.width,
+            [PropsConst.widgetHeight]: rect.height,
+            [PropsConst.widgetX]: rect.x,
+            [PropsConst.widgetY]: rect.y,
+            [PropsConst.widgetBackground]: that.getBackground(),
         };
     }
 
-    initWidgetFormData() {
-        const that = this;
-        const data = super.initWidgetFormData();
-        const rect = that.getBoxRect();
-        data[PropsConst.widgetBackground] = that.getBackground();
-        data[PropsConst.widgetWidth] = rect.width;
-        data[PropsConst.widgetHeight] = rect.height;
-        data[PropsConst.widgetX] = rect.x;
-        data[PropsConst.widgetY] = rect.y;
-        data[PropsConst.widgetInitialWidth] = rect.width !== 'initial';
-        data[PropsConst.widgetInitialHeight] = rect.height !== 'initial';
-
-        return Object.assign(data, that.getLayoutConfig());
+    getConfig(config): * {
+        const data = super.getConfig(config);
+        data[PropsConst.widgetInitialWidth] = data.width !== "initial";
+        data[PropsConst.widgetInitialHeight] = data.height !== "initial";
+        return data;
     }
 
     widgetProps(): Array<Object> {

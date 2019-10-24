@@ -27,6 +27,7 @@ export class ViewGroupStore extends BaseStore {
     @observable selectRect: ClientRect;
     // 选中的widget
     widget: BaseWidget;
+    parentWidget: BaseWidget;
 
     addListener() {
         const that = this;
@@ -72,6 +73,7 @@ export class ViewGroupStore extends BaseStore {
 
         that.selectRect = null;
         that.widget = null;
+        that.parentWidget = null;
     };
 
     /**
@@ -148,7 +150,8 @@ export class ViewGroupStore extends BaseStore {
     @action.bound
     handleWidgetClick(event: MouseEvent, widget: BaseWidget) {
         let that = this;
-        if (!that.group || widget === that.widget) return;
+        if (!that.group || widget === that.parentWidget) return;
+        that.parentWidget = widget;
         const rect = event.currentTarget.getBoundingClientRect();
         const margin = {};
         ({
@@ -208,7 +211,16 @@ export class ViewGroupStore extends BaseStore {
     @action.bound
     handleWidgetDBLClick(event: MouseEvent, widget: BaseWidget) {
         const that = this;
-        console.log(event.target, event.currentTarget, widget)
+        that.switchWidget(event, widget);
+    }
+
+    switchWidget(event: MouseEvent, widget: BaseWidget) {
+        const that = this;
+        const {offsetX, offsetY} = event;
+        const {cid, children} = widget.props;
+        if (cid) {
+            console.log(children)
+        }
     }
 
     get groupConfig(): [] {

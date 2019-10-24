@@ -8,7 +8,6 @@
 import React from "react";
 import '../assets/mobile/header.pcss'
 import type {BaseWidgetProps} from "../base/BaseWidget";
-import {BasePanel} from "../base/BasePanel";
 import {Form} from "fr-ui";
 import {Panel} from './Panel'
 import {LayoutConst, PropsConst} from "../../config/Attribute";
@@ -20,7 +19,7 @@ type Props = {
 
 const backImage = require('fr-art/design/back_chevron.png');
 
-export class Header extends BasePanel<Props> {
+export class Header extends Panel<Props> {
 
     getName(): string {
         return "导航栏";
@@ -36,12 +35,13 @@ export class Header extends BasePanel<Props> {
         return basic;
     }
 
-    getLayoutConfig(): {} {
-        const layout = super.getLayoutConfig();
+    getDefaultConfig(): {} {
+        const spCfg = super.getDefaultConfig();
+
         return {
-            ...layout,
+            ...spCfg,
             [PropsConst.layoutAlignItems]: LayoutConst.alignItem.center,
-            [PropsConst.layoutJustifyContent]: LayoutConst.justifyContent.spaceBetween
+            [PropsConst.layoutJustifyContent]: LayoutConst.justifyContent.spaceBetween,
         }
     }
 
@@ -58,7 +58,7 @@ export class Header extends BasePanel<Props> {
         return [
             ...config,
             {
-                form: 'title',
+                form: 'header.title',
                 title: '标题',
                 type: Form.Const.Type.PanelInput,
             },
@@ -70,18 +70,18 @@ export class Header extends BasePanel<Props> {
         const that = this;
         const data = that.formData;
         const {children} = that.props;
-
+        console.log(children);
         return (
             <>
                 <div className={'header-left flex middle'}>
                     <img src={backImage} width={15}/>
                     <span className="text">返回</span>
                 </div>
+                <div className={'header-right'}>
+                    {children}
+                </div>
                 <div className={'header-title'}>
                     <span className="text">{data.title}</span>
-                </div>
-                <div className={'header-right'}>
-                    <Panel>{children}</Panel>
                 </div>
             </>
         )

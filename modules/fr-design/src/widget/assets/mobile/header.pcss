@@ -3,8 +3,6 @@
 .group-list {
 
     .header-left, .header-right {
-        padding: 10px;
-        max-width: 30%;
         .text {
             text-overflow: ellipsis;
             overflow: hidden;
@@ -13,7 +11,15 @@
         }
     }
 
+    .header-right {
+        display: flex;
+        flex-direction: row;
+    }
+
     .header-left {
+        padding: 10px;
+        max-width: 30%;
+
         img {
             padding-right: 3px;
             color: #000033;
