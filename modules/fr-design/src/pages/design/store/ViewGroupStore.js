@@ -50,14 +50,20 @@ export class ViewGroupStore extends BaseStore {
         //widget basic
     }
 
+    /**
+     * 鼠标移除
+     * @param {MouseEvent} event
+     * @param {BaseWidget} widget
+     */
     @action.bound
-    handleWidgetMouseExit(event: MouseEvent) {
-        this.cancelHove();
+    handleWidgetMouseExit(event: MouseEvent, widget: BaseWidget) {
+        this.hoveWidget === widget && this.cancelHove();
     }
 
     @action
     cancelHove = () => {
         this.hoveRect = null;
+        this.hoveWidget = null;
     };
 
     // 取消选中元素
@@ -114,16 +120,32 @@ export class ViewGroupStore extends BaseStore {
 
     /**
      * widget获得鼠标焦点
-     * @param event
+     * @param {MouseEvent} event
+     * @param {BaseWidget} widget
      */
-    @action.bound
-    handleWidgetMouseEnter(event: MouseEvent) {
+    handleWidgetMouseEnter = (event: MouseEvent, widget: BaseWidget) => {
         let that = this;
+
         // 鼠标选择状态
-        if (that.main.screens.rangeBoundRect || !that.group) return;
+        if (widget === that.widget) {
+            event.stopPropagation();
+            return;
+        }
+
+        let target = event.currentTarget;
+        clearTimeout(that._widgetEnterTimer);
+        that._widgetEnterTimer = setTimeout(function () {
+            that._handleMouseEnter(target, widget);
+        }, 0);
+    };
+
+    @action
+    _handleMouseEnter = (target: Element, widget: BaseWidget) => {
+        const that = this;
+        if (!that.group) return;
         const groupRect = that.group.getBoundingClientRect();
-        const rect = event.currentTarget.getBoundingClientRect();
-        const left = ((rect.left - groupRect.left) / groupRect.width) * 100;
+        const rect = target.getBoundingClientRect();
+        const left = (rect.left - groupRect.left) / groupRect.width * 100;
         const top = ((rect.top - groupRect.top) / groupRect.height) * 100;
         const width = (rect.width / groupRect.width) * 100;
         const height = (rect.height / groupRect.height) * 100;
@@ -140,17 +162,17 @@ export class ViewGroupStore extends BaseStore {
         ) {
             that.cancelHove();
         } else {
-            that.hoveRect = { left, top, width, height };
+            that.hoveRect = {left, top, width, height};
+            that.hoveWidget = widget;
         }
-    }
+    };
 
     /**
      * widget 单击事件
      * @param {MouseEvent} event
      * @param {BaseWidget} widget
      */
-    @action.bound
-    handleWidgetClick(event: MouseEvent, widget: BaseWidget) {
+    handleWidgetClick = (event: MouseEvent, widget: BaseWidget) => {
         let that = this;
 
         if (that.widget === widget) {
@@ -168,8 +190,9 @@ export class ViewGroupStore extends BaseStore {
         that._widgetClickTimer = setTimeout(function () {
             that._handleWidgetClick(target, widget);
         }, 0);
-    }
+    };
 
+    @action
     _handleWidgetClick = (target, widget: BaseWidget) => {
         const that = this;
         that.widgetList.push(widget);

@@ -89,9 +89,9 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
         let that = this;
 
         if (that.widget) {
-            that.widget.addEventListener("mouseleave", that.handleMouseLeave, true);
+            that.widget.addEventListener("mouseleave", that.handleMouseLeave, false);
             that.widget.addEventListener("mousedown", that.handleMouseDown, true);
-            that.widget.addEventListener("mouseover", that.handleMouseEnter, true);
+            that.widget.addEventListener("mouseover", that.handleMouseEnter, false);
             that.widget.addEventListener("click", that.handleClick, false);
         }
     }
@@ -117,8 +117,6 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
      * @param event
      */
     handleMouseEnter = (event: MouseEvent): void => {
-        event.preventDefault();
-        event.stopPropagation();
         DesignEvent.emit(PropsConst.widgetMouseEnter, event, this);
     };
 
@@ -127,8 +125,6 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
      * @param event
      */
     handleMouseLeave = (event: MouseEvent): void => {
-        event.preventDefault();
-        event.stopPropagation();
         DesignEvent.emit(PropsConst.widgetMouseExit, event, this);
     };
 
