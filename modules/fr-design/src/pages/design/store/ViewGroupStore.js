@@ -9,7 +9,8 @@ import {action, observable} from "mobx";
 import {BaseWidget} from "../../../widget/base/BaseWidget";
 import {BaseStore} from "./BaseStore";
 import {DesignEvent} from "fr-web";
-import {PropsConst} from "../../../config/Attribute";
+import { PropsConst } from "../../../config/Attribute";
+import { Types } from "@xt-web/core";
 
 export class ViewGroupStore extends BaseStore {
 
@@ -27,7 +28,6 @@ export class ViewGroupStore extends BaseStore {
     @observable selectRect: ClientRect;
     // 选中的widget
     widget: BaseWidget;
-    parentWidget: BaseWidget;
     widgetList: [BaseWidget] = [];
 
     addListener() {
@@ -81,7 +81,6 @@ export class ViewGroupStore extends BaseStore {
 
         that.selectRect = null;
         that.widget = null;
-        that.parentWidget = null;
         that.widgetList = [];
     };
 
@@ -174,34 +173,30 @@ export class ViewGroupStore extends BaseStore {
      */
     handleWidgetClick = (event: MouseEvent, widget: BaseWidget) => {
         let that = this;
-
-        if (that.widget === widget) {
-            event.stopPropagation();
-            return;
-        }
-        const index = that.widgetList.indexOf(widget);
-        if (index !== -1) {
-            that.widgetList = that.widgetList.slice(0, index);
-            event.stopPropagation();
-        }
-
+        if (!that.group) return;
+        that.widgetList.push(widget);
         clearTimeout(that._widgetClickTimer);
-        let target = event.currentTarget;
-        that._widgetClickTimer = setTimeout(function () {
-            that._handleWidgetClick(target, widget);
-        }, 0);
+        that._widgetClickTimer = setTimeout(that._eachWidgetClickEvent, 0);
     };
 
-    @action
-    _handleWidgetClick = (target, widget: BaseWidget) => {
+    _eachWidgetClickEvent = () => {
         const that = this;
-        that.widgetList.push(widget);
-        if (!that.group || widget === that.parentWidget) return;
-        that.parentWidget = widget;
-
-        // 设置选框
-        that.setSelectBox(target);
-        that.setSelectWidget(widget);
+        // text panel header
+        let lastWidget = that.widgetList[0];
+        const parentWidget = that.widget && that.widget.parentWidget;
+        for (const widget of that.widgetList) {
+            const parent = widget.parentWidget;
+            if (widget === that.widget || (!Types.isEmpty(parent) && parent === parentWidget)) {
+                break;
+            }
+            lastWidget = widget;
+        }
+        if (lastWidget) {
+            // 设置选框
+            that.setSelectBox(lastWidget.widget);
+            that.setSelectWidget(lastWidget);
+        }
+        that.widgetList = [];
     };
 
     /**

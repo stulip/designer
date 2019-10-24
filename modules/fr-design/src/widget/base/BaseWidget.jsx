@@ -14,7 +14,8 @@ import {Types} from "@xt-web/core";
 
 export type BaseWidgetProps = {
     canvasRect: Rect,
-    designRect: DesignType
+    designRect: DesignType,
+    parent?: { current: any }
 };
 type State = {};
 
@@ -22,8 +23,14 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
     // 所有属性
     _formData: Object = {};
     widgetRef = React.createRef();
+
     get widget() {
         return this.widgetRef.current;
+    }
+
+    // 父节点
+    get parentWidget(): BaseWidget | null {
+        return this.props.parent && this.props.parent.current;
     }
 
     get group() {
