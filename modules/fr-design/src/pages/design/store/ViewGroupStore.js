@@ -28,6 +28,7 @@ export class ViewGroupStore extends BaseStore {
     // 选中的widget
     widget: BaseWidget;
     parentWidget: BaseWidget;
+    widgetList: [BaseWidget] = [];
 
     addListener() {
         const that = this;
@@ -35,7 +36,6 @@ export class ViewGroupStore extends BaseStore {
         DesignEvent.addListener(PropsConst.widgetMouseClick, that.handleWidgetClick);
         DesignEvent.addListener(PropsConst.widgetMouseExit, that.handleWidgetMouseExit);
         DesignEvent.addListener(PropsConst.widgetMouseEnter, that.handleWidgetMouseEnter);
-        DesignEvent.addListener(PropsConst.widgetMouseDBLClick, that.handleWidgetDBLClick);
 
         //widget basic
     }
@@ -46,7 +46,6 @@ export class ViewGroupStore extends BaseStore {
         DesignEvent.removeListener(PropsConst.widgetMouseClick, that.handleWidgetClick);
         DesignEvent.removeListener(PropsConst.widgetMouseExit, that.handleWidgetMouseExit);
         DesignEvent.removeListener(PropsConst.widgetMouseEnter, that.handleWidgetMouseEnter);
-        DesignEvent.removeListener(PropsConst.widgetMouseDBLClick, that.handleWidgetDBLClick);
 
         //widget basic
     }
@@ -66,14 +65,18 @@ export class ViewGroupStore extends BaseStore {
     cancelSelect = () => {
         let that = this;
         // 还原标尺刻度
-        const { canvasRect } = that.main.section;
+        const {canvasRect} = that.main.section;
         that.main.section.setRulerShadow(0, 0, canvasRect.width, canvasRect.height);
         that.main.attribute.setConfig();
-        that.widget && (that.widget.onUpdate = null);
+
+        if (that.widget) {
+            that.widget.onUpdate = null
+        }
 
         that.selectRect = null;
         that.widget = null;
         that.parentWidget = null;
+        that.widgetList = [];
     };
 
     /**
@@ -106,8 +109,7 @@ export class ViewGroupStore extends BaseStore {
     _reWidgetSelectBox = () => {
         let that = this;
         if (!that.widget) return;
-        const rect = that.widget.widget.getBoundingClientRect();
-        that._handleWidgetSelect(rect);
+        that.setSelectBox(that.widget.widget);
     };
 
     /**
@@ -150,40 +152,68 @@ export class ViewGroupStore extends BaseStore {
     @action.bound
     handleWidgetClick(event: MouseEvent, widget: BaseWidget) {
         let that = this;
+
+        if (that.widget === widget) {
+            event.stopPropagation();
+            return;
+        }
+        const index = that.widgetList.indexOf(widget);
+        if (index !== -1) {
+            that.widgetList = that.widgetList.slice(0, index);
+            event.stopPropagation();
+        }
+
+        clearTimeout(that._widgetClickTimer);
+        let target = event.currentTarget;
+        that._widgetClickTimer = setTimeout(function () {
+            that._handleWidgetClick(target, widget);
+        }, 0);
+    }
+
+    _handleWidgetClick = (target, widget: BaseWidget) => {
+        const that = this;
+        that.widgetList.push(widget);
         if (!that.group || widget === that.parentWidget) return;
         that.parentWidget = widget;
-        const rect = event.currentTarget.getBoundingClientRect();
+
+        // 设置选框
+        that.setSelectBox(target);
+        that.setSelectWidget(widget);
+    };
+
+    /**
+     * 设置选中边框
+     * @param element
+     */
+    @action
+    setSelectBox(element: Element) {
+        let that = this;
+        if (!that.group) return;
+        let rect = element.getBoundingClientRect();
         const margin = {};
         ({
             marginTop: margin.top,
             marginBottom: margin.bottom,
             marginLeft: margin.left,
             marginRight: margin.right
-        } = event.currentTarget.style);
-        // 设置选框
-        that._handleWidgetSelect({
+        } = element.style);
+
+        rect = {
             width: rect.width + parseInt(margin.left || 0) + parseInt(margin.right || 0),
             height: rect.height + parseInt(margin.top || 0) + parseInt(margin.bottom || 0),
             left: rect.left - parseInt(margin.left || 0),
             top: rect.top - parseInt(margin.top || 0),
-        });
-        that.setSelectWidget(widget);
-    }
-
-    @action
-    _handleWidgetSelect(rect) {
-        let that = this;
-        if (!that.group) return;
+        };
 
         const groupRect = that.group.getBoundingClientRect();
         const left = ((rect.left - groupRect.left) / groupRect.width) * 100;
         const top = ((rect.top - groupRect.top) / groupRect.height) * 100;
         const width = (rect.width / groupRect.width) * 100;
         const height = (rect.height / groupRect.height) * 100;
-        that.selectRect = { left, top, width, height };
+        that.selectRect = {left, top, width, height};
 
         const hoveRect = that.hoveRect;
-        const { canvasScale } = that.main.section;
+        const {canvasScale} = that.main.section;
         // 判断是否与焦点rect一样
         if (
             hoveRect &&
@@ -201,26 +231,6 @@ export class ViewGroupStore extends BaseStore {
             rect.width / canvasScale,
             rect.height / canvasScale
         );
-    }
-
-    /**
-     * widget 双击事件
-     * @param {MouseEvent} event
-     * @param {BaseWidget} widget
-     */
-    @action.bound
-    handleWidgetDBLClick(event: MouseEvent, widget: BaseWidget) {
-        const that = this;
-        that.switchWidget(event, widget);
-    }
-
-    switchWidget(event: MouseEvent, widget: BaseWidget) {
-        const that = this;
-        const {offsetX, offsetY} = event;
-        const {cid, children} = widget.props;
-        if (cid) {
-            console.log(children)
-        }
     }
 
     get groupConfig(): [] {

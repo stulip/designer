@@ -21,6 +21,13 @@ const backImage = require('fr-art/design/back_chevron.png');
 
 export class Header extends Panel<Props> {
 
+    constructor(props) {
+        super(props);
+        this.rightConfig = {
+            [PropsConst.layoutFlexGrow]: 0
+        }
+    }
+
     getName(): string {
         return "导航栏";
     }
@@ -62,7 +69,7 @@ export class Header extends Panel<Props> {
                 title: '标题',
                 type: Form.Const.Type.PanelInput,
             },
-            {Type: Form.Const.Type.Line}
+            {type: Form.Const.Type.Line, bottom: 8}
         ];
     }
 
@@ -70,18 +77,15 @@ export class Header extends Panel<Props> {
         const that = this;
         const data = that.formData;
         const {children} = that.props;
-        console.log(children);
         return (
             <>
                 <div className={'header-left flex middle'}>
                     <img src={backImage} width={15}/>
                     <span className="text">返回</span>
                 </div>
-                <div className={'header-right'}>
-                    {children}
-                </div>
+                <Panel config={that.rightConfig}>{children}</Panel>
                 <div className={'header-title'}>
-                    <span className="text">{data.title}</span>
+                    <span className="text">{data['header.title']}</span>
                 </div>
             </>
         )

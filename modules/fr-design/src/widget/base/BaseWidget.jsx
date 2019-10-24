@@ -92,8 +92,7 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
             that.widget.addEventListener("mouseleave", that.handleMouseLeave, true);
             that.widget.addEventListener("mousedown", that.handleMouseDown, true);
             that.widget.addEventListener("mouseover", that.handleMouseEnter, true);
-            that.widget.addEventListener("click", that.handleClick, true);
-            that.widget.addEventListener("dblclick", that.handleDBLClick, true);
+            that.widget.addEventListener("click", that.handleClick, false);
         }
     }
 
@@ -105,7 +104,6 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
             that.widget.removeEventListener("mousedown", that.handleMouseDown);
             that.widget.removeEventListener("mouseover", that.handleMouseEnter);
             that.widget.removeEventListener("click", that.handleClick);
-            that.widget.removeEventListener("dblclick", that.handleDBLClick);
         }
     }
 
@@ -140,16 +138,7 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
      */
     handleClick = (event: MouseEvent): void => {
         event.preventDefault();
-        event.stopPropagation();
         DesignEvent.emit(PropsConst.widgetMouseClick, event, this);
-    };
-
-    /**
-     * 双击事
-     * @param event
-     */
-    handleDBLClick = (event: MouseEvent): void => {
-        DesignEvent.emit(PropsConst.widgetMouseDBLClick, event, this);
     };
 
     /**

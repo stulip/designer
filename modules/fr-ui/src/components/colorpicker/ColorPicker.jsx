@@ -4,15 +4,15 @@
  * @sine 2019-09-18 10:23
  */
 
-import React, { Component } from "react";
-import { IBotIcon, ColorPicker as Picker } from "fr-web";
+import React from "react";
+import {ColorPicker as Picker, IBotIcon} from "fr-web";
 import "./assets";
-import { Types } from "@xt-web/core";
+import {Types} from "@xt-web/core";
 
 const parseColor = Picker.parseColor;
 // 默认主题颜色
 const THEME_COLORS = [
-    "#FFFFFF",
+    "transparent",
     "#3F51B5",
     "#FF4081",
     "#E51C23",

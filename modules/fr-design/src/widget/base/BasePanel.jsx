@@ -25,7 +25,7 @@ export class BasePanel extends BaseWidget<BasePanelProps, State> {
      * @returns {string}
      */
     getBackground() {
-        return "";//"#fff";
+        return "transparent";//"#fff";
     }
 
     getBoxRect() {
@@ -61,8 +61,8 @@ export class BasePanel extends BaseWidget<BasePanelProps, State> {
 
     getConfig(config): * {
         const data = super.getConfig(config);
-        data[PropsConst.widgetInitialWidth] = data.width !== "initial";
-        data[PropsConst.widgetInitialHeight] = data.height !== "initial";
+        data[PropsConst.widgetInitialWidth] = data[PropsConst.widgetWidth] !== "initial";
+        data[PropsConst.widgetInitialHeight] = data[PropsConst.widgetHeight] !== "initial";
         return data;
     }
 
