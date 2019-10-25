@@ -8,7 +8,6 @@
 import React from "react";
 import '../assets/mobile/header.pcss'
 import type {BaseWidgetProps} from "../base/BaseWidget";
-import {Form} from "fr-ui";
 import {Panel} from './Panel'
 import {LayoutConst, PropsConst} from "../../config/Attribute";
 import {WidgetConst} from "../WidgetConfig";
@@ -59,24 +58,18 @@ export class Header extends Panel<Props> {
         return rect;
     }
 
-    widgetProps(): [] {
-        const that = this;
-        const config = super.widgetProps();
-        return [
-            ...config,
-            {
-                form: 'header.title',
-                title: '标题',
-                type: Form.Const.Type.PanelInput,
-            },
-            {type: Form.Const.Type.Line, bottom: 8}
-        ];
-    }
+    // widgetProps(): [] {
+    //     const that = this;
+    //     const config = super.widgetProps();
+    //     return [
+    //         ...config
+    //     ];
+    // }
 
     renderChild(): * {
         const that = this;
         const data = that.formData;
-        const {widget: {right: rightWidget} = {}} = that.props;
+        const {widget: {right: rightWidget, center: centerWidget} = {}} = that.props;
         return (
             <>
                 <div className={'header-left flex middle'}>
@@ -84,8 +77,9 @@ export class Header extends Panel<Props> {
                     <span className="text">返回</span>
                 </div>
                 {that.renderWidget(rightWidget)}
+
                 <div className={'header-title'}>
-                    <span className="text">{data['header.title']}</span>
+                    {that.renderWidget(centerWidget)}
                 </div>
             </>
         )

@@ -39,7 +39,7 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
         that.state = {};
         // 更新回调
         that.onUpdate = null;
-        that.formData = that.createStyle(props.style);
+        that.formData = that.createWidgetProps(props.widgetProps);
     }
 
     /**
@@ -99,7 +99,7 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
     }
 
     // 子类可继承
-    createStyle(config) {
+    createWidgetProps(config) {
         return Object.assign({}, this.getDefaultConfig(), config);
     }
 

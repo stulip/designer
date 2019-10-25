@@ -27,18 +27,21 @@ const WidgetConfig = [
     {
         cid: "ch0p",
         component: WidgetConst.App.Panel,
-        style: {
+        widgetProps: {
             [PropsConst.layoutFlexGrow]: 0
         },
         children: ['ch1', 'ch2']
     },
     {
+        cid: 'ch0c',
+        component: WidgetConst.App.Text,
+        children: "设计中心",
+    },
+    {
         cid: "ch0",
         component: WidgetConst.App.Header,
-        style: {
-            "header.title": "设计中心"
-        },
-        widget: {right: ['ch0p']}
+        widgetProps: {},
+        widget: {right: ['ch0p'], center: ['ch0c']}
     },
     {
         component: WidgetConst.App.Text,
@@ -77,7 +80,7 @@ const WidgetConfig = [
     {
         cid: "cpt0",
         component: WidgetConst.App.Panel,
-        style: {
+        widgetProps: {
             [PropsConst.layoutJustifyContent]: LayoutConst.justifyContent.spaceBetween
         },
         children: ["cpt01", "cpt02"]

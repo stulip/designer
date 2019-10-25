@@ -59,8 +59,8 @@ export class BasePanel extends BaseWidget<BasePanelProps, State> {
         };
     }
 
-    createStyle(config): * {
-        const data = super.createStyle(config);
+    createWidgetProps(config): * {
+        const data = super.createWidgetProps(config);
         data[PropsConst.widgetInitialWidth] = data[PropsConst.widgetWidth] !== "initial";
         data[PropsConst.widgetInitialHeight] = data[PropsConst.widgetHeight] !== "initial";
         return data;
