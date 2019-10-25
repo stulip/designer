@@ -50,6 +50,7 @@ function createDevice (options){
         height: 0,
         top: 0,
         bottom: 0,
+        radius: 0,
         ...options,
     }
 }
@@ -76,6 +77,7 @@ const DEVICE_INFO = {
             height: 812,
             top: 44,
             bottom: 34,
+            radius: 44,
         }),
         createDevice({
             name: "iPhone Xs Max",
@@ -84,6 +86,7 @@ const DEVICE_INFO = {
             height: 896,
             top: 44,
             bottom: 34,
+            radius: 44,
         })
     ],
     Web: [

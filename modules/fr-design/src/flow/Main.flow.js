@@ -1,8 +1,8 @@
-import { ToolbarStore } from "../pages/design/store/ToolbarStore";
-import { WidgetsStore } from "../pages/design/store/WidgetsStore";
-import { FooterStore } from "../pages/design/store/FooterStore";
-import { ScreensStore } from "../pages/design/store/ScreensStore";
-import { SectionStore } from "../pages/design/store/SectionStore";
+import {ToolbarStore} from "../pages/design/store/ToolbarStore";
+import {WidgetsStore} from "../pages/design/store/WidgetsStore";
+import {FooterStore} from "../pages/design/store/FooterStore";
+import {ScreensStore} from "../pages/design/store/ScreensStore";
+import {SectionStore} from "../pages/design/store/SectionStore";
 import {AttributeStore} from "../pages/design/store/AttributeStore";
 
 export type MainStore = {
@@ -23,6 +23,7 @@ export type DesignType = {
     top: number,
     bottom: number,
     name: string,
+    radius: number,// 社保圆角
     type: string,// device 类型,
 }
 

@@ -97,32 +97,32 @@ export class Screens extends React.Component<Props, State> {
     renderToolArea() {
         let that = this;
         const store = that.props.store;
-        const { main } = store;
-        const { designRect } = main.config;
-        const { canvasScale, canvasRect, gridAttribute } = main.section;
-        const { width, height } = canvasRect;
+        const {main} = store;
+        const {designRect} = main.config;
+        const {canvasScale, canvasRect, gridAttribute} = main.section;
+        const {width, height} = canvasRect;
         const scaleValue = parseInt(100 * canvasScale);
-        const scaleWidth = width * canvasScale,
-            scaleHeight = height * canvasScale;
-        const borderRadius = designRect.top * canvasScale;
-        const screenRadius = (designRect.top + 11) * canvasScale;
+        const scaleWidth = width * canvasScale, scaleHeight = height * canvasScale;
+        const borderRadius = designRect.radius * canvasScale;
+        const clipPath = `inset(0 round ${borderRadius + 13}px`;
+        const clipPath2 = `inset(0 round ${borderRadius}px`;
         return (
             <>
                 <div className={"screen"}
-                     style={{ width: scaleWidth, height: scaleHeight, borderRadius: screenRadius }}>
+                     style={{width: scaleWidth, height: scaleHeight, clipPath}}>
                     <div className={"title-label"}>
                         <span>主页 - 默认状态</span>
                         <span>{scaleValue + "%"}</span>
                     </div>
                 </div>
-                <div className={"canvas-bg-area"} style={{ width: scaleWidth, height: scaleHeight }}>
+                <div className={"canvas-bg-area"} style={{width: scaleWidth, height: scaleHeight}}>
                     {that.renderBgArea()}
                 </div>
                 <div
                     className={classNames("bg-view", designRect.type)}
-                    style={{ height: scaleHeight, backgroundColor: main.pageData.backgroundColor, borderRadius}}
+                    style={{height: scaleHeight, backgroundColor: main.pageData.backgroundColor, clipPath: clipPath2}}
                 >
-                    {gridAttribute.visible && small_grid(gridAttribute.size, canvasScale, borderRadius)}
+                    {gridAttribute.visible && small_grid(gridAttribute.size, canvasScale)}
                 </div>
             </>
         );
