@@ -93,10 +93,12 @@ export class BasePanel extends BaseWidget<BasePanelProps, State> {
         const backgroundColor = data[PropsConst.widgetBackground];
 
         const styles = that.getLayoutStyles();
+        const size = {};
+        if (initialWidth) size.maxWidth = width;
+        if (initialHeight) size.maxHeight = height;
         const pStyle = {
-            [!initialWidth ? "width" : "maxWidth"]: width,
-            [!initialHeight ? "height" : "maxHeight"]: height,
             backgroundColor,
+            ...size,
             ...styles.padding,
             ...styles.margin,
             ...styles.border,
