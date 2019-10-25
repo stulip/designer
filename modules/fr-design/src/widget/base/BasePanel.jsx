@@ -59,8 +59,8 @@ export class BasePanel extends BaseWidget<BasePanelProps, State> {
         };
     }
 
-    getConfig(config): * {
-        const data = super.getConfig(config);
+    createStyle(config): * {
+        const data = super.createStyle(config);
         data[PropsConst.widgetInitialWidth] = data[PropsConst.widgetWidth] !== "initial";
         data[PropsConst.widgetInitialHeight] = data[PropsConst.widgetHeight] !== "initial";
         return data;
@@ -69,10 +69,6 @@ export class BasePanel extends BaseWidget<BasePanelProps, State> {
     widgetProps(): Array<Object> {
         const config = super.widgetProps();
         return [...config, ...BasePanelConfig];
-    }
-
-    renderWidget() {
-        return this.props.children;
     }
 
     /**
@@ -85,6 +81,7 @@ export class BasePanel extends BaseWidget<BasePanelProps, State> {
 
     render() {
         const that = this;
+        const {cid, children} = that.props;
         const data = that.formData;
         const width = data[PropsConst.widgetWidth];
         const height = data[PropsConst.widgetHeight];
@@ -105,10 +102,11 @@ export class BasePanel extends BaseWidget<BasePanelProps, State> {
             ...styles.radius,
             ...styles.flex.self
         };
+
         return (
-            <div className={"group-flow"} style={pStyle} ref={that.widgetRef}>
+            <div className={"group-flow"} style={pStyle} ref={that.widgetRef} data-cid={cid}>
                 <div className={"view-panel"} style={styles.flex.child}>
-                    {that.renderWidget()}
+                    {that.renderChild()}
                 </div>
             </div>
         );

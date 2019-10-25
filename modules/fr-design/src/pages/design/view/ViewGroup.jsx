@@ -6,77 +6,56 @@
 
 // @flow
 import React from "react";
-import ReactDOM from "react-dom";
-import { App } from "../../../widget/mobile";
-import { observer } from "mobx-react";
-import { classNames } from "fr-web";
+import {App} from "../../../widget/mobile";
+import {observer} from "mobx-react";
+import {classNames} from "fr-web";
 import "../../../widget/assets";
-import { ViewGroupStore } from "../store/ViewGroupStore";
-import { LayoutConst, PropsConst } from "../../../config/Attribute";
-import { WidgetConst } from "../../../widget/WidgetConfig";
-import { Types, XMath } from "@xt-web/core";
-import { BaseWidget } from "../../../widget/base/BaseWidget";
+import {ViewGroupStore} from "../store/ViewGroupStore";
+import {LayoutConst, PropsConst} from "../../../config/Attribute";
+import {WidgetConst} from "../../../widget/WidgetConfig";
 
 type Props = {
     store: ViewGroupStore
 };
 type State = {};
 
-const GroupWidget = [
+const WidgetConfig = [
     {
+        cid: "cs1",
         component: WidgetConst.App.StatusBar
     },
     {
-        component: WidgetConst.App.Header,
-        config: {
-            "header.title": "设计中心"
+        cid: "ch0p",
+        component: WidgetConst.App.Panel,
+        style: {
+            [PropsConst.layoutFlexGrow]: 0
         },
-        children: [
-            {
-                component: WidgetConst.App.Text,
-                children: "菜单1"
-            },
-            {
-                component: WidgetConst.App.Text,
-                children: "菜单2"
-            }
-        ]
+        children: ['ch1', 'ch2']
     },
     {
+        cid: "ch0",
+        component: WidgetConst.App.Header,
+        style: {
+            "header.title": "设计中心"
+        },
+        widget: {right: ['ch0p']}
+    },
+    {
+        component: WidgetConst.App.Text,
+        cid: "ch1",
+        children: "菜单1"
+    },
+    {
+        component: WidgetConst.App.Text,
+        cid: "ch2",
+        children: "菜单2"
+    },
+    {
+        cid: "cbo0",
         component: WidgetConst.App.BottomOperateBar
     },
     {
-        component: WidgetConst.App.Panel,
-        config: {
-            [PropsConst.layoutJustifyContent]: LayoutConst.justifyContent.spaceBetween
-        },
-        children: [
-            {
-                component: WidgetConst.App.Text,
-                children: "刘亦菲"
-            },
-            {
-                component: WidgetConst.App.Text,
-                children: "李小璐果照"
-            }
-        ]
-    },
-    {
-        component: WidgetConst.App.Text,
-        children:
-            "测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试"
-    },
-    {
-        component: WidgetConst.App.Text,
-        children:
-            "测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试"
-    },
-    {
-        component: WidgetConst.App.Text,
-        children:
-            "测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试"
-    },
-    {
+        cid: "ct0",
         component: WidgetConst.App.Text,
         children:
             "测试测试测试测试测试测试测试测试测试测试测试测试测试测试" +
@@ -84,14 +63,35 @@ const GroupWidget = [
             "试测试测试测试测试测试测试测试测试测试测试测试测试测试" +
             "测试测试测试测试测试测试测试测试试测试测试测" +
             "测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试试测试测试测试测试测试测试测试测试测试测试"
+    },
+    {
+        cid: "cpt01",
+        component: WidgetConst.App.Text,
+        children: "刘亦菲"
+    },
+    {
+        cid: "cpt02",
+        component: WidgetConst.App.Text,
+        children: "李小璐果照"
+    },
+    {
+        cid: "cpt0",
+        component: WidgetConst.App.Panel,
+        style: {
+            [PropsConst.layoutJustifyContent]: LayoutConst.justifyContent.spaceBetween
+        },
+        children: ["cpt01", "cpt02"]
     }
 ];
+
+const GroupWidget = Array.from(new Set(["cs1", "ch0", "cbo0", "cpt0", "ct0"]));
 
 @observer
 export class ViewGroup extends React.Component<Props, State> {
     constructor(props) {
         super(props);
         props.store.groupConfig = GroupWidget;
+        props.store.widgetMap = WidgetConfig;
     }
 
     componentDidMount() {
@@ -104,48 +104,42 @@ export class ViewGroup extends React.Component<Props, State> {
         store.unmount();
     }
 
-    createWidget = (widget: BaseWidget, parent: BaseWidget) => {
-        const current = React.createRef();
-        let children = widget.children;
-        if (Types.isArray(children)) {
-            children = this.eachWidget(children, current);
-        } else if (Types.isObject(children)) {
-            children = this.createWidget();
-        }
+    createWidget = (cid: string) => {
+        const widgetMap = this.props.store.widgetMap;
+        const widget = widgetMap.get(cid);
+        if (!widget) return null;
 
-        const { main, groupRef } = this.props.store;
-        const { canvasRect, canvasScale } = main.section;
-        const { designRect } = main.config;
+        const {
+            main: {
+                config: {designRect},
+                section: {canvasRect, canvasScale}
+            }
+        } = this.props.store;
 
         const Comp = App[widget.component];
-        widget.cid = XMath.guid(16);
         return (
             Comp && (
                 <Comp
                     key={widget.cid}
                     {...widget}
-                    ref={current}
                     canvasRect={canvasRect}
                     designRect={designRect}
-                    groupRef={groupRef}
-                    parent={parent}
-                >
-                    {children}
-                </Comp>
+                    widgetMap={widgetMap}
+                    module={App}
+                />
             )
         );
     };
 
-    eachWidget = (config, parent) => {
-        return config.map(widget => this.createWidget(widget, parent));
+    eachWidget = config => {
+        return config.map(this.createWidget);
     };
 
     _render() {
-        const { store } = this.props;
-        const { main } = store;
-        const { canvasRect, canvasScale } = main.section;
-        const { designRect } = main.config;
-
+        const {store} = this.props;
+        const {main} = store;
+        const {canvasRect, canvasScale} = main.section;
+        const {designRect} = main.config;
         return (
             <div className={classNames("group-list", designRect.type)} ref={store.groupRef}>
                 {this.eachWidget(store.groupConfig)}

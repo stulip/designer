@@ -7,8 +7,8 @@
 // @flow
 import React from "react";
 import "../assets/mobile/iphonex-operate-bar.pcss";
-import type { BaseWidgetProps } from "../base/BaseWidget";
-import { BaseWidget } from "../base/BaseWidget";
+import type {BaseWidgetProps} from "../base/BaseWidget";
+import {BaseWidget} from "../base/BaseWidget";
 
 type Props = {
     ...BaseWidgetProps
@@ -19,19 +19,19 @@ type Props = {
  */
 export class BottomOperateBar extends BaseWidget<Props> {
     render() {
-        const { canvasRect, designRect } = this.props;
+        const {canvasRect, designRect, cid} = this.props;
         if (designRect.bottom === 0) return null;
         const width = canvasRect.width;
         const height = designRect.bottom;
 
         return (
-            <div className="group-item" style={{ bottom: 0, width, height, zIndex: 99 }}>
+            <div className="group-item" style={{bottom: 0, width, height, zIndex: 99}} data-cid={cid}>
                 <div
                     className="widget operate_bar hcenter vmiddle iphone_x_operate_bar"
-                    style={{ width, height }}
+                    style={{width, height}}
                 >
                     <div className="rounded-bar">
-                        <div className="text" style={{ padding: 0 }}>
+                        <div className="text" style={{padding: 0}}>
                             <p>&nbsp;</p>
                         </div>
                     </div>

@@ -73,17 +73,17 @@ export class Header extends Panel<Props> {
         ];
     }
 
-    renderWidget(): * {
+    renderChild(): * {
         const that = this;
         const data = that.formData;
-        const {children} = that.props;
+        const {widget: {right: rightWidget} = {}} = that.props;
         return (
             <>
                 <div className={'header-left flex middle'}>
                     <img src={backImage} width={15}/>
                     <span className="text">返回</span>
                 </div>
-                <Panel config={that.rightConfig}>{children}</Panel>
+                {that.renderWidget(rightWidget)}
                 <div className={'header-title'}>
                     <span className="text">{data['header.title']}</span>
                 </div>

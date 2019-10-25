@@ -46,7 +46,7 @@ export class StatusBar extends BaseWidget<Props> {
 
     render() {
         const that = this;
-        const {canvasRect, designRect} = that.props;
+        const {canvasRect, designRect, cid} = that.props;
         if (designRect.bottom === 0) return null;
 
         const data = that.formData;
@@ -55,7 +55,7 @@ export class StatusBar extends BaseWidget<Props> {
         const backgroundColor = data[PropsConst.widgetBackground];
 
         return (
-            <div className="group-flow" style={{width, height, backgroundColor}} ref={that.widgetRef}>
+            <div className="group-flow" style={{width, height, backgroundColor}} ref={that.widgetRef} data-cid={cid}>
                 <div className="status-bar" style={{width, height}}>
                     <div className="mobile-status-bar">
                         <div className="time">12:00</div>

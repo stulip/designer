@@ -9,13 +9,14 @@ import {action, observable} from "mobx";
 import {BaseWidget} from "../../../widget/base/BaseWidget";
 import {BaseStore} from "./BaseStore";
 import {DesignEvent} from "fr-web";
-import { PropsConst } from "../../../config/Attribute";
-import { Types } from "@xt-web/core";
+import {PropsConst} from "../../../config/Attribute";
+import {Types} from "@xt-web/core";
 
 export class ViewGroupStore extends BaseStore {
 
     // 组件布局
     _groupConfig = [];
+    _widgetMap: Map<string, Object> = new Map();
     groupRef = React.createRef();
 
     get group() {
@@ -264,5 +265,20 @@ export class ViewGroupStore extends BaseStore {
 
     set groupConfig(value: Array) {
         this._groupConfig = value;
+    }
+
+    get widgetMap(): Map<string, Object> {
+        return this._widgetMap;
+    }
+
+    set widgetMap(value: Array | Map) {
+        if (Array.isArray(value)) {
+            const widgets = new Map();
+            value.forEach(widget => widgets.set(widget.cid, widget));
+            this._widgetMap = widgets;
+        } else {
+            this._widgetMap = value;
+        }
+
     }
 }

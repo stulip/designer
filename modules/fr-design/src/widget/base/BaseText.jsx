@@ -25,7 +25,7 @@ export class BaseText extends BaseWidget<BaseTextProps, State> {
         return "文字";
     }
 
-    renderWidget() {
+    renderChild() {
         const {children} = this.props;
         return (
             <div className={'rich-text'}>

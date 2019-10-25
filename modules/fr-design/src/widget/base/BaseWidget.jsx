@@ -30,11 +30,7 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
 
     // 父节点
     get parentWidget(): BaseWidget | null {
-        return this.props.parent && this.props.parent.current;
-    }
-
-    get group() {
-        return this.props.groupRef && this.props.groupRef.current;
+        return this.props.parent;
     }
 
     constructor(props) {
@@ -43,7 +39,35 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
         that.state = {};
         // 更新回调
         that.onUpdate = null;
-        that.formData = that.getConfig(props.config);
+        that.formData = that.createStyle(props.style);
+    }
+
+    /**
+     * 创建子widget
+     * @param {Array<Object>} widgetNames
+     * @returns {*}
+     */
+    createWidget(widgetNames) {
+        const that = this;
+        const {widgetMap, canvasRect, designRect, module} = that.props;
+
+        return widgetNames.map(cid => {
+            const widget = widgetMap.get(cid);
+            if (!widget) return null;
+            const Comp = module[widget.component];
+
+            return Comp && (
+                <Comp
+                    key={cid}
+                    {...widget}
+                    canvasRect={canvasRect}
+                    designRect={designRect}
+                    widgetMap={widgetMap}
+                    module={module}
+                    parent={that}
+                />
+            )
+        });
     }
 
     //子类实现
@@ -53,12 +77,12 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
 
     componentDidMount() {
         const that = this;
-        that.addListener();
+        that.props.widgetMap && that.addListener();
     }
 
     componentWillUnmount() {
         const that = this;
-        that.removeListener();
+        that.props.widgetMap && that.removeListener();
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -75,7 +99,7 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
     }
 
     // 子类可继承
-    getConfig(config) {
+    createStyle(config) {
         return Object.assign({}, this.getDefaultConfig(), config);
     }
 
@@ -256,8 +280,14 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
     }
 
     // 子类实现
-    renderWidget() {
-        return this.props.children;
+    renderWidget(widgets) {
+        const that = this;
+        if (!Array.isArray(widgets) || !widgets) return widgets;
+        return that.createWidget(widgets);
+    }
+
+    renderChild() {
+        return this.renderWidget(this.props.children);
     }
 
     render() {
@@ -265,7 +295,7 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
         const {cid} = that.props;
         return (
             <div className={"group-flow"} ref={that.widgetRef} data-cid={cid}>
-                {that.renderWidget()}
+                {that.renderChild()}
             </div>
         );
     }

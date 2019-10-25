@@ -4,8 +4,8 @@ const {WebpackPluginServe} = require('webpack-plugin-serve');
 const webpack = require('./webpack.config');
 
 const mainPort = 1235;
-const mainHost = '127.0.0.1';// IPv4 IPv6
-
+const webpackHost = "127.0.0.1";
+const mainHost = '0.0.0.0';// IPv4 IPv6
 
 //单个模块信息
 const moConfig = webpack.module.config || {path: ''};
@@ -27,7 +27,7 @@ if (webpack.isDebug){
             port: moConfig.port,
             liveReload: false,
             hmr: true,
-            host: mainHost,
+            host: webpackHost,
             progress: true,
             static: path.join(webpack.rootPath, `/dist/${webpack.module.name}`),
         })
