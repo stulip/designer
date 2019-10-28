@@ -35,6 +35,10 @@ export class BaseText extends BasePanel<BaseTextProps, State> {
             spCfg[PropsConst.textValue] = children;
         }
         spCfg[PropsConst.textAlign] = TextConst.textAlign.left;
+        spCfg[PropsConst.textWeight] = TextConst.weight.normal;
+        spCfg[PropsConst.textLineHeight] = 16;
+        spCfg[PropsConst.textSize] = 12;
+        spCfg[PropsConst.textLetterSpacing] = 0;
         return spCfg;
     }
 
@@ -45,8 +49,11 @@ export class BaseText extends BasePanel<BaseTextProps, State> {
     renderChild() {
         const that = this;
         const {widget: {text}} = that.styles;
+        const textStyle = text.css;
+        textStyle.fontSize = parseInt(text.css.fontSize);
+        textStyle.lineHeight = `${text.css.lineHeight}px`;
         return (
-            <div className={'rich-text'} style={text.css}>
+            <div className={'rich-text'} style={textStyle}>
                 <span className={'text'}>{text.value}</span>
             </div>
         );

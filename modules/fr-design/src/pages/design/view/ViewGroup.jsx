@@ -11,7 +11,7 @@ import {observer} from "mobx-react";
 import {classNames} from "fr-web";
 import "../../../widget/assets";
 import {ViewGroupStore} from "../store/ViewGroupStore";
-import {LayoutConst, PropsConst} from "../../../config/Attribute";
+import {LayoutConst, PropsConst, TextConst} from "../../../config/Attribute";
 import {WidgetConst} from "../../../widget/WidgetConfig";
 
 type Props = {
@@ -35,6 +35,11 @@ const WidgetConfig = [
     {
         cid: 'ch0c',
         component: WidgetConst.App.Text,
+        widgetProps: {
+            [PropsConst.widgetName]: "标题",
+            [PropsConst.textAlign]: TextConst.textAlign.center,
+            [PropsConst.textSize]: 17,
+        },
         children: "设计中心",
     },
     {

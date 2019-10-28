@@ -80,12 +80,29 @@ const FontSize = {
         {label: 13, value: 13},
         {label: 14, value: 14},
         {label: 16, value: 16},
+        {label: 17, value: 17},
         {label: 18, value: 18},
         {label: 20, value: 20},
         {label: 28, value: 28},
         {label: 36, value: 36},
         {label: 48, value: 48},
         {label: 72, value: 72},
+    ]
+};
+
+const FontWeight = {
+    options: [
+        {label: "标准", value: TextConst.weight.normal},
+        {label: "粗", value: TextConst.weight.bold},
+        {label: "100", value: TextConst.weight['100']},
+        {label: "200", value: TextConst.weight['200']},
+        {label: "300", value: TextConst.weight['300']},
+        {label: "400", value: TextConst.weight['400']},
+        {label: "500", value: TextConst.weight['500']},
+        {label: "600", value: TextConst.weight['600']},
+        {label: "700", value: TextConst.weight['700']},
+        {label: "800", value: TextConst.weight['800']},
+        {label: "900", value: TextConst.weight['900']},
     ]
 };
 
@@ -105,5 +122,6 @@ export const ItemConst = {
     AlignSelf,
     BorderStyles,
     TextAlign,
-    FontSize
+    FontSize,
+    FontWeight
 };

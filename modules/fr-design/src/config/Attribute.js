@@ -94,7 +94,7 @@ export const PropsConst = {
     textStyle: "widget.text.css.fontStyle",
     // normal', 'bold', '100', '200', '300', '400', '500', '600', '700', '800', '900'
     textWeight: "widget.text.css.fontWeight",
-    textLineHeight: "widget.text.css.lineHeight",
+    textLineHeight: "widget.text.css.lineHeight",// number
     // 'none', 'underline', 'line-through', 'underline line-through'
     textDecorationLine: "widget.text.css.textDecorationLine",
     // {width: number,height: number}
@@ -123,6 +123,19 @@ export const TextConst = {
         center: "center",
         justify: "justify",
     },
+    weight: {
+        normal: 'normal',
+        bold: "bold",
+        '100': 100,
+        '200': 200,
+        '300': 300,
+        '400': 400,
+        '500': 500,
+        '600': 600,
+        '700': 700,
+        '800': 800,
+        '900': 900,
+    }
 };
 
 // 布局Layout常量

@@ -10,7 +10,6 @@ import {DesignEvent} from "fr-web";
 import {PropsConst} from "../../config/Attribute";
 import {Form} from "fr-ui";
 import type {DesignType, Rect} from "../../flow/Main.flow";
-import {Types} from "@xt-web/core";
 import {WidgetConfig} from "./base.widget.config";
 
 export type BaseWidgetProps = {
@@ -37,6 +36,7 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
     constructor(props) {
         super(props);
         let that = this;
+        that._wBasic = false;
         that.state = {};
         // 更新回调
         that.onUpdate = null;
@@ -94,7 +94,9 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
 
     // 子类实现, 默认值
     getDefaultConfig() {
+        const that = this;
         return {
+            [PropsConst.widgetName]: that.getName(),
             [PropsConst.widgetInitialWidth]: false,
             [PropsConst.widgetInitialHeight]: false,
         };
@@ -108,10 +110,10 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
     // 初始化 widget 基础属性
     initWidgetBasicData() {
         let that = this;
-        if (!that.widget || !Types.isUndefined(that._formData["widget.name"])) return;
         const data = that.formData;
+        if (!that.widget || that._wBasic) return;
+        that._wBasic = true;
 
-        data[PropsConst.widgetName] = that.getName();
         data[PropsConst.widgetX] = that.widget.offsetLeft;
         data[PropsConst.widgetY] = that.widget.offsetTop;
         data[PropsConst.widgetWidth] = that.widget.offsetWidth;

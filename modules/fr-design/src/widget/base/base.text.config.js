@@ -47,6 +47,29 @@ export const BaseTextConfig = () => [
                     select: {data: ItemConst.TextAlign.options}
                 },
             ],
+            [
+                {
+                    title: "字间距",
+                    type: Form.Const.Type.ConfirmInputNumber,
+                    form: PropsConst.textLetterSpacing,
+                    titleDirection: Form.Const.Direction.Bottom,
+                    input: {step: 0.1},
+                },
+                {
+                    title: "行距",
+                    type: Form.Const.Type.ConfirmInputNumber,
+                    form: PropsConst.textLineHeight,
+                    titleDirection: Form.Const.Direction.Bottom,
+                    input: {min: 12},
+                },
+                {
+                    title: "粗细",
+                    type: Form.Const.Type.Select,
+                    form: PropsConst.textWeight,
+                    titleDirection: Form.Const.Direction.Bottom,
+                    select: {data: ItemConst.FontWeight.options}
+                },
+            ]
         ]
     },
 ];
