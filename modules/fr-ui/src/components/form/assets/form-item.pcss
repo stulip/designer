@@ -57,10 +57,19 @@
 
         &.direction-bottom {
             flex-direction: column;
+
             .left-label {
                 width: 100%;
                 text-align: center;
                 color: #8d9ea7;
+            }
+        }
+
+        &.direction-top {
+            flex-direction: column;
+
+            .right-content {
+                margin-top: 4px;
             }
         }
 
@@ -71,7 +80,7 @@
 
         .required {
 
-            &.hide{
+            &.hide {
                 color: #fff;
                 opacity: 0;
             }
@@ -91,6 +100,10 @@
             -webkit-box-pack: justify;
             justify-content: space-between;
             align-items: center;
+
+            label {
+                flex: 1;
+            }
         }
 
         &.column {

@@ -10,8 +10,7 @@ import type {BaseWidgetProps} from "./BaseWidget";
 import {BaseWidget} from "./BaseWidget";
 import "../assets/panel.pcss";
 import {LayoutConst, PropsConst} from "../../config/Attribute";
-import {Form} from "fr-ui";
-import {BasePanelConfig} from "./BasePanel.config";
+import {BasePanelConfig} from "./base.panel.config";
 
 export type BasePanelProps = {
     ...BaseWidgetProps
@@ -66,17 +65,9 @@ export class BasePanel extends BaseWidget<BasePanelProps, State> {
         return data;
     }
 
-    widgetProps(): Array<Object> {
+    widgetProps(child: Array<Object> = []): Array<Object> {
         const config = super.widgetProps();
-        return [...config, ...BasePanelConfig];
-    }
-
-    /**
-     * 获取表单中布局style信息
-     * @returns {{flex: Object, margin: Object, padding: Object}}
-     */
-    getLayoutStyles() {
-        return Form.View.getFormatFormData(this.formData).layout;
+        return [...config, ...child, ...BasePanelConfig()];
     }
 
     render() {
@@ -89,23 +80,23 @@ export class BasePanel extends BaseWidget<BasePanelProps, State> {
         const initialHeight = data[PropsConst.widgetInitialHeight];
         const backgroundColor = data[PropsConst.widgetBackground];
 
-        const styles = that.getLayoutStyles();
+        const {layout} = that.styles;
         const size = {};
         if (initialWidth) size.maxWidth = width;
         if (initialHeight) size.maxHeight = height;
         const pStyle = {
             backgroundColor,
             ...size,
-            ...styles.padding,
-            ...styles.margin,
-            ...styles.border,
-            ...styles.radius,
-            ...styles.flex.self
+            ...layout.padding,
+            ...layout.margin,
+            ...layout.border,
+            ...layout.radius,
+            ...layout.flex.self
         };
 
         return (
             <div className={"group-flow"} style={pStyle} ref={that.widgetRef} data-cid={cid}>
-                <div className={"view-panel"} style={styles.flex.child}>
+                <div className={"view-panel"} style={layout.flex.child}>
                     {that.renderChild()}
                 </div>
             </div>

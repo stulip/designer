@@ -83,11 +83,46 @@ export const PropsConst = {
     layoutBorderTopColor: "layout.border.borderTopColor",
     layoutBorderBottomColor: "layout.border.borderBottomColor",
 
+    // widget text props
+    textValue: "widget.text.value",
+    textColor: "widget.text.css.color",
+    // 'auto', 'left', 'right', 'center', 'justify'
+    textAlign: "widget.text.css.textAlign",
+    textSize: "widget.text.css.fontSize",
+    textFontFamily: "widget.text.css.fontFamily",
+    // 'normal', 'italic'
+    textStyle: "widget.text.css.fontStyle",
+    // normal', 'bold', '100', '200', '300', '400', '500', '600', '700', '800', '900'
+    textWeight: "widget.text.css.fontWeight",
+    textLineHeight: "widget.text.css.lineHeight",
+    // 'none', 'underline', 'line-through', 'underline line-through'
+    textDecorationLine: "widget.text.css.textDecorationLine",
+    // {width: number,height: number}
+    textShadowOffset: "widget.text.css.textShadowOffset",
+    textShadowColor: "widget.text.css.textShadowColor", // string
+    textShadowRadius: "widget.text.css.textShadowRadius", // number
+    textIncludeFontPadding: "widget.text.css.includeFontPadding", //boolean
+    // 'auto', 'top', 'bottom', 'center'
+    textAlignVertical: "widget.text.css.textAlignVertical", // android
+    textLetterSpacing: "widget.text.css.letterSpacing", // number iOS, Android >= 5.0
+    // 'none', 'uppercase', 'lowercase', 'capitalize'
+    textTransform: "widget.text.css.textTransform",
+
     // widget mouse
     widgetMouseExit: "widget.mouse.exit",
     widgetMouseEnter: "widget.mouse.enter",
     widgetMouseClick: "widget.mouse.click",
     widgetMouseDBLClick: "widget.mouse.dblclick"
+};
+
+export const TextConst = {
+    textAlign: {
+        auto: "auto",
+        left: "left",
+        right: "right",
+        center: "center",
+        justify: "justify",
+    },
 };
 
 // 布局Layout常量

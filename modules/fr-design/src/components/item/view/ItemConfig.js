@@ -1,4 +1,4 @@
-import {LayoutConst} from "../../../config/Attribute";
+import {LayoutConst, TextConst} from "../../../config/Attribute";
 
 /**
  *
@@ -6,62 +6,86 @@ import {LayoutConst} from "../../../config/Attribute";
  * @sine 2019-10-16 14:06
  */
 
-export const Direction = {
+const Direction = {
     options: [
-        { label: "横向", value: LayoutConst.direction.row },
-        { label: "纵向", value: LayoutConst.direction.column }
+        {label: "横向", value: LayoutConst.direction.row},
+        {label: "纵向", value: LayoutConst.direction.column}
     ]
 };
 
-export const JustifyContent = {
+const JustifyContent = {
     options: [
-        { label: "center", value: LayoutConst.justifyContent.center },
-        { label: "flex-start", value: LayoutConst.justifyContent.flexStart },
-        { label: "flex-end", value: LayoutConst.justifyContent.flexEnd },
-        { label: "evenly", value: LayoutConst.justifyContent.evenly },
-        { label: "between", value: LayoutConst.justifyContent.spaceBetween },
-        { label: "around", value: LayoutConst.justifyContent.spaceAround }
+        {label: "center", value: LayoutConst.justifyContent.center},
+        {label: "flex-start", value: LayoutConst.justifyContent.flexStart},
+        {label: "flex-end", value: LayoutConst.justifyContent.flexEnd},
+        {label: "evenly", value: LayoutConst.justifyContent.evenly},
+        {label: "between", value: LayoutConst.justifyContent.spaceBetween},
+        {label: "around", value: LayoutConst.justifyContent.spaceAround}
     ]
 };
 
-export const AlignContent = {
+const AlignContent = {
     options: [
-        { label: "", value: undefined },
-        { label: "center", value: LayoutConst.alignContent.center },
-        { label: "flex-start", value: LayoutConst.alignContent.flexStart },
-        { label: "flex-end", value: LayoutConst.alignContent.flexEnd },
-        { label: "stretch", value: LayoutConst.alignContent.spaceEvenly },
-        { label: "between", value: LayoutConst.alignContent.spaceBetween },
-        { label: "around", value: LayoutConst.alignContent.spaceAround }
+        {label: "", value: undefined},
+        {label: "center", value: LayoutConst.alignContent.center},
+        {label: "flex-start", value: LayoutConst.alignContent.flexStart},
+        {label: "flex-end", value: LayoutConst.alignContent.flexEnd},
+        {label: "stretch", value: LayoutConst.alignContent.spaceEvenly},
+        {label: "between", value: LayoutConst.alignContent.spaceBetween},
+        {label: "around", value: LayoutConst.alignContent.spaceAround}
     ]
 };
 
-export const AlignItems = {
+const AlignItems = {
     options: [
-        { label: "center", value: LayoutConst.alignItem.center },
-        { label: "flex-start", value: LayoutConst.alignItem.flexStart },
-        { label: "flex-end", value: LayoutConst.alignItem.flexEnd },
-        { label: "baseline", value: LayoutConst.alignItem.baseline },
-        { label: "stretch", value: LayoutConst.alignItem.stretch }
+        {label: "center", value: LayoutConst.alignItem.center},
+        {label: "flex-start", value: LayoutConst.alignItem.flexStart},
+        {label: "flex-end", value: LayoutConst.alignItem.flexEnd},
+        {label: "baseline", value: LayoutConst.alignItem.baseline},
+        {label: "stretch", value: LayoutConst.alignItem.stretch}
     ]
 };
 
-export const AlignSelf = {
+const AlignSelf = {
     options: [
-        { label: "auto", value: LayoutConst.alignSelf.auto },
-        { label: "flex-start", value: LayoutConst.alignSelf.flexStart },
-        { label: "flex-end", value: LayoutConst.alignSelf.flexEnd },
-        { label: "center", value: LayoutConst.alignSelf.center },
-        { label: "stretch", value: LayoutConst.alignSelf.stretch },
-        { label: "baseline", value: LayoutConst.alignSelf.baseline }
+        {label: "auto", value: LayoutConst.alignSelf.auto},
+        {label: "flex-start", value: LayoutConst.alignSelf.flexStart},
+        {label: "flex-end", value: LayoutConst.alignSelf.flexEnd},
+        {label: "center", value: LayoutConst.alignSelf.center},
+        {label: "stretch", value: LayoutConst.alignSelf.stretch},
+        {label: "baseline", value: LayoutConst.alignSelf.baseline}
     ]
 };
-export const BorderStyles = {
+const BorderStyles = {
     options: [
-      { label: "", value: "" },
-      { label: "实线", value: LayoutConst.borderStyle.solid },
-      { label: "虚线", value: LayoutConst.borderStyle.dashed },
-      { label: "圆点", value: LayoutConst.borderStyle.dotted }
+        {label: "", value: ""},
+        {label: "实线", value: LayoutConst.borderStyle.solid},
+        {label: "虚线", value: LayoutConst.borderStyle.dashed},
+        {label: "圆点", value: LayoutConst.borderStyle.dotted}
+    ]
+};
+
+const TextAlign = {
+    options: [
+        {label: '左对齐', value: TextConst.textAlign.left},
+        {label: '右对齐', value: TextConst.textAlign.right},
+        {label: '居中', value: TextConst.textAlign.center},
+        {label: 'justify', value: TextConst.textAlign.justify}
+    ]
+};
+
+const FontSize = {
+    options: [
+        {label: 12, value: 12},
+        {label: 13, value: 13},
+        {label: 14, value: 14},
+        {label: 16, value: 16},
+        {label: 18, value: 18},
+        {label: 20, value: 20},
+        {label: 28, value: 28},
+        {label: 36, value: 36},
+        {label: 48, value: 48},
+        {label: 72, value: 72},
     ]
 };
 
@@ -79,5 +103,7 @@ export const ItemConst = {
     AlignItems,
     AlignContent,
     AlignSelf,
-    BorderStyles
+    BorderStyles,
+    TextAlign,
+    FontSize
 };

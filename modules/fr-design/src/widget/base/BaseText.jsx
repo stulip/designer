@@ -7,21 +7,20 @@
 // @flow
 import React from 'react';
 import type {BaseWidgetProps} from "./BaseWidget";
-import {BaseWidget} from "./BaseWidget";
 import '../assets/text.pcss'
-import {Form} from "fr-ui";
 import {Types} from "@xt-web/core";
+import {BaseTextConfig} from "./base.text.config";
+import {BasePanel} from "./BasePanel";
+import {PropsConst, TextConst} from "../../config/Attribute";
 
 export type BaseTextProps = {
     ...BaseWidgetProps
 
 };
 
-type State = {
-    isSelect: boolean
-};
+type State = {};
 
-export class BaseText extends BaseWidget<BaseTextProps, State> {
+export class BaseText extends BasePanel<BaseTextProps, State> {
 
     getName(): string {
         return "文字";
@@ -33,36 +32,22 @@ export class BaseText extends BaseWidget<BaseTextProps, State> {
         const spCfg = super.getDefaultConfig();
 
         if (Types.isString(children)) {
-            spCfg["text.value"] = children;
+            spCfg[PropsConst.textValue] = children;
         }
+        spCfg[PropsConst.textAlign] = TextConst.textAlign.left;
         return spCfg;
     }
 
-    widgetProps(): Array<Object> {
-        const config = super.widgetProps();
-        const {children} = this.props;
-
-        return [
-            ...config,
-            {type: Form.Const.Type.Line, bottom: 8},
-            {
-                form: 'text.value',
-                title: '内容',
-                titleDirection: Form.Const.Direction.Top,
-                type: Form.Const.Type.PanelInput,
-            },
-            {type: Form.Const.Type.Line, bottom: 8}
-        ]
+    widgetProps(child: Array<Object> = []): Array<Object> {
+        return super.widgetProps([...child, ...BaseTextConfig()]);
     }
 
     renderChild() {
         const that = this;
-        const data = that.formData;
+        const {widget: {text}} = that.styles;
         return (
-            <div className={'rich-text'}>
-                <p>
-                    <span className={'text'}>{data['text.value']}</span>
-                </p>
+            <div className={'rich-text'} style={text.css}>
+                <span className={'text'}>{text.value}</span>
             </div>
         );
     };
