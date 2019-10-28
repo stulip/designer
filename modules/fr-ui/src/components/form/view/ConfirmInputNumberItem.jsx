@@ -5,29 +5,40 @@
  */
 
 // @flow
-import * as React from 'react';
-import {classNames, IBotForm} from 'fr-web';
+import * as React from "react";
+import {classNames, IBotForm} from "fr-web";
 import {BaseItem} from "./../base/BaseItem";
 
-type Props = {
+type Props = {};
+type State = {};
 
-};
-type State = {
-
-};
+class PanelInputNumber extends IBotForm.ConfirmInputNumber {
+    positionEverything() {
+        setTimeout(() => {
+            super.positionEverything();
+        }, 0);
+    }
+}
 
 export class ConfirmInputNumberItem extends BaseItem<Props, State> {
-
     renderItem() {
         let that = this;
-        let { item } = that.props;
-        let {value = '', error, disabled, required} = that.state;
+        let {item} = that.props;
+        let {value = "", error, disabled, required} = that.state;
         let input = item.input || {};
+        const className = classNames("PanelInputNumber", input.className);
 
         return (
-            <div className={'right-content'}>
-                <IBotForm.PanelInputNumber {...input} value={value} onConfirm={that.onChange} disabled={disabled}/>
+            <div className={"right-content"}>
+                <PanelInputNumber
+                    {...input}
+                    className={className}
+                    value={value}
+                    onConfirm={that.onChange}
+                    disabled={disabled}
+                    size={"small"}
+                />
             </div>
         );
-    };
+    }
 }
