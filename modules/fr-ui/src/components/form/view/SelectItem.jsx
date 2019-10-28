@@ -27,6 +27,7 @@ class SelectItem extends BaseSelectItem {
 
     renderItem() {
         let that = this;
+        return null;
         const { title, select = {}, titleDirection } = that.props.item;
         let { error, required, disabled, value } = that.state;
 

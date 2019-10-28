@@ -23,12 +23,12 @@ export const BaseTextConfig = () => [
             [
                 {
                     title: "字体",
-                    type: Form.Const.Type.Select,
+                    type: Form.Const.Type.SelectIBot,
                     form: PropsConst.textSize,
                     titleDirection: Form.Const.Direction.Bottom,
-                    style: {maxWidth: 60},
+                    style: { maxWidth: 60 },
                     value: textSize,
-                    select: {data: ItemConst.FontSize.options}
+                    select: { data: ItemConst.FontSize.options }
                 },
                 {
                     title: "颜色",
@@ -41,11 +41,11 @@ export const BaseTextConfig = () => [
                 },
                 {
                     title: "对齐",
-                    type: Form.Const.Type.Select,
+                    type: Form.Const.Type.SelectIBot,
                     form: PropsConst.textAlign,
                     titleDirection: Form.Const.Direction.Bottom,
-                    select: {data: ItemConst.TextAlign.options}
-                },
+                    select: { data: ItemConst.TextAlign.options }
+                }
             ],
             [
                 {
@@ -64,11 +64,11 @@ export const BaseTextConfig = () => [
                 },
                 {
                     title: "粗细",
-                    type: Form.Const.Type.Select,
+                    type: Form.Const.Type.SelectIBot,
                     form: PropsConst.textWeight,
                     titleDirection: Form.Const.Direction.Bottom,
-                    select: {data: ItemConst.FontWeight.options}
-                },
+                    select: { data: ItemConst.FontWeight.options }
+                }
             ]
         ]
     },
