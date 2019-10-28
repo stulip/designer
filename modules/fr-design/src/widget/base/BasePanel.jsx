@@ -24,7 +24,7 @@ export class BasePanel extends BaseWidget<BasePanelProps, State> {
      * @returns {string}
      */
     getBackground() {
-        return "transparent";//"#fff";
+        return "";//"#fff"; 默认没有颜色
     }
 
     getBoxRect() {
