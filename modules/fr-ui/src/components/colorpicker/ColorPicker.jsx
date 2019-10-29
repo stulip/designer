@@ -63,7 +63,7 @@ export class ColorPicker extends React.Component<Props, State> {
             const color = nextProps.color !== prevState.pColor ? nextProps.color: prevState.color;
             return {color, pColor: nextProps.color, visible, targetRect };
         }
-        return null;
+        return {pColor: nextProps.color};
     }
 
     componentDidUpdate() {
