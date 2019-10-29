@@ -28,7 +28,9 @@ const WidgetConfig = [
         cid: "ch0p",
         component: WidgetConst.App.Panel,
         widgetProps: {
-            [PropsConst.layoutFlexGrow]: 0
+            default: {
+                [PropsConst.layoutFlexGrow]: 0
+            },
         },
         children: ['ch1', 'ch2']
     },
@@ -36,9 +38,11 @@ const WidgetConfig = [
         cid: 'ch0c',
         component: WidgetConst.App.Text,
         widgetProps: {
-            [PropsConst.widgetName]: "标题",
-            [PropsConst.textAlign]: TextConst.textAlign.center,
-            [PropsConst.textSize]: 17,
+            default: {
+                [PropsConst.widgetName]: "标题",
+                [PropsConst.textAlign]: TextConst.textAlign.center,
+                [PropsConst.textSize]: 17,
+            }
         },
         children: "设计中心",
     },
@@ -86,7 +90,9 @@ const WidgetConfig = [
         cid: "cpt0",
         component: WidgetConst.App.Panel,
         widgetProps: {
-            [PropsConst.layoutJustifyContent]: LayoutConst.justifyContent.spaceBetween
+            default: {
+                [PropsConst.layoutJustifyContent]: LayoutConst.justifyContent.spaceBetween
+            }
         },
         children: ["cpt01", "cpt02"]
     }

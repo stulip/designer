@@ -28,7 +28,7 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
         return this.widgetRef.current;
     }
 
-    // 父节点
+    // 父节点                                                  ....
     get parentWidget(): BaseWidget | null {
         return this.props.parent;
     }
@@ -41,7 +41,9 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
         // 更新回调
         that.onUpdate = null;
         that._styles = null;
-        that.formData = that.createWidgetProps(props.widgetProps);
+        // 初始化为默认状态属性
+        const {widgetProps: {default: widgetProps} = {}} = props;
+        that.formData = that.createWidgetProps(widgetProps);
     }
 
     /**

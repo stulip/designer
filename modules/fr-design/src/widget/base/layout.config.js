@@ -189,9 +189,9 @@ const LayoutConfig = () => [
                     right: {key: PropsConst.layoutMarginBottom, title: "B"}
                 },
                 bottom: {
-                    left: {key: PropsConst.layoutMarginLeft, title: "T"},
+                    left: {key: PropsConst.layoutMarginLeft, title: "L"},
                     center: {key: PropsConst.layoutMarginHL},
-                    right: {key: PropsConst.layoutMarginRight, title: "B"}
+                    right: {key: PropsConst.layoutMarginRight, title: "R"}
                 }
             })
         ]
