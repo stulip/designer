@@ -31,7 +31,7 @@ export class BaseText extends BasePanel<BaseTextProps, State> {
         const {children} = that.props;
         const spCfg = super.getDefaultConfig();
 
-        if (Types.isString(children)) {
+        if (Types.isString(children) && Types.isEmpty(spCfg[PropsConst.textValue])) {
             spCfg[PropsConst.textValue] = children;
         }
         spCfg[PropsConst.textAlign] = TextConst.textAlign.left;
