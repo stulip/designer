@@ -108,8 +108,10 @@ export class ViewGroupStore extends BaseStore {
     switchWidgetState(stateId: string) {
         const that = this;
         const widget = that.widget;
-        widget.switchStates(stateId);
-        that.main.attribute.setConfig(widget.getWidgetProps(), widget.getFormData());
+        if (widget && stateId !== widget.stateId) {
+            widget.switchStates(stateId);
+            that.main.attribute.setConfig(widget.getWidgetProps(), widget.getFormData());
+        }
     }
 
     /**
