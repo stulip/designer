@@ -117,8 +117,7 @@ const serveData = function(config: Array<Object>, formData: Object) {
  * @returns {{formData: (*|{}), config}}
  */
 const convertState = props => {
-    let formData = props.formData || {},
-        config = {};
+    let formData = props.formData || {}, config = {};
     try {
 
         let eachConfig = cfg => {
@@ -129,7 +128,7 @@ const convertState = props => {
                 da.config.forEach(eachConfig);
             } else {
                 if (!da.form) return;
-                console.log(da);
+                // console.log(da);
                 da.sub = da.sub || FormView.label;
                 config[da.form] = da;
                 if (!props.formData || (props.formData && Types.isUndefined(props.formData[da.form]))) {
@@ -137,9 +136,9 @@ const convertState = props => {
                 }
             }
         };
-        console.groupCollapsed("%c-> Init Fields", "color:#0066CC;");
+        // console.groupCollapsed("%c-> Init Fields", "color:#0066CC;");
         props.config.forEach(eachConfig);
-        console.groupEnd();
+        // console.groupEnd();
     } catch (e) {
         console.error(e);
     }
