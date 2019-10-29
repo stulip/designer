@@ -4,18 +4,17 @@
  * @author tangzehua
  * @sine 2019-09-05 10:18
  */
-import { observable, action, computed } from "mobx";
-import type { MainStore } from "../../../flow/Main.flow";
-import { status_widget } from "../../../assets/svg";
+import {action, computed, observable} from "mobx";
+import {status_widget} from "../../../assets/svg";
 import {BaseStore} from "./BaseStore";
 
 export const SlideBarConfig = [
-    { name: "status", svg: status_widget, tip: "状态", keyboard: "`" },
-    { name: "widget", svgName: "design/common_widget", tip: "内置组件", keyboard: 1, keyCode: '49' },
-    { name: "my_widget", svgName: "design/my_widget", tip: "我的组件", keyboard: 2, keyCode: '50' },
-    { name: "icons", svgName: "design/smiley", tip: "图标", keyboard: 3, keyCode: '51' },
-    { name: "master", svgName: "design/master", tip: "母版", keyboard: 4, keyCode: '52' },
-    { name: "trash", svgName: "recycle", className: "trash-button", tip: "回收站" }
+    {name: "status", svg: status_widget, tip: "状态", keyboard: "`", keyCode: '192'},
+    {name: "widget", svgName: "design/common_widget", tip: "内置组件", keyboard: 1, keyCode: '49'},
+    {name: "my_widget", svgName: "design/my_widget", tip: "我的组件", keyboard: 2, keyCode: '50'},
+    {name: "icons", svgName: "design/smiley", tip: "图标", keyboard: 3, keyCode: '51'},
+    {name: "master", svgName: "design/master", tip: "母版", keyboard: 4, keyCode: '52'},
+    {name: "trash", svgName: "recycle", className: "trash-button", tip: "回收站"}
 ];
 
 export class WidgetsStore extends BaseStore {
@@ -30,11 +29,14 @@ export class WidgetsStore extends BaseStore {
     // 左侧面板实际大小
     @observable leftPanelVXWidth = 240;
 
+    // widget 状态列表
+    @observable widgetStates = [];
+
     addKeyListener() {
         let that = this;
         SlideBarConfig.forEach(da => {
             da.keyCode &&
-                that.main.keyEvents.addListener(String(da.keyCode), that.handleSlideKeys.bind(that, da.name));
+            that.main.keyEvents.addListener(String(da.keyCode), that.handleSlideKeys.bind(that, da.name));
         });
     }
 
@@ -85,7 +87,7 @@ export class WidgetsStore extends BaseStore {
             that.handleSlidePanelClose();
         } else {
             switch (dataType) {
-                case "status":
+                // case "status":
                 case "widget":
                 case "my_widget":
                 case "icons":
@@ -96,6 +98,12 @@ export class WidgetsStore extends BaseStore {
                     break;
             }
         }
+    }
+
+    // 设置widget状态
+    @action
+    setWidgetStates(states) {
+        this.widgetStates = states || [];
     }
 
     /**

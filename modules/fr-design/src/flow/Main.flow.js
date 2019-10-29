@@ -37,11 +37,38 @@ export type ConfigOption = {
 export type PageConfig = {
     isApp: boolean, // 是否是App设计器
     designRect: DesignType, // 设计尺寸信息
-    canvasSize: {width: number, height: number}, // canvasSize
+    canvasSize: { width: number, height: number }, // canvasSize
 }
-
 
 export type PageData = {
     backgroundColor: string,
-    id: string|number,
+    id: string | number,
+}
+
+/**
+ * widget 配置
+ */
+export type WidgetConfigDefined = {
+    cid: string, // 唯一标识
+    name: string, // 名称
+    component: string, // widget 名称
+    widgetProps: { default: WidgetProps, [string]: WidgetProps },// props css 属性
+    children: string | Array<string>, // 子节点具体根据widget类型
+    states: Array<WidgetState>
+}
+
+/**
+ * widget 属性
+ */
+export type WidgetProps = {
+    [string]: any
+}
+
+/**
+ * widget 状态
+ */
+export type WidgetState = {
+    name: string,
+    union?: string | Array
+    cid: string,
 }

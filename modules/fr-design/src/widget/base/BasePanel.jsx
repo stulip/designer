@@ -82,8 +82,8 @@ export class BasePanel extends BaseWidget<BasePanelProps, State> {
 
         const {layout} = that.styles;
         const size = {};
-        if (initialWidth) size.maxWidth = width;
-        if (initialHeight) size.maxHeight = height;
+        if (initialWidth) size.maxWidth = size.width = width;
+        if (initialHeight) size.maxHeight = size.height = height;
         const pStyle = {
             backgroundColor,
             ...size,

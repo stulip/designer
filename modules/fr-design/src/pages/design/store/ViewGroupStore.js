@@ -11,12 +11,13 @@ import {BaseStore} from "./BaseStore";
 import {DesignEvent} from "fr-web";
 import {PropsConst} from "../../../config/Attribute";
 import {Types} from "@xt-web/core";
+import type {WidgetConfigDefined} from "../../../flow/Main.flow";
 
 export class ViewGroupStore extends BaseStore {
 
     // 组件布局
     _groupConfig = [];
-    _widgetMap: Map<string, Object> = new Map();
+    _widgetMap: Map<string, WidgetConfigDefined> = new Map();
     groupRef = React.createRef();
 
     get group() {
@@ -95,7 +96,8 @@ export class ViewGroupStore extends BaseStore {
     setSelectWidget = (widget ?: BaseWidget) => {
         let that = this;
         widget.onUpdate = that._reWidgetSelectBox;
-        that.main.attribute.setConfig(widget.widgetProps(), widget.formData);
+        that.main.attribute.setConfig(widget.getWidgetProps(), widget.formData);
+        that.main.widgets.setWidgetStates(widget.getWidgetStates());
         that.widget = widget;
     };
 
@@ -267,11 +269,15 @@ export class ViewGroupStore extends BaseStore {
         this._groupConfig = value;
     }
 
-    get widgetMap(): Map<string, Object> {
+    /**
+     *
+     * @returns {Map<string, WidgetConfigDefined>}
+     */
+    get widgetMap(): Map<string, WidgetConfigDefined> {
         return this._widgetMap;
     }
 
-    set widgetMap(value: Array | Map) {
+    set widgetMap(value: Array | Map<string, WidgetConfigDefined>) {
         if (Array.isArray(value)) {
             const widgets = new Map();
             value.forEach(widget => widgets.set(widget.cid, widget));

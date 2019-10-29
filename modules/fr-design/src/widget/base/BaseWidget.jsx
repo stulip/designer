@@ -9,13 +9,15 @@ import React from "react";
 import {DesignEvent} from "fr-web";
 import {PropsConst} from "../../config/Attribute";
 import {Form} from "fr-ui";
-import type {DesignType, Rect} from "../../flow/Main.flow";
+import type {DesignType, Rect, WidgetConfigDefined, WidgetProps, WidgetState} from "../../flow/Main.flow";
 import {WidgetConfig} from "./base.widget.config";
 
 export type BaseWidgetProps = {
     canvasRect: Rect,
     designRect: DesignType,
-    parent?: { current: any }
+    module: Object,// 所有可用属性控件
+    parent?: { current: any },
+    ...WidgetConfigDefined
 };
 type State = {};
 
@@ -23,6 +25,9 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
     // 所有属性
     _formData: Object = {};
     widgetRef = React.createRef();
+
+    // 状态标识
+    stateId: string = "default";
 
     get widget() {
         return this.widgetRef.current;
@@ -36,13 +41,19 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
     constructor(props) {
         super(props);
         let that = this;
-        that._wBasic = false;
         that.state = {};
         // 更新回调
         that.onUpdate = null;
         that._styles = null;
+        that._widgetProps = null;
         // 初始化为默认状态属性
-        const {widgetProps: {default: widgetProps} = {}} = props;
+        that.initWidgetState();
+    }
+
+    initWidgetState() {
+        const that = this;
+        const {widgetProps: {[that.stateId]: widgetProps} = {}} = that.props;
+
         that.formData = that.createWidgetProps(widgetProps);
     }
 
@@ -91,14 +102,16 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
 
     componentDidUpdate(prevProps, prevState) {
         let that = this;
+        that.updateBasicData();
         that.onUpdate && that.onUpdate();
     }
 
     // 子类实现, 默认值
     getDefaultConfig() {
         const that = this;
+        const name = that.props.name;
         return {
-            [PropsConst.widgetName]: that.getName(),
+            [PropsConst.widgetName]: name || that.getName(),
             [PropsConst.widgetInitialWidth]: false,
             [PropsConst.widgetInitialHeight]: false,
         };
@@ -107,19 +120,6 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
     // 子类可继承
     createWidgetProps(config) {
         return Object.assign({}, this.getDefaultConfig(), config);
-    }
-
-    // 初始化 widget 基础属性
-    initWidgetBasicData() {
-        let that = this;
-        const data = that.formData;
-        if (!that.widget || that._wBasic) return;
-        that._wBasic = true;
-
-        data[PropsConst.widgetX] = that.widget.offsetLeft;
-        data[PropsConst.widgetY] = that.widget.offsetTop;
-        data[PropsConst.widgetWidth] = that.widget.offsetWidth;
-        data[PropsConst.widgetHeight] = that.widget.offsetHeight;
     }
 
     addListener() {
@@ -196,17 +196,58 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
         };
     }
 
+    updateBasicData() {
+        const that = this;
+        const data = that.formData;
+        data[PropsConst.widgetX] = that.widget.offsetLeft;
+        data[PropsConst.widgetY] = that.widget.offsetTop;
+
+        if (!data[PropsConst.widgetInitialWidth]) {
+            data[PropsConst.widgetWidth] = that.widget.offsetWidth;
+        }
+
+        if (!data[PropsConst.widgetInitialHeight]) {
+            data[PropsConst.widgetHeight] = that.widget.offsetHeight;
+        }
+    }
+
     /**
      * widget 属性, 子类实现
-     * @param {Array<Object>} [child]
-     * @returns Array<Object>
+     * @param {Array<WidgetProps>} [child]
+     * @returns Array<WidgetProps>
      */
-    widgetProps(child: Array<Object> = []) {
-        const that = this;
-        that.initWidgetBasicData();
-        const basic = that.getBasicConfig();
+    widgetProps(child: Array<WidgetProps> = []) {
+        const basic = this.getBasicConfig();
+        this.updateBasicData();
         return WidgetConfig({basic});
     }
+
+    /**
+     * 获取widget属性
+     * @returns {Array<WidgetProps>}
+     */
+    getWidgetProps(): [WidgetProps] {
+        const that = this;
+        return that._widgetProps = that._widgetProps || that.widgetProps();
+    }
+
+    /**
+     * 获取widget states
+     * @returns {[WidgetState]}
+     */
+    getWidgetStates(): [WidgetState] {
+        const that = this;
+        const {states = []} = that.props;
+        return states;
+    }
+
+    /**
+     * 切换状态
+     * @param stateId
+     */
+    switchStates(stateId: string) {
+        this.stateId = stateId;
+    };
 
     /**
      * 原始表单数据

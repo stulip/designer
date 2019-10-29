@@ -85,6 +85,7 @@ export const PropsConst = {
 
     // widget text props
     textValue: "widget.text.value",
+    textI18n: "widget.text.i18n", // 多语言配置
     textColor: "widget.text.css.color",
     // 'auto', 'left', 'right', 'center', 'justify'
     textAlign: "widget.text.css.textAlign",
@@ -245,3 +246,11 @@ export const ArrangeConfig = [
         disable: true
     }
 ];
+
+// 状态
+export const StatesConst = {
+    default: {
+        name: '全局状态',
+        cid: 'state-default',
+    }
+};

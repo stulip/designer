@@ -6,9 +6,9 @@
  */
 
 import React from "react";
-import { IBotIcon, IBotSVG, IBotTooltip } from "fr-web";
-import { observer } from "mobx-react";
-import { WidgetsStore, SlideBarConfig } from "../store/WidgetsStore";
+import {classNames, IBotSVG, IBotTooltip} from "fr-web";
+import {observer} from "mobx-react";
+import {SlideBarConfig, WidgetsStore} from "../store/WidgetsStore";
 import {Exterior} from "./Exterior";
 
 type Props = {
@@ -31,7 +31,6 @@ export class RightPanel extends React.Component<Props, State> {
         let that = this;
         let store = this.props.store;
         const { name, tip, keyboard } = data;
-        const style = `nav-button ${data.className || ""} ${name === store.slideActiveType ? "active" : ""}`;
         const tipDOM = keyboard ? that.renderTips(tip, keyboard) : tip;
         return (
             <IBotTooltip
@@ -39,7 +38,7 @@ export class RightPanel extends React.Component<Props, State> {
                 content={tipDOM}
                 arrowed={false}
                 type={"link"}
-                className={style}
+                className={classNames('nav-button', {active: name === store.slideActiveType}, data.className)}
                 tipClassName={keyboard && "widget"}
                 onClick={store.handleSlideActive}
                 data-type={name}

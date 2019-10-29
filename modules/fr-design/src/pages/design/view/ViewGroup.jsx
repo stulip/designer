@@ -36,12 +36,21 @@ const WidgetConfig = [
     },
     {
         cid: 'ch0c',
+        name: "标题",
         component: WidgetConst.App.Text,
+        states: [
+            {
+                name: '禁用',
+                cid: 'state-ch0c1',
+            }
+        ],
         widgetProps: {
             default: {
-                [PropsConst.widgetName]: "标题",
                 [PropsConst.textAlign]: TextConst.textAlign.center,
                 [PropsConst.textSize]: 17,
+            },
+            "state-ch0c1": {
+                [PropsConst.textSize]: 12,
             }
         },
         children: "设计中心",
@@ -55,7 +64,12 @@ const WidgetConfig = [
     {
         component: WidgetConst.App.Text,
         cid: "ch1",
-        children: "菜单1"
+        children: "菜单1",
+        widgetProps: {
+            default: {
+                [PropsConst.widgetWidth]: 100,
+            }
+        }
     },
     {
         component: WidgetConst.App.Text,
