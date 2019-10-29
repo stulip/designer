@@ -49,11 +49,13 @@ View.registerComponent(Const.Type.Text, {component: TextItem});
 
 //输入框
 View.registerComponent(Const.Type.ConfirmInputNumber, {component: ConfirmInputNumberItem});
+// View.registerComponent(Const.Type.ConfirmInputNumber, {component: InputNumberItem});
 View.registerComponent(Const.Type.PanelInput, {component: PanelInputItem});
 
 //下拉框
 View.registerComponent(Const.Type.Select, {component: SelectItem});
 View.registerComponent(Const.Type.SelectIBot, {component: IBotSelectItem});
+// View.registerComponent(Const.Type.SelectIBot, {component: SelectItem});
 
 // 分隔线
 View.registerComponent(Const.Type.Line, {component: LineItem});
