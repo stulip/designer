@@ -54,7 +54,8 @@ export type WidgetConfigDefined = {
     component: string, // widget 名称
     widgetProps: { default: WidgetProps, [string]: WidgetProps },// props css 属性
     children: string | Array<string>, // 子节点具体根据widget类型
-    states: Array<WidgetState>
+    states: Array<WidgetState>,
+    widget: { [string]: any },// 内置组件, 自由扩展子节点
 }
 
 /**
