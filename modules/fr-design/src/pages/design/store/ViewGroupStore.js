@@ -11,7 +11,7 @@ import {BaseStore} from "./BaseStore";
 import {DesignEvent} from "fr-web";
 import {PropsConst} from "../../../config/Attribute";
 import {Types} from "@xt-web/core";
-import type {WidgetConfigDefined, WidgetState} from "../../../flow/Main.flow";
+import type {WidgetConfigDefined} from "../../../flow/Main.flow";
 
 export class ViewGroupStore extends BaseStore {
 
@@ -103,12 +103,12 @@ export class ViewGroupStore extends BaseStore {
 
     /**
      * 切换widget状态
-     * @param state
+     * @param stateId
      */
-    switchWidgetState(state: WidgetState) {
+    switchWidgetState(stateId: string) {
         const that = this;
         const widget = that.widget;
-        widget.switchStates(state.cid);
+        widget.switchStates(stateId);
         that.main.attribute.setConfig(widget.getWidgetProps(), widget.getFormData());
     }
 

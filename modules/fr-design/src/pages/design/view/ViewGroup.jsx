@@ -51,6 +51,7 @@ const WidgetConfig = [
             },
             "state-ch0c1": {
                 [PropsConst.textSize]: 12,
+                [PropsConst.textColor]: 'red',
             }
         },
         children: "设计中心",

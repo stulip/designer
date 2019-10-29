@@ -32,6 +32,8 @@ export class WidgetsStore extends BaseStore {
     // widget 状态列表
     @observable widgetStates = [];
 
+    testState = 'default';
+
     addKeyListener() {
         let that = this;
         SlideBarConfig.forEach(da => {
@@ -80,7 +82,8 @@ export class WidgetsStore extends BaseStore {
         const that = this;
         if (that.widgetStates && that.widgetStates.length) {
             // 暂时写死
-            that.main.viewGroup.switchWidgetState(that.widgetStates[0]);
+            that.testState = that.testState !== 'default' ? "default" : that.widgetStates[0].cid;
+            that.main.viewGroup.switchWidgetState(that.testState);
         }
     }
 
