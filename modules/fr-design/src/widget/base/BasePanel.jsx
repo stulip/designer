@@ -49,7 +49,7 @@ export class BasePanel extends BaseWidget<BasePanelProps, State> {
             [PropsConst.layoutAlignSelf]: LayoutConst.alignSelf.auto,
             [PropsConst.layoutJustifyContent]: LayoutConst.justifyContent.flexStart,
             [PropsConst.layoutFlexGrow]: 1,
-            [PropsConst.layoutFlexShrink]: 0,
+            // [PropsConst.layoutFlexShrink]: 0,
             [PropsConst.widgetWidth]: rect.width,
             [PropsConst.widgetHeight]: rect.height,
             [PropsConst.widgetX]: rect.x,
