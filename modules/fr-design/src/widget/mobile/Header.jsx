@@ -68,7 +68,7 @@ export class Header extends Panel<Props> {
 
     renderChild(): * {
         const that = this;
-        const data = that.formData;
+        const data = that.getFormData();
         const {widget: {right: rightWidget, center: centerWidget} = {}} = that.props;
         return (
             <>

@@ -76,6 +76,14 @@ export class WidgetsStore extends BaseStore {
         that.setSlideActiveType(dataType);
     };
 
+    switchState() {
+        const that = this;
+        if (that.widgetStates && that.widgetStates.length) {
+            // 暂时写死
+            that.main.viewGroup.switchWidgetState(that.widgetStates[0]);
+        }
+    }
+
     /**
      * 设置弹出工具面板打开类型
      * @param dataType
@@ -87,7 +95,9 @@ export class WidgetsStore extends BaseStore {
             that.handleSlidePanelClose();
         } else {
             switch (dataType) {
-                // case "status":
+                case "status":
+                    that.switchState();
+                    break;
                 case "widget":
                 case "my_widget":
                 case "icons":

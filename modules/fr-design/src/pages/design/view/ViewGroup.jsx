@@ -67,7 +67,7 @@ const WidgetConfig = [
         children: "菜单1",
         widgetProps: {
             default: {
-                [PropsConst.widgetWidth]: 100,
+                [PropsConst.widgetWidth]: 60,
             }
         }
     },

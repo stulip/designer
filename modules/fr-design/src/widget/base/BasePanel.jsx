@@ -73,7 +73,7 @@ export class BasePanel extends BaseWidget<BasePanelProps, State> {
     render() {
         const that = this;
         const {cid, children} = that.props;
-        const data = that.formData;
+        const data = that.getFormData();
         const width = data[PropsConst.widgetWidth];
         const height = data[PropsConst.widgetHeight];
         const initialWidth = data[PropsConst.widgetInitialWidth];

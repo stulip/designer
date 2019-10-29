@@ -11,7 +11,7 @@ import {BaseStore} from "./BaseStore";
 import {DesignEvent} from "fr-web";
 import {PropsConst} from "../../../config/Attribute";
 import {Types} from "@xt-web/core";
-import type {WidgetConfigDefined} from "../../../flow/Main.flow";
+import type {WidgetConfigDefined, WidgetState} from "../../../flow/Main.flow";
 
 export class ViewGroupStore extends BaseStore {
 
@@ -96,10 +96,21 @@ export class ViewGroupStore extends BaseStore {
     setSelectWidget = (widget ?: BaseWidget) => {
         let that = this;
         widget.onUpdate = that._reWidgetSelectBox;
-        that.main.attribute.setConfig(widget.getWidgetProps(), widget.formData);
         that.main.widgets.setWidgetStates(widget.getWidgetStates());
+        that.main.attribute.setConfig(widget.getWidgetProps(), widget.getFormData());
         that.widget = widget;
     };
+
+    /**
+     * 切换widget状态
+     * @param state
+     */
+    switchWidgetState(state: WidgetState) {
+        const that = this;
+        const widget = that.widget;
+        widget.switchStates(state.cid);
+        that.main.attribute.setConfig(widget.getWidgetProps(), widget.getFormData());
+    }
 
     /**
      * widget props change

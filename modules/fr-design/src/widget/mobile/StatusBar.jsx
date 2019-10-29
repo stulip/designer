@@ -49,7 +49,7 @@ export class StatusBar extends BaseWidget<Props> {
         const {canvasRect, designRect, cid} = that.props;
         if (designRect.bottom === 0) return null;
 
-        const data = that.formData;
+        const data = that.getFormData();
         const width = canvasRect.width;
         const height = designRect.top;
         const backgroundColor = data[PropsConst.widgetBackground];

@@ -22,12 +22,18 @@ export type BaseWidgetProps = {
 type State = {};
 
 export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
-    // 所有属性
-    _formData: Object = {};
     widgetRef = React.createRef();
 
     // 状态标识
     stateId: string = "default";
+
+    // 状态数据
+    stateData = {
+        default: {
+            data: {},
+            props: {},
+        }
+    };
 
     get widget() {
         return this.widgetRef.current;
@@ -45,16 +51,20 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
         // 更新回调
         that.onUpdate = null;
         that._styles = null;
-        that._widgetProps = null;
         // 初始化为默认状态属性
         that.initWidgetState();
     }
 
     initWidgetState() {
         const that = this;
-        const {widgetProps: {[that.stateId]: widgetProps} = {}} = that.props;
-
-        that.formData = that.createWidgetProps(widgetProps);
+        const {widgetProps = {}} = that.props;
+        // 防止没有default属性
+        if (!widgetProps.default) widgetProps.default = {};
+        for (const [key, value] of Object.entries(widgetProps)) {
+            const data = that.createWidgetProps(value);
+            const props = that.widgetProps();
+            that.stateData[key] = {data, props}
+        }
     }
 
     /**
@@ -102,7 +112,6 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
 
     componentDidUpdate(prevProps, prevState) {
         let that = this;
-        that.updateBasicData();
         that.onUpdate && that.onUpdate();
     }
 
@@ -176,11 +185,13 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
 
     /**
      * 表单数据改变
-     * @param formData
      */
-    handleChange(formData: Object) {
-        let that = this;
-        that.forceUpdate();
+    handleChange() {
+        this.refreshWidget();
+    }
+
+    refreshWidget() {
+        this.forceUpdate();
     }
 
     /**
@@ -198,7 +209,7 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
 
     updateBasicData() {
         const that = this;
-        const data = that.formData;
+        const data = that.getFormData();
         data[PropsConst.widgetX] = that.widget.offsetLeft;
         data[PropsConst.widgetY] = that.widget.offsetTop;
 
@@ -218,7 +229,6 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
      */
     widgetProps(child: Array<WidgetProps> = []) {
         const basic = this.getBasicConfig();
-        this.updateBasicData();
         return WidgetConfig({basic});
     }
 
@@ -228,7 +238,8 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
      */
     getWidgetProps(): [WidgetProps] {
         const that = this;
-        return that._widgetProps = that._widgetProps || that.widgetProps();
+        this.updateBasicData();
+        return that.stateData[that.stateId].props;
     }
 
     /**
@@ -236,9 +247,7 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
      * @returns {[WidgetState]}
      */
     getWidgetStates(): [WidgetState] {
-        const that = this;
-        const {states = []} = that.props;
-        return states;
+        return this.props.states || [];
     }
 
     /**
@@ -247,25 +256,24 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
      */
     switchStates(stateId: string) {
         this.stateId = stateId;
+        this.refreshWidget();
+        console.log('状态切换:', stateId);
     };
 
     /**
      * 原始表单数据
      * @returns {Object}
      */
-    get formData() {
-        return this._formData;
-    }
-
-    set formData(fromData) {
-        this._formData = fromData;
+    getFormData() {
+        const that = this;
+        return that.stateData[that.stateId].data;
     }
 
     // 获取style 对象
     get styles() {
         const that = this;
         if (!that._styles) {
-            that._styles = Form.View.getFormatFormData(this.formData);
+            that._styles = Form.View.getFormatFormData(this.getFormData());
             setTimeout(function () {
                 that._styles = null;
             }, 0);
