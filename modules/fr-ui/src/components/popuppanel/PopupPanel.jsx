@@ -6,8 +6,8 @@
 
 // @flow
 import * as React from "react";
-import {classNames, IBotSVG} from "fr-web";
-import {arrow_right} from "../../assets/svg";
+import { classNames, IBotSVG } from "fr-web";
+import { arrow_right } from "../../assets/svg";
 import "./assets";
 
 type Props = {
@@ -16,7 +16,9 @@ type Props = {
     className?: string,
     drag: boolean,
     top?: number, // -1 居中
-    left?: number // -1 居中
+    left?: number, // -1 居中
+    dragTop?: number, // 可拖动上边距
+    dragBottom?: number, // 可拖动下边距
 };
 
 type State = {
@@ -33,6 +35,7 @@ export class PopupPanel extends React.PureComponent<Props, State> {
 
     static defaultProps = {
         top: 0,
+        dragTop: 0,
         drag: false,
         onClose: () => {
         }
@@ -40,21 +43,28 @@ export class PopupPanel extends React.PureComponent<Props, State> {
 
     static getDerivedStateFromProps(nextProps, prevState) {
         if (nextProps.visible !== prevState.visible) {
-            const {position} = prevState;
+            const { position } = prevState;
 
-            const {top, left} = prevState.prevProps || {};
+            const { top, left } = prevState.prevProps || {};
             let right = prevState.right,
                 bottom = prevState.bottom;
 
             if (nextProps.top !== top || nextProps.left !== left) {
-                ({left: position.x, top: position.y} = nextProps);
+                ({ left: position.x, top: position.y } = nextProps);
                 if (position.x === -1) right = -1;
                 if (position.y === -1) bottom = -1;
             }
 
-            return {visible: nextProps.visible, position, bottom, right, prevProps: nextProps};
+            return { visible: nextProps.visible, position, bottom, right, prevProps: nextProps };
         }
         return null;
+    }
+
+    constructor(props) {
+        super(props);
+        const that = this;
+        that.asideSize = { width: 0, height: 0 };
+        that.originPosition = { pageX: 0, pageY: 0 };
     }
 
     addListener() {
@@ -69,18 +79,16 @@ export class PopupPanel extends React.PureComponent<Props, State> {
 
     handleMouseMove = (event: MouseEvent) => {
         const that = this;
-        const rect = that.aside.getBoundingClientRect();
-        const {clientX = 0, clientY = 0, x, y} = that.originPosition;
+        const { width, height } = that.asideSize;
+        const { pageX = 0, pageY = 0, x, y } = that.originPosition;
+        const dragTop = that.props.dragTop || 0;
 
-        const offsetX = event.clientX - clientX;
-        const offsetY = event.clientY - clientY;
-        const position = {
-            x: x + offsetX,
-            y: y + offsetY
-        };
-        position.x = Math.min(Math.max(0, position.x), window.innerWidth - rect.width);
-        position.y = Math.min(Math.max(0, position.y), window.innerHeight - rect.height);
-        that.setState({position});
+        const offsetX = event.pageX - pageX;
+        const offsetY = event.pageY - pageY;
+        const position = { x: x + offsetX, y: y + offsetY };
+        position.x = Math.min(Math.max(0, position.x), window.innerWidth - width);
+        position.y = Math.min(Math.max(dragTop, position.y), window.innerHeight - height);
+        that.setState({ position });
     };
 
     handleMouseUp = (event: MouseEvent) => {
@@ -91,34 +99,35 @@ export class PopupPanel extends React.PureComponent<Props, State> {
         const that = this;
         if (!that.props.drag || event.button !== 0) return;
 
-        // event.stopPropagation();
-        // event.preventDefault();
+        event.stopPropagation();
+        event.preventDefault();
 
-        const {clientX, clientY} = event;
+        const { pageX, pageY } = event;
         const rect = that.aside.getBoundingClientRect();
         const x = rect.left;
         const y = rect.top;
 
-        that.originPosition = {clientX, clientY, x, y};
-        that.setState({position: {x, y}, right: "initial", bottom: "initial"});
+        that.originPosition = { pageX, pageY, x, y };
+        that.asideSize = { width: rect.width, height: rect.height };
+        that.setState({ position: { x, y }, right: "initial", bottom: "initial" });
         that.addListener();
     };
 
     handleClose = () => {
         this.props.onClose();
-        this.setState({visible: false});
+        this.setState({ visible: false });
     };
 
     _render() {
         let that = this;
-        const {title, className, children, top, drag} = that.props;
-        const {position, bottom, right} = that.state;
+        const { title, className, children, top, drag } = that.props;
+        const { position, bottom, right } = that.state;
 
-        const style = {top: position.y, left: position.x, bottom, right};
+        const style = { top: position.y, left: position.x, bottom, right };
 
         return (
             <aside className={classNames("popup-panel", className)} style={style} ref={rf => (that.aside = rf)}>
-                <header onMouseDown={that.handleMouseDown} className={classNames({draggable: drag})}>
+                <header onMouseDown={that.handleMouseDown} className={classNames({ draggable: drag })}>
                     <p className="title">{title}</p>
                     <div className="header-buttons">
                         <a className={"icon dora"} onClick={that.handleClose}>
@@ -136,7 +145,7 @@ export class PopupPanel extends React.PureComponent<Props, State> {
     }
 
     render() {
-        const {visible} = this.state;
+        const { visible } = this.state;
         if (!visible) return null;
         return this._render();
     }

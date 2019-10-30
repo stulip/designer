@@ -68,14 +68,18 @@ export class Main extends Component {
                     <Footer store={store.footer} />
                 </main>
                 <RightPanel store={store.widgets} />
+
             </div>
         );
     }
 
     renderSlidePanel() {
         let store = this.store;
-        const {slideActiveType, handleSlidePanelClose, stateSlideActive, handleStatePanelClose} = store.widgets;
-        const topHeight = 112;
+        const { slideActiveType, handleSlidePanelClose, stateSlideActive, handleStatePanelClose } = store.widgets;
+        const { showToolbar } = store.toolbar;
+        const topHeight = showToolbar ? 112 : 96;
+        const dragTop = showToolbar ? 60 : 42;
+
         return (
             <>
                 <PopupPanel
@@ -112,6 +116,7 @@ export class Main extends Component {
                     title={"状态"}
                     drag={true}
                     className={"dznoaS"}
+                    dragTop={dragTop}
                     onClose={handleStatePanelClose}
                 />
             </>
