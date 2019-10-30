@@ -79,6 +79,7 @@ export class PopupPanel extends React.PureComponent<Props, State> {
             y: y + offsetY
         };
         position.x = Math.min(Math.max(0, position.x), window.innerWidth - rect.width);
+        position.y = Math.min(Math.max(0, position.y), window.innerHeight - rect.height);
         that.setState({position});
     };
 
