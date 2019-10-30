@@ -36,7 +36,7 @@ if (webpack.isDebug) {
             hmr: true,
             host: webpackHost,
             progress: true,
-            waitForBuild: true,
+            // waitForBuild: true,
             // ramdisk: true,
             static: static_path,
         })

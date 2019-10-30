@@ -4,20 +4,18 @@
  * @author tangzehua
  * @sine 2019-08-28 16:49
  */
-import React, { Component } from "react";
+import React, {Component} from "react";
 import "../assets/design.pcss";
-import { Toolbar } from "./Toolbar";
-import { Screens } from "./Screens";
-import { Footer } from "./Footer";
-import { Widgets } from "./Widgets";
-import { RightPanel } from "./RightPanel";
-import { LeftPanel } from "./LeftPanel";
-import { Section } from "./Section";
-import { observer } from "mobx-react";
-import { MainStore } from "../store/MainStore";
-import { ColorPicker, PopupPanel } from "fr-ui";
-import {DesignEvent} from "fr-web";
-import {PropsConst} from "../../../config/Attribute";
+import {Toolbar} from "./Toolbar";
+import {Screens} from "./Screens";
+import {Footer} from "./Footer";
+import {Widgets} from "./Widgets";
+import {RightPanel} from "./RightPanel";
+import {LeftPanel} from "./LeftPanel";
+import {Section} from "./Section";
+import {observer} from "mobx-react";
+import {MainStore} from "../store/MainStore";
+import {ColorPicker, PopupPanel} from "fr-ui";
 
 @observer
 export class Main extends Component {
@@ -30,7 +28,7 @@ export class Main extends Component {
     componentDidMount() {
         let that = this;
         document.addEventListener("contextmenu", that.handleContextMenu);
-        document.addEventListener('keydown', that.handleKeyboard);
+        document.addEventListener("keydown", that.handleKeyboard);
         // document.addEventListener('keydown', that.handleKeyboardBan);
     }
 
@@ -38,16 +36,16 @@ export class Main extends Component {
         let that = this;
         that.store.keyEvents.removeAllListeners();
         document.removeEventListener("contextmenu", that.handleContextMenu);
-        document.removeEventListener('keyup', that.handleKeyboard);
+        document.removeEventListener("keyup", that.handleKeyboard);
         that.store.removeListener();
     }
 
     handleKeyboard = (event: KeyboardEvent) => {
         const eventNames = this.store.keyEvents.eventNames();
-        if (eventNames.includes(String(event.keyCode)) && (event.ctrlKey || event.metaKey || event.altKey)){
+        if (eventNames.includes(String(event.keyCode)) && (event.ctrlKey || event.metaKey || event.altKey)) {
             event.preventDefault();
         }
-        if (event.target.nodeName === 'INPUT'){
+        if (event.target.nodeName === "INPUT") {
             return;
         }
         console.log(event.keyCode);
@@ -76,7 +74,7 @@ export class Main extends Component {
 
     renderSlidePanel() {
         let store = this.store;
-        const { slideActiveType, handleSlidePanelClose } = store.widgets;
+        const {slideActiveType, handleSlidePanelClose, stateSlideActive, handleStatePanelClose} = store.widgets;
         const topHeight = 112;
         return (
             <>
@@ -107,6 +105,14 @@ export class Main extends Component {
                     className={"dznoaI"}
                     top={topHeight}
                     onClose={handleSlidePanelClose}
+                />
+                <PopupPanel
+                    top={62}
+                    visible={stateSlideActive}
+                    title={"状态"}
+                    drag={true}
+                    className={"dznoaS"}
+                    onClose={handleStatePanelClose}
                 />
             </>
         );

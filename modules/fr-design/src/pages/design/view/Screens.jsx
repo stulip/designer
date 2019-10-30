@@ -10,9 +10,8 @@ import "../assets/screens.pcss";
 import {observer} from "mobx-react";
 import {ScreensStore} from "../store/ScreensStore";
 import {classNames} from "fr-web";
-import {small_grid} from "../../../assets/svg";
+import {AdjustSizeCanvas, RangeSelection, SVG} from "fr-ui";
 import {ViewGroup} from "./ViewGroup";
-import {AdjustSizeCanvas, RangeSelection} from "fr-ui";
 import {WidgetBorder} from "./WidgetBorder";
 
 type Props = { store: ScreensStore };
@@ -122,7 +121,7 @@ export class Screens extends React.Component<Props, State> {
                     className={classNames("bg-view", designRect.type)}
                     style={{height: scaleHeight, backgroundColor: main.pageData.backgroundColor, clipPath: clipPath2}}
                 >
-                    {gridAttribute.visible && small_grid(gridAttribute.size, canvasScale)}
+                    {gridAttribute.visible && SVG.small_grid(gridAttribute.size, canvasScale)}
                 </div>
             </>
         );

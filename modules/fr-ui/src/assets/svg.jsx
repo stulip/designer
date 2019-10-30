@@ -7,12 +7,9 @@ import React from "react";
  */
 
 // 状态按钮
-export const status_widget = [
-    18,
-    18,
-    '<path d="M9 18A9 9 0 1 1 9 0a9 9 0 0 1 0 18zm0-2A7 7 0 1 0 9 2a7 7 0 0 0 0 14zm0-3a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>'
-];
-
+export const status_widget = [18, 18, '<path d="M9 18A9 9 0 1 1 9 0a9 9 0 0 1 0 18zm0-2A7 7 0 1 0 9 2a7 7 0 0 0 0 14zm0-3a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>'];
+// 箭头
+export const arrow_right = [8, 8, '<path d="M5 4L0 0v8z"/>'];
 /**
  * 背景格子
  * @param {number} [size] grid 大小

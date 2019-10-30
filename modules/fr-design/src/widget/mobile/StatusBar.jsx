@@ -6,7 +6,7 @@
 
 // @flow
 import React from "react";
-import {status_bar_battery, status_bar_signal, status_bar_wifi} from "../../assets/svg";
+import {SVG} from "fr-ui";
 import "../assets/mobile/status-bar.pcss";
 import {BaseWidget} from "../base/BaseWidget";
 import {ItemConst} from "../../components";
@@ -59,9 +59,9 @@ export class StatusBar extends BaseWidget<Props> {
                 <div className="status-bar" style={{width, height}}>
                     <div className="mobile-status-bar">
                         <div className="time">12:00</div>
-                        <div className="signal">{status_bar_signal()}</div>
-                        <div className="wifi">{status_bar_wifi()}</div>
-                        <div className="battery">{status_bar_battery()}</div>
+                        <div className="signal">{SVG.status_bar_signal()}</div>
+                        <div className="wifi">{SVG.status_bar_wifi()}</div>
+                        <div className="battery">{SVG.status_bar_battery()}</div>
                     </div>
                 </div>
             </div>

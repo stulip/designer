@@ -5,11 +5,11 @@
  * @sine 2019-09-05 10:18
  */
 import {action, computed, observable} from "mobx";
-import {status_widget} from "../../../assets/svg";
+import {SVG} from "fr-ui";
 import {BaseStore} from "./BaseStore";
 
 export const SlideBarConfig = [
-    {name: "status", svg: status_widget, tip: "状态", keyboard: "`", keyCode: '192'},
+    {name: "status", svg: SVG.status_widget, tip: "状态", keyboard: "`", keyCode: '192'},
     {name: "widget", svgName: "design/common_widget", tip: "内置组件", keyboard: 1, keyCode: '49'},
     {name: "my_widget", svgName: "design/my_widget", tip: "我的组件", keyboard: 2, keyCode: '50'},
     {name: "icons", svgName: "design/smiley", tip: "图标", keyboard: 3, keyCode: '51'},
@@ -23,6 +23,8 @@ export class WidgetsStore extends BaseStore {
 
     // slide bar 激活类型
     @observable slideActiveType = 0;
+    // state slide panel 激活
+    @observable stateSlideActive = false;
 
     // 左侧面板宽度
     @observable _leftPanelWidth = 0;
@@ -99,7 +101,7 @@ export class WidgetsStore extends BaseStore {
         } else {
             switch (dataType) {
                 case "status":
-                    that.switchState();
+                    that.stateSlideActive = !that.stateSlideActive;
                     break;
                 case "widget":
                 case "my_widget":
@@ -126,4 +128,12 @@ export class WidgetsStore extends BaseStore {
     handleSlidePanelClose = () => {
         this.slideActiveType = 0;
     };
+
+    /**
+     * 关闭state面板
+     */
+    @action
+    handleStatePanelClose = () => {
+        this.stateSlideActive = false;
+    }
 }
