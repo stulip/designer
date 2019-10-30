@@ -2,6 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const {WebpackPluginServe} = require('webpack-plugin-serve');
 const webpack = require('./webpack.config');
+const argv = require('yargs').argv;
 
 const mainPort = 1235;
 const webpackHost = "127.0.0.1";
@@ -14,11 +15,17 @@ if (!!webpack.module.name && !moConfig.port) {
     console.error("模块没有找到", webpack.module.name);
     process.exit(1);
 }
+// 编译模式
+const mode = process.env.NODE_ENV;
+const isDebug = mode !== 'production';
+const isDev = argv.dev;
 
 //设置NODE_ENV之后再引入webpack.config
 const webPath = `./webpack.config.${webpack.module.name}.js`;
+// 静态文件输出目录
+const static_path = path.join(webpack.rootPath, 'dist', webpack.module.name);
 
-if (webpack.isDebug){
+if (webpack.isDebug) {
     webpack.config.plugins = [
         ...webpack.config.plugins,
         new WebpackPluginServe({
@@ -29,7 +36,9 @@ if (webpack.isDebug){
             hmr: true,
             host: webpackHost,
             progress: true,
-            static: path.join(webpack.rootPath, `/dist/${webpack.module.name}`),
+            waitForBuild: true,
+            // ramdisk: true,
+            static: static_path,
         })
     ]
 }
@@ -43,7 +52,7 @@ module.exports = {
     port: mainPort,
     webpack: {
         ...webpack.config,
-        mode: process.env.NODE_ENV,
+        mode,
         watch: webpack.isDebug,
         watchOptions: {
             ignored: /node_modules/
@@ -52,7 +61,7 @@ module.exports = {
         context,
         output: {
             ...webpack.config.output,
-            path: path.join(webpack.rootPath, 'dist', webpack.module.name),
+            path: static_path,
             publicPath: `${webpack.module.name}/`
         }
     }

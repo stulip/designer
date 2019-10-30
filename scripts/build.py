@@ -28,6 +28,7 @@ debug_module = "web"
 build_web = utils.get_path("scripts/build.js")
 zip_dir = os.path.join('dist', '.zip')
 release_dist = os.path.join('build', 'dist')
+dist_path = os.path.join("dist")
 
 
 class struct:
@@ -67,7 +68,7 @@ def start(argv, args):
         for mo_name, mo_config in config['module'].items():
             if (args.all and mo_name in ignore_module['all']) or (
                 args.release and mo_name in ignore_module['release']) or (
-                module is None and not args.release and mo_name in ignore_module['build']):
+                module is None and not args.release and not args.all and mo_name in ignore_module['build']):
                 print("\033[1;33m webpack:\033[0m 忽略模块 %s" % mo_name.upper())
                 continue
 
@@ -90,7 +91,7 @@ def start(argv, args):
 # 合并资源到index.js中
 def merge_assets(args, config):
     os.path.isdir(zip_dir) and shutil.rmtree(zip_dir)
-    shutil.copytree('dist', zip_dir)
+    shutil.copytree(dist_path, zip_dir)
 
     merge_file(args, 'css', config)
     merge_file(args, 'js', config)
@@ -114,7 +115,7 @@ def copy_release (dist):
 
 def merge_file(args, six, config):
     block = config['block'][args.block]
-    list_dirs = utils.get_path("dist")
+    list_dirs = utils.get_path(dist_path)
     index_name = 'index.%s' % six
 
     module_list = ["web"]
@@ -127,7 +128,7 @@ def merge_file(args, six, config):
         fp = open(path, 'r', encoding='utf-8')
         try:
             value += fp.read() + '\n'
-            os.remove(path.replace("dist", zip_dir))
+            os.remove(path.replace(dist_path, zip_dir))
         except Exception as e:
             raise Exception("合并资源错误:", e)
         finally:

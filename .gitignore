@@ -82,3 +82,4 @@ gen
 !/scripts/xlsx2json/node_modules/
 *.pyc
 dist/
+/build/dist-release.zip
