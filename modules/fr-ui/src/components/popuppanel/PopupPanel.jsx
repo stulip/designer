@@ -6,8 +6,8 @@
 
 // @flow
 import * as React from "react";
-import { classNames, IBotSVG } from "fr-web";
-import { arrow_right } from "../../assets/svg";
+import {classNames, IBotSVG} from "fr-web";
+import {arrow_right} from "../../assets/svg";
 import "./assets";
 
 type Props = {
@@ -25,7 +25,7 @@ type State = {
     visible: boolean
 };
 
-export class PopupPanel extends React.PureComponent<Props, State> {
+export class PopupPanel extends React.Component<Props, State> {
     state = {
         visible: false,
         position: {},
@@ -63,8 +63,22 @@ export class PopupPanel extends React.PureComponent<Props, State> {
     constructor(props) {
         super(props);
         const that = this;
-        that.asideSize = { width: 0, height: 0 };
-        that.originPosition = { pageX: 0, pageY: 0 };
+        that.asideSize = {width: 0, height: 0};
+        that.originPosition = {pageX: 0, pageY: 0};
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        const that = this;
+        return nextProps.visible !== that.props.visible
+            || nextProps.top !== that.props.top
+            || nextProps.left !== that.props.left
+            || nextProps.dragTop !== that.props.dragTop
+            || nextProps.dragBottom !== that.props.dragBottom
+            || nextProps.title !== that.props.title
+            || nextState.visible !== that.state.visible
+            || nextState.position !== that.state.position
+            || nextState.bottom !== that.state.bottom
+            || nextState.right !== that.state.right
     }
 
     addListener() {

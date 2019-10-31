@@ -38,11 +38,17 @@ type State = {
     targetRect: ClientRect
 };
 
+function getHistoryColors() {
+    return JSON.parse(localStorage.getItem("pickerPrevColors") || "[]");
+}
+
 export class ColorPicker extends React.Component<Props, State> {
     static defaultProps = {
         themeColors: THEME_COLORS,
-        onChange: () => {},
-        onConfirm: () => {},
+        onChange: () => {
+        },
+        onConfirm: () => {
+        },
         headerText: "选择颜色"
     };
 
@@ -60,32 +66,38 @@ export class ColorPicker extends React.Component<Props, State> {
         if (nextProps.color !== prevState.pColor || targetRect !== prevState.targetRect) {
             const visible =
                 !Types.isEmpty(targetRect) && targetRect !== prevState.targetRect ? true : prevState.visible;
-            const color = nextProps.color !== prevState.pColor ? nextProps.color: prevState.color;
-            return {color, pColor: nextProps.color, visible, targetRect };
+            const color = nextProps.color !== prevState.pColor ? nextProps.color : prevState.color;
+            const historyColors = getHistoryColors();
+            return {color, pColor: nextProps.color, visible, targetRect, historyColors};
         }
         return {pColor: nextProps.color};
     }
 
     componentDidUpdate() {
         let that = this;
-        if (that.state.visible && !that.clickEvent){
+        if (that.state.visible && !that.clickEvent) {
             that.clickEvent = true;
             document.addEventListener("mousedown", that.handleClose);
         }
-        if ( !that.state.visible){
+        if (!that.state.visible) {
             that.clickEvent = false;
             document.removeEventListener('mousedown', that.handleClose);
         }
     }
 
-    getHistoryColors = () => {
-        return JSON.parse(localStorage.getItem("pickerPrevColors") || "[]");
-    };
+    shouldComponentUpdate(nextProps, nextState) {
+        const that = this;
+        return nextProps.color !== that.props.color
+            || nextProps.targetRect !== that.props.targetRect
+            || nextState.color !== that.state.color
+            || nextState.position !== that.state.position
+            || nextState.visible !== that.state.visible
+    }
 
     addLastColorToHistory = () => {
-        const { color } = this.state;
-        const { themeColors } = this.props;
-        const { hex, alpha } = parseColor(color);
+        const {color} = this.state;
+        const {themeColors} = this.props;
+        const {hex, alpha} = parseColor(color);
         let history = JSON.parse(localStorage.getItem("pickerPrevColors") || "[]");
 
         if ((themeColors.includes(hex) && alpha === 1) || color === "transparent") {
@@ -154,11 +166,10 @@ export class ColorPicker extends React.Component<Props, State> {
 
     render() {
         let that = this;
-        const { position, visible, color } = that.state;
+        const {position, visible, color, historyColors} = that.state;
         if (!visible) return null;
 
         const { themeColors, headerText } = that.props;
-        const historyColors = this.getHistoryColors();
         return (
             <div
                 className={"ui-color-pick"}
