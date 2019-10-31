@@ -249,8 +249,12 @@ export const ArrangeConfig = [
 
 // 状态
 export const StatesConst = {
-    default: {
+    global: {
         name: '全局状态',
-        cid: 'state-default',
+        cid: 'global',
+    },
+    default: {
+        name: '默认状态',
+        cid: 'default',
     }
 };

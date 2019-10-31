@@ -77,6 +77,7 @@ export class ViewGroupStore extends BaseStore {
         const {canvasRect} = that.main.section;
         that.main.section.setRulerShadow(0, 0, canvasRect.width, canvasRect.height);
         that.main.attribute.setConfig();
+        that.main.widgets.setWidgetStates();
 
         if (that.widget) {
             that.widget.onUpdate = null
@@ -96,14 +97,14 @@ export class ViewGroupStore extends BaseStore {
     setSelectWidget = (widget ?: BaseWidget) => {
         let that = this;
         widget.onUpdate = that._reWidgetSelectBox;
-        that.main.widgets.setWidgetStates(widget.getWidgetStates());
+        that.main.widgets.setWidgetStates(widget.getWidgetStates(), widget.getStateId());
         that.main.attribute.setConfig(widget.getWidgetProps(), widget.getFormData());
         that.widget = widget;
     };
 
     /**
      * 切换widget状态
-     * @param stateId
+     * @param {string} stateId
      */
     switchWidgetState(stateId: string) {
         const that = this;

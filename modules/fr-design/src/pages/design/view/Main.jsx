@@ -16,6 +16,7 @@ import {Section} from "./Section";
 import {observer} from "mobx-react";
 import {MainStore} from "../store/MainStore";
 import {ColorPicker, PopupPanel} from "fr-ui";
+import {StatesListView} from "../../../components";
 
 @observer
 export class Main extends Component {
@@ -68,15 +69,22 @@ export class Main extends Component {
                     <Footer store={store.footer} />
                 </main>
                 <RightPanel store={store.widgets} />
-
             </div>
         );
     }
 
     renderSlidePanel() {
         let store = this.store;
-        const { slideActiveType, handleSlidePanelClose, stateSlideActive, handleStatePanelClose } = store.widgets;
-        const { showToolbar } = store.toolbar;
+        const {
+            slideActiveType,
+            handleSlidePanelClose,
+            stateSlideActive,
+            handleStatePanelClose,
+            widgetStates,
+            switchState,
+            activeStateId
+        } = store.widgets;
+        const {showToolbar} = store.toolbar;
         const topHeight = showToolbar ? 112 : 96;
         const dragTop = showToolbar ? 60 : 42;
 
@@ -111,14 +119,16 @@ export class Main extends Component {
                     onClose={handleSlidePanelClose}
                 />
                 <PopupPanel
-                    top={62}
+                    top={dragTop + 8}
                     visible={stateSlideActive}
                     title={"状态"}
                     drag={true}
                     className={"dznoaS"}
                     dragTop={dragTop}
                     onClose={handleStatePanelClose}
-                />
+                >
+                    <StatesListView data={widgetStates} onChange={switchState} activeId={activeStateId}/>
+                </PopupPanel>
             </>
         );
     }

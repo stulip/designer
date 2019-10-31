@@ -7,7 +7,7 @@
 // @flow
 import React from "react";
 import {DesignEvent} from "fr-web";
-import {PropsConst} from "../../config/Attribute";
+import {PropsConst, StatesConst} from "../../config/Attribute";
 import {Form} from "fr-ui";
 import type {DesignType, Rect, WidgetConfigDefined, WidgetProps, WidgetState} from "../../flow/Main.flow";
 import {WidgetConfig} from "./base.widget.config";
@@ -25,7 +25,7 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
     widgetRef = React.createRef();
 
     // 状态标识
-    stateId: string = "default";
+    _stateId: string;
 
     // 状态数据
     stateData = {
@@ -65,6 +65,23 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
             const props = that.widgetProps();
             that.stateData[key] = {data, props}
         }
+    }
+
+    /**
+     * 返回原始状态
+     * @returns {string}
+     */
+    getStateId() {
+        return this._stateId;
+    }
+
+    /**
+     * 处理后的状态
+     * @returns {string}
+     */
+    get stateId() {
+        const id = this._stateId;
+        return (!id || id === StatesConst.global.cid) ? StatesConst.default.cid : id;
     }
 
     /**
@@ -255,10 +272,33 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
      * @param stateId
      */
     switchStates(stateId: string) {
-        this.stateId = stateId;
-        this.refreshWidget();
-        console.log('状态切换:', stateId);
+        let that = this;
+        if (stateId in that.stateData) {
+            that._stateId = stateId;
+            that.refreshWidget();
+            console.log('状态切换:', stateId);
+        } else {
+            console.error('状态属性未找到');
+        }
     };
+
+    /**
+     * 添加状态
+     * @param stateId
+     */
+    addStates(stateId) {
+        const that = this;
+        const stateData = JSON.parse(JSON.stringify(that.stateData));
+        that.stateData[stateId] = {data: stateData.data, props: stateData.props};
+    }
+
+    /**
+     * 删除状态其属性
+     * @param stateId
+     */
+    removeState(stateId) {
+        delete this.stateData[stateId];
+    }
 
     /**
      * 原始表单数据

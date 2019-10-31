@@ -7,6 +7,7 @@
 import {action, computed, observable} from "mobx";
 import {SVG} from "fr-ui";
 import {BaseStore} from "./BaseStore";
+import type {WidgetState} from "../../../flow/Main.flow";
 
 export const SlideBarConfig = [
     {name: "status", svg: SVG.status_widget, tip: "状态", keyboard: "`", keyCode: '192'},
@@ -32,9 +33,12 @@ export class WidgetsStore extends BaseStore {
     @observable leftPanelVXWidth = 240;
 
     // widget 状态列表
-    @observable widgetStates = [];
+    @observable _widgetStates;
+    @observable _activeStateId;
 
-    testState = 'default';
+    // 全局属性状态
+    globalStateId;
+    globalStates = [];
 
     addKeyListener() {
         let that = this;
@@ -80,14 +84,12 @@ export class WidgetsStore extends BaseStore {
         that.setSlideActiveType(dataType);
     };
 
-    switchState() {
+    @action
+    switchState = (stateId: string) => {
         const that = this;
-        if (that.widgetStates && that.widgetStates.length) {
-            // 暂时写死
-            that.testState = that.testState !== 'default' ? "default" : that.widgetStates[0].cid;
-            that.main.viewGroup.switchWidgetState(that.testState);
-        }
-    }
+        that._activeStateId = stateId;
+        that.main.viewGroup.switchWidgetState(stateId);
+    };
 
     /**
      * 设置弹出工具面板打开类型
@@ -115,10 +117,23 @@ export class WidgetsStore extends BaseStore {
         }
     }
 
-    // 设置widget状态
+    /**
+     * 设置widget状态
+     * @param {Array<WidgetState>} [states]
+     * @param {string} [activeId]
+     */
     @action
-    setWidgetStates(states) {
-        this.widgetStates = states || [];
+    setWidgetStates(states, activeId) {
+        this._widgetStates = states;
+        this._activeStateId = activeId;
+    }
+
+    get widgetStates() {
+        return this._widgetStates || this.globalStates;
+    }
+
+    get activeStateId() {
+        return this._activeStateId || this.globalStateId;
     }
 
     /**

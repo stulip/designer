@@ -1,0 +1,63 @@
+.states-header {
+    box-sizing: content-box;
+    height: 36px;
+    margin-left: 10px;
+    padding-right: 10px;
+    border-bottom: 1px solid #dedee4;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .new-state {
+        display: flex;
+        align-items: center;
+        color: #415058;
+
+        .icon {
+            font-size: 16px;
+            margin-right: 6px;
+        }
+
+        &:hover {
+            color: #298df8;
+        }
+    }
+}
+
+.state-list {
+    width: calc(100% - 2px);
+    max-height: 290px;
+    padding: 8px 0;
+    overflow-x: hidden;
+
+    li {
+        position: relative;
+        height: 32px;
+        padding-left: 14px;
+        display: flex;
+        -webkit-box-align: center;
+        align-items: center;
+        color: rgb(91, 107, 115);
+        cursor: pointer;
+        border-width: 1px;
+        border-style: solid;
+        border-color: transparent;
+        border-image: initial;
+
+        &.active {
+            color: #298df8;
+            background: #f2f2f2;
+        }
+
+        &:hover {
+            color: #298df8;
+            background: #f7f7f7;
+        }
+
+        .index {
+            min-width: 10px;
+            margin-right: 4px;
+            flex-shrink: 0;
+        }
+    }
+}
