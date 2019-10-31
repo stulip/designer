@@ -273,12 +273,12 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
      */
     switchStates(stateId: string) {
         let that = this;
-        if (stateId in that.stateData) {
+        if (stateId in that.stateData || stateId === StatesConst.global.cid) {
             that._stateId = stateId;
             that.refreshWidget();
-            console.log('状态切换:', stateId);
+            // console.log('状态切换:', stateId);
         } else {
-            console.error('状态属性未找到');
+            console.error('状态属性未找到:', stateId);
         }
     };
 
