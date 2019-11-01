@@ -15,7 +15,7 @@ import {LeftPanel} from "./LeftPanel";
 import {Section} from "./Section";
 import {observer} from "mobx-react";
 import {MainStore} from "../store/MainStore";
-import {ColorPicker, PopupPanel} from "fr-ui";
+import {ColorPicker, Modal, PopupPanel} from "fr-ui";
 import {StatesListView} from "../../../components";
 
 @observer
@@ -24,6 +24,10 @@ export class Main extends Component {
         super(props);
         let that = this;
         that.store = new MainStore(props);
+    }
+
+    componentDidCatch(error: Error, info: { componentStack: string }) {
+        console.error(error, info);
     }
 
     componentDidMount() {
@@ -49,7 +53,7 @@ export class Main extends Component {
         if (event.target.nodeName === "INPUT") {
             return;
         }
-        console.log(event.keyCode);
+        // console.log(event.keyCode);
         this.store.keyEvents.emit(String(event.keyCode), event);
     };
 
@@ -82,6 +86,7 @@ export class Main extends Component {
             handleStatePanelClose,
             widgetStates,
             switchState,
+            handleAddState,
             activeStateId
         } = store.widgets;
         const {showToolbar} = store.toolbar;
@@ -127,7 +132,8 @@ export class Main extends Component {
                     dragTop={dragTop}
                     onClose={handleStatePanelClose}
                 >
-                    <StatesListView data={widgetStates} onChange={switchState} activeId={activeStateId}/>
+                    <StatesListView data={widgetStates} onChange={switchState} activeId={activeStateId}
+                                    onAdd={handleAddState}/>
                 </PopupPanel>
             </>
         );
@@ -143,7 +149,8 @@ export class Main extends Component {
                     {this.renderContext()}
                     <div className={"fixed_area"}>
                         {this.renderSlidePanel()}
-                        <ColorPicker color={color} onChange={colorChange} targetRect={targetRect} />
+                        <ColorPicker color={color} onChange={colorChange} targetRect={targetRect}/>
+                        <Modal/>
                     </div>
                 </div>
             </div>

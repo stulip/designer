@@ -4,6 +4,7 @@
  * @sine 2019-09-24 10:26
  */
 import type {ConfigOption, PageConfig} from "../flow/Main.flow";
+import {XMath} from "@xt-web/core";
 
 // 视口最小尺寸
 export const viewMinSize = Object.freeze({ width: 100, height: 100 });
@@ -121,3 +122,7 @@ export const createConfig = (options: ConfigOption): PageConfig => {
     config.canvasSize = config.designRect;
     return config;
 };
+
+export function randomId() {
+    return XMath.guid(16);
+}

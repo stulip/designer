@@ -34,6 +34,7 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
             props: {},
         }
     };
+    states: [WidgetState] = [];
 
     get widget() {
         return this.widgetRef.current;
@@ -48,6 +49,7 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
         super(props);
         let that = this;
         that.state = {};
+        that.states = props.states || [];
         // 更新回调
         that.onUpdate = null;
         that._styles = null;
@@ -264,7 +266,7 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
      * @returns {[WidgetState]}
      */
     getWidgetStates(): [WidgetState] {
-        return this.props.states || [];
+        return this.states;
     }
 
     /**
@@ -283,13 +285,14 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
     };
 
     /**
-     * 添加状态
-     * @param stateId
+     * 添加状态, 复制当前状态数据
+     * @param {WidgetState} state
      */
-    addStates(stateId) {
+    addState(state: WidgetState) {
         const that = this;
-        const stateData = JSON.parse(JSON.stringify(that.stateData));
-        that.stateData[stateId] = {data: stateData.data, props: stateData.props};
+        const stateData = JSON.parse(JSON.stringify(that.stateData[that.stateId]));
+        that.stateData[state.cid] = {data: stateData.data, props: stateData.props};
+        that.states.push(state);
     }
 
     /**

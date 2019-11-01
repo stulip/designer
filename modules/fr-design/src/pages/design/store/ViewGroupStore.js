@@ -11,7 +11,7 @@ import {BaseStore} from "./BaseStore";
 import {DesignEvent} from "fr-web";
 import {PropsConst} from "../../../config/Attribute";
 import {Types} from "@xt-web/core";
-import type {WidgetConfigDefined} from "../../../flow/Main.flow";
+import type {WidgetConfigDefined, WidgetState} from "../../../flow/Main.flow";
 
 export class ViewGroupStore extends BaseStore {
 
@@ -32,6 +32,10 @@ export class ViewGroupStore extends BaseStore {
     widget: BaseWidget;
     widgetList: [BaseWidget] = [];
     widgetList2: [BaseWidget] = [];
+
+    // 全局属性状态
+    globalStateId;
+    globalStates = [];
 
     addListener() {
         const that = this;
@@ -77,7 +81,7 @@ export class ViewGroupStore extends BaseStore {
         const {canvasRect} = that.main.section;
         that.main.section.setRulerShadow(0, 0, canvasRect.width, canvasRect.height);
         that.main.attribute.setConfig();
-        that.main.widgets.setWidgetStates();
+        that.main.widgets.setWidgetStates(that.globalStates, that.globalStateId);
 
         if (that.widget) {
             that.widget.onUpdate = null
@@ -109,9 +113,31 @@ export class ViewGroupStore extends BaseStore {
     switchWidgetState(stateId: string) {
         const that = this;
         const widget = that.widget;
-        if (widget && stateId !== widget.stateId) {
-            widget.switchStates(stateId);
-            that.main.attribute.setConfig(widget.getWidgetProps(), widget.getFormData());
+        if (widget) {
+            if (stateId !== widget.stateId) {
+                widget.switchStates(stateId);
+                that.main.attribute.setConfig(widget.getWidgetProps(), widget.getFormData());
+            }
+        } else {
+            that.globalStateId = stateId;
+        }
+    }
+
+    /**
+     * 添加状态
+     * @param state
+     */
+    addWidgetState(state: WidgetState) {
+        const that = this;
+        const widget = that.widget;
+        if (widget) {
+            widget.addState(state);
+            widget.switchStates(state.cid);
+            that.main.widgets.setWidgetStates(widget.getWidgetStates(), widget.getStateId());
+        } else {
+            that.globalStates.push(state);
+            that.globalStateId = state.cid;
+            that.main.widgets.setWidgetStates(that.globalStates, state.cid);
         }
     }
 

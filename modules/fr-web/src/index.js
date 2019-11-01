@@ -11,6 +11,7 @@ import ResizableRect from "react-resizable-rotatable-draggable";
 import ColorPicker, {parseColor} from "mb-react-color-picker";
 import IBotIcon from "@ibot/ibot/lib/icon";
 import IBotSVG from "@ibot/ibot/lib/svg";
+import IBotModal from "@ibot/ibot/lib/core-modal";
 import * as IBotForm from "@ibot/ibot/lib/form";
 import {Tooltip as IBotTooltip} from "@ibot/ibot/lib/text";
 // mobx
@@ -41,6 +42,7 @@ export {
     ColorPicker,
     IBotIcon,
     IBotSVG,
+    IBotModal,
     IBotTooltip,
     EventEmitter,
     DesignEvent,

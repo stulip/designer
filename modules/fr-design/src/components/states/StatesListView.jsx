@@ -68,11 +68,12 @@ export class StatesListView extends React.PureComponent<Props, State> {
 
     render() {
         const that = this;
+        const {onAdd} = that.props;
         const {data} = that.state;
         return (
             <>
                 <div className="states-header">
-                    <a className="new-state">
+                    <a className="new-state" onClick={onAdd}>
                         <IBotSVG icon={SVG.plus_o} className={"icon"}/>
                         <span>新状态</span>
                     </a>

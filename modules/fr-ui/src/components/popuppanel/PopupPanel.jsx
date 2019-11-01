@@ -79,6 +79,7 @@ export class PopupPanel extends React.Component<Props, State> {
             || nextState.position !== that.state.position
             || nextState.bottom !== that.state.bottom
             || nextState.right !== that.state.right
+            || nextProps.children !== that.props.children
     }
 
     addListener() {
