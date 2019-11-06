@@ -9,7 +9,7 @@ export {PopupPanel} from './popuppanel/PopupPanel'
 export {Slider} from './slider/Slider'
 export {AdjustSizeCanvas} from './adjustsize/AdjustSizeCanvas'
 export {RangeSelection} from './rangeselection/RangeSelection'
-export {Modal} from './modal'
+export {Dialog} from './modal'
 
 import * as Form from './form'
 

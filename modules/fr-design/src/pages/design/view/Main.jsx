@@ -15,7 +15,7 @@ import {LeftPanel} from "./LeftPanel";
 import {Section} from "./Section";
 import {observer} from "mobx-react";
 import {MainStore} from "../store/MainStore";
-import {ColorPicker, Modal, PopupPanel} from "fr-ui";
+import {ColorPicker, Dialog, PopupPanel} from "fr-ui";
 import {StatesListView} from "../../../components";
 
 @observer
@@ -150,7 +150,7 @@ export class Main extends Component {
                     <div className={"fixed_area"}>
                         {this.renderSlidePanel()}
                         <ColorPicker color={color} onChange={colorChange} targetRect={targetRect}/>
-                        <Modal/>
+                        <Dialog/>
                     </div>
                 </div>
             </div>

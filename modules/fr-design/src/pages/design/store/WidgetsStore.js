@@ -5,7 +5,7 @@
  * @sine 2019-09-05 10:18
  */
 import {action, computed, observable} from "mobx";
-import {SVG} from "fr-ui";
+import {Dialog, SVG} from "fr-ui";
 import {BaseStore} from "./BaseStore";
 import type {WidgetState} from "../../../flow/Main.flow";
 import {randomId} from "../../../config/Config";
@@ -93,11 +93,16 @@ export class WidgetsStore extends BaseStore {
     handleAddState = () => {
         const that = this;
         const size = (that.widgetStates || [1]).length + 2;
-        const name = prompt("状态名称", `状态 ${size}`);
-        if (!Types.isBlank(name)) {
-            const newState = {name, cid: randomId()};
-            that.main.viewGroup.addWidgetState(newState);
-        }
+        const options = {
+            value: `状态 ${size}`,
+            done: (name) => {
+                if (!Types.isBlank(name)) {
+                    const newState = {name, cid: randomId()};
+                    that.main.viewGroup.addWidgetState(newState);
+                }
+            }
+        };
+        Dialog.prompt("新建状态", options);
     };
 
     /**
