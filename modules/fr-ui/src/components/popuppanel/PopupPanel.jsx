@@ -135,8 +135,8 @@ export class PopupPanel extends React.Component<Props, State> {
 
     _render() {
         let that = this;
-        const { title, className, children, top, drag } = that.props;
-        const { position, bottom, right } = that.state;
+        const {title, className, children, top, drag, bodyClassName} = that.props;
+        const {position, bottom, right} = that.state;
 
         const style = { top: position.y, left: position.x, bottom, right };
 

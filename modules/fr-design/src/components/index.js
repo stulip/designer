@@ -6,3 +6,4 @@
 
 export {ItemConst,} from './item'
 export {StatesListView} from './states'
+export {WidgetPanel} from './widgetpnael'

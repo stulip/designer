@@ -1,0 +1,61 @@
+
+.widget-slide-bar {
+    position: absolute;
+    top: 32px;
+    right: 14px;
+    display: flex;
+    flex-direction: column;
+    -webkit-box-align: center;
+    align-items: center;
+    box-shadow: rgba(39, 54, 78, 0.08) 0 2px 10px 0, rgba(39, 54, 78, 0.1) 0 12px 40px 0;
+    pointer-events: auto;
+    z-index: 4;
+    background: rgb(255, 255, 255);
+    border-radius: 2px;
+
+    .nav-button {
+        width: 32px;
+        font-size: 18px;
+        display: flex;
+        -webkit-box-pack: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        align-items: center;
+        cursor: pointer;
+        height: 36px;
+        position: relative;
+        transition: background-color 0.2s ease-out 0s;
+
+        &:hover {
+            background-color: #e8e8e8;
+        }
+
+        &.active {
+            color: #4c4c4c;
+            background: rgb(242, 242, 242);
+            border-color: rgb(232, 232, 232);
+            border-radius: 2px;
+        }
+
+        .fore {
+            fill: #dbdbdb;
+        }
+    }
+
+    a:hover {
+        color: inherit;
+    }
+
+    .nav-line {
+        position: absolute;
+        bottom: 0;
+        width: 20px;
+        border-top: 1px solid #dbdbdb;
+    }
+
+    .line {
+        width: 20px;
+        margin-bottom: 10px;
+        border-top: 1px solid rgb(200, 205, 208);
+    }
+}

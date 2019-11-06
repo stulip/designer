@@ -55,84 +55,17 @@
 
     .panel-right{
         position: relative;
-        width: 250px;
+        width: 230px;
         display: flex;
-        box-shadow: rgba(39, 54, 78, 0.11) 0px -2px 30px 0px;
+        box-shadow: rgba(39, 54, 78, 0.11) 0 -2px 30px 0;
         z-index: 4;
-        //background: white;
-        background-color: inherit;
-
-        .slide-bar {
-            width: 40px;
-            display: flex;
-            flex-direction: column;
-            -webkit-box-align: center;
-            align-items: center;
-            padding-top: 7px;
-            padding-bottom: 12px;
-            border-right: 1px solid rgb(222, 222, 228);
-            background: rgb(255, 255, 255);
-
-            .line {
-                width: 20px;
-                margin-bottom: 10px;
-                border-top: 1px solid rgb(200, 205, 208);
-            }
-        }
+    //background: white; background-color: inherit;
 
         .content {
             display: flex;
             flex-direction: column;
             flex: 1;
             overflow: hidden;
-        }
-
-        .nav-button {
-            cursor: pointer;
-            width: 28px;
-            height: 28px;
-            font-size: 18px;
-            color: rgb(91, 107, 115);
-            display: flex;
-            -webkit-box-pack: center;
-            justify-content: center;
-            -webkit-box-align: center;
-            align-items: center;
-            border-radius: 2px;
-            border-width: 1px;
-            border-style: solid;
-            border-color: transparent;
-            border-image: initial;
-            transition: background-color 0.2s ease-out 0s, border-color 0.2s ease-out 0s;
-
-            &:not(:last-child) {
-                margin-bottom: 10px;
-            }
-            &:hover{
-                color: rgb(65, 80, 88);
-                background-color: rgb(242, 242, 242);
-                border-color: rgb(232, 232, 232);
-            }
-
-            &.active{
-                color: rgb(255, 97, 97);
-                background: rgb(242, 242, 242);
-                border-color: rgb(232, 232, 232);
-                border-radius: 2px;
-            }
-            .fore {
-                fill: #dbdbdb;
-            }
-        }
-
-        .trash-button{
-            margin-top: auto;
-        }
-
-        .nav-buttons {
-            display: flex;
-            flex-direction: column;
-            flex: 1;
         }
     }
 }

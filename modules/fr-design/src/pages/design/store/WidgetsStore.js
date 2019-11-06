@@ -17,7 +17,6 @@ export const SlideBarConfig = [
     {name: "my_widget", svgName: "design/my_widget", tip: "我的组件", keyboard: 2, keyCode: '50'},
     {name: "icons", svgName: "design/smiley", tip: "图标", keyboard: 3, keyCode: '51'},
     {name: "master", svgName: "design/master", tip: "母版", keyboard: 4, keyCode: '52'},
-    {name: "trash", svgName: "recycle", className: "trash-button", tip: "回收站"}
 ];
 
 export class WidgetsStore extends BaseStore {

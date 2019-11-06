@@ -7,7 +7,7 @@
 // @flow
 import * as React from "react";
 import "../assets/widgets.pcss";
-import { IBotIcon } from "fr-web";
+import {IBotIcon, IBotSVG} from "fr-web";
 import {observer} from "mobx-react";
 import {WidgetsStore} from "../store/WidgetsStore";
 
@@ -40,10 +40,18 @@ export class Widgets extends React.Component<Props, State> {
                         <IBotIcon name={"windows"} type={"icon"}/>
                     </li>
                 </ul>
-                <a className={"toggle-area"} onClick={store.handleLeftPanelToggle}>
-                    <IBotIcon name={"left_double_bracket"} type={"dora"} className={`toggle-btn ${store.isLeftPanelOpen? 'is-toggle': ''}`}/>
-                </a>
+                <div className={'nav-footer'}>
+                    <div className={'toggle-icon'}>
+                        <IBotSVG name={'recycle'}/>
+                    </div>
+                    <div className="divider-line"/>
+                    <div className={"toggle-icon"} onClick={store.handleLeftPanelToggle}>
+                        <IBotIcon name={"left_double_bracket"} type={"dora"}
+                                  className={`toggle-btn ${store.isLeftPanelOpen ? 'is-toggle' : ''}`}/>
+                    </div>
+                </div>
+
             </div>
         );
     };
-};
+}

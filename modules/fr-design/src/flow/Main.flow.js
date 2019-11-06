@@ -73,3 +73,9 @@ export type WidgetState = {
     union?: string | Array
     cid: string,
 }
+
+export type BasicWidgetDefined = {
+    title: string,
+    guideId: string, // 类型id
+    svg: string,
+}

@@ -9,6 +9,7 @@ import {Rules} from "./Rules";
 import {ScrollBar} from "./ScrollBar";
 import {observer} from "mobx-react";
 import {SectionStore} from "../store/SectionStore";
+import {WidgetBar} from "./WidgetBar";
 
 type Props = {
     store: SectionStore
@@ -57,7 +58,8 @@ export class Section extends React.Component<Props, State> {
                 {/*    <span className={"dot"} />*/}
                 {/*    <span>链接上一页</span>*/}
                 {/*</div>*/}
-                <Rules store={store} />
+                <Rules store={store}/>
+                <WidgetBar store={store.main.widgets}/>
                 <ScrollBar
                     x={store.scrollPosition.x}
                     y={store.scrollPosition.y}

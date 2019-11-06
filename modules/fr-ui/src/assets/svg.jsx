@@ -10,6 +10,7 @@ import React from "react";
 export const status_widget = [18, 18, '<path d="M9 18A9 9 0 1 1 9 0a9 9 0 0 1 0 18zm0-2A7 7 0 1 0 9 2a7 7 0 0 0 0 14zm0-3a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>'];
 // 箭头
 export const arrow_right = [8, 8, '<path d="M5 4L0 0v8z"/>'];
+export const arrow_right2 = [12, 12, '<path d="M9 6l-5 4V2z"/>'];
 // 圆边框 新增
 export const plus_o = [14, 14, '<path d="M6.01 6L6 4h2l.01 2H10v2H8.019l.009 1.917h-2L6.018 8H4V6h2.01zM7 14A7 7 0 1 1 7 0a7 7 0 0 1 0 14zm0-2A5 5 0 1 0 7 2a5 5 0 0 0 0 10z"/>'];
 
