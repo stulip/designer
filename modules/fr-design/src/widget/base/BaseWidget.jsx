@@ -24,7 +24,8 @@ type State = {};
 export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
 
     static createNewWidgetConfig() {
-        console.warn('子类实现');
+        // console.warn('子类实现');
+        return {};
     }
 
     widgetRef = React.createRef();
@@ -93,14 +94,17 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
 
     /**
      * 创建子widget
-     * @param {Array<Object>} widgetNames
+     * @param {Array<WidgetConfigDefined>|WidgetConfigDefined} widgetNames
+     * @param {Map<string, WidgetConfigDefined>} [widgetMap]
      * @returns {*}
      */
-    createWidget(widgetNames) {
+    createWidget(widgetNames, widgetMap) {
         const that = this;
-        const {widgetMap, canvasRect, designRect, module} = that.props;
+        const {canvasRect, designRect, module} = that.props;
+        widgetMap = widgetMap || that.props.widgetMap;
+        const names = Array.isArray(widgetNames) ? widgetNames : [widgetNames];
 
-        return widgetNames.map(cid => {
+        return names.map(cid => {
             const widget = widgetMap.get(cid);
             if (!widget) return null;
             const Comp = module[widget.component];

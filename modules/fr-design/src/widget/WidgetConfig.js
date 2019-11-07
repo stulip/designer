@@ -1,3 +1,6 @@
+import {randomId} from "../config/Config";
+import {PropsConst, TextConst} from "../config/Attribute";
+
 /**
  * widget 配置
  * @author tangzehua
@@ -86,3 +89,30 @@ export const WebWidgets = Object.freeze([
         webId: App.Header
     }
 ]);
+
+export class WidgetFactory {
+
+    // header
+    static get [App.Header]() {
+        const rightWidget = {
+            cid: randomId(),
+            component: App.Panel,
+            widgetProps: {default: {[PropsConst.layoutFlexGrow]: 0}}
+        };
+
+        const center = {
+            cid: randomId(),
+            component: App.Text,
+            name: "标题",
+            widgetProps: {default: {[PropsConst.textAlign]: TextConst.textAlign.center, [PropsConst.textSize]: 17}},
+            children: '标题',
+        };
+
+        const widget = {
+            cid: randomId(),
+            component: App.Header,
+            widget: {right: [rightWidget.cid], center: [center.cid]}
+        };
+        return [widget, center, rightWidget]
+    }
+}

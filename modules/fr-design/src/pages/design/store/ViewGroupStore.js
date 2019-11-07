@@ -338,6 +338,27 @@ export class ViewGroupStore extends BaseStore {
         } else {
             this._widgetMap = value;
         }
+    }
 
+    createWidget(widget: WidgetConfigDefined, widgetMap: Map<string, WidgetConfigDefined>) {
+        const that = this;
+        const {
+            config: {designRect},
+            section: {canvasRect, canvasScale}
+        } = that.main;
+        const Comp = that.widgetModule[widget.component];
+
+        return (
+            Comp && (
+                <Comp
+                    key={widget.cid}
+                    {...widget}
+                    canvasRect={canvasRect}
+                    designRect={designRect}
+                    widgetMap={widgetMap}
+                    module={that.widgetModule}
+                />
+            )
+        );
     }
 }

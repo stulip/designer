@@ -11,13 +11,14 @@ import {classNames} from "fr-web";
 import "../../../widget/assets";
 import {ViewGroupStore} from "../store/ViewGroupStore";
 import {LayoutConst, PropsConst, TextConst} from "../../../config/Attribute";
-import {WidgetConst} from "../../../widget/WidgetConfig";
+import {WidgetConst, WidgetFactory} from "../../../widget/WidgetConfig";
 
 type Props = {
     store: ViewGroupStore
 };
 type State = {};
 
+const testHeader = WidgetFactory[WidgetConst.App.Header];
 const WidgetConfig = [
     {
         cid: "cs1",
@@ -109,10 +110,11 @@ const WidgetConfig = [
             }
         },
         children: ["cpt01", "cpt02"]
-    }
+    },
+    ...testHeader,
 ];
 
-const GroupWidget = Array.from(new Set(["cs1", "ch0", "cbo0", "cpt0", "ct0"]));
+const GroupWidget = Array.from(new Set(["cs1", "ch0", "cbo0", "cpt0", testHeader[0].cid, "ct0"]));
 
 @observer
 export class ViewGroup extends React.Component<Props, State> {
@@ -138,26 +140,7 @@ export class ViewGroup extends React.Component<Props, State> {
         const widget = widgetMap.get(cid);
         if (!widget) return null;
 
-        const {
-            main: {
-                config: {designRect},
-                section: {canvasRect, canvasScale}
-            }
-        } = this.props.store;
-        const Comp = store.widgetModule[widget.component];
-
-        return (
-            Comp && (
-                <Comp
-                    key={widget.cid}
-                    {...widget}
-                    canvasRect={canvasRect}
-                    designRect={designRect}
-                    widgetMap={widgetMap}
-                    module={store.widgetModule}
-                />
-            )
-        );
+        return store.createWidget(widget, widgetMap);
     };
 
     eachWidget = config => {
