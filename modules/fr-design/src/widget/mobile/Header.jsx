@@ -19,6 +19,7 @@ type Props = {
 const backImage = require('fr-art/design/back_chevron.png');
 
 export class Header extends Panel<Props> {
+    static displayName = WidgetConst.App.Header;
 
     constructor(props) {
         super(props);

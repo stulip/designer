@@ -19,6 +19,11 @@ export type BasePanelProps = {
 type State = {};
 
 export class BasePanel extends BaseWidget<BasePanelProps, State> {
+
+    static createNewWidgetConfig() {
+
+    }
+
     /**
      * 背景颜色
      * @returns {string}

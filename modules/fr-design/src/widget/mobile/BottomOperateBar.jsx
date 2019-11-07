@@ -9,6 +9,7 @@ import React from "react";
 import "../assets/mobile/iphonex-operate-bar.pcss";
 import type {BaseWidgetProps} from "../base/BaseWidget";
 import {BaseWidget} from "../base/BaseWidget";
+import {WidgetConst} from "../WidgetConfig";
 
 type Props = {
     ...BaseWidgetProps
@@ -40,3 +41,5 @@ export class BottomOperateBar extends BaseWidget<Props> {
         );
     }
 }
+
+BottomOperateBar.displayName = WidgetConst.App.BottomOperateBar;

@@ -6,16 +6,16 @@
 
 // @flow
 import React from 'react';
-import {BasePanel} from "../base/BasePanel";
 import type {BasePanelProps} from "../base/BasePanel";
+import {BasePanel} from "../base/BasePanel";
+import {WidgetConst} from "../WidgetConfig";
 
 type Props = {
     ...BasePanelProps
 };
-type State = {
-
-};
+type State = {};
 
 export class Panel extends BasePanel<Props, State> {
+    static displayName = WidgetConst.App.Panel
 
 }

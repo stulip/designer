@@ -164,4 +164,16 @@ export class WidgetsStore extends BaseStore {
     handleStatePanelClose = () => {
         this.stateSlideActive = false;
     };
+
+    handleWidgetDragMove = (event: MouseEvent, widgetId: string) => {
+        console.log('move', widgetId)
+    };
+
+    handleWidgetDragStart = (event: MouseEvent, widgetId: string) => {
+        console.log('start', widgetId)
+    };
+
+    handleWidgetDragEnd = (event: MouseEvent, widgetId: string) => {
+        console.log('end', widgetId)
+    }
 }

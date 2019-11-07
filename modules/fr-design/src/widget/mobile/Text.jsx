@@ -6,17 +6,16 @@
 
 // @flow
 import React from 'react';
-import {BaseText} from "../base/BaseText";
 import type {BaseTextProps} from "../base/BaseText";
+import {BaseText} from "../base/BaseText";
+import {WidgetConst} from "../WidgetConfig";
 
 type Props = {
     ...BaseTextProps
 };
 
-type State = {
-
-};
+type State = {};
 
 export class Text extends BaseText<Props, State> {
-
+    static displayName = WidgetConst.App.Text
 }

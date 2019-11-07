@@ -22,6 +22,11 @@ export type BaseWidgetProps = {
 type State = {};
 
 export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
+
+    static createNewWidgetConfig() {
+        console.warn('子类实现');
+    }
+
     widgetRef = React.createRef();
 
     // 状态标识

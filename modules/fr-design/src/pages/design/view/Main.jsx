@@ -87,12 +87,15 @@ export class Main extends Component {
             widgetStates,
             switchState,
             handleAddState,
+            handleWidgetDragStart,
+            handleWidgetDragEnd,
+            handleWidgetDragMove,
             activeStateId
         } = store.widgets;
         const {showToolbar} = store.toolbar;
         const topHeight = showToolbar ? 90 : 72;
         const dragTop = showToolbar ? 60 : 42;
-        // const {isApp} = store.main.config;
+        const {isApp} = store.config;
 
         return (
             <>
@@ -103,7 +106,12 @@ export class Main extends Component {
                     top={topHeight}
                     onClose={handleSlidePanelClose}
                 >
-                    <WidgetPanel/>
+                    <WidgetPanel
+                        isApp={isApp}
+                        onDragStart={handleWidgetDragStart}
+                        onDragMove={handleWidgetDragMove}
+                        onDragEnd={handleWidgetDragEnd}
+                    />
                 </PopupPanel>
                 <PopupPanel
                     title={"我的组件"}
@@ -125,9 +133,7 @@ export class Main extends Component {
                     className={"dznoaI"}
                     top={topHeight}
                     onClose={handleSlidePanelClose}
-                >
-
-                </PopupPanel>
+                />
                 <PopupPanel
                     top={topHeight}
                     visible={stateSlideActive}
@@ -137,8 +143,12 @@ export class Main extends Component {
                     dragTop={dragTop}
                     onClose={handleStatePanelClose}
                 >
-                    <StatesListView data={widgetStates} onChange={switchState} activeId={activeStateId}
-                                    onAdd={handleAddState}/>
+                    <StatesListView
+                        data={widgetStates}
+                        onChange={switchState}
+                        activeId={activeStateId}
+                        onAdd={handleAddState}
+                    />
                 </PopupPanel>
             </>
         );

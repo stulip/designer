@@ -11,20 +11,50 @@ import {IBotSVG} from "fr-web";
 
 type Props = {
     item: DragWidgetDefined,
+    widgetId: string,
+    onDragStart: (event: MouseEvent, widgetId: string, item: DragWidgetDefined)=> void,
+    onDragMove: (event: MouseEvent, widgetId: string, item: DragWidgetDefined)=> void,
+    onDragEnd: (event: MouseEvent, widgetId: string, item: DragWidgetDefined)=> void,
 };
 type State = {};
 
-export class DragWidget extends React.Component<Props, State> {
+export class DragWidget extends React.PureComponent<Props, State> {
+
+    constructor(props) {
+        super(props);
+    }
+
+    addListener() {
+        document.addEventListener("mouseup", this.handleMouseUp);
+        document.addEventListener("mousemove", this.handleMouseMove);
+    }
+
+    removeListener() {
+        document.removeEventListener("mouseup", this.handleMouseUp);
+        document.removeEventListener("mousemove", this.handleMouseMove);
+    }
+
+    handleMouseUp = (event: MouseEvent) => {
+        this.removeListener();
+        const {item, widgetId, onDragEnd} = this.props;
+        onDragEnd && onDragEnd(event, widgetId, item);
+    };
+
+    handleMouseMove = (event: MouseEvent) => {
+        const that = this;
+        const {item, widgetId, onDragMove} = that.props;
+        onDragMove && onDragMove(event, widgetId, item);
+    };
 
     handleMouseDown = (event: MouseEvent) => {
         const that = this;
         if (event.button !== 0) return;
         event.stopPropagation();
         event.preventDefault();
+        that.addListener();
 
-        const {pageX, pageY} = event;
-        const {item, widgetId} = that.props;
-        console.log(item, widgetId)
+        const {item, widgetId, onDragStart} = that.props;
+        onDragStart && onDragStart(event, widgetId, item);
     };
 
     renderWidget() {

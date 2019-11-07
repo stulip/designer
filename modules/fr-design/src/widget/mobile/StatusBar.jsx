@@ -11,6 +11,7 @@ import "../assets/mobile/status-bar.pcss";
 import {BaseWidget} from "../base/BaseWidget";
 import {ItemConst} from "../../components";
 import {PropsConst} from "../../config/Attribute";
+import {WidgetConst} from "../WidgetConfig";
 
 type Props = {
     width: number,
@@ -18,6 +19,7 @@ type Props = {
 };
 
 export class StatusBar extends BaseWidget<Props> {
+    static displayName = WidgetConst.App.StatusBar;
 
     getName(): string {
         return "状态栏";

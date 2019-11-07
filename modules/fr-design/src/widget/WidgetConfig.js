@@ -29,36 +29,36 @@ export const BasicWidgets = Object.freeze([
     {
         title: "面板",
         svg: "design/rectangle",
-        guideId: "panel",
+        guideId: "basic.panel",
         appId: App.Panel,
         webId: Web.Panel,
     },
     {
         title: '文本',
         svg: "design/text",
-        guideId: "text",
+        guideId: "basic.text",
         appId: App.Text,
         webId: Web.Text,
     },
     {
         title: "按钮",
         svg: "design/button",
-        guideId: "button",
+        guideId: "basic.button",
     },
     {
         title: "单行输入",
         svg: "design/input",
-        guideId: "input",
+        guideId: "basic.input",
     },
     {
         title: "多行输入",
         svg: "design/textarea",
-        guideId: 'textarea'
+        guideId: 'basic.textarea'
     },
     {
         title: "图片",
         svg: "design/image",
-        guideId: "image"
+        guideId: "basic.image"
     }
 ]);
 
@@ -67,13 +67,22 @@ export const AppWidgets = Object.freeze([
     {
         title: "状态栏",
         svg: "design/input",
-        guideId: 'statusbar',
+        guideId: 'app.statusbar',
         appId: App.StatusBar
     },
     {
         title: "导航栏",
         svg: "design/textarea",
-        guideId: 'header',
+        guideId: 'app.header',
         appId: App.Header
+    }
+]);
+
+export const WebWidgets = Object.freeze([
+    {
+        title: "导航栏",
+        svg: "design/textarea",
+        guideId: 'web.header',
+        webId: App.Header
     }
 ]);
