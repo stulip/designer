@@ -303,6 +303,10 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
         delete this.stateData[stateId];
     }
 
+    getDragElement() {
+
+    }
+
     /**
      * 原始表单数据
      * @returns {Object}

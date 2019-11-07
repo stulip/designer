@@ -53,7 +53,7 @@ export class Header extends Panel<Props> {
 
     getBoxRect(): { width: number, x: number, y: number, height: number } {
         const rect = super.getBoxRect();
-        rect.height = WidgetConst.App.HeaderHeight;
+        rect.height = WidgetConst.AppHeaderHeight;
         rect.width = WidgetConst.INITIAL;
         return rect;
     }

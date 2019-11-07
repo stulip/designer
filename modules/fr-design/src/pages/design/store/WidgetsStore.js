@@ -163,5 +163,5 @@ export class WidgetsStore extends BaseStore {
     @action
     handleStatePanelClose = () => {
         this.stateSlideActive = false;
-    }
+    };
 }

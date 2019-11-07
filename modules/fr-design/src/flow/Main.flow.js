@@ -74,8 +74,10 @@ export type WidgetState = {
     cid: string,
 }
 
-export type BasicWidgetDefined = {
+export type DragWidgetDefined = {
     title: string,
     guideId: string, // 类型id
-    svg: string,
+    appId?: string,// app widget类型
+    webId?: string, //web widget类型
+    svg?: string,
 }
