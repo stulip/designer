@@ -11,7 +11,8 @@ import {BaseStore} from "./BaseStore";
 import {DesignEvent} from "fr-web";
 import {PropsConst} from "../../../config/Attribute";
 import {Types} from "@xt-web/core";
-import type {WidgetConfigDefined, WidgetState} from "../../../flow/Main.flow";
+import type {PageConfig, PageData, WidgetConfigDefined, WidgetState} from "../../../flow/Main.flow";
+import WidgetModule from "../../../widget";
 
 export class ViewGroupStore extends BaseStore {
 
@@ -37,6 +38,9 @@ export class ViewGroupStore extends BaseStore {
     globalStateId;
     globalStates = [];
 
+    // 所有widget模块引用
+    @observable.ref widgetModule;
+
     addListener() {
         const that = this;
         // mouse
@@ -55,6 +59,15 @@ export class ViewGroupStore extends BaseStore {
         DesignEvent.removeListener(PropsConst.widgetMouseEnter, that.handleWidgetMouseEnter);
 
         //widget basic
+    }
+
+    init(config: PageConfig, options: { data: PageData } = {}) {
+        let that = this;
+        const {isApp} = config;
+        // 动态导入
+        WidgetModule[isApp ? "App" : "Web"].then(action(module => {
+            that.widgetModule = module.default;
+        }));
     }
 
     /**

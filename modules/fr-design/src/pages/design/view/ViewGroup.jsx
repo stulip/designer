@@ -6,7 +6,6 @@
 
 // @flow
 import React from "react";
-import {App} from "../../../widget/mobile";
 import {observer} from "mobx-react";
 import {classNames} from "fr-web";
 import "../../../widget/assets";
@@ -134,7 +133,8 @@ export class ViewGroup extends React.Component<Props, State> {
     }
 
     createWidget = (cid: string) => {
-        const widgetMap = this.props.store.widgetMap;
+        const store = this.props.store;
+        const widgetMap = store.widgetMap;
         const widget = widgetMap.get(cid);
         if (!widget) return null;
 
@@ -144,8 +144,8 @@ export class ViewGroup extends React.Component<Props, State> {
                 section: {canvasRect, canvasScale}
             }
         } = this.props.store;
+        const Comp = store.widgetModule[widget.component];
 
-        const Comp = App[widget.component];
         return (
             Comp && (
                 <Comp
@@ -154,7 +154,7 @@ export class ViewGroup extends React.Component<Props, State> {
                     canvasRect={canvasRect}
                     designRect={designRect}
                     widgetMap={widgetMap}
-                    module={App}
+                    module={store.widgetModule}
                 />
             )
         );
@@ -166,12 +166,12 @@ export class ViewGroup extends React.Component<Props, State> {
 
     _render() {
         const {store} = this.props;
-        const {main} = store;
+        const {main, widgetModule} = store;
         const {canvasRect, canvasScale} = main.section;
         const {designRect} = main.config;
         return (
             <div className={classNames("group-list", designRect.type)} ref={store.groupRef}>
-                {this.eachWidget(store.groupConfig)}
+                {widgetModule && this.eachWidget(store.groupConfig)}
             </div>
         );
     }

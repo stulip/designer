@@ -92,6 +92,7 @@ export class Main extends Component {
         const {showToolbar} = store.toolbar;
         const topHeight = showToolbar ? 90 : 72;
         const dragTop = showToolbar ? 60 : 42;
+        // const {isApp} = store.main.config;
 
         return (
             <>

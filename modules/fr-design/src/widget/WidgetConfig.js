@@ -19,6 +19,7 @@ const Web = Object.freeze({
 
 export const WidgetConst = Object.freeze({
     App,
+    Web,
     INITIAL: "initial",
     AppHeaderHeight: 44,// 默认导航栏高度
 });

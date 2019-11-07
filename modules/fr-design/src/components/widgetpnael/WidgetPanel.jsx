@@ -13,13 +13,18 @@ import type {DragWidgetDefined} from "../../flow/Main.flow";
 import {DragWidget} from "./DragWidget";
 import {AppWidgets, BasicWidgets} from "../../widget/WidgetConfig";
 
-type Props = {};
+type Props = {
+    isApp: boolean
+};
 type State = {};
 
 export class WidgetPanel extends React.Component<Props, State> {
 
     renderWidget = (item: DragWidgetDefined) => {
-        return <DragWidget key={item.guideId} item={item}/>
+        const {isApp} = this.props;
+        const {appId, webId} = item;
+        const widgetId = isApp ? appId : webId;
+        return <DragWidget key={item.guideId} item={item} widgetId={widgetId}/>
     };
 
     _render() {

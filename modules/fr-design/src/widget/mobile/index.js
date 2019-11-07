@@ -10,7 +10,7 @@ import {BottomOperateBar} from './BottomOperateBar'
 import {Text} from './Text'
 import {Panel} from './Panel'
 
-export const App = {
+export default {
     [WidgetConst.App.StatusBar]: StatusBar,
     [WidgetConst.App.Header]: Header,
     [WidgetConst.App.BottomOperateBar]: BottomOperateBar,

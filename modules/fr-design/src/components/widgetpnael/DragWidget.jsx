@@ -23,8 +23,8 @@ export class DragWidget extends React.Component<Props, State> {
         event.preventDefault();
 
         const {pageX, pageY} = event;
-        const {item} = that.props;
-        console.log(item)
+        const {item, widgetId} = that.props;
+        console.log(item, widgetId)
     };
 
     renderWidget() {
