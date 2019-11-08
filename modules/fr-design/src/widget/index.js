@@ -6,6 +6,6 @@
 import {Async} from "@xt-web/core";
 
 export default {
-    App: Async(() => import ('./mobile')),
-    Web: Async(() => import("./mobile"))
+    App: Async(() => import (/* webpackChunkName: "widget_mobile" */ './mobile')),
+    Web: Async(() => import (/* webpackChunkName: "widget_web" */ './mobile')),
 }

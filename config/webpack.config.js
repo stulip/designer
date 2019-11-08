@@ -66,7 +66,7 @@ const webConfig = {
                     src: Object.values(webpack.libs.cdn).filter(da => !!da.from).map(cdn => (
                         require.resolve(path.join(webpack.rootPath, `${cdn.from}${!~cdn.from.indexOf(".") ? "/" + cdn.name : ''}`))
                     )),
-                    dest: code => ({[`js/${webpack.libs.name}.js`]: code.replace(/\/\/# sourceMappingURL=[\w-]*.js.map/g, "")})
+                    dest: code => ({[`js/${webpack.libs.name}.js`]: code.replace(/\/\/# sourceMappingURL=[\w-.]*.js.map/g, "")})
                 }
             ],
             // transform: {
