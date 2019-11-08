@@ -26,7 +26,7 @@ const getNumberLockItems = function (options, all = {}, first = {}) {
     return configLock([
         {
             form: left.key,
-            type: left.type || Form.Const.Type.ConfirmInputNumber,
+            type: left.type || Form.Const.Type.IBotInputNumber,
             value: left.value,
             input: {title: left.title},
             handlePicker: left.handlePicker
@@ -40,7 +40,7 @@ const getNumberLockItems = function (options, all = {}, first = {}) {
         },
         {
             form: right.key,
-            type: right.type || Form.Const.Type.ConfirmInputNumber,
+            type: right.type || Form.Const.Type.IBotInputNumber,
             value: right.value,
             input: {title: right.title},
             handlePicker: right.handlePicker
@@ -101,7 +101,7 @@ const LayoutConfig = () => [
             {
                 title: "方向",
                 form: PropsConst.layoutDirection,
-                type: Form.Const.Type.SelectIBot,
+                type: Form.Const.Type.IBotSelect,
                 select: {data: ItemConst.Direction.options}
             },
             [
@@ -109,19 +109,19 @@ const LayoutConfig = () => [
                     title: "拉伸",
                     titleDirection: Form.Const.Direction.Bottom,
                     form: PropsConst.layoutFlexGrow,
-                    type: Form.Const.Type.ConfirmInputNumber
+                    type: Form.Const.Type.IBotInputNumber
                 },
                 {
                     title: "收缩",
                     titleDirection: Form.Const.Direction.Bottom,
                     form: PropsConst.layoutFlexShrink,
-                    type: Form.Const.Type.ConfirmInputNumber
+                    type: Form.Const.Type.IBotInputNumber
                 },
                 {
                     title: "尺寸",
                     titleDirection: Form.Const.Direction.Bottom,
                     form: PropsConst.layoutFlexBasis,
-                    type: Form.Const.Type.ConfirmInputNumber
+                    type: Form.Const.Type.IBotInputNumber
                 }
             ],
             [
@@ -129,14 +129,14 @@ const LayoutConfig = () => [
                     title: "主轴空间",
                     titleDirection: Form.Const.Direction.Bottom,
                     form: PropsConst.layoutJustifyContent,
-                    type: Form.Const.Type.SelectIBot,
+                    type: Form.Const.Type.IBotSelect,
                     select: {data: ItemConst.JustifyContent.options}
                 },
                 {
                     title: "次轴空间",
                     titleDirection: Form.Const.Direction.Bottom,
                     form: PropsConst.layoutAlignContent,
-                    type: Form.Const.Type.SelectIBot,
+                    type: Form.Const.Type.IBotSelect,
                     select: {data: ItemConst.AlignContent.options}
                 }
             ],
@@ -145,14 +145,14 @@ const LayoutConfig = () => [
                     title: "次轴对齐",
                     titleDirection: Form.Const.Direction.Bottom,
                     form: PropsConst.layoutAlignItems,
-                    type: Form.Const.Type.SelectIBot,
+                    type: Form.Const.Type.IBotSelect,
                     select: {data: ItemConst.AlignItems.options}
                 },
                 {
                     title: "次轴对齐(self)",
                     titleDirection: Form.Const.Direction.Bottom,
                     form: PropsConst.layoutAlignSelf,
-                    type: Form.Const.Type.SelectIBot,
+                    type: Form.Const.Type.IBotSelect,
                     select: {data: ItemConst.AlignSelf.options}
                 }
             ]
@@ -222,7 +222,7 @@ const LayoutConfig = () => [
             {
                 title: "样式",
                 form: PropsConst.layoutBorderStyle,
-                type: Form.Const.Type.SelectIBot,
+                type: Form.Const.Type.IBotSelect,
                 select: {data: ItemConst.BorderStyles.options}
             },
             groupNumberLockItems({

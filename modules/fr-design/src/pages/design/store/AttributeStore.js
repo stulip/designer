@@ -53,7 +53,7 @@ export class AttributeStore extends BaseStore {
                     [
                         {
                             form: "canvas.width",
-                            type: Form.Const.Type.ConfirmInputNumber,
+                            type: Form.Const.Type.IBotConfirmInputNumber,
                             value: canvasRect.width,
                             disabled: true,
                             input: {
@@ -63,12 +63,12 @@ export class AttributeStore extends BaseStore {
                             listener: {
                                 key: PropsConst.canvasSize,
                                 getValue: da => da.width,
-                                setValue: (width, data) => ({ width, height: data['canvas.height']})
+                                setValue: (width, data) => ({width, height: data['canvas.height']})
                             },
                         },
                         {
                             form: "canvas.height",
-                            type: Form.Const.Type.ConfirmInputNumber,
+                            type: Form.Const.Type.IBotConfirmInputNumber,
                             value: canvasRect.height,
                             input: {
                                 title: "高",
@@ -77,7 +77,7 @@ export class AttributeStore extends BaseStore {
                             listener: {
                                 key: PropsConst.canvasSize,
                                 getValue: da => da.height,
-                                setValue: (height, data) => ({ height, width: data['canvas.width']})
+                                setValue: (height, data) => ({height, width: data['canvas.width']})
                             },
                         }
                     ],

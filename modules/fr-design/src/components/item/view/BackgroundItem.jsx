@@ -8,7 +8,7 @@
 import React from "react";
 import "../assets/background.pcss";
 import {Form, Slider} from "fr-ui";
-import {ColorPicker, DesignEvent, IBotForm} from "fr-web";
+import {ColorPicker, DesignEvent, IBotConfirmInputNumber} from "fr-web";
 import {Color, Tools, Types} from "@xt-web/core";
 
 type Props = {
@@ -63,13 +63,14 @@ export class BackgroundItem extends Form.BaseItem<Props, State> {
                                 <div className="thumbnail" style={{ backgroundColor: value.rgba }} />
                             </div>
                         </div>
-                        <Slider value={value.alpha} onChange={that.handleAlpha} />
-                        <IBotForm.PanelInputNumber
+                        <Slider value={value.alpha} onChange={that.handleAlpha}/>
+                        <IBotConfirmInputNumber
                             min={0}
                             max={100}
                             value={value.alpha}
                             onConfirm={that.handleAlpha}
-                            className={"input-number"}
+                            size={"small"}
+                            className={"PanelInputNumber input-number"}
                         />
                     </div>
                 </section>

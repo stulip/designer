@@ -8,20 +8,20 @@ import {PropsConst} from "../../config/Attribute";
  */
 
 export const WidgetConfig = ({basic}) => [
-    {form: "widget.name", type: Form.Const.Type.PanelInput, className: "widget-name"},
+    {form: "widget.name", type: Form.Const.Type.IBotInput, className: "widget-name"},
     {
         className: "ic-content",
         config: [
             [
                 {
                     form: "widget.x",
-                    type: Form.Const.Type.ConfirmInputNumber,
+                    type: Form.Const.Type.IBotConfirmInputNumber,
                     disabled: basic.widgetX.disabled,
                     input: {title: "X ", min: basic.widgetX.min, max: basic.widgetX.max}
                 },
                 {
                     form: "widget.y",
-                    type: Form.Const.Type.ConfirmInputNumber,
+                    type: Form.Const.Type.IBotConfirmInputNumber,
                     disabled: basic.widgetY.disabled,
                     input: {title: "Y ", min: basic.widgetY.min, max: basic.widgetY.max}
                 }
@@ -30,7 +30,7 @@ export const WidgetConfig = ({basic}) => [
                 [
                     {
                         form: PropsConst.widgetWidth,
-                        type: Form.Const.Type.ConfirmInputNumber,
+                        type: Form.Const.Type.IBotConfirmInputNumber,
                         disabled: data => !data[PropsConst.widgetInitialWidth] || basic.widgetWidth.disabled,
                         input: {title: "W", min: basic.widgetWidth.min, max: basic.widgetWidth.max},
                         className: "size-input",
@@ -51,7 +51,7 @@ export const WidgetConfig = ({basic}) => [
                 [
                     {
                         form: PropsConst.widgetHeight,
-                        type: Form.Const.Type.ConfirmInputNumber,
+                        type: Form.Const.Type.IBotConfirmInputNumber,
                         disabled: data => !data[PropsConst.widgetInitialHeight] || basic.widgetHeight.disabled,
                         input: {title: "H", min: basic.widgetHeight.min, max: basic.widgetHeight.max},
                         className: "size-input",

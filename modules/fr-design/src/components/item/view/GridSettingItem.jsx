@@ -7,7 +7,7 @@
 // @flow
 import React from 'react';
 import {Form} from "fr-ui";
-import {IBotForm, IBotSVG} from 'fr-web';
+import {IBotCheck, IBotConfirmInputNumber, IBotSVG} from 'fr-web';
 import '../assets/grid-setting.pcss'
 
 type Props = {
@@ -40,16 +40,17 @@ export class GridSettingItem extends Form.BaseItem<Props, State> {
                 </header>
                 <section>
                     <div className={"grid-content"}>
-                        <IBotForm.Check isChecked={!!value.visible} onChange={that.handleCheck}/>
+                        <IBotCheck isChecked={!!value.visible} onChange={that.handleCheck}/>
                         <div className="dir-icon">
                             <IBotSVG name={'design/grid'}/>
                         </div>
-                        <IBotForm.PanelInputNumber
+                        <IBotConfirmInputNumber
                             min={0}
                             max={grid.max}
                             value={value.size}
                             onConfirm={that.handleSize}
-                            className={"input-number"}
+                            size={"small"}
+                            className={"PanelInputNumber input-number"}
                         />
                     </div>
                 </section>

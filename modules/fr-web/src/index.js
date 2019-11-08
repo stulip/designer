@@ -12,8 +12,12 @@ import ColorPicker, {parseColor} from "mb-react-color-picker";
 import IBotIcon from "@ibot/ibot/lib/icon";
 import IBotSVG from "@ibot/ibot/lib/svg";
 import IBotModal from "@ibot/ibot/lib/core-modal";
-import * as IBotForm from "@ibot/ibot/lib/form";
-import {Tooltip as IBotTooltip} from "@ibot/ibot/lib/text";
+import IBotTooltip from '@ibot/ibot/lib/tooltip';
+import IBotInputNumber from '@ibot/ibot/lib/numberInput';
+import IBotConfirmInputNumber from '@ibot/ibot/lib/confirmInputNumber';
+import IBotCheck, {CheckGroup as IBotCheckGroup} from '@ibot/ibot/lib/check';
+import IBotSelect, {SelectMenu as IBotSelectMenu} from '@ibot/ibot/lib/select';
+import IBotInput, {Textarea as IBotTextArea} from '@ibot/ibot/lib/input';
 // mobx
 import {configure} from "mobx";
 // EventEmitter
@@ -44,8 +48,15 @@ export {
     IBotSVG,
     IBotModal,
     IBotTooltip,
+    IBotCheck,
+    IBotCheckGroup,
+    IBotSelect,
+    IBotSelectMenu,
+    IBotInput,
+    IBotTextArea,
+    IBotInputNumber,
+    IBotConfirmInputNumber,
     EventEmitter,
     DesignEvent,
     classNames,
-    IBotForm
 };

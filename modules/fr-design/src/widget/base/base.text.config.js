@@ -18,17 +18,17 @@ export const BaseTextConfig = () => [
         config: [
             {
                 form: PropsConst.textValue,
-                type: Form.Const.Type.PanelInput,
+                type: Form.Const.Type.IBotInput,
             },
             [
                 {
                     title: "字体",
-                    type: Form.Const.Type.SelectIBot,
+                    type: Form.Const.Type.IBotSelect,
                     form: PropsConst.textSize,
                     titleDirection: Form.Const.Direction.Bottom,
-                    style: { maxWidth: 60 },
+                    style: {maxWidth: 60},
                     value: textSize,
-                    select: { data: ItemConst.FontSize.options }
+                    select: {data: ItemConst.FontSize.options}
                 },
                 {
                     title: "颜色",
@@ -41,33 +41,33 @@ export const BaseTextConfig = () => [
                 },
                 {
                     title: "对齐",
-                    type: Form.Const.Type.SelectIBot,
+                    type: Form.Const.Type.IBotSelect,
                     form: PropsConst.textAlign,
                     titleDirection: Form.Const.Direction.Bottom,
-                    select: { data: ItemConst.TextAlign.options }
+                    select: {data: ItemConst.TextAlign.options}
                 }
             ],
             [
                 {
                     title: "字间距",
-                    type: Form.Const.Type.ConfirmInputNumber,
+                    type: Form.Const.Type.IBotInputNumber,
                     form: PropsConst.textLetterSpacing,
                     titleDirection: Form.Const.Direction.Bottom,
                     input: {step: 0.1},
                 },
                 {
                     title: "行距",
-                    type: Form.Const.Type.ConfirmInputNumber,
+                    type: Form.Const.Type.IBotInputNumber,
                     form: PropsConst.textLineHeight,
                     titleDirection: Form.Const.Direction.Bottom,
                     input: {min: 12},
                 },
                 {
                     title: "粗细",
-                    type: Form.Const.Type.SelectIBot,
+                    type: Form.Const.Type.IBotSelect,
                     form: PropsConst.textWeight,
                     titleDirection: Form.Const.Direction.Bottom,
-                    select: { data: ItemConst.FontWeight.options }
+                    select: {data: ItemConst.FontWeight.options}
                 }
             ]
         ]

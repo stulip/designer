@@ -6,7 +6,7 @@
 
 // @flow
 import React from "react";
-import {IBotForm, IBotModal} from "fr-web";
+import {IBotInput, IBotModal} from "fr-web";
 import "./assets";
 
 type Props = {};
@@ -101,7 +101,7 @@ export class Dialog extends React.Component<Props, State> {
                 onClose={that.handleClose}
                 onCancel={that.handleCancel}
             >
-                <IBotForm.Input className={"prompt-input"} value={value} onChange={that.handleValue}/>
+                <IBotInput className={"prompt-input"} value={value} onChange={that.handleValue}/>
             </IBotModal>
         );
     }

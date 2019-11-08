@@ -2,15 +2,16 @@ import {FormView as View} from './FormView';
 import {FormConst as Const} from './FormConst'
 
 import {TextItem} from "./view/TextItem";
-import {ConfirmInputNumberItem} from './view/ConfirmInputNumberItem'
+import {IBotConfirmInputNumberItem} from './view/IBotConfirmInputNumberItem'
 import {BaseItem} from './base/BaseItem';
 import {BaseSelectItem} from "./base/BaseSelectItem";
 import {required} from './Required'
 import {GapItem, LineItem} from "./view/LineItem";
-import {PanelInputItem} from "./view/PanelInputItem";
+import {IBotInputItem} from "./view/IBotInputItem";
 import {SelectItem} from "./view/SelectItem";
 import {IBotSelectItem} from "./view/IBotSelectItem";
 import {SwitchItem} from "./view/SwitchItem";
+import {IBotInputNumberItem} from "./view/IBotInputNumberItem";
 
 //单选
 // View.registerComponent("select", {
@@ -48,14 +49,13 @@ import {SwitchItem} from "./view/SwitchItem";
 View.registerComponent(Const.Type.Text, {component: TextItem});
 
 //输入框
-View.registerComponent(Const.Type.ConfirmInputNumber, {component: ConfirmInputNumberItem});
-// View.registerComponent(Const.Type.ConfirmInputNumber, {component: InputNumberItem});
-View.registerComponent(Const.Type.PanelInput, {component: PanelInputItem});
+View.registerComponent(Const.Type.IBotConfirmInputNumber, {component: IBotConfirmInputNumberItem});
+View.registerComponent(Const.Type.IBotInputNumber, {component: IBotInputNumberItem});
+View.registerComponent(Const.Type.IBotInput, {component: IBotInputItem});
 
 //下拉框
 View.registerComponent(Const.Type.Select, {component: SelectItem});
-View.registerComponent(Const.Type.SelectIBot, {component: IBotSelectItem});
-// View.registerComponent(Const.Type.SelectIBot, {component: SelectItem});
+View.registerComponent(Const.Type.IBotSelect, {component: IBotSelectItem});
 
 // 分隔线
 View.registerComponent(Const.Type.Line, {component: LineItem});
@@ -72,7 +72,7 @@ export {
     // SelectItem,
     // SelectNormalItem,
     // SwitchItem,
-    ConfirmInputNumberItem,
+    IBotConfirmInputNumberItem,
     TextItem,
     BaseSelectItem,
     BaseItem,

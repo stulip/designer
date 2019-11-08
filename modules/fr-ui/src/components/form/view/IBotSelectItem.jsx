@@ -5,10 +5,9 @@
  * @sine 2018-12-27 11:29
  */
 import React from "react";
-import { BaseSelectItem } from "../base/BaseSelectItem";
-import { Types } from "@xt-web/core";
-import { classNames, IBotForm } from "fr-web";
-import { FormConst } from "../FormConst";
+import {BaseSelectItem} from "../base/BaseSelectItem";
+import {Types} from "@xt-web/core";
+import {IBotSelect} from "fr-web";
 
 class IBotSelectItem extends BaseSelectItem {
     static defaultProps = {
@@ -16,7 +15,7 @@ class IBotSelectItem extends BaseSelectItem {
     };
 
     onChange(data) {
-        const { single } = this.props;
+        const {single} = this.props;
         super.onChange(!single && !Array.isArray(data) && !Types.isEmpty(data) ? [data] : data);
     }
 
@@ -31,7 +30,7 @@ class IBotSelectItem extends BaseSelectItem {
         let { error, required, disabled, value } = that.state;
 
         return (
-            <IBotForm.Select
+            <IBotSelect
                 size={"small"}
                 placeholder={""}
                 {...select}

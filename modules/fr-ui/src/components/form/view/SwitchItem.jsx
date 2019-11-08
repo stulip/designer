@@ -7,7 +7,7 @@
 // @flow
 import React from 'react';
 import {BaseItem} from '../base/BaseItem'
-import {IBotForm} from 'fr-web'
+import {IBotCheck} from 'fr-web'
 
 type Props = {};
 type State = {};
@@ -19,7 +19,7 @@ export class SwitchItem extends BaseItem<Props, State> {
         const {value = false, disabled} = that.state;
 
         return (
-            <IBotForm.Check isChecked={value} onToggle={that.onChange} disabled={disabled}/>
+            <IBotCheck isChecked={value} onToggle={that.onChange} disabled={disabled}/>
         );
     };
 }

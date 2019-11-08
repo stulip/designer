@@ -25,7 +25,7 @@
     "yarn": ">=1.15.0"
   },
   "dependencies": {
-    "@ibot/ibot": "^0.6.0-dev.2",
+    "@ibot/ibot": "^0.7.0-dev.12",
     "@xt-web/core": "^0.2.8",
     "@xt-web/react": "^0.1.12",
     "@xt-web/react-dom": "^0.1.7",
@@ -35,7 +35,7 @@
     "lodash": "^4.17.15",
     "mb-react-color-picker": "^1.1.0-dev.1",
     "mb-sketch-ruler": "^1.1.0-dev.26",
-    "mobx": "^5.14.2",
+    "mobx": "^5.15.0",
     "mobx-react": "^6.1.4",
     "react": "16.11.0",
     "react-dom": "16.11.0",
