@@ -15,7 +15,6 @@ import type {PageConfig, PageData, WidgetConfigDefined, WidgetState} from "../..
 import WidgetModule from "../../../widget";
 
 export class ViewGroupStore extends BaseStore {
-
     // 组件布局
     _groupConfig = [];
     _widgetMap: Map<string, WidgetConfigDefined> = new Map();
@@ -65,9 +64,9 @@ export class ViewGroupStore extends BaseStore {
         let that = this;
         const {isApp} = config;
         // 动态导入
-        WidgetModule[isApp ? "App" : "Web"].then(action(module => {
-            that.widgetModule = module.default;
-        }));
+        WidgetModule[isApp ? "App" : "Web"]
+            .then(action(module => (that.widgetModule = module)))
+            .catch(e => window.console.log(e));
     }
 
     /**
@@ -97,7 +96,7 @@ export class ViewGroupStore extends BaseStore {
         that.main.widgets.setWidgetStates(that.globalStates, that.globalStateId);
 
         if (that.widget) {
-            that.widget.onUpdate = null
+            that.widget.onUpdate = null;
         }
 
         that.selectRect = null;
@@ -111,7 +110,7 @@ export class ViewGroupStore extends BaseStore {
      * @param {BaseWidget} [widget]
      */
     @action
-    setSelectWidget = (widget ?: BaseWidget) => {
+    setSelectWidget = (widget?: BaseWidget) => {
         let that = this;
         widget.onUpdate = that._reWidgetSelectBox;
         that.main.widgets.setWidgetStates(widget.getWidgetStates(), widget.getStateId());
@@ -215,7 +214,7 @@ export class ViewGroupStore extends BaseStore {
         if (!that.group) return;
         const groupRect = that.group.getBoundingClientRect();
         const rect = widget.widget.getBoundingClientRect();
-        const left = (rect.left - groupRect.left) / groupRect.width * 100;
+        const left = ((rect.left - groupRect.left) / groupRect.width) * 100;
         const top = ((rect.top - groupRect.top) / groupRect.height) * 100;
         const width = (rect.width / groupRect.width) * 100;
         const height = (rect.height / groupRect.height) * 100;
@@ -283,7 +282,7 @@ export class ViewGroupStore extends BaseStore {
             width: rect.width + parseInt(margin.left || 0) + parseInt(margin.right || 0),
             height: rect.height + parseInt(margin.top || 0) + parseInt(margin.bottom || 0),
             left: rect.left - parseInt(margin.left || 0),
-            top: rect.top - parseInt(margin.top || 0),
+            top: rect.top - parseInt(margin.top || 0)
         };
 
         const groupRect = that.group.getBoundingClientRect();

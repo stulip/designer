@@ -26,9 +26,9 @@
   },
   "dependencies": {
     "@ibot/ibot": "^0.7.0-dev.12",
-    "@xt-web/core": "^0.2.8",
-    "@xt-web/react": "^0.1.12",
-    "@xt-web/react-dom": "^0.1.7",
+    "@xt-web/core": "^0.2.10",
+    "@xt-web/react": "^0.1.13",
+    "@xt-web/react-dom": "^0.1.8",
     "classnames": "^2.2.6",
     "eventemitter3": "^4.0.0",
     "json5": "^0.5.1",
