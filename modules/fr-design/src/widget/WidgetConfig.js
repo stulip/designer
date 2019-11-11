@@ -12,19 +12,19 @@ const App = Object.freeze({
     Header: "app.header.1",
     BottomOperateBar: "app.bottom.operate.bar.1",
     Text: "app.text.1",
-    Panel: "app.panel.1",
+    Panel: "app.panel.1"
 });
 
 const Web = Object.freeze({
     Panel: "web.panel.1",
-    Text: "web.text.1",
+    Text: "web.text.1"
 });
 
 export const WidgetConst = Object.freeze({
     App,
     Web,
     INITIAL: "initial",
-    AppHeaderHeight: 44,// 默认导航栏高度
+    AppHeaderHeight: 44 // 默认导航栏高度
 });
 
 // Basic Widget
@@ -34,29 +34,29 @@ export const BasicWidgets = Object.freeze([
         svg: "design/rectangle",
         guideId: "basic.panel",
         appId: App.Panel,
-        webId: Web.Panel,
+        webId: Web.Panel
     },
     {
-        title: '文本',
+        title: "文本",
         svg: "design/text",
         guideId: "basic.text",
         appId: App.Text,
-        webId: Web.Text,
+        webId: Web.Text
     },
     {
         title: "按钮",
         svg: "design/button",
-        guideId: "basic.button",
+        guideId: "basic.button"
     },
     {
         title: "单行输入",
         svg: "design/input",
-        guideId: "basic.input",
+        guideId: "basic.input"
     },
     {
         title: "多行输入",
         svg: "design/textarea",
-        guideId: 'basic.textarea'
+        guideId: "basic.textarea"
     },
     {
         title: "图片",
@@ -70,13 +70,13 @@ export const AppWidgets = Object.freeze([
     {
         title: "状态栏",
         svg: "design/input",
-        guideId: 'app.statusbar',
+        guideId: "app.statusbar",
         appId: App.StatusBar
     },
     {
         title: "导航栏",
         svg: "design/textarea",
-        guideId: 'app.header',
+        guideId: "app.header",
         appId: App.Header
     }
 ]);
@@ -85,13 +85,12 @@ export const WebWidgets = Object.freeze([
     {
         title: "导航栏",
         svg: "design/textarea",
-        guideId: 'web.header',
+        guideId: "web.header",
         webId: App.Header
     }
 ]);
 
 export class WidgetFactory {
-
     // header
     static get [App.Header]() {
         const rightWidget = {
@@ -105,7 +104,7 @@ export class WidgetFactory {
             component: App.Text,
             name: "标题",
             widgetProps: {default: {[PropsConst.textAlign]: TextConst.textAlign.center, [PropsConst.textSize]: 17}},
-            children: '标题',
+            children: "标题"
         };
 
         const widget = {
@@ -113,6 +112,21 @@ export class WidgetFactory {
             component: App.Header,
             widget: {right: [rightWidget.cid], center: [center.cid]}
         };
-        return [widget, center, rightWidget]
+        return [widget, center, rightWidget];
+    }
+
+    //面板
+    static get [App.Panel]() {
+        return [{cid: randomId(), component: App.Panel}];
+    }
+
+    // 文字
+    static get [App.Text]() {
+        const widget = {
+            cid: randomId(),
+            component: App.Text,
+            children: "文本"
+        };
+        return [widget];
     }
 }
