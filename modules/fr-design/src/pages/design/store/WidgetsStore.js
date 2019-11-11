@@ -11,7 +11,6 @@ import type {WidgetState} from "../../../flow/Main.flow";
 import {arrayToMap, randomId} from "../../../config/Config";
 import {Types} from "@xt-web/core";
 import {WidgetFactory} from "../../../widget/WidgetConfig";
-import {PropsConst} from "../../../config/Attribute";
 
 export const SlideBarConfig = [
     {name: "status", svg: SVG.status_widget, tip: "状态", keyboard: "`", keyCode: '192'},
@@ -40,9 +39,7 @@ export class WidgetsStore extends BaseStore {
     @observable _activeStateId;
 
     // 拖拽出来的新组建
-    newWidget = null;
-    // drag widget rect
-    @observable newWidgetRect = {x: 0, y: 0, width: 0, height: 0};
+    newCId = null;
 
     addKeyListener() {
         let that = this;
@@ -174,8 +171,6 @@ export class WidgetsStore extends BaseStore {
     @action
     handleWidgetDragMove = (event: MouseEvent, widgetId: string) => {
         const that = this;
-        that.newWidgetRect.x = event.pageX;
-        that.newWidgetRect.y = event.pageY;
     };
 
     @action
@@ -186,24 +181,17 @@ export class WidgetsStore extends BaseStore {
         const widgetMap = arrayToMap(widgets, 'cid');
         viewGroup.setWidgetMap(widgets);
 
+        const cid = widgets[0].cid;
         if (!viewGroup.widget) {
-            viewGroup.addNewWidget(widgets[0].cid);
-
-            that.newWidget = viewGroup.createWidget(widgets[0], widgetMap);
-            that.newWidgetRect.width = viewGroup.group.offsetWidth;
-            that.newWidgetRect.height = viewGroup.group.offsetHeight;
+            viewGroup.addNewWidget(cid);
         } else {
-            const isFlag = viewGroup.widget.addNewWidget(widgets[0].cid);
+            const isFlag = viewGroup.widget.addNewWidget(cid);
             if (isFlag === false) {
                 console.log('不支持添加子组件!');
+                return false;
             }
-
-            that.newWidget = viewGroup.widget.createWidget(widgets[0].cid, widgetMap);
-            that.newWidgetRect.width = viewGroup.widget.getFormData()[PropsConst.widgetWidth];
-            that.newWidgetRect.height = viewGroup.widget.getFormData()[PropsConst.widgetHeight];
         }
-        that.newWidgetRect.x = event.pageX;
-        that.newWidgetRect.y = event.pageY;
+        that.newCId = cid;
     };
 
     handleWidgetDragEnd = (event: MouseEvent, widgetId: string) => {
