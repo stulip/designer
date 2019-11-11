@@ -52,6 +52,13 @@ export class Header extends Panel<Props> {
         return rect;
     }
 
+    addNewWidget(widgetId: string) {
+        const that = this;
+        const {widget: {right}} = that.state;
+        const rightWidget = that.childrenRef.get(right[0]);
+        rightWidget && rightWidget.addNewWidget(widgetId);
+    }
+
     // widgetProps(): [] {
     //     const that = this;
     //     const config = super.widgetProps();
@@ -60,10 +67,10 @@ export class Header extends Panel<Props> {
     //     ];
     // }
 
-    renderChild(): * {
+    renderChild() {
         const that = this;
         const data = that.getFormData();
-        const {widget: {right: rightWidget, center: centerWidget} = {}} = that.props;
+        const {widget: {right: rightWidget, center: centerWidget} = {}} = that.state;
         return (
             <>
                 <div className={"header-left flex middle"}>

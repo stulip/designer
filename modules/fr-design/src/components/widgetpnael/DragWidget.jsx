@@ -22,6 +22,8 @@ export class DragWidget extends React.PureComponent<Props, State> {
 
     constructor(props) {
         super(props);
+
+        this.isDrag = false;
     }
 
     addListener() {
@@ -35,15 +37,22 @@ export class DragWidget extends React.PureComponent<Props, State> {
     }
 
     handleMouseUp = (event: MouseEvent) => {
-        this.removeListener();
-        const {item, widgetId, onDragEnd} = this.props;
+        let that = this;
+        that.removeListener();
+        that.isDrag = false;
+        const {item, widgetId, onDragEnd} = that.props;
         onDragEnd && onDragEnd(event, widgetId, item);
     };
 
     handleMouseMove = (event: MouseEvent) => {
         const that = this;
-        const {item, widgetId, onDragMove} = that.props;
-        onDragMove && onDragMove(event, widgetId, item);
+        const {item, widgetId, onDragMove, onDragStart} = that.props;
+        if (!that.isDrag) {
+            that.isDrag = true;
+            onDragStart && onDragStart(event, widgetId, item);
+        } else {
+            onDragMove && onDragMove(event, widgetId, item);
+        }
     };
 
     handleMouseDown = (event: MouseEvent) => {
@@ -52,9 +61,6 @@ export class DragWidget extends React.PureComponent<Props, State> {
         event.stopPropagation();
         event.preventDefault();
         that.addListener();
-
-        const {item, widgetId, onDragStart} = that.props;
-        onDragStart && onDragStart(event, widgetId, item);
     };
 
     renderWidget() {

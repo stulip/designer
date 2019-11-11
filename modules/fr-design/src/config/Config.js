@@ -126,3 +126,15 @@ export const createConfig = (options: ConfigOption): PageConfig => {
 export function randomId() {
     return XMath.guid(16);
 }
+
+/**
+ * 数组对象转换成Map对象
+ * @param {Array<Object>} array
+ * @param {string} key
+ * @returns {Map<any, Object>}
+ */
+export function arrayToMap(array, key) {
+    const map = new Map();
+    array.forEach(da => map.set(da[key], da));
+    return map;
+}

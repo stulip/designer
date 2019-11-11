@@ -5,13 +5,14 @@
  */
 
 // @flow
-import * as React from "react";
+import React from "react";
+import ReactDOM from 'react-dom';
 import "../assets/widgets.pcss";
 import {IBotIcon, IBotSVG} from "fr-web";
 import {observer} from "mobx-react";
 import {WidgetsStore} from "../store/WidgetsStore";
 
-type Props = {store: WidgetsStore};
+type Props = { store: WidgetsStore };
 type State = {};
 
 @observer
@@ -23,6 +24,25 @@ export class Widgets extends React.Component<Props, State> {
 
     componentWillUnmount() {
         this.props.store.unmount();
+    }
+
+    renderNewWidget() {
+        const that = this;
+        const {main, newWidget, newWidgetRect} = that.props.store;
+        const {designRect} = main.config;
+        const style = {
+            width: newWidgetRect.width,
+            height: newWidgetRect.height,
+            left: newWidgetRect.x,
+            top: newWidgetRect.y
+        };
+        return (
+            ReactDOM.createPortal((
+                <div style={style} className={`group-list ${designRect.type} drag-new-widget`}>
+                    {newWidget}
+                </div>
+            ), document.body)
+        )
     }
 
     render() {
@@ -50,7 +70,7 @@ export class Widgets extends React.Component<Props, State> {
                                   className={`toggle-btn ${store.isLeftPanelOpen ? 'is-toggle' : ''}`}/>
                     </div>
                 </div>
-
+                {this.renderNewWidget()}
             </div>
         );
     };

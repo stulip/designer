@@ -28,7 +28,7 @@ export class BaseText extends BasePanel<BaseTextProps, State> {
 
     getDefaultConfig(): {} {
         const that = this;
-        const {children} = that.props;
+        const {children} = that.state;
         const spCfg = super.getDefaultConfig();
 
         if (Types.isString(children) && Types.isEmpty(spCfg[PropsConst.textValue])) {
@@ -44,6 +44,11 @@ export class BaseText extends BasePanel<BaseTextProps, State> {
 
     widgetProps(child: Array<Object> = []): Array<Object> {
         return super.widgetProps([...child, ...BaseTextConfig()]);
+    }
+
+    // 默认不可添加子组件
+    addNewWidget(widgetId: string) {
+        return false;
     }
 
     renderChild() {

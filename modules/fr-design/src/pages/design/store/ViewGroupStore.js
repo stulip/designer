@@ -5,7 +5,7 @@
  * @sine 2019-10-10 10:25
  */
 import React from "react";
-import {action, observable} from "mobx";
+import {action, computed, observable} from "mobx";
 import {BaseWidget} from "../../../widget/base/BaseWidget";
 import {BaseStore} from "./BaseStore";
 import {DesignEvent} from "fr-web";
@@ -16,7 +16,7 @@ import WidgetModule from "../../../widget";
 
 export class ViewGroupStore extends BaseStore {
     // 组件布局
-    _groupConfig = [];
+    @observable _groupConfig = [];
     _widgetMap: Map<string, WidgetConfigDefined> = new Map();
     groupRef = React.createRef();
 
@@ -313,12 +313,22 @@ export class ViewGroupStore extends BaseStore {
         );
     }
 
-    get groupConfig(): [] {
-        return this._groupConfig;
+    @computed
+    get groupConfig(): [string] {
+        return this._groupConfig.slice();
     }
 
     set groupConfig(value: Array) {
         this._groupConfig = value;
+    }
+
+    /**
+     * 添加新的组件
+     * @param {string} widgetId
+     */
+    @action
+    addNewWidget(widgetId) {
+        this._groupConfig.push(widgetId);
     }
 
     /**
@@ -339,25 +349,41 @@ export class ViewGroupStore extends BaseStore {
         }
     }
 
-    createWidget(widget: WidgetConfigDefined, widgetMap: Map<string, WidgetConfigDefined>) {
+    /**
+     * 添加widget到widget Map
+     * @param widgets
+     */
+    setWidgetMap(widgets: WidgetConfigDefined[]) {
+        widgets.forEach(widget => this._widgetMap.set(widget.cid, widget));
+    }
+
+    createWidget(widgetIds: string | string[], widgetMap: Map<string, WidgetConfigDefined>) {
         const that = this;
+        widgetMap = widgetMap || that.widgetMap;
+        const names = Array.isArray(widgetIds) ? widgetIds : [widgetIds];
+
         const {
             config: {designRect},
             section: {canvasRect, canvasScale}
         } = that.main;
-        const Comp = that.widgetModule[widget.component];
 
-        return (
-            Comp && (
-                <Comp
-                    key={widget.cid}
-                    {...widget}
-                    canvasRect={canvasRect}
-                    designRect={designRect}
-                    widgetMap={widgetMap}
-                    module={that.widgetModule}
-                />
-            )
-        );
+        return names.map(cid => {
+            const widget = widgetMap.get(cid);
+            if (!widget) return null;
+            const Comp = that.widgetModule[widget.component];
+
+            return (
+                Comp && (
+                    <Comp
+                        key={widget.cid}
+                        {...widget}
+                        canvasRect={canvasRect}
+                        designRect={designRect}
+                        widgetMap={widgetMap}
+                        module={that.widgetModule}
+                    />
+                )
+            );
+        });
     }
 }

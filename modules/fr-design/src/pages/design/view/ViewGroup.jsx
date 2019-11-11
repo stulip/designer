@@ -7,7 +7,6 @@
 // @flow
 import React from "react";
 import {observer} from "mobx-react";
-import {classNames} from "fr-web";
 import "../../../widget/assets";
 import {ViewGroupStore} from "../store/ViewGroupStore";
 import {LayoutConst, PropsConst, TextConst} from "../../../config/Attribute";
@@ -134,27 +133,14 @@ export class ViewGroup extends React.Component<Props, State> {
         store.unmount();
     }
 
-    createWidget = (cid: string) => {
-        const store = this.props.store;
-        const widgetMap = store.widgetMap;
-        const widget = widgetMap.get(cid);
-        if (!widget) return null;
-
-        return store.createWidget(widget, widgetMap);
-    };
-
-    eachWidget = config => {
-        return config.map(this.createWidget);
-    };
-
     _render() {
         const {store} = this.props;
         const {main, widgetModule} = store;
         const {canvasRect, canvasScale} = main.section;
         const {designRect} = main.config;
         return (
-            <div className={classNames("group-list", designRect.type)} ref={store.groupRef}>
-                {widgetModule && this.eachWidget(store.groupConfig)}
+            <div className={`group-list group-content ${designRect.type}`} ref={store.groupRef}>
+                {widgetModule && store.createWidget(store.groupConfig)}
             </div>
         );
     }

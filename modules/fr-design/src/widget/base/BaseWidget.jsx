@@ -15,19 +15,17 @@ import {WidgetConfig} from "./base.widget.config";
 export type BaseWidgetProps = {
     canvasRect: Rect,
     designRect: DesignType,
-    module: Object,// 所有可用属性控件
+    module: Object, // 所有可用属性控件
     parent?: { current: any },
+    isHasBox: boolean, // 是否有box选框
     ...WidgetConfigDefined
 };
-type State = {};
+type State = {
+    widget: Object,
+    children: string[] | string
+};
 
-export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
-
-    static createNewWidgetConfig() {
-        // console.warn('子类实现');
-        return {};
-    }
-
+export class BaseWidget extends React.Component<BaseWidgetProps, State> {
     widgetRef = React.createRef();
 
     // 状态标识
@@ -37,7 +35,7 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
     stateData = {
         default: {
             data: {},
-            props: {},
+            props: {}
         }
     };
     states: [WidgetState] = [];
@@ -46,16 +44,34 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
         return this.widgetRef.current;
     }
 
-    // 父节点                                                  ....
+    // 父节点
     get parentWidget(): BaseWidget | null {
         return this.props.parent;
+    }
+
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (nextProps.widget !== prevState.pWidget || nextProps.children !== prevState.pChildren) {
+            const {widget, children} = nextProps;
+            return {
+                widget,
+                pWidget: widget,
+                children,
+                pChildren: children
+            };
+        }
+        return null;
     }
 
     constructor(props) {
         super(props);
         let that = this;
-        that.state = {};
+        that.state = {
+            widget: props.widget,
+            children: props.children,
+        };
         that.states = props.states || [];
+        // 所有子节点引用
+        that.childrenRef = new Map();
         // 更新回调
         that.onUpdate = null;
         that._styles = null;
@@ -71,7 +87,7 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
         for (const [key, value] of Object.entries(widgetProps)) {
             const data = that.createWidgetProps(value);
             const props = that.widgetProps();
-            that.stateData[key] = {data, props}
+            that.stateData[key] = {data, props};
         }
     }
 
@@ -89,37 +105,39 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
      */
     get stateId() {
         const id = this._stateId;
-        return (!id || id === StatesConst.global.cid) ? StatesConst.default.cid : id;
+        return !id || id === StatesConst.global.cid ? StatesConst.default.cid : id;
     }
 
     /**
      * 创建子widget
-     * @param {Array<WidgetConfigDefined>|WidgetConfigDefined} widgetNames
+     * @param {Array<string>|string} widgetIds
      * @param {Map<string, WidgetConfigDefined>} [widgetMap]
      * @returns {*}
      */
-    createWidget(widgetNames, widgetMap) {
+    createWidget(widgetIds, widgetMap) {
         const that = this;
         const {canvasRect, designRect, module} = that.props;
         widgetMap = widgetMap || that.props.widgetMap;
-        const names = Array.isArray(widgetNames) ? widgetNames : [widgetNames];
+        const names = Array.isArray(widgetIds) ? widgetIds : [widgetIds];
 
         return names.map(cid => {
             const widget = widgetMap.get(cid);
             if (!widget) return null;
             const Comp = module[widget.component];
-
-            return Comp && (
-                <Comp
-                    key={cid}
-                    {...widget}
-                    canvasRect={canvasRect}
-                    designRect={designRect}
-                    widgetMap={widgetMap}
-                    module={module}
-                    parent={that}
-                />
-            )
+            return (
+                Comp && (
+                    <Comp
+                        key={cid}
+                        {...widget}
+                        canvasRect={canvasRect}
+                        designRect={designRect}
+                        widgetMap={widgetMap}
+                        module={module}
+                        parent={that}
+                        ref={ref => that.childrenRef.set(cid, ref)}
+                    />
+                )
+            );
         });
     }
 
@@ -130,17 +148,24 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
 
     componentDidMount() {
         const that = this;
-        that.props.widgetMap && that.addListener();
+        const {isHasBox = true, widgetMap} = that.props;
+        widgetMap && isHasBox && that.addListener();
     }
 
     componentWillUnmount() {
         const that = this;
-        that.props.widgetMap && that.removeListener();
+        const {isHasBox = true, widgetMap} = that.props;
+        widgetMap && isHasBox && that.removeListener();
     }
 
     componentDidUpdate(prevProps, prevState) {
         let that = this;
         that.onUpdate && that.onUpdate();
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        return nextState.widget !== this.state.widget
+            || nextState.children !== this.state.children;
     }
 
     // 子类实现, 默认值
@@ -150,7 +175,7 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
         return {
             [PropsConst.widgetName]: name || that.getName(),
             [PropsConst.widgetInitialWidth]: false,
-            [PropsConst.widgetInitialHeight]: false,
+            [PropsConst.widgetInitialHeight]: false
         };
     }
 
@@ -289,9 +314,9 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
             that.refreshWidget();
             // console.log('状态切换:', stateId);
         } else {
-            console.error('状态属性未找到:', stateId);
+            console.error("状态属性未找到:", stateId);
         }
-    };
+    }
 
     /**
      * 添加状态, 复制当前状态数据
@@ -312,8 +337,15 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
         delete this.stateData[stateId];
     }
 
-    getDragElement() {
-
+    /**
+     * 子类可重写, 默认Add widget 到children 里面
+     * @param {string} widgetId
+     * @returns {undefined|boolean}
+     */
+    addNewWidget(widgetId: string) {
+        const that = this;
+        const {children = []} = that.state;
+        that.setState({children: [...children, widgetId]});
     }
 
     /**
@@ -345,7 +377,7 @@ export class BaseWidget extends React.PureComponent<BaseWidgetProps, State> {
     }
 
     renderChild(options) {
-        return this.renderWidget(this.props.children);
+        return this.renderWidget(this.state.children);
     }
 
     render() {

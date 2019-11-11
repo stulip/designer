@@ -8,8 +8,10 @@ import {action, computed, observable} from "mobx";
 import {Dialog, SVG} from "fr-ui";
 import {BaseStore} from "./BaseStore";
 import type {WidgetState} from "../../../flow/Main.flow";
-import {randomId} from "../../../config/Config";
+import {arrayToMap, randomId} from "../../../config/Config";
 import {Types} from "@xt-web/core";
+import {WidgetFactory} from "../../../widget/WidgetConfig";
+import {PropsConst} from "../../../config/Attribute";
 
 export const SlideBarConfig = [
     {name: "status", svg: SVG.status_widget, tip: "状态", keyboard: "`", keyCode: '192'},
@@ -37,6 +39,10 @@ export class WidgetsStore extends BaseStore {
     @observable _widgetStates = [];
     @observable _activeStateId;
 
+    // 拖拽出来的新组建
+    newWidget = null;
+    // drag widget rect
+    @observable newWidgetRect = {x: 0, y: 0, width: 0, height: 0};
 
     addKeyListener() {
         let that = this;
@@ -165,12 +171,39 @@ export class WidgetsStore extends BaseStore {
         this.stateSlideActive = false;
     };
 
+    @action
     handleWidgetDragMove = (event: MouseEvent, widgetId: string) => {
-        console.log('move', widgetId)
+        const that = this;
+        that.newWidgetRect.x = event.pageX;
+        that.newWidgetRect.y = event.pageY;
     };
 
+    @action
     handleWidgetDragStart = (event: MouseEvent, widgetId: string) => {
-        console.log('start', widgetId)
+        const that = this;
+        const {viewGroup} = that.main;
+        const widgets = WidgetFactory[widgetId];
+        const widgetMap = arrayToMap(widgets, 'cid');
+        viewGroup.setWidgetMap(widgets);
+
+        if (!viewGroup.widget) {
+            viewGroup.addNewWidget(widgets[0].cid);
+
+            that.newWidget = viewGroup.createWidget(widgets[0], widgetMap);
+            that.newWidgetRect.width = viewGroup.group.offsetWidth;
+            that.newWidgetRect.height = viewGroup.group.offsetHeight;
+        } else {
+            const isFlag = viewGroup.widget.addNewWidget(widgets[0].cid);
+            if (isFlag === false) {
+                console.log('不支持添加子组件!');
+            }
+
+            that.newWidget = viewGroup.widget.createWidget(widgets[0].cid, widgetMap);
+            that.newWidgetRect.width = viewGroup.widget.getFormData()[PropsConst.widgetWidth];
+            that.newWidgetRect.height = viewGroup.widget.getFormData()[PropsConst.widgetHeight];
+        }
+        that.newWidgetRect.x = event.pageX;
+        that.newWidgetRect.y = event.pageY;
     };
 
     handleWidgetDragEnd = (event: MouseEvent, widgetId: string) => {
