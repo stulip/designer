@@ -83,3 +83,11 @@ export type DragWidgetDefined = {
     webId?: string, //web widget类型
     svg?: string,
 }
+
+// dom to image
+type domtoimage = {
+    toPng: ()=> {},
+    toJpeg: ()=> {}
+    toSvg: () => {}
+    toPixelData: ()=> {},
+};

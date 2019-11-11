@@ -141,6 +141,11 @@ config.libs.cdn = {
         from: 'node_modules/react-router-config/umd',
         to: config.libs.name,
     },
+    domToImage: {
+        name: `dom-to-image-more.min.js`,
+        from: 'node_modules/dom-to-image-more/dist',
+        to: config.libs.name,
+    },
     xtCore: {
         name: `xt.core.min.js`,
         from: 'node_modules/@xt-web/core/dist',

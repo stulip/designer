@@ -30,6 +30,7 @@
     "@xt-web/react": "^0.1.13",
     "@xt-web/react-dom": "^0.1.8",
     "classnames": "^2.2.6",
+    "dom-to-image-more": "2.8.0",
     "eventemitter3": "^4.0.0",
     "json5": "^0.5.1",
     "lodash": "^4.17.15",

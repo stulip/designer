@@ -38,8 +38,10 @@ export class WidgetsStore extends BaseStore {
     @observable _widgetStates = [];
     @observable _activeStateId;
 
-    // 拖拽出来的新组建
+    // 拖拽出来的新组建ID
     newCId = null;
+    // 新组件DOM
+    newWidgetDOM = null;
 
     addKeyListener() {
         let that = this;
@@ -171,6 +173,25 @@ export class WidgetsStore extends BaseStore {
     @action
     handleWidgetDragMove = (event: MouseEvent, widgetId: string) => {
         const that = this;
+        let dom = that.newWidgetDOM;
+        if (!dom) {
+            const widgetDOM = document.querySelector(`div[data-cid='${that.newCId}']`);
+            if (widgetDOM) {
+                that.newWidgetDOM = dom = widgetDOM;
+
+                domtoimage.toPng(widgetDOM)
+                    .then(function (dataUrl) {
+                        var link = document.createElement('a');
+                        link.download = 'my-image-name.png';
+                        link.href = dataUrl;
+                        link.click();
+                    });
+            }
+        }
+
+        if (dom) {
+
+        }
     };
 
     @action
@@ -195,6 +216,9 @@ export class WidgetsStore extends BaseStore {
     };
 
     handleWidgetDragEnd = (event: MouseEvent, widgetId: string) => {
-        console.log('end', widgetId)
+        const that = this;
+        console.log('end', widgetId, that.newCId);
+        that.newWidgetDOM = null;
+        that.newCId = null;
     }
 }
