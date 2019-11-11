@@ -340,7 +340,7 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
     /**
      * 子类可重写, 默认Add widget 到children 里面
      * @param {string} widgetId
-     * @returns {undefined|boolean}
+     * @returns {*|boolean}
      */
     addNewWidget(widgetId: string) {
         const that = this;
