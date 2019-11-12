@@ -275,7 +275,6 @@ export class ViewGroupStore extends BaseStore {
                 // 设置选框
                 that.setSelectBox(lastWidget.widget);
                 that.setSelectWidget(lastWidget);
-                that.addMoveListener();
             }
         }
         that.dbWidgetDownTimer = Date.now();
