@@ -9,6 +9,7 @@ export const PropsConst = {
     canvasSize: "basic.canvas.size",
     background: "basic.background",
     designGrid: "basic.design.grid",
+    opacity: "basic.opacity",
 
     //widget basic
     widgetName: "widget.name",

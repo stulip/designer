@@ -6,6 +6,7 @@
 
 // @flow
 import React from "react";
+import {classNames} from 'fr-web';
 import type {BaseWidgetProps} from "./BaseWidget";
 import {BaseWidget} from "./BaseWidget";
 import "../assets/panel.pcss";
@@ -77,7 +78,7 @@ export class BasePanel extends BaseWidget<BasePanelProps, State> {
 
     render() {
         const that = this;
-        const {cid, children} = that.props;
+        const {cid, children, isDrag} = that.props;
         const data = that.getFormData();
         const width = data[PropsConst.widgetWidth];
         const height = data[PropsConst.widgetHeight];
@@ -98,9 +99,9 @@ export class BasePanel extends BaseWidget<BasePanelProps, State> {
             ...layout.radius,
             ...layout.flex.self
         };
-
         return (
-            <div className={"group-flow"} style={pStyle} ref={that.widgetRef} data-cid={cid}>
+            <div className={classNames("group-flow", {"drag-widget": isDrag})} style={pStyle} ref={that.widgetRef}
+                 data-cid={cid}>
                 <div className={"view-panel"} style={layout.flex.child}>
                     {that.renderChild()}
                 </div>

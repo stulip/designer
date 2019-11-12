@@ -6,7 +6,7 @@
 
 // @flow
 import React from "react";
-import {DesignEvent} from "fr-web";
+import {classNames, DesignEvent} from "fr-web";
 import {PropsConst, StatesConst} from "../../config/Attribute";
 import {Form} from "fr-ui";
 import type {DesignType, Rect, WidgetConfigDefined, WidgetProps, WidgetState} from "../../flow/Main.flow";
@@ -18,6 +18,7 @@ export type BaseWidgetProps = {
     module: Object, // 所有可用属性控件
     parent?: { current: any },
     isHasBox: boolean, // 是否有box选框
+    isDrag: boolean, // 是否被拖动
     ...WidgetConfigDefined
 };
 type State = {
@@ -66,6 +67,7 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
         super(props);
         let that = this;
         that.state = {
+            dragWidgetId: null,
             widget: props.widget,
             children: props.children,
         };
@@ -117,6 +119,7 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
     createWidget(widgetIds, widgetMap) {
         const that = this;
         const {canvasRect, designRect, module} = that.props;
+        const {dragWidgetId} = that.state;
         widgetMap = widgetMap || that.props.widgetMap;
         const names = Array.isArray(widgetIds) ? widgetIds : [widgetIds];
 
@@ -135,6 +138,7 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
                         module={module}
                         parent={that}
                         ref={ref => that.childrenRef.set(cid, ref)}
+                        isDrag={dragWidgetId === cid}
                     />
                 )
             );
@@ -345,7 +349,21 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
     addNewWidget(widgetId: string) {
         const that = this;
         const {children = []} = that.state;
-        that.setState({children: [...children, widgetId]});
+        that.setState({children: [...children, widgetId], dragWidgetId: widgetId});
+    }
+
+    /**
+     * 删除widget
+     * @param widgetId
+     */
+    removeWidget(widgetId: string) {
+        const that = this;
+        const {children = []} = that.state;
+        const wix = children.indexOf(widgetId);
+        if (wix !== -1) {
+            children.splice(wix, 1);
+            that.setState({children: Array.from(children), dragWidgetId: null});
+        }
     }
 
     /**
@@ -382,9 +400,9 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
 
     render() {
         let that = this;
-        const {cid} = that.props;
+        const {cid, isDrag} = that.props;
         return (
-            <div className={"group-flow"} ref={that.widgetRef} data-cid={cid}>
+            <div className={classNames("group-flow", {"drag-widget": isDrag})} ref={that.widgetRef} data-cid={cid}>
                 {that.renderChild()}
             </div>
         );

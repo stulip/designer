@@ -41,6 +41,7 @@ export class WidgetsStore extends BaseStore {
 
     // 拖拽出来的新组建ID
     newCId = null;
+    newWidgets = [];// 拖拽出来所有的新的widget
     // 新组件DOM
     newWidgetDOM = null;
     newWidgetRef = React.createRef();
@@ -202,8 +203,8 @@ export class WidgetsStore extends BaseStore {
         const {viewGroup} = that.main;
         const widgets = WidgetFactory[widgetId];
         const widgetMap = arrayToMap(widgets, 'cid');
-        viewGroup.setWidgetMap(widgets);
 
+        viewGroup.setWidgetMap(widgets);
         const cid = widgets[0].cid;
         if (!viewGroup.widget) {
             viewGroup.addNewWidget(cid);
@@ -211,15 +212,25 @@ export class WidgetsStore extends BaseStore {
             const isFlag = viewGroup.widget.addNewWidget(cid);
             if (isFlag === false) {
                 console.log('不支持添加子组件!');
+                viewGroup.deleteWidgetMap(widgets);
                 return false;
             }
         }
         that.newCId = cid;
+        that.newWidgets = widgets;
     };
 
     handleWidgetDragEnd = (event: MouseEvent, widgetId: string) => {
         const that = this;
-        //
+        // 删除
+        const {viewGroup} = that.main;
+        viewGroup.deleteWidgetMap(that.newWidgets);
+        if (!viewGroup.widget) {
+            viewGroup.removeWidget(that.newCId);
+        } else {
+            viewGroup.widget.removeWidget(that.newCId);
+        }
+
         that.newWidgetDOM = null;
         that.newCId = null;
         that.newWidgetRef.current.innerText = "";

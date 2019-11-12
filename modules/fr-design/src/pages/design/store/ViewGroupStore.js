@@ -33,6 +33,9 @@ export class ViewGroupStore extends BaseStore {
     widgetList: [BaseWidget] = [];
     widgetList2: [BaseWidget] = [];
 
+    // 拖动的widget id
+    @observable dragWidgetId = null;
+
     // 全局属性状态
     globalStateId;
     globalStates = [];
@@ -329,6 +332,14 @@ export class ViewGroupStore extends BaseStore {
     @action
     addNewWidget(widgetId) {
         this._groupConfig.push(widgetId);
+        this.dragWidgetId = widgetId;
+    }
+
+    @action
+    removeWidget(widgetId: string) {
+        const that = this;
+        that.dragWidgetId = null;
+        that._groupConfig.remove(widgetId);
     }
 
     /**
@@ -357,6 +368,14 @@ export class ViewGroupStore extends BaseStore {
         widgets.forEach(widget => this._widgetMap.set(widget.cid, widget));
     }
 
+    /**
+     * 从 widget Map 删除 widget
+     * @param widgets
+     */
+    deleteWidgetMap(widgets: WidgetConfigDefined[]) {
+        widgets.forEach(widget => this._widgetMap.delete(widget.cid));
+    }
+
     createWidget(widgetIds: string | string[], widgetMap: Map<string, WidgetConfigDefined>) {
         const that = this;
         widgetMap = widgetMap || that.widgetMap;
@@ -381,6 +400,7 @@ export class ViewGroupStore extends BaseStore {
                         designRect={designRect}
                         widgetMap={widgetMap}
                         module={that.widgetModule}
+                        isDrag={that.dragWidgetId === widget.cid}
                     />
                 )
             );
