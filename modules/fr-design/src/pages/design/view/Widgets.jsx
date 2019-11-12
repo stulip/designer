@@ -6,6 +6,7 @@
 
 // @flow
 import React from "react";
+import ReactDOM from 'react-dom';
 import "../assets/widgets.pcss";
 import {IBotIcon, IBotSVG} from "fr-web";
 import {observer} from "mobx-react";
@@ -50,6 +51,9 @@ export class Widgets extends React.Component<Props, State> {
                                   className={`toggle-btn ${store.isLeftPanelOpen ? 'is-toggle' : ''}`}/>
                     </div>
                 </div>
+                {ReactDOM.createPortal((
+                    <div className={'group-list drag-new-widget'} ref={store.newWidgetRef}/>
+                ), document.body)}
             </div>
         );
     };

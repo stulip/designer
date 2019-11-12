@@ -11,6 +11,7 @@ import type {WidgetState} from "../../../flow/Main.flow";
 import {arrayToMap, randomId} from "../../../config/Config";
 import {Types} from "@xt-web/core";
 import {WidgetFactory} from "../../../widget/WidgetConfig";
+import React from "react";
 
 export const SlideBarConfig = [
     {name: "status", svg: SVG.status_widget, tip: "状态", keyboard: "`", keyCode: '192'},
@@ -42,6 +43,7 @@ export class WidgetsStore extends BaseStore {
     newCId = null;
     // 新组件DOM
     newWidgetDOM = null;
+    newWidgetRef = React.createRef();
 
     addKeyListener() {
         let that = this;
@@ -174,23 +176,23 @@ export class WidgetsStore extends BaseStore {
     handleWidgetDragMove = (event: MouseEvent, widgetId: string) => {
         const that = this;
         let dom = that.newWidgetDOM;
+        const {pageX, pageY} = event;
         if (!dom) {
             const widgetDOM = document.querySelector(`div[data-cid='${that.newCId}']`);
             if (widgetDOM) {
-                that.newWidgetDOM = dom = widgetDOM;
+                that.newWidgetDOM = dom = widgetDOM.cloneNode(true);
 
-                domtoimage.toPng(widgetDOM)
-                    .then(function (dataUrl) {
-                        var link = document.createElement('a');
-                        link.download = 'my-image-name.png';
-                        link.href = dataUrl;
-                        link.click();
-                    });
+                const size = `width: ${widgetDOM.offsetWidth}px;height:${widgetDOM.offsetHeight}px;`;
+                const position = `left:${pageX - dom.offsetWidth / 2}px;top:${pageY - dom.offsetHeight / 2}px`;
+                dom.style.cssText = `${dom.style.cssText};${size};position:absolute;${position}`;
+                that.newWidgetRef.current.append(dom)
             }
+            return;
         }
 
         if (dom) {
-
+            const position = `left:${pageX - dom.offsetWidth / 2}px;top:${pageY - dom.offsetHeight / 2}px`;
+            dom.style.cssText = `${dom.style.cssText};${position}`;
         }
     };
 
@@ -217,8 +219,8 @@ export class WidgetsStore extends BaseStore {
 
     handleWidgetDragEnd = (event: MouseEvent, widgetId: string) => {
         const that = this;
-        console.log('end', widgetId, that.newCId);
         that.newWidgetDOM = null;
         that.newCId = null;
+        that.newWidgetRef.current.innerText = "";
     }
 }
