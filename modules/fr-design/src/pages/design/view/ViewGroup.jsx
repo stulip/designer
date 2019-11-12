@@ -133,13 +133,21 @@ export class ViewGroup extends React.Component<Props, State> {
         store.unmount();
     }
 
+    handleMouseDown = (event: MouseEvent) => {
+        if (event.button !== 0 || (event.ctrlKey || event.metaKey)) return;
+        event.stopPropagation();
+        event.preventDefault();
+    };
+
     _render() {
-        const {store} = this.props;
-        const {main, widgetModule} = store;
-        const {canvasRect, canvasScale} = main.section;
-        const {designRect} = main.config;
+        const that = this;
+        const { store } = this.props;
+        const { main, widgetModule } = store;
+        const { canvasRect, canvasScale } = main.section;
+        const { designRect } = main.config;
         return (
-            <div className={`group-list group-content ${designRect.type}`} ref={store.groupRef}>
+            <div className={`group-list group-content ${designRect.type}`} ref={store.groupRef}
+                 onMouseDown={that.handleMouseDown}>
                 {widgetModule && store.createWidget(store.groupConfig)}
             </div>
         );

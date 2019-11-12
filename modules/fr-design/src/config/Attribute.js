@@ -113,7 +113,8 @@ export const PropsConst = {
     // widget mouse
     widgetMouseExit: "widget.mouse.exit",
     widgetMouseEnter: "widget.mouse.enter",
-    widgetMouseClick: "widget.mouse.click",
+    widgetMouseDown: "widget.mouse.down",
+    widgetMouseMove: "widget.mouse.move",
     widgetMouseDBLClick: "widget.mouse.dblclick"
 };
 

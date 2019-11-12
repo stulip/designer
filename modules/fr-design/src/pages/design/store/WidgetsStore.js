@@ -174,12 +174,12 @@ export class WidgetsStore extends BaseStore {
     };
 
     @action
-    handleWidgetDragMove = (event: MouseEvent, widgetId: string) => {
+    handleWidgetDragMove = (event: MouseEvent, newWidgetId: string) => {
         const that = this;
         let dom = that.newWidgetDOM;
-        const {pageX, pageY} = event;
+        const { pageX, pageY } = event;
         if (!dom) {
-            const widgetDOM = document.querySelector(`div[data-cid='${that.newCId}']`);
+            const widgetDOM = document.querySelector(`div[data-cid='${newWidgetId}']`);
             if (widgetDOM) {
                 that.newWidgetDOM = dom = widgetDOM.cloneNode(true);
 
@@ -213,17 +213,18 @@ export class WidgetsStore extends BaseStore {
             if (isFlag === false) {
                 console.log('不支持添加子组件!');
                 viewGroup.deleteWidgetMap(widgets);
-                return false;
+                return null;
             }
         }
         that.newCId = cid;
         that.newWidgets = widgets;
+        return cid;
     };
 
     handleWidgetDragEnd = (event: MouseEvent, widgetId: string) => {
         const that = this;
         // 删除
-        const {viewGroup} = that.main;
+        const { viewGroup } = that.main;
         viewGroup.deleteWidgetMap(that.newWidgets);
         if (!viewGroup.widget) {
             viewGroup.removeWidget(that.newCId);
@@ -231,8 +232,14 @@ export class WidgetsStore extends BaseStore {
             viewGroup.widget.removeWidget(that.newCId);
         }
 
-        that.newWidgetDOM = null;
         that.newCId = null;
+        that.newWidgets = [];
+        that.onWidgetDragEnd();
+    };
+
+    onWidgetDragEnd() {
+        const that = this;
+        that.newWidgetDOM = null;
         that.newWidgetRef.current.innerText = "";
     }
 }

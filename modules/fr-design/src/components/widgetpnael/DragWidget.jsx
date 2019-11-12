@@ -7,7 +7,8 @@
 // @flow
 import React from 'react';
 import type {DragWidgetDefined} from "../../flow/Main.flow";
-import {IBotSVG} from "fr-web";
+import { IBotSVG } from "fr-web";
+import { Types } from "@xt-web/core";
 
 type Props = {
     item: DragWidgetDefined,
@@ -24,7 +25,7 @@ export class DragWidget extends React.PureComponent<Props, State> {
         super(props);
 
         this.isDrag = false;
-        this.flagDrag = true;
+        this.newWidgetId = void 0;
     }
 
     addListener() {
@@ -41,7 +42,7 @@ export class DragWidget extends React.PureComponent<Props, State> {
         let that = this;
         that.removeListener();
         that.isDrag = false;
-        that.flagDrag = true;
+        that.newWidgetId = void 0;
         const {item, widgetId, onDragEnd} = that.props;
         onDragEnd && onDragEnd(event, widgetId, item);
     };
@@ -49,13 +50,13 @@ export class DragWidget extends React.PureComponent<Props, State> {
     handleMouseMove = (event: MouseEvent) => {
         const that = this;
         const {item, widgetId, onDragMove, onDragStart} = that.props;
-        if (that.flagDrag === false) return;
+        if (that.newWidgetId === null) return;
 
         if (!that.isDrag) {
             that.isDrag = true;
-            that.flagDrag = onDragStart && onDragStart(event, widgetId, item);
+            that.newWidgetId = onDragStart && onDragStart(event, widgetId);
         } else {
-            onDragMove && onDragMove(event, widgetId, item);
+            onDragMove && onDragMove(event, that.newWidgetId);
         }
     };
 

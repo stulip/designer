@@ -150,15 +150,20 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
         return "widget";
     }
 
+    // 获取组件ID
+    getId() {
+        return this.props.cid;
+    }
+
     componentDidMount() {
         const that = this;
-        const {isHasBox = true, widgetMap} = that.props;
+        const { isHasBox = true, widgetMap } = that.props;
         widgetMap && isHasBox && that.addListener();
     }
 
     componentWillUnmount() {
         const that = this;
-        const {isHasBox = true, widgetMap} = that.props;
+        const { isHasBox = true, widgetMap } = that.props;
         widgetMap && isHasBox && that.removeListener();
     }
 
@@ -193,9 +198,8 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
 
         if (that.widget) {
             that.widget.addEventListener("mouseleave", that.handleMouseLeave, false);
-            that.widget.addEventListener("mousedown", that.handleMouseDown, true);
+            that.widget.addEventListener("mousedown", that.handleMouseDown, false);
             that.widget.addEventListener("mouseover", that.handleMouseEnter, false);
-            that.widget.addEventListener("click", that.handleClick, false);
         }
     }
 
@@ -206,20 +210,15 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
             that.widget.removeEventListener("mouseleave", that.handleMouseLeave);
             that.widget.removeEventListener("mousedown", that.handleMouseDown);
             that.widget.removeEventListener("mouseover", that.handleMouseEnter);
-            that.widget.removeEventListener("click", that.handleClick);
         }
     }
-
-    handleMouseDown = (event: MouseEvent): void => {
-        event.preventDefault();
-        event.stopPropagation();
-    };
 
     /**
      * 获得鼠标焦点
      * @param event
      */
     handleMouseEnter = (event: MouseEvent): void => {
+        if (event.ctrlKey || event.metaKey) return;
         DesignEvent.emit(PropsConst.widgetMouseEnter, event, this);
     };
 
@@ -235,9 +234,9 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
      * 元素被点击
      * @param event
      */
-    handleClick = (event: MouseEvent): void => {
+    handleMouseDown = (event: MouseEvent): void => {
         event.preventDefault();
-        DesignEvent.emit(PropsConst.widgetMouseClick, event, this);
+        DesignEvent.emit(PropsConst.widgetMouseDown, event, this);
     };
 
     /**

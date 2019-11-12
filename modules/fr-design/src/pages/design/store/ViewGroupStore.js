@@ -28,6 +28,9 @@ export class ViewGroupStore extends BaseStore {
     @observable hoveRect: ClientRect;
     // 选中元素
     @observable selectRect: ClientRect;
+
+    // 做双击判断
+    dbWidgetDownTimer: number = 0;
     // 选中的widget
     widget: BaseWidget;
     widgetList: [BaseWidget] = [];
@@ -46,7 +49,7 @@ export class ViewGroupStore extends BaseStore {
     addListener() {
         const that = this;
         // mouse
-        DesignEvent.addListener(PropsConst.widgetMouseClick, that.handleWidgetClick);
+        DesignEvent.addListener(PropsConst.widgetMouseDown, that.handleWidgetDown);
         DesignEvent.addListener(PropsConst.widgetMouseExit, that.handleWidgetMouseExit);
         DesignEvent.addListener(PropsConst.widgetMouseEnter, that.handleWidgetMouseEnter);
 
@@ -56,7 +59,7 @@ export class ViewGroupStore extends BaseStore {
     removeListener() {
         const that = this;
         // mouse
-        DesignEvent.removeListener(PropsConst.widgetMouseClick, that.handleWidgetClick);
+        DesignEvent.removeListener(PropsConst.widgetMouseDown, that.handleWidgetDown);
         DesignEvent.removeListener(PropsConst.widgetMouseExit, that.handleWidgetMouseExit);
         DesignEvent.removeListener(PropsConst.widgetMouseEnter, that.handleWidgetMouseEnter);
 
@@ -189,6 +192,17 @@ export class ViewGroupStore extends BaseStore {
         that._widgetEnterTimer = setTimeout(that._eachWidgetEnter, 0);
     };
 
+    /**
+     * widget move drag
+     * @param {MouseEvent} event
+     */
+    handleMouseMove = (event: MouseEvent) => {
+        const that = this;
+        if (that.widget) {
+            that.main.widgets.handleWidgetDragMove(event, that.widget.getId());
+        }
+    };
+
     _eachWidgetEnter = () => {
         const that = this;
         let lastWidget = that.getMouseWidgetSelect(that.widgetList2);
@@ -244,7 +258,7 @@ export class ViewGroupStore extends BaseStore {
      * @param {MouseEvent} event
      * @param {BaseWidget} widget
      */
-    handleWidgetClick = (event: MouseEvent, widget: BaseWidget) => {
+    handleWidgetDown = (event: MouseEvent, widget: BaseWidget) => {
         let that = this;
         if (!that.group) return;
         that.widgetList.push(widget);
@@ -254,14 +268,33 @@ export class ViewGroupStore extends BaseStore {
 
     _eachWidgetClickEvent = () => {
         const that = this;
-        // text panel header
-        let lastWidget = that.getMouseWidgetSelect(that.widgetList);
-        if (lastWidget) {
-            // 设置选框
-            that.setSelectBox(lastWidget.widget);
-            that.setSelectWidget(lastWidget);
+        if (Date.now() - that.dbWidgetDownTimer < 200) {
+            // text panel header
+            let lastWidget = that.getMouseWidgetSelect(that.widgetList);
+            if (lastWidget) {
+                // 设置选框
+                that.setSelectBox(lastWidget.widget);
+                that.setSelectWidget(lastWidget);
+                that.addMoveListener();
+            }
         }
+        that.dbWidgetDownTimer = Date.now();
         that.widgetList = [];
+    };
+
+    addMoveListener() {
+        document.addEventListener("mouseup", this.handleMouseUp);
+        document.addEventListener("mousemove", this.handleMouseMove);
+    }
+
+    removeMoveListener() {
+        document.removeEventListener("mouseup", this.handleMouseUp);
+        document.removeEventListener("mousemove", this.handleMouseMove);
+    }
+
+    handleMouseUp = (event: MouseEvent) => {
+        this.removeMoveListener();
+        this.main.widgets.onWidgetDragEnd();
     };
 
     /**
