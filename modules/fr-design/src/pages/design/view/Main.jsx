@@ -166,6 +166,7 @@ export class Main extends Component {
                         {this.renderSlidePanel()}
                         <ColorPicker color={color} onChange={colorChange} targetRect={targetRect}/>
                         <Dialog/>
+                        <div className={'group-list drag-new-widget'} ref={store.widgets.newWidgetRef}/>
                     </div>
                 </div>
             </div>

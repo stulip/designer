@@ -182,12 +182,12 @@ export class WidgetsStore extends BaseStore {
             if (widgetDOM) {
                 that.newWidgetDOM = dom = widgetDOM.cloneNode(true);
 
-                const size = `width: ${widgetDOM.offsetWidth}px;height:${widgetDOM.offsetHeight}px;`;
-                const position = `left:${pageX - dom.offsetWidth / 2}px;top:${pageY - dom.offsetHeight / 2}px`;
-                dom.style.cssText = `${dom.style.cssText};${size};position:absolute;${position}`;
+                const offsetWidth = widgetDOM.offsetWidth;
+                const offsetHeight = widgetDOM.offsetHeight;
+
+                dom.style.cssText = `${dom.style.cssText};width: ${offsetWidth}px;height:${offsetHeight}px;`;
                 that.newWidgetRef.current.append(dom)
             }
-            return;
         }
 
         if (dom) {
@@ -219,6 +219,7 @@ export class WidgetsStore extends BaseStore {
 
     handleWidgetDragEnd = (event: MouseEvent, widgetId: string) => {
         const that = this;
+        //
         that.newWidgetDOM = null;
         that.newCId = null;
         that.newWidgetRef.current.innerText = "";
