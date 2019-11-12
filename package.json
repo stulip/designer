@@ -35,7 +35,7 @@
     "json5": "^0.5.1",
     "lodash": "^4.17.15",
     "mb-react-color-picker": "^1.1.0-dev.1",
-    "mb-sketch-ruler": "^1.1.0-dev.26",
+    "mb-sketch-ruler": "^1.2.0-dev.1",
     "mobx": "^5.15.0",
     "mobx-react": "^6.1.4",
     "react": "16.11.0",
