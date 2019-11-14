@@ -204,9 +204,10 @@ export class ViewGroupStore extends BaseStore {
     @action
     handleMouseMove = (event: MouseEvent) => {
         const that = this;
-        if (!that.dragWidgetId && that.hoverWidget) {
-            that.dragWidgetId = that.hoverWidget.getId();
-            const box = that.hoverWidget.widget.getBoundingClientRect();
+        const widget = (that.hoverWidget || that.widget);
+        if (!that.dragWidgetId && widget) {
+            that.dragWidgetId = widget.getId();
+            const box = widget.widget.getBoundingClientRect();
             that.originDragPosition = {x: event.pageX - box.left, y: event.pageY - box.top};
             if (that.widget) {
                 that.widget.setDragWidgetId(that.dragWidgetId);
@@ -287,7 +288,6 @@ export class ViewGroupStore extends BaseStore {
             // text panel header
             let lastWidget = that.getMouseWidgetSelect(that.widgetList);
             if (lastWidget) {
-                that.removeMoveListener();
                 // 设置选框
                 that.setSelectBox(lastWidget.widget);
                 that.setSelectWidget(lastWidget);
