@@ -4265,10 +4265,10 @@ mb-react-color-picker@^1.1.0-dev.1:
   resolved "https://registry.yarnpkg.com/mb-react-color-picker/-/mb-react-color-picker-1.1.0-dev.1.tgz#b45b0380d2da673cf57ce79bea3005170b689b8a"
   integrity sha512-fg3nioJb8hDlGMig09FiyfcHdlWhNR8pDpiIx35O2MTJFEoXsLEW38pR9BEkxivlb94Xrom6GM+agcuqM9yNwg==
 
-mb-sketch-ruler@^1.2.0-dev.8:
-  version "1.2.0-dev.8"
-  resolved "https://registry.yarnpkg.com/mb-sketch-ruler/-/mb-sketch-ruler-1.2.0-dev.8.tgz#adf5eca927a049ae65fddae80e5aa50d0738b651"
-  integrity sha512-x1rYucUgvCsTbvm3IFpnsGJ5Api0dIkyo2IYwxZUU7w9od1ZhMJAJN3zao8XUfbNgomWpA4+Bqenv2/ZsUnKcA==
+mb-sketch-ruler@1.2.0-dev.11:
+  version "1.2.0-dev.11"
+  resolved "https://registry.yarnpkg.com/mb-sketch-ruler/-/mb-sketch-ruler-1.2.0-dev.11.tgz#edea29a8bad8a03e1db52958d8947d1c785f205e"
+  integrity sha512-htVJxrXEqdXgV6sqNlJWlwB3pHhgXdXOyDmOETyvxfR9kRVy1nTg9gY4PKZdpoyGXP3OmjnbRXkHf8bmTOgYjg==
 
 md5.js@^1.3.4:
   version "1.3.5"

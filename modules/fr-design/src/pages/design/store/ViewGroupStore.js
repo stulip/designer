@@ -269,6 +269,7 @@ export class ViewGroupStore extends BaseStore {
     _eachWidgetClickEvent = () => {
         const that = this;
         if (Date.now() - that.dbWidgetDownTimer < 200) {
+            that.dbWidgetDownTimer = 0;
             // text panel header
             let lastWidget = that.getMouseWidgetSelect(that.widgetList);
             if (lastWidget) {
@@ -276,8 +277,9 @@ export class ViewGroupStore extends BaseStore {
                 that.setSelectBox(lastWidget.widget);
                 that.setSelectWidget(lastWidget);
             }
+        } else {
+            that.dbWidgetDownTimer = Date.now();
         }
-        that.dbWidgetDownTimer = Date.now();
         that.widgetList = [];
     };
 
