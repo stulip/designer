@@ -383,6 +383,33 @@ export class ViewGroupStore extends BaseStore {
     }
 
     /**
+     *
+     * @param {string} targetWidgetId 目标 widget
+     * @param {string} widgetId 需要换位的 widget
+     * @param {0|1} dir 方向 0 = 后面 1 = 前面
+     */
+    @action
+    sortWidgets(targetWidgetId, widgetId, dir) {
+        const that = this;
+        console.log(targetWidgetId, widgetId, dir);
+        const group = that.groupConfig;
+        const index = group.indexOf(widgetId);
+        if (index !== -1) {
+            const newGroup = [];
+            group.splice(index, 1);
+
+            group.forEach(data => {
+                if (data === targetWidgetId) {
+                    dir ? newGroup.push(data, widgetId) : newGroup.push(widgetId, data);
+                } else {
+                    newGroup.push(data);
+                }
+            });
+            that.groupConfig = newGroup;
+        }
+    }
+
+    /**
      * 添加新的组件
      * @param {string} widgetId
      */

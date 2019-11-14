@@ -54,9 +54,9 @@ export class BaseText extends BasePanel<BaseTextProps, State> {
     renderChild() {
         const that = this;
         const {widget: {text}} = that.styles;
-        const textStyle = text.css;
-        textStyle.fontSize = parseInt(text.css.fontSize);
-        textStyle.lineHeight = `${text.css.lineHeight}px`;
+        const textStyle = text.css || {};
+        textStyle.fontSize = parseInt(textStyle.fontSize);
+        textStyle.lineHeight = `${textStyle.lineHeight}px`;
         return (
             <div className={'rich-text'} style={textStyle}>
                 <span className={'text'}>{text.value}</span>
