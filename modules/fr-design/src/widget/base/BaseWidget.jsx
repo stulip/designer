@@ -173,8 +173,11 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        return nextState.widget !== this.state.widget
-            || nextState.children !== this.state.children;
+        const that = this;
+        return nextState.widget !== that.state.widget
+            || nextState.children !== that.state.children
+            || nextProps.isDrag !== that.props.isDrag
+            || nextState.dragWidgetId !== that.state.dragWidgetId;
     }
 
     // 子类实现, 默认值
@@ -215,7 +218,7 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
 
     /**
      * 获得鼠标焦点
-     * @param event
+     * @param {MouseEvent} event
      */
     handleMouseEnter = (event: MouseEvent): void => {
         if (event.ctrlKey || event.metaKey) return;
@@ -224,7 +227,7 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
 
     /**
      * 失去鼠标焦点
-     * @param event
+     * @param {MouseEvent} event
      */
     handleMouseLeave = (event: MouseEvent): void => {
         DesignEvent.emit(PropsConst.widgetMouseExit, event, this);
@@ -232,7 +235,7 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
 
     /**
      * 元素被点击
-     * @param event
+     * @param {MouseEvent} event
      */
     handleMouseDown = (event: MouseEvent): void => {
         event.preventDefault();
@@ -349,6 +352,14 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
         const that = this;
         const {children = []} = that.state;
         that.setState({children: [...children, widgetId], dragWidgetId: widgetId});
+    }
+
+    /**
+     * 设置拖拽widget id
+     * @param widgetId
+     */
+    setDragWidgetId(widgetId) {
+        this.setState({dragWidgetId: widgetId});
     }
 
     /**

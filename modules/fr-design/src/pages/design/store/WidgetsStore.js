@@ -173,11 +173,17 @@ export class WidgetsStore extends BaseStore {
         this.stateSlideActive = false;
     };
 
+    /**
+     *
+     * @param {MouseEvent} event
+     * @param {string} newWidgetId
+     * @param {{x: number, y: number}} [originPosition] 原始坐标
+     */
     @action
-    handleWidgetDragMove = (event: MouseEvent, newWidgetId: string) => {
+    handleWidgetDragMove = (event: MouseEvent, newWidgetId: string, originPosition?: { x: number, y: number }) => {
         const that = this;
         let dom = that.newWidgetDOM;
-        const { pageX, pageY } = event;
+        const {pageX, pageY} = event;
         if (!dom) {
             const widgetDOM = document.querySelector(`div[data-cid='${newWidgetId}']`);
             if (widgetDOM) {
@@ -192,7 +198,8 @@ export class WidgetsStore extends BaseStore {
         }
 
         if (dom) {
-            const position = `left:${pageX - dom.offsetWidth / 2}px;top:${pageY - dom.offsetHeight / 2}px`;
+            const {x: originX, y: originY} = originPosition || {x: dom.offsetWidth / 2, y: dom.offsetHeight / 2};
+            const position = `left:${pageX - originX}px;top:${pageY - originY}px`;
             dom.style.cssText = `${dom.style.cssText};${position}`;
         }
     };

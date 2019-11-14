@@ -32,12 +32,14 @@ export class ViewGroupStore extends BaseStore {
     // 做双击判断
     dbWidgetDownTimer: number = 0;
     // 选中的widget
-    widget: BaseWidget;
+    widget: BaseWidget; // 鼠标点击选中的widget
+    hoverWidget: BaseWidget; // 鼠标滑过选中的widget
     widgetList: [BaseWidget] = [];
     widgetList2: [BaseWidget] = [];
 
     // 拖动的widget id
     @observable dragWidgetId = null;
+    originDragPosition = null; // 拖拽按下是先对元素坐标
 
     // 全局属性状态
     globalStateId;
@@ -82,13 +84,13 @@ export class ViewGroupStore extends BaseStore {
      */
     @action.bound
     handleWidgetMouseExit(event: MouseEvent, widget: BaseWidget) {
-        this.hoveWidget === widget && this.cancelHove();
+        this.hoverWidget === widget && this.cancelHove();
     }
 
     @action
     cancelHove = () => {
         this.hoveRect = null;
-        this.hoveWidget = null;
+        this.hoverWidget = null;
     };
 
     // 取消选中元素
@@ -118,10 +120,13 @@ export class ViewGroupStore extends BaseStore {
     @action
     setSelectWidget = (widget?: BaseWidget) => {
         let that = this;
-        widget.onUpdate = that._reWidgetSelectBox;
-        that.main.widgets.setWidgetStates(widget.getWidgetStates(), widget.getStateId());
-        that.main.attribute.setConfig(widget.getWidgetProps(), widget.getFormData());
-        that.widget = widget;
+        if (widget !== that.widget) {
+            widget.onUpdate = that._reWidgetSelectBox;
+            that.main.widgets.setWidgetStates(widget.getWidgetStates(), widget.getStateId());
+            that.main.attribute.setConfig(widget.getWidgetProps(), widget.getFormData());
+            that.widget = widget;
+            that.hoverWidget = widget;
+        }
     };
 
     /**
@@ -196,10 +201,19 @@ export class ViewGroupStore extends BaseStore {
      * widget move drag
      * @param {MouseEvent} event
      */
+    @action
     handleMouseMove = (event: MouseEvent) => {
         const that = this;
-        if (that.widget) {
-            that.main.widgets.handleWidgetDragMove(event, that.widget.getId());
+        if (!that.dragWidgetId && that.hoverWidget) {
+            that.dragWidgetId = that.hoverWidget.getId();
+            const box = that.hoverWidget.widget.getBoundingClientRect();
+            that.originDragPosition = {x: event.pageX - box.left, y: event.pageY - box.top};
+            if (that.widget) {
+                that.widget.setDragWidgetId(that.dragWidgetId);
+            }
+        }
+        if (that.dragWidgetId) {
+            that.main.widgets.handleWidgetDragMove(event, that.dragWidgetId, that.originDragPosition);
         }
     };
 
@@ -249,7 +263,7 @@ export class ViewGroupStore extends BaseStore {
             that.cancelHove();
         } else {
             that.hoveRect = {left, top, width, height};
-            that.hoveWidget = widget;
+            that.hoverWidget = widget;
         }
     };
 
@@ -273,12 +287,14 @@ export class ViewGroupStore extends BaseStore {
             // text panel header
             let lastWidget = that.getMouseWidgetSelect(that.widgetList);
             if (lastWidget) {
+                that.removeMoveListener();
                 // 设置选框
                 that.setSelectBox(lastWidget.widget);
                 that.setSelectWidget(lastWidget);
             }
         } else {
             that.dbWidgetDownTimer = Date.now();
+            that.addMoveListener();
         }
         that.widgetList = [];
     };
@@ -293,9 +309,16 @@ export class ViewGroupStore extends BaseStore {
         document.removeEventListener("mousemove", this.handleMouseMove);
     }
 
+    @action
     handleMouseUp = (event: MouseEvent) => {
-        this.removeMoveListener();
-        this.main.widgets.onWidgetDragEnd();
+        const that = this;
+        that.dragWidgetId = null;
+        that.originDragPosition = null;
+        that.removeMoveListener();
+        that.main.widgets.onWidgetDragEnd();
+        if (that.widget) {
+            that.widget.setDragWidgetId(null);
+        }
     };
 
     /**
