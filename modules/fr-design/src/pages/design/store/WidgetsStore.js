@@ -199,7 +199,7 @@ export class WidgetsStore extends BaseStore {
 
         if (dom) {
             const {x: originX, y: originY} = originPosition || {x: dom.offsetWidth / 2, y: dom.offsetHeight / 2};
-            const position = `left:${pageX - originX}px;top:${pageY - originY}px`;
+            const position = `left:${pageX - originX}px;top:${pageY - originY}px;`;
             dom.style.cssText = `${dom.style.cssText};${position}`;
         }
     };

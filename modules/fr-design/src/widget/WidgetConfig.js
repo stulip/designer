@@ -130,3 +130,28 @@ export class WidgetFactory {
         return [widget];
     }
 }
+
+/**
+ *
+ * @param {Array<string>} widgets
+ * @param {string} targetWidgetId 目标 widget
+ * @param {string} widgetId 需要换位的 widget
+ * @param {0|1} dir 方向 0 = 后面 1 = 前面
+ * @returns []
+ */
+export function SwapWidget(widgets, targetWidgetId, widgetId, dir) {
+    const index = widgets.indexOf(widgetId);
+    if (index !== -1) {
+        const newGroup = [];
+        widgets.splice(index, 1);
+
+        widgets.forEach(data => {
+            if (data === targetWidgetId) {
+                dir ? newGroup.push(data, widgetId) : newGroup.push(widgetId, data);
+            } else {
+                newGroup.push(data);
+            }
+        });
+        return newGroup;
+    }
+}
