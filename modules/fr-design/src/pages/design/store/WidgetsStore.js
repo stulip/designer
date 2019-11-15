@@ -10,8 +10,9 @@ import {BaseStore} from "./BaseStore";
 import type {WidgetState} from "../../../flow/Main.flow";
 import {arrayToMap, randomId} from "../../../config/Config";
 import {Types} from "@xt-web/core";
-import {WidgetFactory} from "../../../widget/WidgetConfig";
+import {SwapWidget, WidgetFactory} from "../../../widget/WidgetConfig";
 import React from "react";
+import {LayoutConst, PropsConst} from "../../../config/Attribute";
 
 export const SlideBarConfig = [
     {name: "status", svg: SVG.status_widget, tip: "状态", keyboard: "`", keyCode: '192'},
@@ -42,6 +43,7 @@ export class WidgetsStore extends BaseStore {
     // 拖拽出来的新组建ID
     newCId = null;
     newWidgets = [];// 拖拽出来所有的新的widget
+    _dragDOM: Element; // 拖拽的模板DOM
     // 新组件DOM
     newWidgetDOM = null;
     newWidgetRef = React.createRef();
@@ -176,16 +178,16 @@ export class WidgetsStore extends BaseStore {
     /**
      *
      * @param {MouseEvent} event
-     * @param {string} newWidgetId
+     * @param {string} dragId
      * @param {{x: number, y: number}} [originPosition] 原始坐标
      */
     @action
-    handleWidgetDragMove = (event: MouseEvent, newWidgetId: string, originPosition?: { x: number, y: number }) => {
+    handleWidgetDragMove = (event: MouseEvent, dragId: string, originPosition?: { x: number, y: number }) => {
         const that = this;
         let dom = that.newWidgetDOM;
         const {pageX, pageY} = event;
         if (!dom) {
-            const widgetDOM = document.querySelector(`div[data-cid='${newWidgetId}']`);
+            const widgetDOM = document.querySelector(`div[data-cid='${dragId}']`);
             if (widgetDOM) {
                 that.newWidgetDOM = dom = widgetDOM.cloneNode(true);
 
@@ -201,6 +203,53 @@ export class WidgetsStore extends BaseStore {
             const {x: originX, y: originY} = originPosition || {x: dom.offsetWidth / 2, y: dom.offsetHeight / 2};
             const position = `left:${pageX - originX}px;top:${pageY - originY}px;`;
             dom.style.cssText = `${dom.style.cssText};${position}`;
+
+            // 处理碰撞
+            const hoverWidget = that.main.viewGroup.hoverWidget;
+            if (hoverWidget && hoverWidget.getId() !== dragId) {
+                const {pageX, pageY} = event;
+                const targetBox = hoverWidget.widget.getBoundingClientRect();
+                const targetData = hoverWidget.getFormData();
+                const flexDirection = targetData[PropsConst.layoutDirection];
+
+                // target Rect
+                const targetRect = {
+                    endX: targetBox.x + targetBox.width,
+                    endY: targetBox.y + targetBox.height,
+                    ctWidth: targetBox.width / 4,
+                    ctHeight: targetBox.height / 4
+                };
+                let dir = 0;
+                // 垂直
+                if (LayoutConst.direction.row === flexDirection) {
+                    if (pageY < targetRect.y + targetRect.ctHeight) {
+                        // 上面
+                        dir = 1;
+                    } else if (pageY > targetRect.endY - targetRect.ctHeight) {
+                        //  下面
+                        dir = -1;
+                    }
+                } else {
+                    if (pageX < targetRect.x + targetRect.ctWidth) {
+                        // 左边
+                        dir = 1;
+                    } else if (pageX > targetRect.endX - targetRect.ctWidth) {
+                        // 右边
+                        dir = -1;
+                    }
+                }
+
+                if (dir) {
+                    const widgets = that.main.viewGroup.groupConfig;
+                    const newWidgets = SwapWidget(widgets, hoverWidget.getId(), dragId, dir);
+
+                    if (widgets === newWidgets) {
+                        console.log('无需移动')
+                    } else {
+                        console.log("----", dir)
+                    }
+                }
+            }
         }
     };
 

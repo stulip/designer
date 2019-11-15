@@ -132,26 +132,41 @@ export class WidgetFactory {
 }
 
 /**
- *
- * @param {Array<string>} widgets
+ * 转换widget到目标widget
+ * @param {Array<string>} widgets 目标widget数组
  * @param {string} targetWidgetId 目标 widget
  * @param {string} widgetId 需要换位的 widget
- * @param {0|1} dir 方向 0 = 后面 1 = 前面
+ * @param {-1|1} dir 方向 -1 = 后面 1 = 前面
  * @returns []
  */
 export function SwapWidget(widgets, targetWidgetId, widgetId, dir) {
-    const index = widgets.indexOf(widgetId);
-    if (index !== -1) {
-        const newGroup = [];
-        widgets.splice(index, 1);
+    const widgetIx = widgets.indexOf(widgetId);
+    const targetIx = widgets.indexOf(targetWidgetId);
 
-        widgets.forEach(data => {
-            if (data === targetWidgetId) {
-                dir ? newGroup.push(data, widgetId) : newGroup.push(widgetId, data);
-            } else {
-                newGroup.push(data);
-            }
-        });
-        return newGroup;
+    // 是否和目标widget 在同一个widget中
+    if (targetIx !== -1 && widgetIx !== -1) {
+        if (targetIx - dir === widgetIx) {
+            return widgets;
+        }
     }
+    return null;
+
+    //
+    // if (targetIx !== -1){
+    //     // 判断是否不需要交换
+    //
+    //     const newGroup = [];
+    //     widgets.forEach(data => {
+    //         if (data === targetWidgetId) {
+    //             dir ? newGroup.push(data, widgetId) : newGroup.push(widgetId, data);
+    //         } else {
+    //             newGroup.push(data);
+    //         }
+    //     });
+    //     widgets = newGroup;
+    // } else {
+    //     // 不和目标widget在同一个widget中, 果断删除
+    //     widgets.splice(widgetIx, 1);
+    // }
+    // return widgets;
 }

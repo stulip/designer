@@ -39,7 +39,7 @@ export class ViewGroupStore extends BaseStore {
 
     // 拖动的widget id
     @observable dragWidgetId = null;
-    originDragPosition = null; // 拖拽按下是先对元素坐标
+    originDragPosition = null; // 拖拽按下时相对元素坐标
 
     // 全局属性状态
     globalStateId;
@@ -378,7 +378,6 @@ export class ViewGroupStore extends BaseStore {
         return this._groupConfig.slice();
     }
 
-    @action
     set groupConfig(value: Array) {
         this._groupConfig = value;
     }
