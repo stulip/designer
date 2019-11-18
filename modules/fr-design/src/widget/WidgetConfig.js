@@ -143,30 +143,28 @@ export function SwapWidget(widgets, targetWidgetId, widgetId, dir) {
     const widgetIx = widgets.indexOf(widgetId);
     const targetIx = widgets.indexOf(targetWidgetId);
 
+    // 移动位置
+    const move = () => {
+        const newGroup = [];
+        widgets.forEach(data => {
+            if (data === widgetId) return;
+
+            if (data === targetWidgetId) {
+                dir !== 1 ? newGroup.push(data, widgetId) : newGroup.push(widgetId, data);
+            } else {
+                newGroup.push(data);
+            }
+        });
+        return newGroup;
+    };
+
     // 是否和目标widget 在同一个widget中
     if (targetIx !== -1 && widgetIx !== -1) {
+        // 不需要移动
         if (targetIx - dir === widgetIx) {
             return widgets;
         }
+        return move();
     }
-    return null;
-
-    //
-    // if (targetIx !== -1){
-    //     // 判断是否不需要交换
-    //
-    //     const newGroup = [];
-    //     widgets.forEach(data => {
-    //         if (data === targetWidgetId) {
-    //             dir ? newGroup.push(data, widgetId) : newGroup.push(widgetId, data);
-    //         } else {
-    //             newGroup.push(data);
-    //         }
-    //     });
-    //     widgets = newGroup;
-    // } else {
-    //     // 不和目标widget在同一个widget中, 果断删除
-    //     widgets.splice(widgetIx, 1);
-    // }
-    // return widgets;
+    return widgets;
 }

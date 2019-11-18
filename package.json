@@ -89,7 +89,7 @@
     "postcss-preset-env": "^6.7.0",
     "precss": "^4.0.0",
     "prettier": "^1.19.1",
-    "react-hot-loader": "^4.12.17",
+    "react-hot-loader": "^4.12.18",
     "style-loader": "^1.0.0",
     "terser-webpack-plugin": "^2.2.1",
     "thread-loader": "^2.1.3",

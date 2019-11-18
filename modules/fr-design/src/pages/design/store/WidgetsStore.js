@@ -214,10 +214,12 @@ export class WidgetsStore extends BaseStore {
 
                 // target Rect
                 const targetRect = {
+                    x: targetBox.x,
+                    y: targetBox.y,
                     endX: targetBox.x + targetBox.width,
                     endY: targetBox.y + targetBox.height,
-                    ctWidth: targetBox.width / 4,
-                    ctHeight: targetBox.height / 4
+                    ctWidth: targetBox.width / 3,
+                    ctHeight: targetBox.height / 3
                 };
                 let dir = 0;
                 // 垂直
@@ -238,15 +240,12 @@ export class WidgetsStore extends BaseStore {
                         dir = -1;
                     }
                 }
-
                 if (dir) {
                     const widgets = that.main.viewGroup.groupConfig;
                     const newWidgets = SwapWidget(widgets, hoverWidget.getId(), dragId, dir);
 
-                    if (widgets === newWidgets) {
-                        console.log('无需移动')
-                    } else {
-                        console.log("----", dir)
+                    if (widgets !== newWidgets) {
+                        that.main.viewGroup.groupConfig = newWidgets;
                     }
                 }
             }
