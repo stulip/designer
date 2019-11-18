@@ -54,7 +54,7 @@ export class BaseText extends BasePanel<BaseTextProps, State> {
     renderChild() {
         const that = this;
         const {widget: {text}} = that.styles;
-        const textStyle = text.css || {};
+        const textStyle = {...text.css};
         textStyle.fontSize = parseInt(textStyle.fontSize);
         textStyle.lineHeight = `${textStyle.lineHeight}px`;
         return (
