@@ -31,6 +31,7 @@ const WidgetConfig = [
                 [PropsConst.layoutFlexGrow]: 0
             },
         },
+        draggable: false,
         children: ['ch1', 'ch2']
     },
     {
@@ -53,6 +54,7 @@ const WidgetConfig = [
                 [PropsConst.textColor]: 'red',
             }
         },
+        draggable: false,
         children: "设计中心",
     },
     {

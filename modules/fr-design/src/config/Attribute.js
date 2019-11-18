@@ -4,7 +4,7 @@
  * @sine 2019-09-24 16:17
  */
 
-// 设计器事件常量
+// 设计器常量
 export const PropsConst = {
     canvasSize: "basic.canvas.size",
     background: "basic.background",

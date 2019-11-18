@@ -11,6 +11,7 @@ import {PropsConst, StatesConst} from "../../config/Attribute";
 import {Form} from "fr-ui";
 import type {DesignType, Rect, WidgetConfigDefined, WidgetProps, WidgetState} from "../../flow/Main.flow";
 import {WidgetConfig} from "./base.widget.config";
+import {Types} from "@xt-web/core";
 
 export type BaseWidgetProps = {
     canvasRect: Rect,
@@ -152,7 +153,8 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
 
     //是否可拖动
     isDraggable() {
-        return true;
+        const {draggable} = this.props;
+        return Types.isEmpty(draggable) ? true : draggable;
     }
 
     // 获取组件ID

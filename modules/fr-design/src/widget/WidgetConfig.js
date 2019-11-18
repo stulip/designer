@@ -96,6 +96,7 @@ export class WidgetFactory {
         const rightWidget = {
             cid: randomId(),
             component: App.Panel,
+            draggable: false,
             widgetProps: {default: {[PropsConst.layoutFlexGrow]: 0}}
         };
 
@@ -103,6 +104,7 @@ export class WidgetFactory {
             cid: randomId(),
             component: App.Text,
             name: "标题",
+            draggable: false,
             widgetProps: {default: {[PropsConst.textAlign]: TextConst.textAlign.center, [PropsConst.textSize]: 17}},
             children: "标题"
         };
