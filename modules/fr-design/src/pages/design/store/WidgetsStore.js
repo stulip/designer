@@ -214,8 +214,6 @@ export class WidgetsStore extends BaseStore {
 
                 // target Rect
                 const targetRect = {
-                    x: targetBox.x,
-                    y: targetBox.y,
                     endX: targetBox.x + targetBox.width,
                     endY: targetBox.y + targetBox.height,
                     ctWidth: targetBox.width / 3,
@@ -224,7 +222,7 @@ export class WidgetsStore extends BaseStore {
                 let dir = 0;
                 // 垂直
                 if (LayoutConst.direction.row === flexDirection) {
-                    if (pageY < targetRect.y + targetRect.ctHeight) {
+                    if (pageY < targetBox.y + targetRect.ctHeight) {
                         // 上面
                         dir = 1;
                     } else if (pageY > targetRect.endY - targetRect.ctHeight) {
@@ -232,7 +230,7 @@ export class WidgetsStore extends BaseStore {
                         dir = -1;
                     }
                 } else {
-                    if (pageX < targetRect.x + targetRect.ctWidth) {
+                    if (pageX < targetBox.x + targetRect.ctWidth) {
                         // 左边
                         dir = 1;
                     } else if (pageX > targetRect.endX - targetRect.ctWidth) {
