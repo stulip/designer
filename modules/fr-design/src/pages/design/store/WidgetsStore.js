@@ -182,14 +182,14 @@ export class WidgetsStore extends BaseStore {
     swapWidget(dragId) {
         const that = this;
         const {viewGroup} = that.main;
-        const hoverWidget = viewGroup.hoverWidget;
-        if (!hoverWidget || !hoverWidget.isDraggable() || hoverWidget.getId() === dragId) {
+        const widget = viewGroup.hoverWidget || viewGroup.widget;
+        if (!widget || !widget.isDraggable() || widget.getId() === dragId) {
             return;
         }
 
         const {pageX, pageY} = event;
-        const targetBox = hoverWidget.widget.getBoundingClientRect();
-        const parentWidget = hoverWidget.parentWidget;
+        const targetBox = widget.widget.getBoundingClientRect();
+        const parentWidget = widget.parentWidget;
         let flexDirection = LayoutConst.direction.column;
         if (parentWidget) {
             flexDirection = parentWidget.getFormData()[PropsConst.layoutDirection];
@@ -226,7 +226,7 @@ export class WidgetsStore extends BaseStore {
             if (parentWidget) {
                 widgets = parentWidget.widgetIds;
             }
-            const newWidgets = SwapWidget(widgets, hoverWidget.getId(), dragId, dir);
+            const newWidgets = SwapWidget(widgets, widget.getId(), dragId, dir);
 
             if (widgets !== newWidgets) {
                 if (parentWidget) {
