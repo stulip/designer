@@ -294,7 +294,7 @@ export class ViewGroupStore extends BaseStore {
             }
         } else {
             that.dbWidgetDownTimer = Date.now();
-            that.addMoveListener();
+            that.hoverWidget && that.hoverWidget.isDraggable() && that.addMoveListener();
         }
         that.widgetList = [];
     };
@@ -374,12 +374,12 @@ export class ViewGroupStore extends BaseStore {
     }
 
     @computed
-    get groupConfig(): [string] {
+    get widgetIds() {
         return this._groupConfig.slice();
     }
 
-    set groupConfig(value: Array) {
-        this._groupConfig = value;
+    set widgetIds(widgets) {
+        this._groupConfig = widgets;
     }
 
     /**

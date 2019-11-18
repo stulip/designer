@@ -119,7 +119,7 @@ const GroupWidget = Array.from(new Set(["cs1", "ch0", "cbo0", "cpt0", testHeader
 export class ViewGroup extends React.Component<Props, State> {
     constructor(props) {
         super(props);
-        props.store.groupConfig = GroupWidget;
+        props.store.widgetIds = GroupWidget;
         props.store.widgetMap = WidgetConfig;
     }
 
@@ -148,7 +148,7 @@ export class ViewGroup extends React.Component<Props, State> {
         return (
             <div className={`group-list group-content ${designRect.type}`} ref={store.groupRef}
                  onMouseDown={that.handleMouseDown}>
-                {widgetModule && store.createWidget(store.groupConfig)}
+                {widgetModule && store.createWidget(store.widgetIds)}
             </div>
         );
     }

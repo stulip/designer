@@ -150,6 +150,11 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
         return "widget";
     }
 
+    //是否可拖动
+    isDraggable() {
+        return true;
+    }
+
     // 获取组件ID
     getId() {
         return this.props.cid;
@@ -157,7 +162,7 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
 
     componentDidMount() {
         const that = this;
-        const { isHasBox = true, widgetMap } = that.props;
+        const {isHasBox = true, widgetMap} = that.props;
         widgetMap && isHasBox && that.addListener();
     }
 
@@ -352,6 +357,22 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
         const that = this;
         const {children = []} = that.state;
         that.setState({children: [...children, widgetId], dragWidgetId: widgetId});
+    }
+
+    /**
+     * 获取所有子节点
+     * @returns {*|*[]}
+     */
+    get widgetIds() {
+        return this.state.children || [];
+    }
+
+    /**
+     * 重新设置子节点
+     * @param widgets
+     */
+    set widgetIds(widgets) {
+        this.setState({children: widgets});
     }
 
     /**

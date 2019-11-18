@@ -176,6 +176,69 @@ export class WidgetsStore extends BaseStore {
     };
 
     /**
+     * 换位
+     * @param dragId
+     */
+    swapWidget(dragId) {
+        const that = this;
+        const {viewGroup} = that.main;
+        const hoverWidget = viewGroup.hoverWidget;
+        if (!hoverWidget || !hoverWidget.isDraggable() || hoverWidget.getId() === dragId) {
+            return;
+        }
+
+        const {pageX, pageY} = event;
+        const targetBox = hoverWidget.widget.getBoundingClientRect();
+        const parentWidget = hoverWidget.parentWidget;
+        let flexDirection = LayoutConst.direction.column;
+        if (parentWidget) {
+            flexDirection = parentWidget.getFormData()[PropsConst.layoutDirection];
+        }
+
+        // target Rect
+        const targetRect = {
+            endX: targetBox.x + targetBox.width,
+            endY: targetBox.y + targetBox.height,
+            ctWidth: targetBox.width / 3,
+            ctHeight: targetBox.height / 3
+        };
+        let dir = 0;
+        // 垂直
+        if (LayoutConst.direction.column === flexDirection) {
+            if (pageY < targetBox.y + targetRect.ctHeight) {
+                // 上面
+                dir = 1;
+            } else if (pageY > targetRect.endY - targetRect.ctHeight) {
+                //  下面
+                dir = -1;
+            }
+        } else {
+            if (pageX < targetBox.x + targetRect.ctWidth) {
+                // 左边
+                dir = 1;
+            } else if (pageX > targetRect.endX - targetRect.ctWidth) {
+                // 右边
+                dir = -1;
+            }
+        }
+        if (dir) {
+            let widgets = viewGroup.widgetIds;
+            if (parentWidget) {
+                widgets = parentWidget.widgetIds;
+            }
+            const newWidgets = SwapWidget(widgets, hoverWidget.getId(), dragId, dir);
+
+            if (widgets !== newWidgets) {
+                if (parentWidget) {
+                    parentWidget.widgetIds = newWidgets;
+                } else {
+                    viewGroup.widgetIds = newWidgets;
+                }
+            }
+        }
+    }
+
+    /**
      *
      * @param {MouseEvent} event
      * @param {string} dragId
@@ -204,49 +267,7 @@ export class WidgetsStore extends BaseStore {
             const position = `left:${pageX - originX}px;top:${pageY - originY}px;`;
             dom.style.cssText = `${dom.style.cssText};${position}`;
 
-            // 处理碰撞
-            const hoverWidget = that.main.viewGroup.hoverWidget;
-            if (hoverWidget && hoverWidget.getId() !== dragId) {
-                const {pageX, pageY} = event;
-                const targetBox = hoverWidget.widget.getBoundingClientRect();
-                const targetData = hoverWidget.getFormData();
-                const flexDirection = targetData[PropsConst.layoutDirection];
-
-                // target Rect
-                const targetRect = {
-                    endX: targetBox.x + targetBox.width,
-                    endY: targetBox.y + targetBox.height,
-                    ctWidth: targetBox.width / 3,
-                    ctHeight: targetBox.height / 3
-                };
-                let dir = 0;
-                // 垂直
-                if (LayoutConst.direction.row === flexDirection) {
-                    if (pageY < targetBox.y + targetRect.ctHeight) {
-                        // 上面
-                        dir = 1;
-                    } else if (pageY > targetRect.endY - targetRect.ctHeight) {
-                        //  下面
-                        dir = -1;
-                    }
-                } else {
-                    if (pageX < targetBox.x + targetRect.ctWidth) {
-                        // 左边
-                        dir = 1;
-                    } else if (pageX > targetRect.endX - targetRect.ctWidth) {
-                        // 右边
-                        dir = -1;
-                    }
-                }
-                if (dir) {
-                    const widgets = that.main.viewGroup.groupConfig;
-                    const newWidgets = SwapWidget(widgets, hoverWidget.getId(), dragId, dir);
-
-                    if (widgets !== newWidgets) {
-                        that.main.viewGroup.groupConfig = newWidgets;
-                    }
-                }
-            }
+            that.swapWidget(dragId);
         }
     };
 

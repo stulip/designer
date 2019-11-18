@@ -25,6 +25,10 @@ export class StatusBar extends BaseWidget<Props> {
         return "状态栏";
     }
 
+    isDraggable() {
+        return false;
+    }
+
     getDefaultConfig(): {} {
         return {
             ...super.getDefaultConfig(),

@@ -59,6 +59,27 @@ export class Header extends Panel<Props> {
         rightWidget && rightWidget.addNewWidget(widgetId);
     }
 
+    removeWidget(widgetId: string) {
+        const that = this;
+        const {widget: {right = []}} = that.state;
+        const rightWidget = that.childrenRef.get(right[0]);
+        rightWidget && rightWidget.removeWidget(widgetId);
+    }
+
+    get widgetIds(): * | *[] {
+        const that = this;
+        const {widget: {right = []}} = that.state;
+        const rightWidget = that.childrenRef.get(right[0]);
+        return rightWidget ? rightWidget.widgetIds : [];
+    }
+
+    set widgetIds(widgets) {
+        const that = this;
+        const {widget: {right = []}} = that.state;
+        const rightWidget = that.childrenRef.get(right[0]);
+        rightWidget && (rightWidget.widgetIds = widgets);
+    }
+
     // widgetProps(): [] {
     //     const that = this;
     //     const config = super.widgetProps();
