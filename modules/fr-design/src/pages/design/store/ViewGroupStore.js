@@ -206,7 +206,7 @@ export class ViewGroupStore extends BaseStore {
         const that = this;
         const widget = (that.hoverWidget || that.widget);
         if (!that.dragWidgetId && widget) {
-            that.dragWidgetId = widget.getId();
+            that.setDragWidgetId(widget.getId());
             const box = widget.widget.getBoundingClientRect();
             that.originDragPosition = {x: event.pageX - box.left, y: event.pageY - box.top};
             if (that.widget) {
@@ -389,14 +389,19 @@ export class ViewGroupStore extends BaseStore {
     @action
     addNewWidget(widgetId) {
         this._groupConfig.push(widgetId);
-        this.dragWidgetId = widgetId;
+        this.setDragWidgetId(widgetId);
     }
 
     @action
     removeWidget(widgetId: string) {
         const that = this;
-        that.dragWidgetId = null;
+        that.setDragWidgetId(null);
         that._groupConfig.remove(widgetId);
+    }
+
+    @action
+    setDragWidgetId(widgetId: string) {
+        this.dragWidgetId = widgetId;
     }
 
     /**

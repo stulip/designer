@@ -297,13 +297,23 @@ export class WidgetsStore extends BaseStore {
 
     handleWidgetDragEnd = (event: MouseEvent, widgetId: string) => {
         const that = this;
+        const {pageX} = event;
+        const {viewGroup} = that.main;
+
         // 删除
-        const { viewGroup } = that.main;
-        viewGroup.deleteWidgetMap(that.newWidgets);
-        if (!viewGroup.widget) {
-            viewGroup.removeWidget(that.newCId);
+        if (pageX > window.innerWidth - 220) {
+            viewGroup.deleteWidgetMap(that.newWidgets);
+            if (!viewGroup.widget) {
+                viewGroup.removeWidget(that.newCId);
+            } else {
+                viewGroup.widget.removeWidget(that.newCId);
+            }
         } else {
-            viewGroup.widget.removeWidget(that.newCId);
+            if (!viewGroup.widget) {
+                viewGroup.setDragWidgetId(null);
+            } else {
+                viewGroup.widget.setDragWidgetId(null);
+            }
         }
 
         that.newCId = null;
