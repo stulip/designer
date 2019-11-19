@@ -9,8 +9,12 @@ module.exports = {
             "@babel/preset-env",
             {
                 targets: {
-                    esmodules: true
-                }
+                    // "chrome": "76",
+                    browsers: [
+                        "last 2 Chrome versions"
+                    ]
+                },
+                ignoreBrowserslistConfig: true,
             }
         ],
         "@babel/preset-react",
