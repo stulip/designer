@@ -107,12 +107,10 @@ export class Screens extends React.Component<Props, State> {
         const clipPath2 = `inset(0 round ${borderRadius}px`;
         return (
             <>
-                <div className={"screen"}
-                     style={{width: scaleWidth, height: scaleHeight, clipPath}}>
-                    <div className={"title-label"}>
-                        <span>主页 - 默认状态</span>
-                        <span>{scaleValue + "%"}</span>
-                    </div>
+                <div className={"screen"} style={{width: scaleWidth, height: scaleHeight, clipPath}}/>
+                <div className={"title-label"}>
+                    <span>主页 - 默认状态</span>
+                    <span>{scaleValue + "%"}</span>
                 </div>
                 <div className={"canvas-bg-area"} style={{width: scaleWidth, height: scaleHeight}}>
                     {that.renderBgArea()}

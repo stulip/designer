@@ -10,7 +10,7 @@ import {BaseStore} from "./BaseStore";
 import type {WidgetState} from "../../../flow/Main.flow";
 import {arrayToMap, randomId} from "../../../config/Config";
 import {Types} from "@xt-web/core";
-import {SwapWidget, WidgetFactory} from "../../../widget/WidgetConfig";
+import {SwapWidget, WidgetAppFactory, WidgetWebFactory} from "../../../widget";
 import React from "react";
 import {LayoutConst, PropsConst} from "../../../config/Attribute";
 
@@ -40,6 +40,9 @@ export class WidgetsStore extends BaseStore {
     @observable _widgetStates = [];
     @observable _activeStateId;
 
+    // widget 工厂
+    widgetFactory;
+
     // 拖拽出来的新组建ID
     newCId = null;
     newWidgets = [];// 拖拽出来所有的新的widget
@@ -65,6 +68,7 @@ export class WidgetsStore extends BaseStore {
     init(config, options = {}) {
         let that = this;
         const { isApp } = config;
+        that.widgetFactory = isApp ? WidgetAppFactory : WidgetWebFactory;
         that.isLeftPanelOpen = !isApp;
     }
 
@@ -275,7 +279,8 @@ export class WidgetsStore extends BaseStore {
     handleWidgetDragStart = (event: MouseEvent, widgetId: string) => {
         const that = this;
         const {viewGroup} = that.main;
-        const widgets = WidgetFactory[widgetId];
+        const widgets = that.widgetFactory[widgetId];
+        if (!widgets) return;
         const widgetMap = arrayToMap(widgets, 'cid');
 
         viewGroup.setWidgetMap(widgets);

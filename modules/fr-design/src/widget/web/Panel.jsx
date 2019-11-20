@@ -16,6 +16,6 @@ type Props = {
 type State = {};
 
 export class Panel extends BasePanel<Props, State> {
-    static displayName = WidgetConst.App.Panel
+    static displayName = WidgetConst.Web.Panel
 
 }

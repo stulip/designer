@@ -3,7 +3,7 @@
  * @author tangzehua
  * @sine 2019-10-10 15:02
  */
-import {WidgetConst} from '../WidgetConfig'
+import {WidgetConst} from '../config'
 import {Header} from './Header'
 import {StatusBar} from './StatusBar'
 import {BottomOperateBar} from './BottomOperateBar'

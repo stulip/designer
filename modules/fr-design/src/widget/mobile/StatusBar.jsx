@@ -8,10 +8,10 @@
 import React from "react";
 import {SVG} from "fr-ui";
 import "../assets/mobile/status-bar.pcss";
-import {BaseWidget} from "../base/BaseWidget";
+import {BaseWidget} from "../base";
 import {ItemConst} from "../../components";
 import {PropsConst} from "../../config/Attribute";
-import {WidgetConst} from "../WidgetConfig";
+import {WidgetConst} from "../config";
 
 type Props = {
     width: number,

@@ -6,7 +6,7 @@
  */
 import React from "react";
 import {action, computed, observable} from "mobx";
-import {BaseWidget} from "../../../widget/base/BaseWidget";
+import type {BaseWidget} from "../../../widget/base";
 import {BaseStore} from "./BaseStore";
 import {DesignEvent} from "fr-web";
 import {PropsConst} from "../../../config/Attribute";

@@ -7,9 +7,9 @@
 // @flow
 import React from "react";
 import "../assets/mobile/iphonex-operate-bar.pcss";
-import type {BaseWidgetProps} from "../base/BaseWidget";
-import {BaseWidget} from "../base/BaseWidget";
-import {WidgetConst} from "../WidgetConfig";
+import type {BaseWidgetProps} from "../base";
+import {BaseWidget} from "../base";
+import {WidgetConst} from "../config";
 
 type Props = {
     ...BaseWidgetProps

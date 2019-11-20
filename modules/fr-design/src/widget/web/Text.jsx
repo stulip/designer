@@ -17,5 +17,5 @@ type Props = {
 type State = {};
 
 export class Text extends BaseText<Props, State> {
-    static displayName = WidgetConst.App.Text
+    static displayName = WidgetConst.Web.Text
 }

@@ -11,7 +11,7 @@ import {SVG} from "fr-ui";
 import {IBotSVG} from "fr-web";
 import type {DragWidgetDefined} from "../../flow/Main.flow";
 import {DragWidget} from "./DragWidget";
-import {AppWidgets, BasicWidgets, WebWidgets} from "../../widget/WidgetConfig";
+import {AppWidgets, BasicWidgets, WebWidgets} from "../../widget";
 
 type Props = {
     isApp: boolean,

@@ -10,14 +10,13 @@ import {observer} from "mobx-react";
 import "../../../widget/assets";
 import {ViewGroupStore} from "../store/ViewGroupStore";
 import {LayoutConst, PropsConst, TextConst} from "../../../config/Attribute";
-import {WidgetConst, WidgetFactory} from "../../../widget/WidgetConfig";
+import {WidgetConst} from "../../../widget";
 
 type Props = {
     store: ViewGroupStore
 };
 type State = {};
 
-const testHeader = WidgetFactory[WidgetConst.App.Header];
 const WidgetConfig = [
     {
         cid: "cs1",
@@ -112,10 +111,9 @@ const WidgetConfig = [
         },
         children: ["cpt01", "cpt02"]
     },
-    ...testHeader,
 ];
 
-const GroupWidget = Array.from(new Set(["cs1", "ch0", "cbo0", "cpt0", testHeader[0].cid, "ct0"]));
+const GroupWidget = Array.from(new Set(["cs1", "ch0", "cbo0", "cpt0", "ct0"]));
 
 @observer
 export class ViewGroup extends React.Component<Props, State> {

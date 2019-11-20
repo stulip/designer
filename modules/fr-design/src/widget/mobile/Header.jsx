@@ -7,10 +7,10 @@
 // @flow
 import React from "react";
 import "../assets/mobile/header.pcss";
-import type {BaseWidgetProps} from "../base/BaseWidget";
+import type {BaseWidgetProps} from "../base";
 import {Panel} from "./Panel";
 import {LayoutConst, PropsConst} from "../../config/Attribute";
-import {WidgetConst} from "../WidgetConfig";
+import {WidgetConst} from "../config";
 
 type Props = {
     ...BaseWidgetProps
