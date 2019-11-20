@@ -7,3 +7,4 @@
 export {BasePanel, BasePanelProps} from './BasePanel';
 export {BaseText, BaseTextProps} from './BaseText';
 export {BaseWidget, BaseWidgetProps} from './BaseWidget'
+export {RootWidget} from './RootWidget'

@@ -194,10 +194,7 @@ export class WidgetsStore extends BaseStore {
         const {pageX, pageY} = event;
         const targetBox = widget.widget.getBoundingClientRect();
         const parentWidget = widget.parentWidget;
-        let flexDirection = LayoutConst.direction.column;
-        if (parentWidget) {
-            flexDirection = parentWidget.getFormData()[PropsConst.layoutDirection];
-        }
+        let flexDirection = parentWidget.getFormData()[PropsConst.layoutDirection] || LayoutConst.direction.column;
 
         // target Rect
         const targetRect = {
@@ -226,18 +223,11 @@ export class WidgetsStore extends BaseStore {
             }
         }
         if (dir) {
-            let widgets = viewGroup.widgetIds;
-            if (parentWidget) {
-                widgets = parentWidget.widgetIds;
-            }
+            let widgets = parentWidget.widgetIds;
             const newWidgets = SwapWidget(widgets, widget.getId(), dragId, dir);
 
             if (widgets !== newWidgets) {
-                if (parentWidget) {
-                    parentWidget.widgetIds = newWidgets;
-                } else {
-                    viewGroup.widgetIds = newWidgets;
-                }
+                parentWidget.widgetIds = newWidgets;
             }
         }
     }
@@ -286,7 +276,7 @@ export class WidgetsStore extends BaseStore {
         viewGroup.setWidgetMap(widgets);
         const cid = widgets[0].cid;
         if (!viewGroup.widget) {
-            viewGroup.addNewWidget(cid);
+            viewGroup.rootWidget.addNewWidget(cid);
         } else {
             const isFlag = viewGroup.widget.addNewWidget(cid);
             if (isFlag === false) {
@@ -309,13 +299,13 @@ export class WidgetsStore extends BaseStore {
         if (pageX > window.innerWidth - 220) {
             viewGroup.deleteWidgetMap(that.newWidgets);
             if (!viewGroup.widget) {
-                viewGroup.removeWidget(that.newCId);
+                viewGroup.rootWidget.removeWidget(that.newCId);
             } else {
                 viewGroup.widget.removeWidget(that.newCId);
             }
         } else {
             if (!viewGroup.widget) {
-                viewGroup.setDragWidgetId(null);
+                viewGroup.rootWidget.setDragWidgetId(null);
             } else {
                 viewGroup.widget.setDragWidgetId(null);
             }

@@ -4,13 +4,13 @@
  * @author tangzehua
  * @sine 2019-09-04 13:45
  */
-import { observable, action, computed } from "mobx";
-import { ToolbarStore } from "./ToolbarStore";
-import { WidgetsStore } from "./WidgetsStore";
-import { FooterStore } from "./FooterStore";
-import { ScreensStore } from "./ScreensStore";
-import { SectionStore } from "./SectionStore";
-import { createConfig } from "../../../config/Config";
+import {action, observable} from "mobx";
+import {ToolbarStore} from "./ToolbarStore";
+import {WidgetsStore} from "./WidgetsStore";
+import {FooterStore} from "./FooterStore";
+import {ScreensStore} from "./ScreensStore";
+import {SectionStore} from "./SectionStore";
+import {createConfig} from "../../../config/Config";
 import type {PageConfig, PageData} from "../../../flow/Main.flow";
 import {DesignEvent, EventEmitter} from 'fr-web'
 import {AttributeStore} from "./AttributeStore";
@@ -20,6 +20,7 @@ import {BaseStore} from "./BaseStore";
 
 export class MainStore {
     // 配置
+    @observable
     config: PageConfig;
 
     _storeList: Array<BaseStore> = [];
@@ -61,30 +62,18 @@ export class MainStore {
         that._storeList.forEach(da => da.classMount());
 
         that.addListener();
-        that.init(props);
-    }
-
-    addListener (){
-        let that = this;
-        DesignEvent.addListener(PropsConst.background, that.onListenerBackgroundColor);
-        DesignEvent.addListener(PropsConst.widgetColorHandle, that.handleColorPicker);
-    }
-
-    removeListener (){
-        let that = this;
-        DesignEvent.removeListener(PropsConst.background, that.onListenerBackgroundColor);
-        DesignEvent.removeListener(PropsConst.widgetColorHandle, that.handleColorPicker);
+        const {name} = props.match.params;
+        that.config = createConfig({
+            isApp: name === 'app',
+        });
     }
 
     /**
      * 初始化
      */
+    @action
     init(props) {
         let that = this;
-        const { name } = props.match.params;
-        that.config = createConfig({
-            isApp: name === 'app',
-        });
         const config = that.config;
         const options = {
             data: that.pageData,
@@ -95,12 +84,24 @@ export class MainStore {
         });
     }
 
+    addListener() {
+        let that = this;
+        DesignEvent.addListener(PropsConst.background, that.onListenerBackgroundColor);
+        DesignEvent.addListener(PropsConst.widgetColorHandle, that.handleColorPicker);
+    }
+
+    removeListener() {
+        let that = this;
+        DesignEvent.removeListener(PropsConst.background, that.onListenerBackgroundColor);
+        DesignEvent.removeListener(PropsConst.widgetColorHandle, that.handleColorPicker);
+    }
+
     /**
      * 设置背景颜色
      * @param color
      */
     @action
-    setBackgroundColor = (color)=> {
+    setBackgroundColor = (color) => {
         DesignEvent.emit(PropsConst.background, color);
     };
 

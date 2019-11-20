@@ -10,7 +10,6 @@ import type {BaseWidget} from "../../../widget/base";
 import {BaseStore} from "./BaseStore";
 import {DesignEvent} from "fr-web";
 import {PropsConst} from "../../../config/Attribute";
-import {Types} from "@xt-web/core";
 import type {PageConfig, PageData, WidgetConfigDefined, WidgetState} from "../../../flow/Main.flow";
 import WidgetModule, {WidgetAppFactory} from "../../../widget";
 
@@ -18,10 +17,10 @@ export class ViewGroupStore extends BaseStore {
     // 组件布局
     @observable _groupConfig = [];
     _widgetMap: Map<string, WidgetConfigDefined> = new Map();
-    groupRef = React.createRef();
+    rootRef = React.createRef();
 
-    get group() {
-        return this.groupRef.current;
+    get rootWidget() {
+        return this.rootRef.current;
     }
 
     // 鼠标悬浮元素
@@ -37,8 +36,6 @@ export class ViewGroupStore extends BaseStore {
     widgetList: [BaseWidget] = [];
     widgetList2: [BaseWidget] = [];
 
-    // 拖动的widget id
-    @observable dragWidgetId = null;
     originDragPosition = null; // 拖拽按下时相对元素坐标
 
     // 全局属性状态
@@ -79,7 +76,7 @@ export class ViewGroupStore extends BaseStore {
             that.widgetMap = defaultWidget.widgets;
         }
         // 动态导入
-        WidgetModule[isApp ? "App" : "Web"]
+        WidgetModule[isApp ? "App" : "Web"]()
             .then(action(module => (that.widgetModule = module)))
             .catch(e => window.console.log(e));
     }
@@ -212,16 +209,17 @@ export class ViewGroupStore extends BaseStore {
     handleMouseMove = (event: MouseEvent) => {
         const that = this;
         const widget = (that.hoverWidget || that.widget);
-        if (!that.dragWidgetId && widget) {
-            that.setDragWidgetId(widget.getId());
+        let dragWidgetId = that.rootWidget.getDragWidgetId();
+        if (!dragWidgetId && widget) {
+            that.rootWidget.setDragWidgetId(dragWidgetId = widget.getId());
             const box = widget.widget.getBoundingClientRect();
             that.originDragPosition = {x: event.pageX - box.left, y: event.pageY - box.top};
             if (that.widget) {
-                that.widget.setDragWidgetId(that.dragWidgetId);
+                that.widget.setDragWidgetId(dragWidgetId);
             }
         }
-        if (that.dragWidgetId) {
-            that.main.widgets.handleWidgetDragMove(event, that.dragWidgetId, that.originDragPosition);
+        if (dragWidgetId) {
+            that.main.widgets.handleWidgetDragMove(event, dragWidgetId, that.originDragPosition);
         }
     };
 
@@ -239,7 +237,7 @@ export class ViewGroupStore extends BaseStore {
         const parentWidget = that.widget && that.widget.parentWidget;
         for (const widget of widgets) {
             const parent = widget.parentWidget;
-            if (widget === that.widget || (!Types.isEmpty(parent) && parent === parentWidget)) {
+            if (widget === that.widget || parent === parentWidget) {
                 break;
             }
             lastWidget = widget;
@@ -250,13 +248,13 @@ export class ViewGroupStore extends BaseStore {
     @action
     _handleMouseEnter = (widget: BaseWidget) => {
         const that = this;
-        if (!that.group) return;
-        const groupRect = that.group.getBoundingClientRect();
+        if (!that.rootWidget) return;
+        const rootRect = that.rootWidget.widget.getBoundingClientRect();
         const rect = widget.widget.getBoundingClientRect();
-        const left = ((rect.left - groupRect.left) / groupRect.width) * 100;
-        const top = ((rect.top - groupRect.top) / groupRect.height) * 100;
-        const width = (rect.width / groupRect.width) * 100;
-        const height = (rect.height / groupRect.height) * 100;
+        const left = ((rect.left - rootRect.left) / rootRect.width) * 100;
+        const top = ((rect.top - rootRect.top) / rootRect.height) * 100;
+        const width = (rect.width / rootRect.width) * 100;
+        const height = (rect.height / rootRect.height) * 100;
 
         //如果被点击了就不获得焦点rect
         const selectRect = that.selectRect;
@@ -282,7 +280,7 @@ export class ViewGroupStore extends BaseStore {
      */
     handleWidgetDown = (event: MouseEvent, widget: BaseWidget) => {
         let that = this;
-        if (!that.group) return;
+        if (!that.rootWidget) return;
         that.widgetList.push(widget);
         clearTimeout(that._widgetClickTimer);
         that._widgetClickTimer = setTimeout(that._eachWidgetClickEvent, 0);
@@ -319,7 +317,7 @@ export class ViewGroupStore extends BaseStore {
     @action
     handleMouseUp = (event: MouseEvent) => {
         const that = this;
-        that.dragWidgetId = null;
+        that.rootWidget.setDragWidgetId(null);
         that.originDragPosition = null;
         that.removeMoveListener();
         that.main.widgets.onWidgetDragEnd();
@@ -335,7 +333,7 @@ export class ViewGroupStore extends BaseStore {
     @action
     setSelectBox(element: Element) {
         let that = this;
-        if (!that.group) return;
+        if (!that.rootWidget) return;
         let rect = element.getBoundingClientRect();
         const margin = {};
         ({
@@ -352,11 +350,11 @@ export class ViewGroupStore extends BaseStore {
             top: rect.top - parseInt(margin.top || 0)
         };
 
-        const groupRect = that.group.getBoundingClientRect();
-        const left = ((rect.left - groupRect.left) / groupRect.width) * 100;
-        const top = ((rect.top - groupRect.top) / groupRect.height) * 100;
-        const width = (rect.width / groupRect.width) * 100;
-        const height = (rect.height / groupRect.height) * 100;
+        const rootRect = that.rootWidget.widget.getBoundingClientRect();
+        const left = ((rect.left - rootRect.left) / rootRect.width) * 100;
+        const top = ((rect.top - rootRect.top) / rootRect.height) * 100;
+        const width = (rect.width / rootRect.width) * 100;
+        const height = (rect.height / rootRect.height) * 100;
         that.selectRect = {left, top, width, height};
 
         const hoveRect = that.hoveRect;
@@ -373,8 +371,8 @@ export class ViewGroupStore extends BaseStore {
         }
         // 设置标尺刻度
         that.main.section.setRulerShadow(
-            (rect.left - groupRect.left) / canvasScale,
-            (rect.top - groupRect.top) / canvasScale,
+            (rect.left - rootRect.left) / canvasScale,
+            (rect.top - rootRect.top) / canvasScale,
             rect.width / canvasScale,
             rect.height / canvasScale
         );
@@ -387,28 +385,6 @@ export class ViewGroupStore extends BaseStore {
 
     set widgetIds(widgets) {
         this._groupConfig = widgets;
-    }
-
-    /**
-     * 添加新的组件
-     * @param {string} widgetId
-     */
-    @action
-    addNewWidget(widgetId) {
-        this._groupConfig.push(widgetId);
-        this.setDragWidgetId(widgetId);
-    }
-
-    @action
-    removeWidget(widgetId: string) {
-        const that = this;
-        that.setDragWidgetId(null);
-        that._groupConfig.remove(widgetId);
-    }
-
-    @action
-    setDragWidgetId(widgetId: string) {
-        this.dragWidgetId = widgetId;
     }
 
     /**
@@ -445,34 +421,4 @@ export class ViewGroupStore extends BaseStore {
         widgets.forEach(widget => this._widgetMap.delete(widget.cid));
     }
 
-    createWidget(widgetIds: string | string[], widgetMap: Map<string, WidgetConfigDefined>) {
-        const that = this;
-        widgetMap = widgetMap || that.widgetMap;
-        const names = Array.isArray(widgetIds) ? widgetIds : [widgetIds];
-
-        const {
-            config: {designRect},
-            section: {canvasRect, canvasScale}
-        } = that.main;
-
-        return names.map(cid => {
-            const widget = widgetMap.get(cid);
-            if (!widget) return null;
-            const Comp = that.widgetModule[widget.component];
-
-            return (
-                Comp && (
-                    <Comp
-                        key={widget.cid}
-                        {...widget}
-                        canvasRect={canvasRect}
-                        designRect={designRect}
-                        widgetMap={widgetMap}
-                        module={that.widgetModule}
-                        isDrag={that.dragWidgetId === widget.cid}
-                    />
-                )
-            );
-        });
-    }
 }

@@ -32,6 +32,7 @@ export class Main extends Component {
 
     componentDidMount() {
         let that = this;
+        that.store.init(that.props);
         document.addEventListener("contextmenu", that.handleContextMenu);
         document.addEventListener("keydown", that.handleKeyboard);
         // document.addEventListener('keydown', that.handleKeyboardBan);

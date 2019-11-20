@@ -18,7 +18,6 @@ export type BaseWidgetProps = {
     designRect: DesignType,
     module: Object, // 所有可用属性控件
     parent?: { current: any },
-    isHasBox: boolean, // 是否有box选框
     isDrag: boolean, // 是否被拖动
     ...WidgetConfigDefined
 };
@@ -120,6 +119,7 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
     createWidget(widgetIds, widgetMap) {
         const that = this;
         const {canvasRect, designRect, module} = that.props;
+        if (!module) return null;
         const {dragWidgetId} = that.state;
         widgetMap = widgetMap || that.props.widgetMap;
         const names = Array.isArray(widgetIds) ? widgetIds : [widgetIds];
@@ -164,14 +164,14 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
 
     componentDidMount() {
         const that = this;
-        const {isHasBox = true, widgetMap} = that.props;
-        widgetMap && isHasBox && that.addListener();
+        const {widgetMap} = that.props;
+        widgetMap && that.addListener();
     }
 
     componentWillUnmount() {
         const that = this;
-        const { isHasBox = true, widgetMap } = that.props;
-        widgetMap && isHasBox && that.removeListener();
+        const {widgetMap} = that.props;
+        widgetMap && that.removeListener();
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -184,6 +184,7 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
         return nextState.widget !== that.state.widget
             || nextState.children !== that.state.children
             || nextProps.isDrag !== that.props.isDrag
+            || nextProps.module !== that.props.module
             || nextState.dragWidgetId !== that.state.dragWidgetId;
     }
 
@@ -375,6 +376,14 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
      */
     set widgetIds(widgets) {
         this.setState({children: widgets});
+    }
+
+    /**
+     * 获取拖拽widget id
+     * @returns {null}
+     */
+    getDragWidgetId() {
+        return this.state.dragWidgetId;
     }
 
     /**

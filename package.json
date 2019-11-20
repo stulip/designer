@@ -27,7 +27,7 @@
   "dependencies": {
     "@ibot/ibot": "^0.7.0-dev.12",
     "@xt-web/core": "^0.2.10",
-    "@xt-web/react": "^0.1.13",
+    "@xt-web/react": "^0.1.15",
     "@xt-web/react-dom": "^0.1.8",
     "classnames": "^2.2.6",
     "dom-to-image-more": "2.8.0",

@@ -9,6 +9,7 @@ import React from "react";
 import {observer} from "mobx-react";
 import "../../../widget/assets";
 import {ViewGroupStore} from "../store/ViewGroupStore";
+import {RootWidget} from './../../../widget'
 
 type Props = {
     store: ViewGroupStore
@@ -28,24 +29,22 @@ export class ViewGroup extends React.Component<Props, State> {
         store.unmount();
     }
 
-    handleMouseDown = (event: MouseEvent) => {
-        if (event.button !== 0 || (event.ctrlKey || event.metaKey)) return;
-        event.stopPropagation();
-        event.preventDefault();
-    };
-
     _render() {
         const that = this;
-        const { store } = this.props;
-        const { main, widgetModule } = store;
-        const { canvasRect, canvasScale } = main.section;
-        const { designRect } = main.config;
+        const {store} = this.props;
+        const {main, widgetModule, rootRef} = store;
+        const {canvasRect} = main.section;
+        const {designRect} = main.config;
         return (
-            <div className={`group-list group-content ${designRect.type}`} ref={store.groupRef}
-                 onMouseDown={that.handleMouseDown}>
-                {widgetModule && store.createWidget(store.widgetIds)}
-            </div>
-        );
+            <RootWidget
+                designRect={designRect}
+                canvasRect={canvasRect}
+                children={store.widgetIds}
+                widgetMap={store.widgetMap}
+                module={widgetModule}
+                ref={rootRef}
+            />
+        )
     }
 
     render() {

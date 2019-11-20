@@ -52,24 +52,33 @@ export class Header extends Panel<Props> {
         return rect;
     }
 
-    addNewWidget(widgetId: string) {
+    _getChildrenWidget() {
         const that = this;
         const {widget: {right}} = that.state;
-        const rightWidget = that.childrenRef.get(right[0]);
+        return that.childrenRef.get(right[0]);
+    }
+
+    addNewWidget(widgetId: string) {
+        const that = this;
+        const rightWidget = that._getChildrenWidget();
         rightWidget && rightWidget.addNewWidget(widgetId);
     }
 
     removeWidget(widgetId: string) {
         const that = this;
-        const {widget: {right = []}} = that.state;
-        const rightWidget = that.childrenRef.get(right[0]);
+        const rightWidget = that._getChildrenWidget();
         rightWidget && rightWidget.removeWidget(widgetId);
+    }
+
+    setDragWidgetId(widgetId) {
+        const that = this;
+        const rightWidget = that._getChildrenWidget();
+        rightWidget && rightWidget.setDragWidgetId(widgetId);
     }
 
     get widgetIds(): * | *[] {
         const that = this;
-        const {widget: {right = []}} = that.state;
-        const rightWidget = that.childrenRef.get(right[0]);
+        const rightWidget = that._getChildrenWidget();
         return rightWidget ? rightWidget.widgetIds : [];
     }
 
