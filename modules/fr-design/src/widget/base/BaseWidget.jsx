@@ -36,10 +36,10 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
     stateData = {
         default: {
             data: {},
-            props: {}
         }
     };
     states: [WidgetState] = [];
+    fields = {};
 
     get widget() {
         return this.widgetRef.current;
@@ -88,9 +88,9 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
         if (!widgetProps.default) widgetProps.default = {};
         for (const [key, value] of Object.entries(widgetProps)) {
             const data = that.createWidgetProps(value);
-            const props = that.widgetProps();
-            that.stateData[key] = {data, props};
+            that.stateData[key] = {data};
         }
+        that.fields = that.widgetProps();
     }
 
     /**
@@ -306,7 +306,8 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
     getWidgetProps(): [WidgetProps] {
         const that = this;
         this.updateBasicData();
-        return that.stateData[that.stateId].props;
+        // return that.stateData[that.stateId].props;
+        return that.fields;
     }
 
     /**
@@ -323,6 +324,7 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
      */
     switchStates(stateId: string) {
         let that = this;
+        if (that._stateId === stateId) return;
         if (stateId in that.stateData || stateId === StatesConst.global.cid) {
             that._stateId = stateId;
             that.refreshWidget();
@@ -338,8 +340,7 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
      */
     addState(state: WidgetState) {
         const that = this;
-        const stateData = JSON.parse(JSON.stringify(that.stateData[that.stateId]));
-        that.stateData[state.cid] = {data: stateData.data, props: stateData.props};
+        that.stateData[state.cid] = JSON.parse(JSON.stringify(that.stateData[that.stateId]));
         that.states.push(state);
     }
 

@@ -38,10 +38,6 @@ export class ViewGroupStore extends BaseStore {
 
     originDragPosition = null; // 拖拽按下时相对元素坐标
 
-    // 全局属性状态
-    globalStateId;
-    globalStates = [];
-
     // 所有widget模块引用
     @observable.ref widgetModule;
 
@@ -105,7 +101,7 @@ export class ViewGroupStore extends BaseStore {
         const {canvasRect} = that.main.section;
         that.main.section.setRulerShadow(0, 0, canvasRect.width, canvasRect.height);
         that.main.attribute.setConfig();
-        that.main.widgets.setWidgetStates(that.globalStates, that.globalStateId);
+        that.main.widgets.setWidgetStates(that.rootWidget.getWidgetStates(), that.rootWidget.getStateId());
 
         if (that.widget) {
             that.widget.onUpdate = null;
@@ -146,7 +142,7 @@ export class ViewGroupStore extends BaseStore {
                 that.main.attribute.setConfig(widget.getWidgetProps(), widget.getFormData());
             }
         } else {
-            that.globalStateId = stateId;
+            that.rootWidget.switchStates(stateId);
         }
     }
 
@@ -156,16 +152,10 @@ export class ViewGroupStore extends BaseStore {
      */
     addWidgetState(state: WidgetState) {
         const that = this;
-        const widget = that.widget;
-        if (widget) {
-            widget.addState(state);
-            widget.switchStates(state.cid);
-            that.main.widgets.setWidgetStates(widget.getWidgetStates(), widget.getStateId());
-        } else {
-            that.globalStates.push(state);
-            that.globalStateId = state.cid;
-            that.main.widgets.setWidgetStates(that.globalStates, state.cid);
-        }
+        const widget = that.widget || that.rootWidget;
+        widget.addState(state);
+        that.switchWidgetState(state.cid);
+        that.main.widgets.setWidgetStates(widget.getWidgetStates(), widget.getStateId());
     }
 
     /**
