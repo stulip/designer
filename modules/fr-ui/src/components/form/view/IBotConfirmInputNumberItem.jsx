@@ -53,7 +53,7 @@ export class IBotConfirmInputNumberItem extends BaseItem<Props, State> {
                     {...input}
                     className={className}
                     value={value}
-                    onChange={that.onChange}
+                    onConfirm={that.onChange}
                     disabled={disabled}
                     size={"small"}
                 />
