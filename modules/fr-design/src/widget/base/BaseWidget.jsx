@@ -246,7 +246,7 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
      * @param {MouseEvent} event
      */
     handleMouseDown = (event: MouseEvent): void => {
-        event.preventDefault();
+        if (event.ctrlKey || event.metaKey) return;
         DesignEvent.emit(PropsConst.widgetMouseDown, event, this);
     };
 

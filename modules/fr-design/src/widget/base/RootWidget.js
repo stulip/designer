@@ -14,13 +14,25 @@ type State = {};
 export class RootWidget extends BaseWidget<Props, State> {
 
     addListener() {
-        // 不处理事件
+        const that = this;
+        if (that.widget) {
+            that.widget.addEventListener('mousedown', that.handleMouseDown);
+        }
+    }
+
+    removeListener() {
+        const that = this;
+        if (that.widget) {
+            that.widget.removeEventListener('mousedown', that.handleMouseDown);
+        }
     }
 
     handleMouseDown = (event: MouseEvent) => {
         if (event.button !== 0 || event.ctrlKey || event.metaKey) return;
-        event.stopPropagation();
-        event.preventDefault();
+        if (event.target !== this.widget) {
+            event.stopPropagation();
+            event.preventDefault();
+        }
     };
 
     render() {
@@ -28,11 +40,7 @@ export class RootWidget extends BaseWidget<Props, State> {
         const {children, designRect, canvasRect} = this.props;
 
         return (
-            <div
-                className={`group-list group-content ${designRect.type}`}
-                onMouseDown={that.handleMouseDown}
-                ref={that.widgetRef}
-            >
+            <div className={`group-list group-root ${designRect.type}`} ref={that.widgetRef}>
                 {that.renderChild()}
             </div>
         );
