@@ -237,7 +237,7 @@ export class ViewGroupStore extends BaseStore {
         const parentWidget = that.widget && that.widget.parentWidget;
         for (const widget of widgets) {
             const parent = widget.parentWidget;
-            if (widget === that.widget || parent === parentWidget) {
+            if (widget === that.widget || (parent === parentWidget & parentWidget !== that.rootWidget)) {
                 break;
             }
             lastWidget = widget;
