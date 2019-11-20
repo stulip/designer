@@ -57,7 +57,8 @@ export type WidgetConfigDefined = {
     widgetProps: { default: WidgetProps, [string]: WidgetProps },// props css 属性
     children: string | Array<string>, // 子节点具体根据widget类型
     states: Array<WidgetState>,
-    draggable: boolean, // 是否支持退拽移动
+    draggable?: boolean, // 是否支持退拽移动, 默认true
+    visible?: boolean, // 是否显示, 状态之外的控制.  默认true
     widget: { [string]: any },// 内置组件, 自由扩展子节点
 }
 

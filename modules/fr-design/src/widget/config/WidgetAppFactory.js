@@ -3,13 +3,26 @@
  * @author tangzehua
  * @sine 2019-11-20 10:44
  */
-import {WidgetConst} from './config'
+import {WidgetConst} from "./config";
 import {randomId} from "../../config/Config";
 import {PropsConst, TextConst} from "../../config/Attribute";
 
 const App = WidgetConst.App;
 
 export class WidgetAppFactory {
+
+    /**
+     * 带导航栏的新页面
+     * @returns {{ids: [*, *, *], widgets: *[]}}
+     */
+    static get navigator() {
+        const that = this;
+        const Status = that[App.StatusBar];
+        const Header = that[App.Header];
+        const Operate = that[App.BottomOperateBar];
+        const widgets = [...Status, ...Header, ...Operate];
+        return {ids: [Status[0].cid, Header[0].cid, Operate[0].cid], widgets};
+    }
 
     static get [App.StatusBar]() {
         return [{cid: randomId(), component: App.StatusBar}];
@@ -44,6 +57,10 @@ export class WidgetAppFactory {
     //面板
     static get [App.Panel]() {
         return [{cid: randomId(), component: App.Panel}];
+    }
+
+    static get [App.BottomOperateBar]() {
+        return [{cid: randomId(), component: App.BottomOperateBar}];
     }
 
     // 文字

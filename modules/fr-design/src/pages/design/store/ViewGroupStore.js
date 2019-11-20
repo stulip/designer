@@ -12,7 +12,7 @@ import {DesignEvent} from "fr-web";
 import {PropsConst} from "../../../config/Attribute";
 import {Types} from "@xt-web/core";
 import type {PageConfig, PageData, WidgetConfigDefined, WidgetState} from "../../../flow/Main.flow";
-import WidgetModule from "../../../widget";
+import WidgetModule, {WidgetAppFactory} from "../../../widget";
 
 export class ViewGroupStore extends BaseStore {
     // 组件布局
@@ -68,9 +68,16 @@ export class ViewGroupStore extends BaseStore {
         //widget basic
     }
 
+    @action
     init(config: PageConfig, options: { data: PageData } = {}) {
         let that = this;
         const {isApp} = config;
+
+        if (isApp) {
+            const defaultWidget = WidgetAppFactory.navigator;
+            that.widgetIds = defaultWidget.ids;
+            that.widgetMap = defaultWidget.widgets;
+        }
         // 动态导入
         WidgetModule[isApp ? "App" : "Web"]
             .then(action(module => (that.widgetModule = module)))
