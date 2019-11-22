@@ -35,6 +35,10 @@ export class RootWidget extends BaseWidget<Props, State> {
         }
     };
 
+    getId() {
+        return "root-widget";
+    }
+
     render() {
         const that = this;
         const {children, designRect, canvasRect} = this.props;

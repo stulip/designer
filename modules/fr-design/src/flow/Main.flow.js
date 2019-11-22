@@ -53,13 +53,39 @@ export type PageData = {
 export type WidgetConfigDefined = {
     cid: string, // 唯一标识
     name: string, // 名称
-    component: string, // widget 名称
-    widgetProps: { default: WidgetProps, [string]: WidgetProps },// props css 属性
-    children: string | Array<string>, // 子节点具体根据widget类型
-    states: Array<WidgetState>,
+    component: string, // widget 名称, 如: WidgetConst.App.Header
+    props?: { default: WidgetProps, [string]: WidgetProps },// widget 属性
+    event?: { default: [string], [string]: [string] },// 事件数组
+    states?: Array<WidgetState>,
     draggable?: boolean, // 是否支持退拽移动, 默认true
     visible?: boolean, // 是否显示, 状态之外的控制.  默认true
-    widget: { [string]: any },// 内置组件, 自由扩展子节点
+    children?: string | Array<string>, // 子节点具体根据widget类型
+    widget?: { [string]: any },// 内置组件, 自由扩展子节点
+}
+
+// 事件类型枚举
+export type WidgetEventType =
+    | "click"
+    | "dblclick"
+    | "change"
+    | "hover"
+    | "longPress";
+
+// 事件行为枚举
+export type WidgetEventBehavior =
+    | "page"
+    | "page-state"
+    | "widget-state"
+    | "work-flow";
+
+/**
+ * widget 事件
+ */
+export type WidgetEvent = {
+    cid: string, // 唯一标识
+    name: string, // 名称
+    type: WidgetEventType, // 事件类型
+    behavior: string,
 }
 
 /**

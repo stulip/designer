@@ -16,6 +16,41 @@ type Props = {
 };
 type State = {};
 
+/*
+{
+
+}
+
+{
+    cid: 'w-123',
+    name: "导航栏",
+    component: WidgetConst.App.Header,
+	states: [
+		{
+		    name: "禁止",
+		    cid: 's-123'
+		}
+	],
+	event: {
+		"w-123: ['e-123', 'e-124'],
+		"s-123": ['e-223']
+	},
+	props: {
+		"w-123: {
+            //css 属性
+		},
+		"s-123": {
+
+		}
+	},
+	children: []|string,
+	draggable: true,
+	visible: true,
+
+}
+
+ */
+
 @observer
 export class ViewGroup extends React.Component<Props, State> {
 

@@ -35,7 +35,8 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
     // 状态数据
     stateData = {
         default: {
-            data: {},
+            props: {},
+            event: []
         }
     };
     states: [WidgetState] = [];
@@ -69,7 +70,7 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
         that.state = {
             dragWidgetId: null,
             widget: props.widget,
-            children: props.children,
+            children: props.children
         };
         that.states = props.states || [];
         // 所有子节点引用
@@ -83,12 +84,14 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
 
     initWidgetState() {
         const that = this;
-        const {widgetProps = {}} = that.props;
-        // 防止没有default属性
-        if (!widgetProps.default) widgetProps.default = {};
-        for (const [key, value] of Object.entries(widgetProps)) {
-            const data = that.createWidgetProps(value);
-            that.stateData[key] = {data};
+        const {states = [], props = {}, event = []} = that.props;
+        // 防止没有default
+        states.push(StatesConst.default);
+
+        for (const {cid} of states) {
+            const data = that.createWidgetProps(props[cid] || {});
+            const evt = event[cid] || [];
+            that.stateData[cid] = {props: data, event: evt};
         }
         that.fields = that.widgetProps();
     }
@@ -108,6 +111,31 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
     get stateId() {
         const id = this._stateId;
         return !id || id === StatesConst.global.cid ? StatesConst.default.cid : id;
+    }
+
+    getData() {
+        const that = this;
+        const {component, draggable} = that.props;
+        const {children, widget} = that.state;
+        const cid = that.getId(),
+            name = that.getName();
+        const event = {},
+            props = {};
+        for (const [name, value] of Object.entries(that.stateData)) {
+            props[name] = value.props;
+            event[name] = value.event;
+        }
+        return Object.assign(Object.create(null), {
+            cid,
+            name,
+            component,
+            event,
+            props,
+            draggable,
+            children,
+            widget,
+            states: that.getWidgetStates()
+        });
     }
 
     /**
@@ -181,11 +209,13 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
 
     shouldComponentUpdate(nextProps, nextState) {
         const that = this;
-        return nextState.widget !== that.state.widget
-            || nextState.children !== that.state.children
-            || nextProps.isDrag !== that.props.isDrag
-            || nextProps.module !== that.props.module
-            || nextState.dragWidgetId !== that.state.dragWidgetId;
+        return (
+            nextState.widget !== that.state.widget ||
+            nextState.children !== that.state.children ||
+            nextProps.isDrag !== that.props.isDrag ||
+            nextProps.module !== that.props.module ||
+            nextState.dragWidgetId !== that.state.dragWidgetId
+        );
     }
 
     // 子类实现, 默认值
@@ -415,7 +445,7 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
      */
     getFormData() {
         const that = this;
-        return that.stateData[that.stateId].data;
+        return that.stateData[that.stateId].props;
     }
 
     // 获取style 对象

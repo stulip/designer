@@ -19,7 +19,7 @@ export class ViewGroupStore extends BaseStore {
     _widgetMap: Map<string, WidgetConfigDefined> = new Map();
     rootRef = React.createRef();
 
-    get rootWidget() {
+    get rootWidget(): BaseWidget {
         return this.rootRef.current;
     }
 

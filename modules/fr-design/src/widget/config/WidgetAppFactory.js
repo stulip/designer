@@ -34,7 +34,7 @@ export class WidgetAppFactory {
             cid: randomId(),
             component: App.Panel,
             draggable: false,
-            widgetProps: {default: {[PropsConst.layoutFlexGrow]: 0}}
+            props: {default: {[PropsConst.layoutFlexGrow]: 0}}
         };
 
         const center = {
@@ -42,7 +42,7 @@ export class WidgetAppFactory {
             component: App.Text,
             name: "标题",
             draggable: false,
-            widgetProps: {default: {[PropsConst.textAlign]: TextConst.textAlign.center, [PropsConst.textSize]: 17}},
+            props: {default: {[PropsConst.textAlign]: TextConst.textAlign.center, [PropsConst.textSize]: 17}},
             children: "标题"
         };
 

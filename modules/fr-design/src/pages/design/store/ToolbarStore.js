@@ -4,8 +4,7 @@
  * @author tangzehua
  * @sine 2019-08-29 10:47
  */
-import type {MainStore} from "../../../flow/Main.flow";
-import {zoomScale, ENUM} from '../../../config/Config'
+import {ENUM, zoomScale} from '../../../config/Config'
 import {BaseStore} from "./BaseStore";
 import {action, observable} from "mobx";
 
@@ -29,19 +28,27 @@ export class ToolbarStore extends BaseStore{
             (event.metaKey || event.ctrlKey) && that.handleZoom(ENUM.ZOOM_P);
         });
         //缩小
-        KeyEvents.addListener("189", (event: KeyboardEvent)=> {
+        KeyEvents.addListener("189", (event: KeyboardEvent) => {
             (event.metaKey || event.ctrlKey) && that.handleZoom(ENUM.ZOOM_M);
         });
         // 还原大小
-        KeyEvents.addListener("48", (event: KeyboardEvent)=> {
+        KeyEvents.addListener("48", (event: KeyboardEvent) => {
             (event.metaKey || event.ctrlKey) && that.handleZoom(0);
         })
     }
 
+    handleSave = () => {
+        const that = this;
+        const {viewGroup} = that.main;
+
+        const data = viewGroup.rootWidget.getData();
+        console.log(data)
+    };
+
     /**
      * 缩放设置
      */
-    handleZoom = (value)=> {
+    handleZoom = (value) => {
         let that = this;
         const section = that.main.section;
         const contentScale = section.canvasScale;

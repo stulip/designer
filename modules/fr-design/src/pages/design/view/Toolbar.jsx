@@ -66,17 +66,17 @@ export class Toolbar extends React.Component<Props, State> {
                 </div>
                 <div className={'center'}>
                     <div>
-                        <a className={'icons'}>
+                        <a className={'icons'} onClick={store.handleSave}>
                             <div className={'wrapper'}>
                                 <IBotIcon type={'dora'} name={'save'}/>
                             </div>
-                            { showToolbar && <span>保存</span> }
+                            {showToolbar && <span>保存</span>}
                         </a>
                         <a className={'icons'}>
                             <div className={'wrapper'}>
                                 <IBotIcon type={'dora'} name={'undo'}/>
                             </div>
-                            { showToolbar && <span>撤销</span> }
+                            {showToolbar && <span>撤销</span>}
                         </a>
                         <a className={'icons'}>
                             <div className={'wrapper'}>
