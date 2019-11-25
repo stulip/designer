@@ -14,8 +14,11 @@ import type {PageConfig, PageData, WidgetConfigDefined, WidgetState} from "../..
 import WidgetModule, {WidgetAppFactory} from "../../../widget";
 import {ENUM} from "../../../config";
 import {Dialog} from "fr-ui";
+import {CloneWidget} from "../../../widget/config/ConfigUtils";
 
 export class ViewGroupStore extends BaseStore {
+    // 复制的widget
+    _copyWidgets;
     @observable.ref rootWidgetConfig;
     _widgetMap: Map<string, WidgetConfigDefined> = new Map();
     rootRef = React.createRef();
@@ -68,7 +71,17 @@ export class ViewGroupStore extends BaseStore {
         // delete
         KeyEvents.addListener("46", (event: KeyboardEvent) => {
             that.handleRemoveWidget();
-        })
+        });
+
+        // ctrl/meta + c
+        KeyEvents.addListener("67", (event: KeyboardEvent) => {
+            (event.ctrlKey || event.metaKey) && that.handleCopyWidget();
+        });
+
+        // ctrl/meta + v
+        KeyEvents.addListener("86", (event: KeyboardEvent) => {
+            (event.ctrlKey || event.metaKey) && that.handlePasteWidget();
+        });
     }
 
     @action
@@ -179,6 +192,33 @@ export class ViewGroupStore extends BaseStore {
                 Dialog.confirm(`确认删除所选组件【${that.widget.getName()}】?`, options);
             } else {
                 Toast.info(`此组件【${that.widget.getName()}】不支持删除!`);
+            }
+        }
+    };
+
+    /**
+     * 复制widget
+     */
+    handleCopyWidget = () => {
+        const that = this;
+        if (that.widget) {
+            that._copyWidgets = that.widget.widgetData;
+        }
+    };
+
+    /**
+     * 粘贴 widget
+     */
+    handlePasteWidget = () => {
+        const that = this;
+        if (that.widget && that._copyWidgets) {
+            const [root] = that._copyWidgets;
+            const cloneWidgets = CloneWidget(that._copyWidgets);
+            if (root.cid === that.widget.getId()) {
+                that.setWidgetMap(cloneWidgets);
+                that.widget.parentWidget.addNewWidget(cloneWidgets[0].cid);
+            } else {
+                console.log('不是同一个')
             }
         }
     };

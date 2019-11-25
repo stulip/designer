@@ -139,6 +139,7 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
             widget,
             states
         });
+        // 当前widget数据放第一个
         return Array.from(that.childrenMap.values()).reduce((acc, cur) => (cur && acc.push(...cur.widgetData), acc), [
             data
         ]);
@@ -423,6 +424,15 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
         const that = this;
         const {children = []} = that.state;
         that.setState({children: [...children, widgetId], dragWidgetId: widgetId});
+    }
+
+    /**
+     * 粘贴新的widget
+     * @param widgetId
+     * @param targetId
+     */
+    pastWidget(widgetId: string, targetId: string) {
+
     }
 
     /**
