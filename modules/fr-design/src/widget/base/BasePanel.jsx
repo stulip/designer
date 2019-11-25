@@ -12,6 +12,7 @@ import {BaseWidget} from "./BaseWidget";
 import "../assets/panel.pcss";
 import {LayoutConst, PropsConst} from "../../config/Attribute";
 import {BasePanelConfig} from "./base.panel.config";
+import {Types} from "@xt-web/core";
 
 export type BasePanelProps = {
     ...BaseWidgetProps
@@ -61,13 +62,20 @@ export class BasePanel extends BaseWidget<BasePanelProps, State> {
             [PropsConst.widgetX]: rect.x,
             [PropsConst.widgetY]: rect.y,
             [PropsConst.widgetBackground]: that.getBackground(),
+            [PropsConst.widgetInitialWidth]: undefined,
+            [PropsConst.widgetInitialHeight]: undefined
         };
     }
 
     createWidgetProps(config): * {
         const data = super.createWidgetProps(config);
-        data[PropsConst.widgetInitialWidth] = data[PropsConst.widgetWidth] !== "initial";
-        data[PropsConst.widgetInitialHeight] = data[PropsConst.widgetHeight] !== "initial";
+        if (Types.isUndefined(data[PropsConst.widgetInitialWidth])) {
+            data[PropsConst.widgetInitialWidth] = data[PropsConst.widgetWidth] !== "initial";
+        }
+
+        if (Types.isUndefined(data[PropsConst.widgetInitialHeight])) {
+            data[PropsConst.widgetInitialHeight] = data[PropsConst.widgetHeight] !== "initial";
+        }
         return data;
     }
 
