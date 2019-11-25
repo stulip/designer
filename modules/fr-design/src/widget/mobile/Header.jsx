@@ -52,64 +52,19 @@ export class Header extends Panel<Props> {
         return rect;
     }
 
-    _getChildrenWidget() {
-        const that = this;
-        const {widget: {right}} = that.state;
-        return that.childrenMap.get(right[0]);
-    }
-
-    addNewWidget(widgetId: string) {
-        const that = this;
-        const rightWidget = that._getChildrenWidget();
-        rightWidget && rightWidget.addNewWidget(widgetId);
-    }
-
-    removeWidget(widgetId: string) {
-        const that = this;
-        const rightWidget = that._getChildrenWidget();
-        return rightWidget && rightWidget.removeWidget(widgetId);
-    }
-
-    setDragWidgetId(widgetId) {
-        const that = this;
-        const rightWidget = that._getChildrenWidget();
-        rightWidget && rightWidget.setDragWidgetId(widgetId);
-    }
-
-    get widgetIds(): * | *[] {
-        const that = this;
-        const rightWidget = that._getChildrenWidget();
-        return rightWidget ? rightWidget.widgetIds : [];
-    }
-
-    set widgetIds(widgets) {
-        const that = this;
-        const {widget: {right = []}} = that.state;
-        const rightWidget = that.childrenMap.get(right[0]);
-        rightWidget && (rightWidget.widgetIds = widgets);
-    }
-
-    // widgetProps(): [] {
-    //     const that = this;
-    //     const config = super.widgetProps();
-    //     return [
-    //         ...config
-    //     ];
-    // }
-
     renderChild() {
         const that = this;
         const data = that.getFormData();
-        const {widget: {right: rightWidget, center: centerWidget} = {}} = that.state;
+        const { widget: { children, center: centerWidget } = {} } = that.state;
         return (
             <>
                 <div className={"header-left flex middle"}>
                     <img src={backImage} width={15}/>
                     <span className="text">返回</span>
                 </div>
-                {that.renderWidget(rightWidget)}
+                {that.renderWidget([children])}
 
-                <div className={"header-title"}>{that.renderWidget(centerWidget)}</div>
+                <div className={"header-title"}>{that.renderWidget([centerWidget])}</div>
             </>
         );
     }

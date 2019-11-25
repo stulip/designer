@@ -61,7 +61,7 @@ export type WidgetConfigDefined = {
     draggable?: boolean, // 是否支持退拽移动(删除), 默认true
     visible?: boolean, // 是否显示, 状态之外的控制.  默认true
     children?: string | Array<string>, // 子节点具体根据widget类型
-    widget?: { [string]: any },// 内置组件, 自由扩展子节点
+    widget?: { children: string, [string]: any },// 内置组件, 自由扩展子节点
 }
 
 // 事件类型枚举

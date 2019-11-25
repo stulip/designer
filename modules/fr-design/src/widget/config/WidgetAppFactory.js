@@ -53,7 +53,7 @@ export class WidgetAppFactory {
         const widget = {
             cid: randomId(),
             component: App.Header,
-            widget: {right: [rightWidget.cid], center: [center.cid]}
+            widget: { children: rightWidget.cid, center: center.cid }
         };
         return [widget, center, rightWidget];
     }

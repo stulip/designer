@@ -422,8 +422,13 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
      */
     addNewWidget(widgetId: string) {
         const that = this;
-        const {children = []} = that.state;
-        that.setState({children: [...children, widgetId], dragWidgetId: widgetId});
+        const { children = [], widget: { children: wc } = {} } = that.state;
+        const widget = wc && that.childrenMap.get(wc);
+        if (widget) {
+            widget.addNewWidget(widgetId);
+        } else {
+            that.setState({ children: [...children, widgetId], dragWidgetId: widgetId });
+        }
     }
 
     /**
@@ -432,7 +437,25 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
      * @param targetId
      */
     pastWidget(widgetId: string, targetId: string) {
-
+        const that = this;
+        const { children = [], widget: { children: wc } = {} } = that.state;
+        const widget = wc && that.childrenMap.get(wc);
+        if (widget) {
+            widget.pastWidget(widgetId, targetId);
+        } else {
+            const nChildren = [];
+            children.forEach(wid => {
+                nChildren.push(wid);
+                if (targetId && wid === targetId) {
+                    nChildren.push(widgetId);
+                    widgetId = null;
+                }
+            });
+            if (widgetId) {
+                nChildren.push(widgetId);
+            }
+            that.setState({ children: nChildren });
+        }
     }
 
     /**
@@ -440,7 +463,9 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
      * @returns {*|*[]}
      */
     get widgetIds() {
-        return this.state.children || [];
+        const { children = [], widget: { children: wc } = {} } = this.state;
+        const widget = wc && this.childrenMap.get(wc);
+        return widget ? widget.widgetIds : children;
     }
 
     /**
@@ -448,7 +473,13 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
      * @param widgets
      */
     set widgetIds(widgets) {
-        this.setState({children: widgets});
+        const { widget: { children: wc } = {} } = this.state;
+        const widget = wc && this.childrenMap.get(wc);
+        if (widget) {
+            widget.widgetIds = widgets;
+        } else {
+            this.setState({ children: widgets });
+        }
     }
 
     /**
@@ -464,7 +495,14 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
      * @param widgetId
      */
     setDragWidgetId(widgetId) {
-        this.setState({dragWidgetId: widgetId});
+        const that = this;
+        const { widget: { children: wc } = {} } = that.state;
+        const widget = wc && that.childrenMap.get(wc);
+        if (widget) {
+            widget.setDragWidgetId(widgetId);
+        } else {
+            that.setState({ dragWidgetId: widgetId });
+        }
     }
 
     /**
@@ -474,18 +512,23 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
      */
     removeWidget(widgetId: string) {
         const that = this;
-        const {children = []} = that.state;
-        const widget = that.childrenMap.get(widgetId);
+        const { children = [], widget: { children: wc } = {} } = that.state;
 
-        // 不支持 退拽也不支持删除
-        if (!widget || !widget.isDelete()) {
-            return false;
-        }
+        const wcWidget = wc && that.childrenMap.get(wc);
+        if (wcWidget) {
+            return wcWidget.removeWidget(widgetId);
+        } else {
+            const widget = that.childrenMap.get(widgetId);
+            // 不支持 退拽也不支持删除
+            if (!widget || !widget.isDelete()) {
+                return false;
+            }
 
-        const wix = children.indexOf(widgetId);
-        if (wix !== -1) {
-            children.splice(wix, 1);
-            that.setState({children: Array.from(children), dragWidgetId: null});
+            const wix = children.indexOf(widgetId);
+            if (wix !== -1) {
+                children.splice(wix, 1);
+                that.setState({ children: Array.from(children), dragWidgetId: null });
+            }
         }
     }
 
@@ -511,14 +554,18 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
         const that = this;
         if (!that._styles) {
             that._styles = Form.View.getFormatFormData(this.getFormData());
-            setTimeout(function () {
+            setTimeout(function() {
                 that._styles = null;
             }, 0);
         }
         return that._styles;
     }
 
-    // 子类实现
+    /**
+     * 渲染widget
+     * @param {Array<string>} widgets
+     * @returns {*}
+     */
     renderWidget(widgets) {
         const that = this;
         if (!Array.isArray(widgets) || !widgets) return widgets;

@@ -211,14 +211,18 @@ export class ViewGroupStore extends BaseStore {
      */
     handlePasteWidget = () => {
         const that = this;
-        if (that.widget && that._copyWidgets) {
+        if (that._copyWidgets) {
             const [root] = that._copyWidgets;
             const cloneWidgets = CloneWidget(that._copyWidgets);
-            if (root.cid === that.widget.getId()) {
-                that.setWidgetMap(cloneWidgets);
-                that.widget.parentWidget.addNewWidget(cloneWidgets[0].cid);
+            that.setWidgetMap(cloneWidgets);
+            if (that.widget) {
+                if (root.cid === that.widget.getId()) {
+                    that.widget.parentWidget.pastWidget(cloneWidgets[0].cid, root.cid);
+                } else {
+                    that.widget.pastWidget(cloneWidgets[0].cid, root.cid);
+                }
             } else {
-                console.log('不是同一个')
+                that.rootWidget.pastWidget(cloneWidgets[0].cid, root.cid);
             }
         }
     };

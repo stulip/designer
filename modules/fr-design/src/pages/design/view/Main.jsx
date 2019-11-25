@@ -48,11 +48,12 @@ export class Main extends Component {
 
     handleKeyboard = (event: KeyboardEvent) => {
         const eventNames = this.store.keyEvents.eventNames();
-        if (eventNames.includes(String(event.keyCode)) && (event.ctrlKey || event.metaKey || event.altKey)) {
-            event.preventDefault();
-        }
         if (event.target.nodeName === "INPUT") {
             return;
+        }
+
+        if (eventNames.includes(String(event.keyCode)) && (event.ctrlKey || event.metaKey || event.altKey)) {
+            event.preventDefault();
         }
         // console.log(event.keyCode);
         this.store.keyEvents.emit(String(event.keyCode), event);
