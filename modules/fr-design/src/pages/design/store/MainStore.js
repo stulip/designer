@@ -80,8 +80,8 @@ export class MainStore {
         let that = this;
         const config = that.config;
         const pageData = {
-            id: that.pageId,
-            ...Storage.local.getItem(`${ENUM.PROJECT}_${that.pageId}`, that.pageData)
+            ...Storage.local.getItem(`${ENUM.PROJECT}_${that.pageId}`, that.pageData),
+            id: that.pageId
         };
         const options = {
             data: pageData,

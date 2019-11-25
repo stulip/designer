@@ -85,10 +85,8 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
     initWidgetState() {
         const that = this;
         const {states = [], props = {}, event = []} = that.props;
-        // 防止没有default
-        states.push(StatesConst.default);
 
-        for (const {cid} of states) {
+        for (const {cid} of [...states, StatesConst.default]) {
             const data = that.createWidgetProps(props[cid] || {});
             const evt = event[cid] || [];
             that.stateData[cid] = {props: data, event: evt};
