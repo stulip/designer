@@ -21,7 +21,7 @@ const backImage = require("fr-art/design/back_chevron.png");
 export class Header extends Panel<Props> {
     static displayName = WidgetConst.App.Header;
 
-    getName(): string {
+    getDefaultName(): string {
         return "导航栏";
     }
 
@@ -67,7 +67,7 @@ export class Header extends Panel<Props> {
     removeWidget(widgetId: string) {
         const that = this;
         const rightWidget = that._getChildrenWidget();
-        rightWidget && rightWidget.removeWidget(widgetId);
+        return rightWidget && rightWidget.removeWidget(widgetId);
     }
 
     setDragWidgetId(widgetId) {

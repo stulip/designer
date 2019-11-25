@@ -111,7 +111,11 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
         return !id || id === StatesConst.global.cid ? StatesConst.default.cid : id;
     }
 
-    getData() {
+    /**
+     * 获取所有的配置数据
+     * @returns {T|*[]}
+     */
+    get widgetData() {
         const that = this;
         const {component, draggable} = that.props;
         const {children, widget} = that.state;
@@ -135,8 +139,9 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
             widget,
             states
         });
-
-        return Array.from(that.childrenMap.values()).reduce((acc, cur) => (acc.push(...cur.getData()), acc), [data]);
+        return Array.from(that.childrenMap.values()).reduce((acc, cur) => (cur && acc.push(...cur.widgetData), acc), [
+            data
+        ]);
     }
 
     /**
@@ -176,19 +181,35 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
     }
 
     //子类实现
-    getName() {
+    getDefaultName() {
         return "widget";
     }
 
-    //是否可拖动
+    /**
+     * 是否可拖动
+     * @returns {*}
+     */
     isDraggable() {
         const {draggable} = this.props;
         return Types.isEmpty(draggable) ? true : draggable;
     }
 
+    /**
+     * 是否可删除, 目前不可拖动就不可删除
+     * @returns {boolean}
+     */
+    isDelete() {
+        return this.isDraggable();
+    }
+
     // 获取组件ID
     getId() {
         return this.props.cid;
+    }
+
+    getName() {
+        const data = this.getFormData();
+        return data[PropsConst.widgetName] || this.getDefaultName();
     }
 
     componentDidMount() {
@@ -254,6 +275,14 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
             that.widget.removeEventListener("mouseover", that.handleMouseEnter);
         }
     }
+
+    /**
+     * 同步不同状态的widget名称
+     * @param value
+     */
+    asyncName = value => {
+        Object.values(this.stateData).forEach(({props}) => (props[PropsConst.widgetName] = value));
+    };
 
     /**
      * 获得鼠标焦点
@@ -326,8 +355,10 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
      * @returns Array<WidgetProps>
      */
     widgetProps(child: Array<WidgetProps> = []) {
-        const basic = this.getBasicConfig();
-        return WidgetConfig({basic});
+        const that = this;
+        const basic = that.getBasicConfig();
+        const nameOptions = {onChange: that.asyncName};
+        return WidgetConfig({basic, nameOptions});
     }
 
     /**
@@ -429,15 +460,31 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
     /**
      * 删除widget
      * @param widgetId
+     * @return {*|boolean}
      */
     removeWidget(widgetId: string) {
         const that = this;
         const {children = []} = that.state;
+        const widget = that.childrenMap.get(widgetId);
+
+        // 不支持 退拽也不支持删除
+        if (!widget || !widget.isDelete()) {
+            return false;
+        }
+
         const wix = children.indexOf(widgetId);
         if (wix !== -1) {
             children.splice(wix, 1);
             that.setState({children: Array.from(children), dragWidgetId: null});
         }
+    }
+
+    /**
+     * 删除自己
+     * @return {*|boolean}
+     */
+    removeSelf() {
+        return this.isDelete() && this.parentWidget.removeWidget(this.getId());
     }
 
     /**

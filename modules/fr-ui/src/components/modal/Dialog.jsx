@@ -14,7 +14,6 @@ type State = {};
 
 let instance;
 const ModalType = {
-    Toast: "0",
     Alert: "1",
     Prompt: "2",
     Confirm: "3"
@@ -39,10 +38,6 @@ export class Dialog extends React.Component<Props, State> {
 
     static confirm(title, options = {}) {
         instance && instance.setState({type: ModalType.Confirm, title, options});
-    }
-
-    static toast(title, options = {}) {
-        instance && instance.setState({type: ModalType.Prompt, title, options: options});
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -76,11 +71,6 @@ export class Dialog extends React.Component<Props, State> {
         this.setState({value});
     };
 
-    renderToast() {
-        const {options} = this.state;
-        return null;
-    }
-
     renderPrompt() {
         let that = this;
         const {
@@ -106,16 +96,39 @@ export class Dialog extends React.Component<Props, State> {
         );
     }
 
+    renderConfirm() {
+        let that = this;
+        const {
+            options: {modal = {}},
+            title,
+        } = that.state;
+        return (
+            <IBotModal
+                {...modal}
+                isOpen={true}
+                title={"提示"}
+                type={"display"}
+                cancelText={"取消"}
+                confirmText={"确定"}
+                canClose={false}
+                onConfirm={that.handleConfirm}
+                onClose={that.handleClose}
+                onCancel={that.handleCancel}
+            >
+                <span>{title}</span>
+            </IBotModal>
+        );
+    }
+
     render() {
         const that = this;
         const {type} = that.state;
         switch (type) {
             case ModalType.Prompt:
                 return that.renderPrompt();
-            case ModalType.Toast:
-                return that.renderToast();
-            case ModalType.Alert:
             case ModalType.Confirm:
+                return that.renderConfirm();
+            case ModalType.Alert:
             default:
                 return null;
         }

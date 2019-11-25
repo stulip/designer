@@ -22,7 +22,7 @@ type State = {};
 
 export class BaseText extends BasePanel<BaseTextProps, State> {
 
-    getName(): string {
+    getDefaultName(): string {
         return "文字";
     }
 

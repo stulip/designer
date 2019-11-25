@@ -151,7 +151,7 @@ export class ColorPicker extends React.Component<Props, State> {
     };
 
     handleClose = () => {
-        this.setState({ visible: false });
+        this.setState({visible: false, pColor: null});
     };
 
     handleChange = color => {

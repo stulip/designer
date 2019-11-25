@@ -4,7 +4,6 @@
  * @author tangzehua
  * @sine 2019-10-14 09:25
  */
-import {observable, action, computed} from 'mobx';
 import type {MainStore} from "../../../flow/Main.flow";
 
 export class BaseStore {
@@ -31,7 +30,6 @@ export class BaseStore {
     unmount (){
         let that = this;
         that.removeListener();
-        that.removeKeyListener();
     }
 
     /**
@@ -54,9 +52,5 @@ export class BaseStore {
 
     addKeyListener (){
         // 子类实现
-    }
-
-    removeKeyListener (){
-        //子类实现
     }
 }

@@ -8,11 +8,12 @@ import React from "react";
 import {action, observable} from "mobx";
 import type {BaseWidget} from "../../../widget/base";
 import {BaseStore} from "./BaseStore";
-import {DesignEvent} from "fr-web";
+import {DesignEvent, Toast} from "fr-web";
 import {PropsConst} from "../../../config/Attribute";
 import type {PageConfig, PageData, WidgetConfigDefined, WidgetState} from "../../../flow/Main.flow";
 import WidgetModule, {WidgetAppFactory} from "../../../widget";
 import {ENUM} from "../../../config";
+import {Dialog} from "fr-ui";
 
 export class ViewGroupStore extends BaseStore {
     @observable.ref rootWidgetConfig;
@@ -59,6 +60,15 @@ export class ViewGroupStore extends BaseStore {
         DesignEvent.removeListener(PropsConst.widgetMouseEnter, that.handleWidgetMouseEnter);
 
         //widget basic
+    }
+
+    addKeyListener() {
+        const that = this;
+        const KeyEvents = that.main.keyEvents;
+        // delete
+        KeyEvents.addListener("46", (event: KeyboardEvent) => {
+            that.handleRemoveWidget();
+        })
     }
 
     @action
@@ -152,6 +162,26 @@ export class ViewGroupStore extends BaseStore {
             that.rootWidget.switchStates(stateId);
         }
     }
+
+    /**
+     * 删除所选widget
+     */
+    handleRemoveWidget = () => {
+        const that = this;
+        if (that.widget) {
+            if (that.widget.isDelete()) {
+                const options = {
+                    done: () => {
+                        that.widget.removeSelf();
+                        that.cancelSelect();
+                    }
+                };
+                Dialog.confirm(`确认删除所选组件【${that.widget.getName()}】?`, options);
+            } else {
+                Toast.info(`此组件【${that.widget.getName()}】不支持删除!`);
+            }
+        }
+    };
 
     /**
      * 添加状态

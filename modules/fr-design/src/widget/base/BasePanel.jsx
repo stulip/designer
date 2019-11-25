@@ -21,7 +21,7 @@ type State = {};
 
 export class BasePanel extends BaseWidget<BasePanelProps, State> {
 
-    getName(): string {
+    getDefaultName(): string {
         return "面板";
     }
 

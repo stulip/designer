@@ -7,20 +7,20 @@ import {PropsConst} from "../../config/Attribute";
  * @sine 2019-10-28 14:35
  */
 
-export const WidgetConfig = ({basic}) => [
-    {form: "widget.name", type: Form.Const.Type.IBotInput, className: "widget-name"},
+export const WidgetConfig = ({basic, nameOptions}) => [
+    {form: PropsConst.widgetName, type: Form.Const.Type.IBotInput, className: "widget-name", ...nameOptions},
     {
         className: "ic-content",
         config: [
             [
                 {
-                    form: "widget.x",
+                    form: PropsConst.widgetX,
                     type: Form.Const.Type.IBotConfirmInputNumber,
                     disabled: basic.widgetX.disabled,
                     input: {title: "X ", min: basic.widgetX.min, max: basic.widgetX.max}
                 },
                 {
-                    form: "widget.y",
+                    form: PropsConst.widgetY,
                     type: Form.Const.Type.IBotConfirmInputNumber,
                     disabled: basic.widgetY.disabled,
                     input: {title: "Y ", min: basic.widgetY.min, max: basic.widgetY.max}

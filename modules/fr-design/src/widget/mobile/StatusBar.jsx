@@ -21,7 +21,7 @@ type Props = {
 export class StatusBar extends BaseWidget<Props> {
     static displayName = WidgetConst.App.StatusBar;
 
-    getName(): string {
+    getDefaultName(): string {
         return "状态栏";
     }
 

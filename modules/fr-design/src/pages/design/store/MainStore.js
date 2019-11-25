@@ -46,6 +46,7 @@ export class MainStore {
         // 背景颜色
         backgroundColor: "#FBFBFB",
         widgets: [],
+        events: [],
     };
 
     // 颜色选择器
@@ -143,7 +144,7 @@ export class MainStore {
     handleSaveData() {
         const that = this;
         const data = toJS(that.pageData);
-        data.widgets = that.viewGroup.rootWidget.getData();
+        data.widgets = that.viewGroup.rootWidget.widgetData;
         Storage.local.setItem(`${ENUM.PROJECT}_${data.id}`, data);
         Toast.success("保存完成!");
     }
