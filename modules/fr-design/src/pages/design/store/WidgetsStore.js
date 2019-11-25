@@ -13,6 +13,7 @@ import {Types} from "@xt-web/core";
 import {SwapWidget, WidgetAppFactory, WidgetWebFactory} from "../../../widget";
 import React from "react";
 import {LayoutConst, PropsConst} from "../../../config/Attribute";
+import {Toast} from "fr-web";
 
 export const SlideBarConfig = [
     {name: "status", svg: SVG.status_widget, tip: "状态", keyboard: "`", keyCode: '192'},
@@ -280,7 +281,7 @@ export class WidgetsStore extends BaseStore {
         } else {
             const isFlag = viewGroup.widget.addNewWidget(cid);
             if (isFlag === false) {
-                console.log('不支持添加子组件!');
+                Toast.info("不支持添加子组件!");
                 viewGroup.deleteWidgetMap(widgets);
                 return null;
             }

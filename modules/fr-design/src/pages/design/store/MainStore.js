@@ -12,7 +12,7 @@ import {ScreensStore} from "./ScreensStore";
 import {SectionStore} from "./SectionStore";
 import {createConfig, ENUM} from "../../../config/Config";
 import type {PageConfig, PageData} from "../../../flow/Main.flow";
-import {DesignEvent, EventEmitter} from 'fr-web'
+import {DesignEvent, EventEmitter, Toast} from 'fr-web'
 import {AttributeStore} from "./AttributeStore";
 import {PropsConst} from "../../../config/Attribute";
 import {ViewGroupStore} from "./ViewGroupStore";
@@ -145,5 +145,6 @@ export class MainStore {
         const data = toJS(that.pageData);
         data.widgets = that.viewGroup.rootWidget.getData();
         Storage.local.setItem(`${ENUM.PROJECT}_${data.id}`, data);
+        Toast.success("保存完成!");
     }
 }

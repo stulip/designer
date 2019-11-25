@@ -29,6 +29,11 @@ export class StatusBar extends BaseWidget<Props> {
         return false;
     }
 
+    // 默认不可添加子组件
+    addNewWidget(widgetId: string) {
+        return false;
+    }
+
     getDefaultConfig(): {} {
         return {
             ...super.getDefaultConfig(),

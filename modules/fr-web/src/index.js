@@ -18,7 +18,9 @@ import IBotConfirmInputNumber from '@ibot/ibot/lib/confirmInputNumber';
 import IBotCheck, {CheckGroup as IBotCheckGroup} from '@ibot/ibot/lib/check';
 import IBotSelect, {SelectMenu as IBotSelectMenu} from '@ibot/ibot/lib/select';
 import IBotInput, {Textarea as IBotTextArea} from '@ibot/ibot/lib/input';
-// mobx
+// mobx end
+//
+import Toast from 'cogo-toast';
 import {configure} from "mobx";
 // EventEmitter
 import {EventEmitter} from "eventemitter3";
@@ -41,6 +43,7 @@ Storage.session = new Storage(sessionStorage);
 window.onload = () => ReactDOM.render(<App/>, document.getElementById("root"));
 export const version = process.env.MODULE_VERSION;
 export {
+    Toast,
     Ruler,
     ResizableRect,
     ColorPicker,
