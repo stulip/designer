@@ -67,14 +67,14 @@ export class ViewGroup extends React.Component<Props, State> {
     _render() {
         const that = this;
         const {store} = this.props;
-        const {main, widgetModule, rootRef} = store;
+        const {main, widgetModule, rootRef, rootWidgetConfig} = store;
         const {canvasRect} = main.section;
         const {designRect} = main.config;
         return (
             <RootWidget
+                {...rootWidgetConfig}
                 designRect={designRect}
                 canvasRect={canvasRect}
-                children={store.widgetIds}
                 widgetMap={store.widgetMap}
                 module={widgetModule}
                 ref={rootRef}

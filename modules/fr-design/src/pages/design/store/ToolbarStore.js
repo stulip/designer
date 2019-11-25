@@ -43,11 +43,7 @@ export class ToolbarStore extends BaseStore{
     }
 
     handleSave = () => {
-        const that = this;
-        const {viewGroup} = that.main;
-
-        const data = viewGroup.rootWidget.getData();
-        console.log(data)
+        this.main.handleSaveData();
     };
 
     /**

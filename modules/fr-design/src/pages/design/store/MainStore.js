@@ -4,19 +4,20 @@
  * @author tangzehua
  * @sine 2019-09-04 13:45
  */
-import {action, observable} from "mobx";
+import {action, observable, toJS} from "mobx";
 import {ToolbarStore} from "./ToolbarStore";
 import {WidgetsStore} from "./WidgetsStore";
 import {FooterStore} from "./FooterStore";
 import {ScreensStore} from "./ScreensStore";
 import {SectionStore} from "./SectionStore";
-import {createConfig} from "../../../config/Config";
+import {createConfig, ENUM} from "../../../config/Config";
 import type {PageConfig, PageData} from "../../../flow/Main.flow";
 import {DesignEvent, EventEmitter} from 'fr-web'
 import {AttributeStore} from "./AttributeStore";
 import {PropsConst} from "../../../config/Attribute";
 import {ViewGroupStore} from "./ViewGroupStore";
 import {BaseStore} from "./BaseStore";
+import {Storage} from "@xt-web/core";
 
 export class MainStore {
     // 配置
@@ -36,12 +37,15 @@ export class MainStore {
     attribute: AttributeStore;
     viewGroup: ViewGroupStore;
 
+    pageId = "007";
+
     // 页面配置信息
     @observable
     pageData: PageData = {
-        id: "007",
+        id: undefined,
         // 背景颜色
-        backgroundColor: "#FBFBFB"
+        backgroundColor: "#FBFBFB",
+        widgets: [],
     };
 
     // 颜色选择器
@@ -75,10 +79,15 @@ export class MainStore {
     init(props) {
         let that = this;
         const config = that.config;
+        const pageData = {
+            id: that.pageId,
+            ...Storage.local.getItem(`${ENUM.PROJECT}_${that.pageId}`, that.pageData)
+        };
         const options = {
-            data: that.pageData,
+            data: pageData,
         };
 
+        that.pageData = pageData;
         that._storeList.forEach(da => {
             da.init(config, options);
         });
@@ -117,14 +126,24 @@ export class MainStore {
      * @param onChange
      */
     @action
-    handleColorPicker = (event, color, onChange)=> {
+    handleColorPicker = (event, color, onChange) => {
         let that = this;
         that.colorPickProps.targetRect = event.target.getBoundingClientRect();
         that.colorPickProps.color = color;
         that.colorPickProps.onChange = onChange;
     };
 
-    pushStore (store: BaseStore){
+    pushStore(store: BaseStore) {
         this._storeList.push(store);
+    }
+
+    /**
+     * 保存数据
+     */
+    handleSaveData() {
+        const that = this;
+        const data = toJS(that.pageData);
+        data.widgets = that.viewGroup.rootWidget.getData();
+        Storage.local.setItem(`${ENUM.PROJECT}_${data.id}`, data);
     }
 }

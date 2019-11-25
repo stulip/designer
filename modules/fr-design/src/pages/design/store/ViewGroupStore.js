@@ -5,7 +5,7 @@
  * @sine 2019-10-10 10:25
  */
 import React from "react";
-import {action, computed, observable} from "mobx";
+import {action, observable} from "mobx";
 import type {BaseWidget} from "../../../widget/base";
 import {BaseStore} from "./BaseStore";
 import {DesignEvent} from "fr-web";
@@ -14,8 +14,7 @@ import type {PageConfig, PageData, WidgetConfigDefined, WidgetState} from "../..
 import WidgetModule, {WidgetAppFactory} from "../../../widget";
 
 export class ViewGroupStore extends BaseStore {
-    // 组件布局
-    @observable _groupConfig = [];
+    @observable.ref rootWidgetConfig;
     _widgetMap: Map<string, WidgetConfigDefined> = new Map();
     rootRef = React.createRef();
 
@@ -65,12 +64,19 @@ export class ViewGroupStore extends BaseStore {
     init(config: PageConfig, options: { data: PageData } = {}) {
         let that = this;
         const {isApp} = config;
+        const {data: {widgets}} = options;
 
-        if (isApp) {
-            const defaultWidget = WidgetAppFactory.navigator;
-            that.widgetIds = defaultWidget.ids;
-            that.widgetMap = defaultWidget.widgets;
+        if (!widgets || !widgets.length) {
+            if (isApp) {
+                const {root, widgets} = WidgetAppFactory.navigator;
+                that.widgetIds = ids;
+                that.widgetMap = widgets;
+            }
+        } else {
+            that.rootWidgetConfig = widgets.find(wi => wi.cid === 'root-widget');
+            that.widgetMap = widgets;
         }
+
         // 动态导入
         WidgetModule[isApp ? "App" : "Web"]()
             .then(action(module => (that.widgetModule = module)))
@@ -366,15 +372,6 @@ export class ViewGroupStore extends BaseStore {
             rect.width / canvasScale,
             rect.height / canvasScale
         );
-    }
-
-    @computed
-    get widgetIds() {
-        return this._groupConfig.slice();
-    }
-
-    set widgetIds(widgets) {
-        this._groupConfig = widgets;
     }
 
     /**

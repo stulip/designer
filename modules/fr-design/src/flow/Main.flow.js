@@ -45,6 +45,7 @@ export type PageConfig = {
 export type PageData = {
     backgroundColor: string,
     id: string | number,
+    widgets: Array<WidgetConfigDefined>
 }
 
 /**

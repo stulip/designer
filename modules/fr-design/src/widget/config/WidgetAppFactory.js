@@ -21,7 +21,10 @@ export class WidgetAppFactory {
         const Header = that[App.Header];
         const Operate = that[App.BottomOperateBar];
         const widgets = [...Status, ...Header, ...Operate];
-        return {ids: [Status[0].cid, Header[0].cid, Operate[0].cid], widgets};
+        const root = {
+            children: [Status[0].cid, Header[0].cid, Operate[0].cid]
+        };
+        return {root, widgets};
     }
 
     static get [App.StatusBar]() {
