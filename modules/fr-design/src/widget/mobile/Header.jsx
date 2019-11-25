@@ -55,7 +55,7 @@ export class Header extends Panel<Props> {
     _getChildrenWidget() {
         const that = this;
         const {widget: {right}} = that.state;
-        return that.childrenRef.get(right[0]);
+        return that.childrenMap.get(right[0]);
     }
 
     addNewWidget(widgetId: string) {
@@ -85,7 +85,7 @@ export class Header extends Panel<Props> {
     set widgetIds(widgets) {
         const that = this;
         const {widget: {right = []}} = that.state;
-        const rightWidget = that.childrenRef.get(right[0]);
+        const rightWidget = that.childrenMap.get(right[0]);
         rightWidget && (rightWidget.widgetIds = widgets);
     }
 

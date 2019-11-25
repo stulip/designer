@@ -23,18 +23,23 @@ export class ToolbarStore extends BaseStore{
         const KeyEvents = that.main.keyEvents;
         const section = that.main.section;
 
-        // 放大
-        KeyEvents.addListener("187", (event: KeyboardEvent)=> {
+        // 放大 +
+        KeyEvents.addListener("187", (event: KeyboardEvent) => {
             (event.metaKey || event.ctrlKey) && that.handleZoom(ENUM.ZOOM_P);
         });
-        //缩小
+        //缩小 -
         KeyEvents.addListener("189", (event: KeyboardEvent) => {
             (event.metaKey || event.ctrlKey) && that.handleZoom(ENUM.ZOOM_M);
         });
-        // 还原大小
+        // 还原大小 0
         KeyEvents.addListener("48", (event: KeyboardEvent) => {
             (event.metaKey || event.ctrlKey) && that.handleZoom(0);
-        })
+        });
+
+        // 保存 s
+        KeyEvents.addListener("83", (event: KeyboardEvent) => {
+            (event.metaKey || event.ctrlKey) && that.handleSave();
+        });
     }
 
     handleSave = () => {

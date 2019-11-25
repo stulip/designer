@@ -74,7 +74,7 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
         };
         that.states = props.states || [];
         // 所有子节点引用
-        that.childrenRef = new Map();
+        that.childrenMap = new Map();
         // 更新回调
         that.onUpdate = null;
         that._styles = null;
@@ -118,14 +118,15 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
         const {component, draggable} = that.props;
         const {children, widget} = that.state;
         const cid = that.getId(),
-            name = that.getName();
-        const event = {},
+            name = that.getName(),
+            states = that.getWidgetStates(),
+            event = {},
             props = {};
         for (const [name, value] of Object.entries(that.stateData)) {
             props[name] = value.props;
             event[name] = value.event;
         }
-        return Object.assign(Object.create(null), {
+        const data = Object.assign(Object.create(null), {
             cid,
             name,
             component,
@@ -134,8 +135,10 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
             draggable,
             children,
             widget,
-            states: that.getWidgetStates()
+            states
         });
+
+        return Array.from(that.childrenMap.values()).reduce((acc, cur) => (acc.push(...cur.getData()), acc), [data]);
     }
 
     /**
@@ -166,7 +169,7 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
                         widgetMap={widgetMap}
                         module={module}
                         parent={that}
-                        ref={ref => that.childrenRef.set(cid, ref)}
+                        ref={ref => that.childrenMap.set(cid, ref)}
                         isDrag={dragWidgetId === cid}
                     />
                 )
