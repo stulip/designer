@@ -12,6 +12,7 @@ import {DesignEvent} from "fr-web";
 import {PropsConst} from "../../../config/Attribute";
 import type {PageConfig, PageData, WidgetConfigDefined, WidgetState} from "../../../flow/Main.flow";
 import WidgetModule, {WidgetAppFactory} from "../../../widget";
+import {ENUM} from "../../../config";
 
 export class ViewGroupStore extends BaseStore {
     @observable.ref rootWidgetConfig;
@@ -69,11 +70,11 @@ export class ViewGroupStore extends BaseStore {
         if (!widgets || !widgets.length) {
             if (isApp) {
                 const {root, widgets} = WidgetAppFactory.navigator;
-                that.widgetIds = ids;
+                that.rootWidgetConfig = root;
                 that.widgetMap = widgets;
             }
         } else {
-            that.rootWidgetConfig = widgets.find(wi => wi.cid === 'root-widget');
+            that.rootWidgetConfig = widgets.find(wi => wi.cid === ENUM.ROOT_WIDGET_ID);
             that.widgetMap = widgets;
         }
 

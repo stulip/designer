@@ -37,6 +37,7 @@ export const zoomScale = {
 export const viewportScale = { x: 3, y: 2 };
 
 export const ENUM = {
+    ROOT_WIDGET_ID: "root-widget",
     DESIGN_SCALE: "design_scale",
     DESIGN_GRID: 'design_grid',
     PROJECT: "PROJECT",
