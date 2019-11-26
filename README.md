@@ -1,5 +1,9 @@
 
 # 网页、App设计
+##### 地址 [http://stulip.xicp.net:84](http://stulip.xicp.net:84)
+
+#####App设计页面
+![image](./docs/app.png)
 
 ### 安装步骤
 
@@ -32,4 +36,4 @@ yarn build:release
 #### Widget事件驱动
 ![image](./docs/widget_event.png)
 
-##### 地址 [http://localhost:1235](http://localhost:1235)
+##### 开发地址 [http://localhost:1235](http://localhost:1235)
