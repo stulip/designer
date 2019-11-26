@@ -12,13 +12,13 @@ yarn
 ```
 yarn build -a
 yarn start
-``` 
+```
 
 2. 开发模式
 ```
 yarn start design // design 为对应的模块名称
 // 编译web模块为调试模式
-yarn build:debug 
+yarn build:debug
 // 或者换成开发模式
 yarn start web
 yarn start
@@ -28,5 +28,8 @@ yarn start
 ```
 yarn build:release
 ```
+
+#### Widget事件驱动
+![image](./docs/widget_event.png)
 
 ##### 地址 [http://localhost:1235](http://localhost:1235)
