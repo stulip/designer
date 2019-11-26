@@ -97,6 +97,10 @@ export class WidgetsStore extends BaseStore {
         that.setSlideActiveType(dataType);
     };
 
+    /**
+     * 切换状态
+     * @param stateId
+     */
     @action
     switchState = (stateId: string) => {
         const that = this;
@@ -104,6 +108,9 @@ export class WidgetsStore extends BaseStore {
         that.main.viewGroup.switchWidgetState(stateId);
     };
 
+    /**
+     * 添加新状态
+     */
     handleAddState = () => {
         const that = this;
         const size = (that.widgetStates || [1]).length + 2;
@@ -234,7 +241,7 @@ export class WidgetsStore extends BaseStore {
     }
 
     /**
-     *
+     * 退拽新组件
      * @param {MouseEvent} event
      * @param {string} dragId
      * @param {{x: number, y: number}} [originPosition] 原始坐标
@@ -266,6 +273,12 @@ export class WidgetsStore extends BaseStore {
         }
     };
 
+    /**
+     * 退拽新组件
+     * @param event
+     * @param widgetId
+     * @returns {null|string|string}
+     */
     @action
     handleWidgetDragStart = (event: MouseEvent, widgetId: string) => {
         const that = this;
@@ -291,6 +304,11 @@ export class WidgetsStore extends BaseStore {
         return cid;
     };
 
+    /**
+     * 退拽新组件
+     * @param event
+     * @param widgetId
+     */
     handleWidgetDragEnd = (event: MouseEvent, widgetId: string) => {
         const that = this;
         const {pageX} = event;
@@ -321,5 +339,13 @@ export class WidgetsStore extends BaseStore {
         const that = this;
         that.newWidgetDOM = null;
         that.newWidgetRef.current.innerText = "";
+    }
+
+    /**
+     * 切换切面
+     * @param {string} pageId 页面ID
+     */
+    switchPage = (pageId) => {
+        this.main.switchPage(pageId);
     }
 }

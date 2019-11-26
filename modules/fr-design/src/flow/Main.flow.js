@@ -40,12 +40,14 @@ export type PageConfig = {
     isApp: boolean, // 是否是App设计器
     designRect: DesignType, // 设计尺寸信息
     canvasSize: { width: number, height: number }, // canvasSize
+    defaultProps: PageData,
 }
 
 export type PageData = {
     backgroundColor: string,
     id: string | number,
-    widgets: Array<WidgetConfigDefined>
+    widgets: Array<WidgetConfigDefined>,
+    events: Array<WidgetEvent>
 }
 
 /**

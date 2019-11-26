@@ -111,10 +111,12 @@ const DEVICE_INFO = {
 // 根据参数创建配置信息
 export const createConfig = (options: ConfigOption): PageConfig => {
     const config: PageConfig = {};
-    const {isApp, } = options;
+    const {isApp,} = options;
     config.isApp = isApp;
 
-    if (isApp){
+    // 设置默认视图属性
+    const defaultProps = {id: undefined, widgets: [], events: [], backgroundColor: "#FBFBFB"};
+    if (isApp) {
         // 先写上,默认iPhone X
         config.designRect = DEVICE_INFO.App[2];
     } else {
@@ -122,6 +124,8 @@ export const createConfig = (options: ConfigOption): PageConfig => {
     }
     // 目前没有保存画布大小, 取驱动大小
     config.canvasSize = config.designRect;
+    // 设置默认视图属性
+    config.defaultProps = defaultProps;
     return config;
 };
 

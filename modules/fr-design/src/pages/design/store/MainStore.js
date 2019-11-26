@@ -41,13 +41,7 @@ export class MainStore {
 
     // 页面配置信息
     @observable
-    pageData: PageData = {
-        id: undefined,
-        // 背景颜色
-        backgroundColor: "#FBFBFB",
-        widgets: [],
-        events: [],
-    };
+    pageData: PageData = {};
 
     // 颜色选择器
     @observable colorPickProps = { targetRect: null, color: "", onChange: ()=> {}};
@@ -77,17 +71,16 @@ export class MainStore {
      * 初始化
      */
     @action
-    init(props) {
+    init() {
         let that = this;
         const config = that.config;
         const pageData = {
-            ...Storage.local.getItem(`${ENUM.PROJECT}_${that.pageId}`, that.pageData),
+            ...Storage.local.getItem(`${ENUM.PROJECT}_${that.pageId}`, config.defaultProps),
             id: that.pageId
         };
         const options = {
             data: pageData,
         };
-
         that.pageData = pageData;
         that._storeList.forEach(da => {
             da.init(config, options);
@@ -147,5 +140,15 @@ export class MainStore {
         data.widgets = that.viewGroup.rootWidget.widgetData;
         Storage.local.setItem(`${ENUM.PROJECT}_${data.id}`, data);
         Toast.success("保存完成!");
+    }
+
+    /**
+     * 切换页面
+     * @param {string} pageId
+     */
+    switchPage(pageId) {
+        const that = this;
+        that.pageId = pageId;
+        that.init();
     }
 }
