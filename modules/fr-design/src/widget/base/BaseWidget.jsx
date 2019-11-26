@@ -119,25 +119,22 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
         const that = this;
         const {component, draggable} = that.props;
         const {children, widget} = that.state;
-        const cid = that.getId(),
-            name = that.getName(),
-            states = that.getWidgetStates(),
-            event = {},
+        const event = {},
             props = {};
         for (const [name, value] of Object.entries(that.stateData)) {
             props[name] = value.props;
             event[name] = value.event;
         }
         const data = Object.assign(Object.create(null), {
-            cid,
-            name,
+            cid: that.getId(),
+            name: that.getName(),
             component,
             event,
             props,
             draggable,
             children,
             widget,
-            states
+            states: that.getWidgetStates()
         });
         // 当前widget数据放第一个
         return Array.from(that.childrenMap.values()).reduce((acc, cur) => (cur && acc.push(...cur.widgetData), acc), [

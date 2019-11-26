@@ -1,3 +1,10 @@
-.fr-ui{
-  width: 100px;
+.fr-ui {
+    width: 100px;
+}
+
+
+#ct-container {
+    > .ct-row {
+        margin-top: 50px;
+    }
 }

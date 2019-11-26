@@ -135,11 +135,18 @@ export class MainStore {
      * 保存数据
      */
     handleSaveData() {
+        this.savePageDataToLocal();
+        Toast.success("所有修改页面保存完成!");
+    }
+
+    /**
+     * 保存数据到本地
+     */
+    savePageDataToLocal() {
         const that = this;
         const data = toJS(that.pageData);
         data.widgets = that.viewGroup.rootWidget.widgetData;
         Storage.local.setItem(`${ENUM.PROJECT}_${data.id}`, data);
-        Toast.success("保存完成!");
     }
 
     /**
@@ -148,6 +155,8 @@ export class MainStore {
      */
     switchPage(pageId) {
         const that = this;
+        //切换页面时, 保存数据到本地
+        that.savePageDataToLocal();
         that.pageId = pageId;
         that.init();
     }
