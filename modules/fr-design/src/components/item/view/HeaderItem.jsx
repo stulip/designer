@@ -28,7 +28,7 @@ export class HeaderItem extends React.Component<Props, State> {
     }
 
     handleFold = () => {
-        this.setState({fold: !this.state.fold});
+        // this.setState({fold: !this.state.fold});
     };
 
     render() {
