@@ -2,7 +2,7 @@
 # 网页、App设计
 ##### 地址 [http://stulip.xicp.net:84](http://stulip.xicp.net:84)
 
-#####App设计页面
+##### App设计页面
 ![image](./docs/app.png)
 
 ### 安装步骤
