@@ -36,4 +36,7 @@ yarn build:release
 #### Widget事件驱动
 ![image](./docs/widget_event.png)
 
+#### Widget 工作流
+![image](./docs/work_flow.png)
+
 ##### 开发地址 [http://localhost:1235](http://localhost:1235)
