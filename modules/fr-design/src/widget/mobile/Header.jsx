@@ -11,7 +11,7 @@ import type {BaseWidgetProps} from "../base";
 import {Panel} from "./Panel";
 import {LayoutConst, PropsConst} from "../../config/Attribute";
 import {WidgetConst} from "../config";
-import backImage from 'fr-art/design/back_chevron.png'
+import {back_chevron} from '../assets/svg'
 
 type Props = {
     ...BaseWidgetProps
@@ -58,7 +58,7 @@ export class Header extends Panel<Props> {
         return (
             <>
                 <div className={"header-left flex middle"}>
-                    <img src={backImage} width={15}/>
+                    {back_chevron()}
                     <span className="text">返回</span>
                 </div>
                 {that.renderWidget([children])}
