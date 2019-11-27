@@ -3,7 +3,8 @@
  */
 import React from 'react';
 
-const _404 = require("fr-art/errors/404.jpg");
+import _404 from 'fr-art/errors/404.jpg';
+
 export default () => (
     <div className={'_404'}>
         <img src={_404}/>

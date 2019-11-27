@@ -11,12 +11,11 @@ import type {BaseWidgetProps} from "../base";
 import {Panel} from "./Panel";
 import {LayoutConst, PropsConst} from "../../config/Attribute";
 import {WidgetConst} from "../config";
+import backImage from 'fr-art/design/back_chevron.png'
 
 type Props = {
     ...BaseWidgetProps
 };
-
-const backImage = require("fr-art/design/back_chevron.png");
 
 export class Header extends Panel<Props> {
     static displayName = WidgetConst.App.Header;

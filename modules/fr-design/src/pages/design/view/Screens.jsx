@@ -13,11 +13,10 @@ import {classNames} from "fr-web";
 import {AdjustSizeCanvas, RangeSelection, SVG} from "fr-ui";
 import {ViewGroup} from "./ViewGroup";
 import {WidgetBorder} from "./WidgetBorder";
+import sliderImage from 'fr-art/design/slider-arrow.png';
 
 type Props = { store: ScreensStore };
 type State = {};
-
-const sliderImage = require("fr-art/design/slider-arrow.png");
 
 @observer
 export class Screens extends React.Component<Props, State> {

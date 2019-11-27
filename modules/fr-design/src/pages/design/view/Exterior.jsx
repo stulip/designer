@@ -7,12 +7,11 @@
 // @flow
 import * as React from "react";
 import "../assets/exterior.pcss";
-import { Form } from "fr-ui";
-import { IBotSVG } from "fr-web";
-import { ArrangeConfig } from "../../../config/Attribute";
-import { observer } from "mobx-react";
-import { AttributeStore } from "../store/AttributeStore";
-import { toJS } from "mobx";
+import {Form} from "fr-ui";
+import {IBotSVG} from "fr-web";
+import {observer} from "mobx-react";
+import {AttributeStore} from "../store/AttributeStore";
+import {toJS} from "mobx";
 
 type Props = {
     store: AttributeStore
@@ -51,7 +50,7 @@ export class Exterior extends React.Component<Props, State> {
         const config = toJS(store.formConfig);
         return (
             <>
-                <div className={"arrange"}>{ArrangeConfig.map(that.renderArrange)}</div>
+                {/*<div className={"arrange"}>{ArrangeConfig.map(that.renderArrange)}</div>*/}
                 <main className={"ds-attribute"}>
                     <Form.View
                         config={config}
