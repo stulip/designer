@@ -18,6 +18,7 @@ import {PropsConst} from "../../../config/Attribute";
 import {ViewGroupStore} from "./ViewGroupStore";
 import {BaseStore} from "./BaseStore";
 import {Storage} from "@xt-web/core";
+import {EventsStore} from "./EventsStore";
 
 export class MainStore {
     // 配置
@@ -36,6 +37,7 @@ export class MainStore {
     section: SectionStore;
     attribute: AttributeStore;
     viewGroup: ViewGroupStore;
+    events: EventsStore;
 
     pageId = "007";
 
@@ -57,6 +59,7 @@ export class MainStore {
         that.section = new SectionStore(that);
         that.attribute = new AttributeStore(that);
         that.viewGroup = new ViewGroupStore(that);
+        that.events = new EventsStore(that);
 
         that._storeList.forEach(da => da.classMount());
 

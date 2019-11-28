@@ -5,6 +5,7 @@ import {ScreensStore} from "../pages/design/store/ScreensStore";
 import {SectionStore} from "../pages/design/store/SectionStore";
 import {AttributeStore} from "../pages/design/store/AttributeStore";
 import {ViewGroupStore} from "../pages/design/store/ViewGroupStore";
+import {EventsStore} from "../pages/design/store/EventsStore";
 
 export type MainStore = {
     screens: ScreensStore,
@@ -14,6 +15,7 @@ export type MainStore = {
     section: SectionStore,
     attribute: AttributeStore,
     viewGroup: ViewGroupStore,
+    events: EventsStore,
 };
 
 export type Size = {width: number, height: number};

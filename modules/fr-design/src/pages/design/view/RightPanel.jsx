@@ -6,18 +6,17 @@
  */
 
 import React from "react";
-import {observer} from "mobx-react";
 import {WidgetsStore} from "../store/WidgetsStore";
 import {Exterior} from "./Exterior";
 import {Tab, TabList, TabPanel, Tabs} from 'react-tabs';
+import {Events} from "./Events";
 
 type Props = {
     store: WidgetsStore
 };
 type State = {};
 
-@observer
-export class RightPanel extends React.Component<Props, State> {
+export class RightPanel extends React.PureComponent<Props, State> {
 
     render() {
         let that = this;
@@ -33,7 +32,7 @@ export class RightPanel extends React.Component<Props, State> {
                         <Exterior store={store.main.attribute}/>
                     </TabPanel>
                     <TabPanel>
-                        <div>事件</div>
+                        <Events store={store.main.events}/>
                     </TabPanel>
                 </Tabs>
             </div>
