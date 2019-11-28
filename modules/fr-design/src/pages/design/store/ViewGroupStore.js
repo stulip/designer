@@ -404,7 +404,7 @@ export class ViewGroupStore extends BaseStore {
     @action
     setSelectBox(element: Element) {
         let that = this;
-        if (!that.rootWidget) return;
+        if (!that.rootWidget || !element) return;
         let rect = element.getBoundingClientRect();
         const margin = {};
         ({

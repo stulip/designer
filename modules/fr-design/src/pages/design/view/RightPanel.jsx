@@ -9,6 +9,7 @@ import React from "react";
 import {observer} from "mobx-react";
 import {WidgetsStore} from "../store/WidgetsStore";
 import {Exterior} from "./Exterior";
+import {Tab, TabList, TabPanel, Tabs} from 'react-tabs';
 
 type Props = {
     store: WidgetsStore
@@ -23,9 +24,18 @@ export class RightPanel extends React.Component<Props, State> {
         let store = this.props.store;
         return (
             <div className={"panel-right"}>
-                <div className={"content"}>
-                    <Exterior store={store.main.attribute}/>
-                </div>
+                <Tabs forceRenderTabPanel>
+                    <TabList>
+                        <Tab>属性</Tab>
+                        <Tab>事件</Tab>
+                    </TabList>
+                    <TabPanel>
+                        <Exterior store={store.main.attribute}/>
+                    </TabPanel>
+                    <TabPanel>
+                        <div>事件</div>
+                    </TabPanel>
+                </Tabs>
             </div>
         );
     }
