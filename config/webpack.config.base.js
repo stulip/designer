@@ -64,6 +64,7 @@ const config = {
         'react-router-dom': "ReactRouterDOM",
         'react-router-config': "ReactRouterConfig",
         'lodash': "lodash",
+        "react-tabs": "reactTabs"
     },
     provide: {
         // jQuery: "jquery",
@@ -146,6 +147,11 @@ config.libs.cdn = {
         from: 'node_modules/dom-to-image-more/dist',
         to: config.libs.name,
     },
+    reactTabs: {
+        name: `react-tabs.production.min.js`,
+        from: 'node_modules/react-tabs/dist',
+        to: config.libs.name,
+    },
     xtCore: {
         name: `xt.core.min.js`,
         from: 'node_modules/@xt-web/core/dist',
@@ -196,7 +202,9 @@ function plugins() {
         new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
         new webpack.DefinePlugin({
             'process.env': {
-                'MODULE_VERSION': JSON.stringify(getLastVersion(config.packages.version))
+                'MODULE_VERSION': JSON.stringify(getLastVersion(config.packages.version)),
+                "NODE_DEBUG": `"${isDebug}"`,
+                "NODE_DEV": `"${libName}"`
             }
         }),
         ...isDebug ? devPlugin : proPlugins

@@ -73,8 +73,9 @@ def start(argv, args):
                 continue
 
             print("\033[0;34m webpack:\033[0m 编译模块 %s" % str(mo_name).upper())
+            dev = args.dev and 'true' or 'false'
             commend = 'node %s --module %s --progress false --block %s --release %s --dev %s' % (
-            build_web, mo_name, args.block, args.release, args.dev)
+            build_web, mo_name, args.block, args.release, dev)
             thread_start(build_js, (mo_name, commend,))
         thread_sleep()
         for name in error_module:
@@ -150,8 +151,9 @@ def build_module(args, module):
         if stat != 0:
             raise Exception("安装模块 %s 依赖失败!" % module.upper())
     progress = args.git and 'false' or 'true'
+    dev = args.dev and 'true' or 'false'
     commend = 'node %s --module %s --progress %s --block %s --dev %s' % (
-    build_web, module, progress, args.block, args.dev)
+    build_web, module, progress, args.block, dev)
     stat = subprocess.call(commend, shell=True)
     if stat != 0:
         raise Exception("编译模块 %s 失败!" % module.upper())
