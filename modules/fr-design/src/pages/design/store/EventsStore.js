@@ -3,9 +3,22 @@
  * @author tangzehua
  * @sine 2019-11-28 15:00
  */
+import React from 'react';
 import {BaseStore} from "./BaseStore";
+import {Form} from "fr-ui";
 
 export class EventsStore extends BaseStore {
+
+    // form
+    formRef = React.createRef();
+
+    get form() {
+        return this.formRef.current;
+    }
+
+    // 表单数据
+    formConfig = [];
+    formData = {};
 
     /**
      * 初始化
@@ -14,6 +27,30 @@ export class EventsStore extends BaseStore {
      */
     init(config, options = {}) {
         let that = this;
+
+        that.formConfig = that.createFieldConfig();
+    }
+
+    createFieldConfig() {
+        const fields = [];
+        Array(3).forEach((da, index) => {
+
+            return {
+                config: [
+                    {
+                        title: "事件",
+                        form: `a.${index}`,
+                        type: Form.Const.Type.Text
+                    },
+                    {
+                        title: "吃饭",
+                        form: `b.${index}`,
+                        type: Form.Const.Type.Text
+                    }
+                ]
+            }
+        });
+        return fields;
     }
 
     /**

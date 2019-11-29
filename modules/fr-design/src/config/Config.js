@@ -37,7 +37,6 @@ export const zoomScale = {
 export const viewportScale = { x: 3, y: 2 };
 
 export const ENUM = {
-    ROOT_WIDGET_ID: "root-widget",
     DESIGN_SCALE: "design_scale",
     DESIGN_GRID: 'design_grid',
     PROJECT: "PROJECT",
@@ -115,7 +114,7 @@ export const createConfig = (options: ConfigOption): PageConfig => {
     config.isApp = isApp;
 
     // 设置默认视图属性
-    const defaultProps = {id: undefined, widgets: [], events: [], backgroundColor: "#FBFBFB"};
+    const defaultProps = {id: undefined, widgets: [], events: []};
     if (isApp) {
         // 先写上,默认iPhone X
         config.designRect = DEVICE_INFO.App[2];

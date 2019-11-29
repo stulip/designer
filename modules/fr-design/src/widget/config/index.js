@@ -5,6 +5,6 @@
  */
 
 export * from './config'
-export {SwapWidget} from './ConfigUtils'
+export {SwapWidget, CloneWidget} from './ConfigUtils'
 export {WidgetAppFactory} from './WidgetAppFactory'
 export {WidgetWebFactory} from './WidgetWebFactory'

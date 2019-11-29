@@ -12,9 +12,8 @@ import {DesignEvent, Toast} from "fr-web";
 import {PropsConst} from "../../../config/Attribute";
 import type {PageConfig, PageData, WidgetConfigDefined, WidgetState} from "../../../flow/Main.flow";
 import WidgetModule, {WidgetAppFactory} from "../../../widget";
-import {ENUM} from "../../../config";
 import {Dialog} from "fr-ui";
-import {CloneWidget} from "../../../widget/config/ConfigUtils";
+import {CloneWidget} from "../../../widget/config";
 
 export class ViewGroupStore extends BaseStore {
     // 复制的widget
@@ -35,7 +34,7 @@ export class ViewGroupStore extends BaseStore {
     // 做双击判断
     dbWidgetDownTimer: number = 0;
     // 选中的widget
-    widget: BaseWidget; // 鼠标点击选中的widget
+    _widget: BaseWidget; // 鼠标点击选中的widget
     hoverWidget: BaseWidget; // 鼠标滑过选中的widget
     widgetList: [BaseWidget] = [];
     widgetList2: [BaseWidget] = [];
@@ -88,16 +87,17 @@ export class ViewGroupStore extends BaseStore {
     init(config: PageConfig, options: { data: PageData } = {}) {
         let that = this;
         const {isApp} = config;
-        const {data: {widgets}} = options;
+        const {data: {widgets, id}} = options;
 
         if (!widgets || !widgets.length) {
             if (isApp) {
                 const {root, widgets} = WidgetAppFactory.navigator;
+                root.cid = id;
                 that.rootWidgetConfig = root;
                 that.widgetMap = widgets;
             }
         } else {
-            that.rootWidgetConfig = widgets.find(wi => wi.cid === ENUM.ROOT_WIDGET_ID);
+            that.rootWidgetConfig = widgets.find(wi => wi.cid === id);
             that.widgetMap = widgets;
         }
 
@@ -130,7 +130,6 @@ export class ViewGroupStore extends BaseStore {
         // 还原标尺刻度
         const {canvasRect} = that.main.section;
         that.main.section.setRulerShadow(0, 0, canvasRect.width, canvasRect.height);
-        that.main.attribute.setConfig();
         that.main.widgets.setWidgetStates(that.rootWidget.getWidgetStates(), that.rootWidget.getStateId());
 
         if (that.widget) {
@@ -153,7 +152,6 @@ export class ViewGroupStore extends BaseStore {
         if (widget !== that.widget) {
             widget.onUpdate = that._reWidgetSelectBox;
             that.main.widgets.setWidgetStates(widget.getWidgetStates(), widget.getStateId());
-            that.main.attribute.setConfig(widget.getWidgetProps(), widget.getFormData());
             that.widget = widget;
             that.hoverWidget = widget;
         }
@@ -165,15 +163,9 @@ export class ViewGroupStore extends BaseStore {
      */
     switchWidgetState(stateId: string) {
         const that = this;
-        const widget = that.widget;
-        if (widget) {
-            if (stateId !== widget.stateId) {
-                widget.switchStates(stateId);
-                that.main.attribute.setConfig(widget.getWidgetProps(), widget.getFormData());
-            }
-        } else {
-            that.rootWidget.switchStates(stateId);
-        }
+        const widget = that.widget || that.rootWidget;
+        widget.switchStates(stateId);
+        DesignEvent.emit(PropsConst.switchWidgetState, widget, stateId);
     }
 
     /**
@@ -483,4 +475,12 @@ export class ViewGroupStore extends BaseStore {
         widgets.forEach(widget => this._widgetMap.delete(widget.cid));
     }
 
+    get widget(): BaseWidget {
+        return this._widget;
+    }
+
+    set widget(widget: BaseWidget) {
+        this._widget = widget;
+        DesignEvent.emit(PropsConst.switchWidget, widget);
+    }
 }

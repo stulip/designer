@@ -6,6 +6,14 @@
 
 // 设计器常量
 export const PropsConst = {
+    rootWidgetInit: "root.widget.init",
+    // widget 改变
+    switchWidget: "switch.widget",
+    // widget 状态改变
+    switchWidgetState: "switch.widget.state",
+
+    canvasWidth: "basic.canvas.width",
+    canvasHeight: "basic.canvas.height",
     canvasSize: "basic.canvas.size",
     background: "basic.background",
     designGrid: "basic.design.grid",

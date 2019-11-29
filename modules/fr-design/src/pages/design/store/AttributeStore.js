@@ -10,6 +10,7 @@ import {Form} from "fr-ui";
 import {ItemConst} from "../../../components";
 import {ArrangeConst, PropsConst} from "../../../config/Attribute";
 import {BaseStore} from "./BaseStore";
+import {DesignEvent} from "fr-web";
 
 export class AttributeStore extends BaseStore {
 
@@ -25,6 +26,7 @@ export class AttributeStore extends BaseStore {
     @observable
     _baseConfig = [];
     formData;
+    rootData = {};
 
     /**
      * 初始化
@@ -34,62 +36,48 @@ export class AttributeStore extends BaseStore {
     init(config, options = {}) {
         let that = this;
         that.formData = null;
-        that.formConfig = that._baseConfig = that.createBasicConfig();
+        that._baseConfig = [];
+    }
+
+    /**
+     * root widget 初始化之后
+     * @param {RootWidget} widget
+     */
+    rootInit = (widget) => {
+        const that = this;
+        that.rootData = widget.getFormData();
+        that._baseConfig = [...widget.getWidgetProps(), ...that.createBasicConfig()];
+        that.main.setBackgroundColor(that.rootData[PropsConst.background]);
+        that.switchWidget(widget);
+    };
+
+    addListener() {
+        const that = this;
+        DesignEvent.addListener(PropsConst.switchWidget, that.switchWidget);
+        DesignEvent.addListener(PropsConst.rootWidgetInit, that.rootInit);
+        DesignEvent.addListener(PropsConst.switchWidgetState, that.switchWidgetState)
+    }
+
+    removeListener() {
+        const that = this;
+        DesignEvent.removeListener(PropsConst.switchWidget, that.switchWidget);
+        DesignEvent.removeListener(PropsConst.rootWidgetInit, that.rootInit);
+        DesignEvent.removeListener(PropsConst.switchWidgetState, that.switchWidgetState);
     }
 
     /**
      * 基础面板属性
      * @returns {{className: string, config: *[]}[]}
      */
-    createBasicConfig (){
+    createBasicConfig() {
         let that = this;
-        const { section } = that.main;
-        const { canvasRect, gridAttribute } = section;
-        const { config, pageData } = that.main;
+        const {section} = that.main;
+        const {canvasRect, gridAttribute} = section;
+        const {config, pageData} = that.main;
         return [
             {
                 className: "appearance-panel",
                 config: [
-                    [
-                        {
-                            form: "canvas.width",
-                            type: Form.Const.Type.IBotConfirmInputNumber,
-                            value: canvasRect.width,
-                            disabled: true,
-                            input: {
-                                title: "宽",
-                                min: config.designRect.width
-                            },
-                            listener: {
-                                key: PropsConst.canvasSize,
-                                getValue: da => da.width,
-                                setValue: (width, data) => ({width, height: data['canvas.height']})
-                            },
-                        },
-                        {
-                            form: "canvas.height",
-                            type: Form.Const.Type.IBotConfirmInputNumber,
-                            value: canvasRect.height,
-                            input: {
-                                title: "高",
-                                min: config.designRect.height
-                            },
-                            listener: {
-                                key: PropsConst.canvasSize,
-                                getValue: da => da.height,
-                                setValue: (height, data) => ({height, width: data['canvas.width']})
-                            },
-                        }
-                    ],
-                    {type: Form.Const.Type.Gap},
-                    {
-                        title: "背景颜色",
-                        type: ItemConst.Type.Background,
-                        form: "background",
-                        value: pageData.backgroundColor,
-                        listener: PropsConst.background,
-                        handlePicker: PropsConst.widgetColorHandle
-                    },
                     {
                         title: "网格",
                         type: ItemConst.Type.GridSetting,
@@ -139,15 +127,35 @@ export class AttributeStore extends BaseStore {
      * @param {Object} [formData]
      */
     @action
-    setConfig = (config, formData) =>{
+    _setConfig = (config, formData) => {
         let that = this;
-        if ( !config || !config.length){
+        if (!config || !config.length) {
             that.formConfig = that._baseConfig;
-            that.formData = null;
+            that.formData = that.rootData;
         } else {
             that.formConfig = config;
             that.formData = formData;
         }
+    };
 
+    /**
+     * 监听widget 切换
+     * @param {BaseWidget} widget
+     */
+    switchWidget = (widget) => {
+        if (widget && widget.getId() !== this.main.pageId) {
+            this._setConfig(widget.getWidgetProps(), widget.getFormData())
+        } else {
+            this._setConfig();
+        }
+    };
+
+    /**
+     * 监听widget 状态切换
+     * @param {BaseWidget} widget
+     * @param {string} stateId
+     */
+    switchWidgetState = (widget, stateId) => {
+        this.switchWidget(widget);
     }
 }

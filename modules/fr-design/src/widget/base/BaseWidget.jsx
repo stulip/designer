@@ -53,12 +53,13 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
 
     static getDerivedStateFromProps(nextProps, prevState) {
         if (nextProps.widget !== prevState.pWidget || nextProps.children !== prevState.pChildren) {
-            const {widget, children} = nextProps;
+            const {widget, children, cid} = nextProps;
             return {
+                cid,
                 widget,
                 pWidget: widget,
                 children,
-                pChildren: children
+                pChildren: children,
             };
         }
         return null;
@@ -72,7 +73,12 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
             widget: props.widget,
             children: props.children
         };
-        that.states = props.states || [];
+        that.init();
+    }
+
+    init() {
+        const that = this;
+        that.states = that.props.states || [];
         // 所有子节点引用
         that.childrenMap = new Map();
         // 更新回调
@@ -230,6 +236,7 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
     shouldComponentUpdate(nextProps, nextState) {
         const that = this;
         return (
+            nextProps.cid !== that.props.cid ||
             nextState.widget !== that.state.widget ||
             nextState.children !== that.state.children ||
             nextProps.isDrag !== that.props.isDrag ||

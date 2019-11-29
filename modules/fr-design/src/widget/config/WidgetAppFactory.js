@@ -4,7 +4,7 @@
  * @sine 2019-11-20 10:44
  */
 import {WidgetConst} from "./config";
-import {ENUM, randomId} from "../../config/Config";
+import {randomId} from "../../config/Config";
 import {PropsConst, TextConst} from "../../config";
 
 const App = WidgetConst.App;
@@ -22,8 +22,8 @@ export class WidgetAppFactory {
         const Operate = that[App.BottomOperateBar];
         const widgets = [...Status, ...Header, ...Operate];
         const root = {
-            cid: ENUM.ROOT_WIDGET_ID,
-            children: [Status[0].cid, Header[0].cid, Operate[0].cid]
+            children: [Status[0].cid, Header[0].cid, Operate[0].cid],
+            props: {default: {[PropsConst.background]: '#FBFBFB'}}
         };
         return {root, widgets};
     }

@@ -6,9 +6,13 @@
 
 // @flow
 import React from 'react';
+import {Form} from 'fr-ui'
 import './../assets/events.pcss'
+import {EventsStore} from "../store/EventsStore";
 
-type Props = {};
+type Props = {
+    store: EventsStore
+};
 type State = {};
 
 export class Events extends React.Component<Props, State> {
@@ -19,6 +23,7 @@ export class Events extends React.Component<Props, State> {
                 <a className={'add-button'} onClick={store.handleAddEvent}>
                     <span>添加事件</span>
                 </a>
+                <Form.View config={store.formConfig} ref={store.formRef} formData={store.formData}/>
             </div>
         );
     };

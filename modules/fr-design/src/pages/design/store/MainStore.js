@@ -45,8 +45,14 @@ export class MainStore {
     @observable
     pageData: PageData = {};
 
+    @observable
+    editData = {};
+
     // 颜色选择器
-    @observable colorPickProps = { targetRect: null, color: "", onChange: ()=> {}};
+    @observable colorPickProps = {
+        targetRect: null, color: "", onChange: () => {
+        }
+    };
 
     constructor(props) {
         let that = this;
@@ -113,7 +119,7 @@ export class MainStore {
 
     @action
     onListenerBackgroundColor = (color)=> {
-        this.pageData.backgroundColor = color;
+        this.editData.backgroundColor = color;
     };
 
     /**

@@ -46,7 +46,6 @@ export class Screens extends React.Component<Props, State> {
 
         const topHeight = designRect.top * canvasScale;
         const bottomHeight = designRect.bottom * canvasScale;
-        const backgroundColor = main.pageData.backgroundColor;
         return (
             <>
                 <div className={"slider"}>
@@ -60,16 +59,6 @@ export class Screens extends React.Component<Props, State> {
                     </div>
                 </div>
                 <AdjustSizeCanvas handleResize={store.handleCanvasResize} width={width} height={height} />
-                {/*<div className={"back-buttons"}>
-                    <IBotTooltip content={"设置背景颜色"} position={"left"}>
-                        <a
-                            className={"sbgcolor"}
-                            style={{ backgroundColor }}
-                            onClick={main.handleBackgroundColor}
-                            onMouseDown={event => event.stopPropagation()}
-                        />
-                    </IBotTooltip>
-                </div>*/}
             </>
         );
     }
@@ -116,7 +105,7 @@ export class Screens extends React.Component<Props, State> {
                 </div>
                 <div
                     className={classNames("bg-view", designRect.type)}
-                    style={{height: scaleHeight, backgroundColor: main.pageData.backgroundColor, clipPath: clipPath2}}
+                    style={{height: scaleHeight, backgroundColor: main.editData.backgroundColor, clipPath: clipPath2}}
                 >
                     {gridAttribute.visible && SVG.small_grid(gridAttribute.size, canvasScale)}
                 </div>

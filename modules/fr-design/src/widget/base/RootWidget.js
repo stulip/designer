@@ -7,11 +7,48 @@
 // @flow
 import React from "react";
 import {BaseWidget} from "./BaseWidget";
+import {RootConfig} from "./root.config";
+import {PropsConst, StatesConst} from "../../config";
+import {DesignEvent} from "fr-web";
 
 type Props = {};
 type State = {};
 
+const displayName = "root.widget";
+
 export class RootWidget extends BaseWidget<Props, State> {
+    static displayName = displayName;
+
+    getName(): * {
+        return displayName;
+    }
+
+    widgetProps(child: Array<WidgetProps> = []): Array<WidgetProps> {
+        const {canvasRect, designRect} = this.props;
+        return RootConfig({canvasRect, designRect});
+    }
+
+    componentDidMount() {
+        super.componentDidMount();
+        DesignEvent.emit(PropsConst.rootWidgetInit, this);
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.cid !== this.props.cid) {
+            this.resetWidget();
+        }
+    }
+
+    /**
+     * 重置widget, 切换页面的时候
+     */
+    resetWidget() {
+        const that = this;
+        that.init();
+        that.forceUpdate(() => {
+            DesignEvent.emit(PropsConst.rootWidgetInit, that);
+        });
+    }
 
     addListener() {
         const that = this;
@@ -34,6 +71,11 @@ export class RootWidget extends BaseWidget<Props, State> {
             event.preventDefault();
         }
     };
+
+    // 始终返回默认数据
+    getFormData(): * {
+        return this.stateData[StatesConst.default.cid].props;
+    }
 
     render() {
         const that = this;
