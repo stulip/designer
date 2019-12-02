@@ -60,13 +60,27 @@ export class SectionStore extends BaseStore {
         let that = this;
         DesignEvent.addListener(PropsConst.canvasSize, that.onListenerCanvasSize);
         DesignEvent.addListener(PropsConst.designGrid, that.onListenerDesignGrid);
+        DesignEvent.addListener(PropsConst.rootWidgetInit, that.rootInit);
     }
 
     removeListener() {
         let that = this;
         DesignEvent.removeListener(PropsConst.canvasSize, that.onListenerCanvasSize);
         DesignEvent.removeListener(PropsConst.designGrid, that.onListenerDesignGrid);
+        DesignEvent.removeListener(PropsConst.rootWidgetInit, that.rootInit);
     }
+
+    /**
+     * root widget 初始化之后
+     * @param {RootWidget} widget
+     */
+    rootInit = (widget) => {
+        const that = this;
+        that.rootData = widget.getFormData();
+        const width = that.rootData[PropsConst.canvasWidth];
+        const height = that.rootData[PropsConst.canvasHeight];
+        that.setCanvasSize(width, height);
+    };
 
     /**
      * 设置内容区尺寸

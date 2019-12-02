@@ -42,7 +42,6 @@ export class MainStore {
     pageId = "007";
 
     // 页面配置信息
-    @observable
     pageData: PageData = {};
 
     @observable

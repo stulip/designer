@@ -121,7 +121,7 @@ export const createConfig = (options: ConfigOption): PageConfig => {
     } else {
         config.designRect = DEVICE_INFO.Web[0];
     }
-    // 目前没有保存画布大小, 取驱动大小
+    //画布大小, 默认取驱动大小
     config.canvasSize = config.designRect;
     // 设置默认视图属性
     config.defaultProps = defaultProps;

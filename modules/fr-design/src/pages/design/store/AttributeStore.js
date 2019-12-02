@@ -47,7 +47,9 @@ export class AttributeStore extends BaseStore {
         const that = this;
         that.rootData = widget.getFormData();
         that._baseConfig = [...widget.getWidgetProps(), ...that.createBasicConfig()];
-        that.main.setBackgroundColor(that.rootData[PropsConst.background]);
+        // 设置背景颜色
+        const background = that.rootData[PropsConst.background];
+        DesignEvent.emit(PropsConst.background, background);
         that.switchWidget(widget);
     };
 
