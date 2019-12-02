@@ -6,6 +6,7 @@
 import React from 'react';
 import {BaseStore} from "./BaseStore";
 import {Form} from "fr-ui";
+import {observable} from "mobx";
 
 export class EventsStore extends BaseStore {
 
@@ -17,7 +18,7 @@ export class EventsStore extends BaseStore {
     }
 
     // 表单数据
-    formConfig = [];
+    @observable.ref formConfig = [];
     formData = {};
 
     /**
@@ -33,9 +34,10 @@ export class EventsStore extends BaseStore {
 
     createFieldConfig() {
         const fields = [];
-        Array(3).forEach((da, index) => {
+        Array(5).fill(1).forEach((da, index) => {
 
-            return {
+            fields.push({
+                className: "event-item",
                 config: [
                     {
                         title: "事件",
@@ -48,7 +50,7 @@ export class EventsStore extends BaseStore {
                         type: Form.Const.Type.Text
                     }
                 ]
-            }
+            })
         });
         return fields;
     }
@@ -60,10 +62,8 @@ export class EventsStore extends BaseStore {
     handleAddEvent = (event: MouseEvent) => {
         const that = this;
         const {viewGroup} = that.main;
-        if (viewGroup.widget) {
-            console.log('widget 事件')
-        } else {
-            console.log('全局事件')
-        }
+        const widget = viewGroup.sWidget;
+
+        console.log(widget.getEvents())
     }
 }

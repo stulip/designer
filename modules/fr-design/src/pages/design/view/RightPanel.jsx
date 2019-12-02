@@ -25,11 +25,14 @@ export class RightPanel extends React.PureComponent<Props, State> {
             <div className={"panel-right"}>
                 <Tabs forceRenderTabPanel>
                     <TabList>
+                        <Tab>样式</Tab>
                         <Tab>属性</Tab>
                         <Tab>事件</Tab>
                     </TabList>
                     <TabPanel>
                         <Exterior store={store.main.attribute}/>
+                    </TabPanel>
+                    <TabPanel>
                     </TabPanel>
                     <TabPanel>
                         <Events store={store.main.events}/>

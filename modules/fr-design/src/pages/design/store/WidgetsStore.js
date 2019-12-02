@@ -289,16 +289,14 @@ export class WidgetsStore extends BaseStore {
 
         viewGroup.setWidgetMap(widgets);
         const cid = widgets[0].cid;
-        if (!viewGroup.widget) {
-            viewGroup.rootWidget.addNewWidget(cid);
-        } else {
-            const isFlag = viewGroup.widget.addNewWidget(cid);
-            if (isFlag === false) {
-                Toast.info("不支持添加子组件!");
-                viewGroup.deleteWidgetMap(widgets);
-                return null;
-            }
+        const isFlag = viewGroup.sWidget.addNewWidget(cid);
+
+        if (isFlag === false) {
+            Toast.info("不支持添加子组件!");
+            viewGroup.deleteWidgetMap(widgets);
+            return null;
         }
+
         that.newCId = cid;
         that.newWidgets = widgets;
         return cid;
@@ -317,17 +315,9 @@ export class WidgetsStore extends BaseStore {
         // 删除
         if (pageX > window.innerWidth - 220) {
             viewGroup.deleteWidgetMap(that.newWidgets);
-            if (!viewGroup.widget) {
-                viewGroup.rootWidget.removeWidget(that.newCId);
-            } else {
-                viewGroup.widget.removeWidget(that.newCId);
-            }
+            viewGroup.sWidget.removeWidget(that.newCId);
         } else {
-            if (!viewGroup.widget) {
-                viewGroup.rootWidget.setDragWidgetId(null);
-            } else {
-                viewGroup.widget.setDragWidgetId(null);
-            }
+            viewGroup.sWidget.setDragWidgetId(null);
         }
 
         that.newCId = null;

@@ -1,9 +1,10 @@
 .ds-events {
-    padding: 0px 9px;
+    padding: 0 9px;
     flex: 1;
     overflow-y: auto;
     overflow-x: hidden;
     display: flex;
+    flex-direction: column;
 
     .add-button {
         height: 22px;
@@ -12,12 +13,11 @@
         margin: 12px 0;
         border-radius: 2px;
         background: rgb(41, 141, 248);
-        flex: 1;
+        justify-content: center;
 
         span {
             text-align: center;
             line-height: 22px;
-            flex: 1;
         }
 
         &[disabled] {
@@ -30,5 +30,18 @@
             border-color: rgb(222, 222, 228);
             border-image: initial;
         }
+    }
+
+    .event-list {
+        list-style: none;
+        margin-top: 10px;
+    }
+
+    .event-item {
+        padding: 15px 5px 10px;
+        background-color: #f5f5f5;
+        margin-bottom: 13px;
+        border-radius: 2px;
+        transition: all 0.2s ease-in-out 0s;
     }
 }

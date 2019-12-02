@@ -7,7 +7,6 @@
 import React from 'react';
 import {BaseItem} from "./../base/BaseItem";
 import {Types} from "@xt-web/core";
-import {classNames} from 'fr-web'
 
 class TextItem extends BaseItem {
 
@@ -21,12 +20,9 @@ class TextItem extends BaseItem {
             : (Types.isBoolean(value)? (value ?"是" : "否"): value);
 
         return (
-            <>
-                <span className={classNames('left-label', {error: error})}>{item.title}</span>
-                <div className={'right-content'}>
-                    {text.render ? text.render(value, text): <span className={'value'} { ...text}>{value}</span>}
-                </div>
-            </>
+            <div className={'right-content'}>
+                {text.render ? text.render(value, text) : <span className={'value'} {...text}>{value}</span>}
+            </div>
         )
     }
 }

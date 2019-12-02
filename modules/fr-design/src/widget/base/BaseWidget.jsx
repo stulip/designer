@@ -545,12 +545,19 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
     }
 
     /**
-     * 原始表单数据
-     * @returns {Object}
+     * 状态原始表单数据
+     * @returns {*}
      */
     getFormData() {
-        const that = this;
-        return that.stateData[that.stateId].props;
+        return this.stateData[this.stateId].props;
+    }
+
+    /**
+     * 状态事件数据
+     * @returns {[]|*[]|{default: [string], [p: string]: [string]}}
+     */
+    getEvents() {
+        return this.stateData[this.stateId].event;
     }
 
     // 获取style 对象
@@ -558,7 +565,7 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
         const that = this;
         if (!that._styles) {
             that._styles = Form.View.getFormatFormData(this.getFormData());
-            setTimeout(function() {
+            setTimeout(function () {
                 that._styles = null;
             }, 0);
         }

@@ -21,10 +21,8 @@ export class AttributeStore extends BaseStore {
         return this.formRef.current;
     }
 
-    @observable
-    formConfig = [];
-    @observable
-    _baseConfig = [];
+    @observable.ref formConfig = [];
+    @observable.ref _baseConfig = [];
     formData;
     rootData = {};
 
