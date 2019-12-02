@@ -139,7 +139,7 @@ export class EventsStore extends BaseStore {
         //  新的事件
         events.push({
             cid: randomId(),
-            name: "事件"
+            name: `事件 ${events.length}`
         });
         that._setConfig(events);
     };
