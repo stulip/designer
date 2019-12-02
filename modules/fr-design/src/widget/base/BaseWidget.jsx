@@ -560,6 +560,14 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
         return this.stateData[this.stateId].event;
     }
 
+    /**
+     * 设置事件数据
+     * @param events
+     */
+    setEvents(events) {
+        this.stateData[this.stateId].event = events;
+    }
+
     // 获取style 对象
     get styles() {
         const that = this;

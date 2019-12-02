@@ -44,4 +44,36 @@
         border-radius: 2px;
         transition: all 0.2s ease-in-out 0s;
     }
+
+    .ic-event-input {
+        padding: 5px 6px;
+        background: #f2f2f2;
+        border-bottom: 1px solid #ebebeb;
+
+        .Input {
+            width: 100%;
+        }
+
+        input {
+            background: #f2f2f2;
+            transition: 0s !important;
+            border-width: 0;
+            border-bottom: 1px solid transparent;
+            padding: 0;
+            border-radius: 0;
+
+            &:enabled:not([readonly]):focus {
+                background-color: #f2f2f2;
+                border-width: 0;
+                border-bottom: 1px solid #ff6161 !important;
+                box-shadow: initial;
+            }
+
+            &:enabled:not([readonly]):hover {
+                background-color: #f2f2f2;
+                border-width: 0;
+                border-bottom: 1px dashed #ff6161;
+            }
+        }
+    }
 }

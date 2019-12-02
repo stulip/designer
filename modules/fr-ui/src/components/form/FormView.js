@@ -297,7 +297,7 @@ class FormView extends React.Component<Props, State> {
             return null;
         }
 
-        const serveData = serveData(config, formData);
+        const data = serveData(config, formData);
 
         const nData = {};
         for (const key in formData) {
@@ -305,7 +305,7 @@ class FormView extends React.Component<Props, State> {
                 nData[key] = formData[key];
             }
         }
-        return Object.assign(nData, serveData);
+        return Object.assign(nData, data);
     };
 
     /**

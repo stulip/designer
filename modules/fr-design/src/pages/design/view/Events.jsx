@@ -23,7 +23,7 @@ export class Events extends React.Component<Props, State> {
         return (
             <div className={'ds-events'}>
                 <ol className={'event-list'}>
-                    <Form.View config={store.formConfig} ref={store.formRef} formData={store.formData}/>
+                    <Form.View config={store.formConfig} ref={store.formRef} onChange={store.handleFormData}/>
                 </ol>
                 <a className={'add-button'} onClick={store.handleAddEvent}>
                     <span>添加事件</span>

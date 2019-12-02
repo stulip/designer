@@ -10,7 +10,7 @@ import type {BaseWidget} from "../../../widget/base";
 import {BaseStore} from "./BaseStore";
 import {DesignEvent, Toast} from "fr-web";
 import {PropsConst} from "../../../config/Attribute";
-import type {PageConfig, PageData, WidgetConfigDefined, WidgetEvent, WidgetState} from "../../../flow/Main.flow";
+import type {PageConfig, PageData, WidgetConfigDefined, WidgetState} from "../../../flow/Main.flow";
 import WidgetModule, {WidgetAppFactory} from "../../../widget";
 import {Dialog} from "fr-ui";
 import {CloneWidget} from "../../../widget/config";
@@ -21,8 +21,6 @@ export class ViewGroupStore extends BaseStore {
     @observable.ref rootWidgetConfig;
     // 所有的widget配置 cid -> widget
     _widgetMap: Map<string, WidgetConfigDefined> = new Map();
-    // 所有的widget 事件配置 cid -> event
-    _eventMap: Map<string, WidgetEvent> = new Map();
     rootRef = React.createRef();
 
     get rootWidget(): BaseWidget {
@@ -477,35 +475,15 @@ export class ViewGroupStore extends BaseStore {
         widgets.forEach(widget => this._widgetMap.delete(widget.cid));
     }
 
-    get eventMap(): Map<string, WidgetEvent> {
-        return this._eventMap;
-    }
-
-    set eventMap(value: Array<WidgetEvent> | Map<string, WidgetEvent>) {
-        if (Array.isArray(value)) {
-            const events = new Map();
-            value.forEach(event => events.set(event.cid, event));
-            this._widgetMap = events;
-        } else {
-            this._eventMap = value;
-        }
-    }
-
-    /**
-     * 添加事件到event map 中
-     * @param {Array<WidgetEvent>} events
-     */
-    setEventMap(events: WidgetEvent[]) {
-        events.forEach(event => this._widgetMap.set(event.cid, event));
-    }
-
     get widget(): BaseWidget {
         return this._widget;
     }
 
     set widget(widget: BaseWidget) {
-        this._widget = widget;
-        DesignEvent.emit(PropsConst.switchWidget, widget);
+        if (widget !== this._widget) {
+            this._widget = widget;
+            DesignEvent.emit(PropsConst.switchWidget, widget);
+        }
     }
 
     /**

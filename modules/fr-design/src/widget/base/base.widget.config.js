@@ -8,7 +8,7 @@ import {PropsConst} from "../../config/Attribute";
  */
 
 export const WidgetConfig = ({basic, nameOptions}) => [
-    {form: PropsConst.widgetName, type: Form.Const.Type.IBotInput, className: "widget-name", ...nameOptions},
+    {form: PropsConst.widgetName, type: Form.Const.Type.IBotInput, className: "widget-input", ...nameOptions},
     {
         className: "ic-content",
         config: [

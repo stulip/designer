@@ -3,13 +3,14 @@
  * @author tangzehua
  * @sine 2019-11-28 15:00
  */
-import React from 'react';
+import React from "react";
 import {BaseStore} from "./BaseStore";
 import {Form} from "fr-ui";
-import {observable} from "mobx";
+import {action, observable} from "mobx";
+import {DesignEvent} from "fr-web";
+import {PropsConst, randomId} from "../../../config";
 
 export class EventsStore extends BaseStore {
-
     // form
     formRef = React.createRef();
 
@@ -19,7 +20,7 @@ export class EventsStore extends BaseStore {
 
     // 表单数据
     @observable.ref formConfig = [];
-    formData = {};
+    events;
 
     /**
      * 初始化
@@ -28,32 +29,89 @@ export class EventsStore extends BaseStore {
      */
     init(config, options = {}) {
         let that = this;
-
-        that.formConfig = that.createFieldConfig();
+        that.events = [];
+        that.formConfig = [];
     }
 
     createFieldConfig() {
-        const fields = [];
-        Array(5).fill(1).forEach((da, index) => {
-
-            fields.push({
-                className: "event-item",
-                config: [
-                    {
-                        title: "事件",
-                        form: `a.${index}`,
-                        type: Form.Const.Type.Text
-                    },
-                    {
-                        title: "吃饭",
-                        form: `b.${index}`,
-                        type: Form.Const.Type.Text
-                    }
-                ]
-            })
-        });
-        return fields;
+        const that = this;
+        return (that.events || []).map((event, index, events) => ({
+            className: "event-item",
+            config: [
+                {
+                    form: `${index}.cid`,
+                    value: event.cid
+                },
+                {
+                    form: `${index}.name`,
+                    type: Form.Const.Type.IBotInput,
+                    className: "event-input",
+                    value: event.name
+                },
+                {
+                    title: "吃饭",
+                    form: `${index}.title`,
+                    type: Form.Const.Type.Text
+                },
+                {
+                    form: "length",
+                    value: events.length
+                }
+            ]
+        }));
     }
+
+    addListener() {
+        const that = this;
+        DesignEvent.addListener(PropsConst.switchWidget, that.switchWidget);
+        DesignEvent.addListener(PropsConst.rootWidgetInit, that.rootInit);
+        DesignEvent.addListener(PropsConst.switchWidgetState, that.switchWidgetState);
+    }
+
+    removeListener() {
+        const that = this;
+        DesignEvent.removeListener(PropsConst.switchWidget, that.switchWidget);
+        DesignEvent.removeListener(PropsConst.rootWidgetInit, that.rootInit);
+        DesignEvent.removeListener(PropsConst.switchWidgetState, that.switchWidgetState);
+    }
+
+    /**
+     * root widget 初始化之后
+     * @param {RootWidget} widget
+     */
+    rootInit = widget => {
+        const that = this;
+        that.switchWidget(widget);
+    };
+
+    /**
+     * 监听widget 切换
+     * @param {BaseWidget} [widget]
+     */
+    switchWidget = widget => {
+        const that = this;
+        widget = widget || that.main.viewGroup.sWidget;
+        that._setConfig(widget.getEvents());
+    };
+
+    /**
+     * 监听widget 状态切换
+     * @param {BaseWidget} widget
+     * @param {string} stateId
+     */
+    switchWidgetState = (widget, stateId) => {
+        this.switchWidget(widget);
+    };
+
+    /**
+     * @param {Array} events
+     */
+    @action
+    _setConfig = events => {
+        const that = this;
+        that.events = events;
+        that.formConfig = that.createFieldConfig();
+    };
 
     /**
      * 添加事件
@@ -63,7 +121,20 @@ export class EventsStore extends BaseStore {
         const that = this;
         const {viewGroup} = that.main;
         const widget = viewGroup.sWidget;
+        const events = widget.getEvents();
 
-        console.log(widget.getEvents())
-    }
+        //  新的事件
+        events.push({
+            cid: randomId(),
+            name: "事件"
+        });
+        that._setConfig(events);
+    };
+
+    handleFormData = (data: Object) => {
+        const that = this;
+        const formData = Array.from(that.form.getData());
+        const {viewGroup} = that.main;
+        viewGroup.sWidget.setEvents((that.events = formData));
+    };
 }

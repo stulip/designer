@@ -122,7 +122,6 @@ export class AttributeStore extends BaseStore {
     };
 
     /**
-     *
      * @param {Array} [config]
      * @param {Object} [formData]
      */
@@ -143,10 +142,11 @@ export class AttributeStore extends BaseStore {
      * @param {BaseWidget} widget
      */
     switchWidget = (widget) => {
-        if (widget && widget.getId() !== this.main.pageId) {
-            this._setConfig(widget.getWidgetProps(), widget.getFormData())
+        const that = this;
+        if (widget && widget.getId() !== that.main.pageId) {
+            that._setConfig(widget.getWidgetProps(), widget.getFormData())
         } else {
-            this._setConfig();
+            that._setConfig();
         }
     };
 
