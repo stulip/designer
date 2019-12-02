@@ -48,7 +48,8 @@ export class EventsStore extends BaseStore {
                         form: `${index}.name`,
                         type: Form.Const.Type.IBotInput,
                         className: "event-input",
-                        value: event.name
+                        value: event.name,
+                        rules: true,
                     },
                     {
                         type: ItemConst.Type.IBotIcon,
@@ -60,6 +61,14 @@ export class EventsStore extends BaseStore {
                     title: "类型",
                     form: `${index}.type`,
                     type: Form.Const.Type.Text,
+                },
+                {
+                    title: "行为表达式",
+                    form: `${index}.exps`,
+                    type: Form.Const.Type.IBotInput,
+                    className: "event-input",
+                    value: event.exps,
+                    titleDirection: Form.Const.Direction.Top
                 },
                 {
                     title: "行为",
@@ -93,8 +102,7 @@ export class EventsStore extends BaseStore {
      * @param {RootWidget} widget
      */
     rootInit = widget => {
-        const that = this;
-        that.switchWidget(widget);
+        this.switchWidget(widget);
     };
 
     /**
@@ -104,7 +112,8 @@ export class EventsStore extends BaseStore {
     switchWidget = widget => {
         const that = this;
         widget = widget || that.main.viewGroup.sWidget;
-        that._setConfig(widget.getEvents());
+        const events = widget.getEvents();
+        that.events !== events && that._setConfig(events);
     };
 
     /**
@@ -146,9 +155,11 @@ export class EventsStore extends BaseStore {
 
     handleFormData = (data: Object) => {
         const that = this;
-        const formData = Array.from(that.form.getData());
-        const {viewGroup} = that.main;
-        viewGroup.sWidget.setEvents((that.events = formData));
+        const formData = that.form.validateData();
+        if (formData) {
+            const {sWidget} = that.main.viewGroup;
+            sWidget.setEvents(that.events = Array.from(formData));
+        }
     };
 
     /**

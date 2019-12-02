@@ -91,6 +91,7 @@ export type WidgetEvent = {
     name: string, // 名称
     type: WidgetEventType, // 事件类型
     behavior: string,
+    exps: string,// 行为表达式
 }
 
 /**

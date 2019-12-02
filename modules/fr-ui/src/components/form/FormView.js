@@ -8,6 +8,7 @@ import React from "react";
 import {Tools, Types} from "@xt-web/core";
 import {Required} from "./Required";
 import "./assets/form-item.pcss";
+import {Toast} from "fr-web";
 
 // 接口请求参数,具体数据参考Paging.js
 type ApiProps = {
@@ -30,7 +31,8 @@ type SwitchProps = {};
 type CompsProps = {
     defaultValue?: any,
     component: React.DOM,
-    props?: Object // 组件属性
+    props?: Object, // 组件属性
+    errorMsg?: string, //错误提示信息
 };
 
 export type ItemProps = {
@@ -309,7 +311,6 @@ class FormView extends React.Component<Props, State> {
     };
 
     /**
-     *
      * @param {String} [errorMsg]
      * @returns {*}
      */
@@ -317,10 +318,8 @@ class FormView extends React.Component<Props, State> {
         let that = this;
         let data = that.getData(true);
         if (Types.isNull(data)) {
-            let msg = Types.isUndefined(that.props.errorMsg)
-                ? errorMsg || I18n.t(241 /*保存失败!*/)
-                : that.props.errorMsg;
-            // xt.ui.showToast(msg);
+            let msg = errorMsg && that.props.errorMsg;
+            msg && Toast.error(msg);
         }
         return data;
     };

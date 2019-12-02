@@ -15,7 +15,7 @@ class IBotInputItem extends BaseInputItem {
         let {item} = that.props;
         let {value = "", error, disabled, required} = that.state;
         let input = item.input || {};
-        const className = classNames("PanelInputNumber", input.className);
+        const className = classNames("PanelInputNumber", input.className, {error});
 
         return (
             <div className={"right-content"}>
