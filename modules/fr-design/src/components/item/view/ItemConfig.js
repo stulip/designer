@@ -114,6 +114,7 @@ export const ItemConst = {
         Header: "widget.header.0",
         Button: "widget.button.0",
         LockIconButton: "widget.lock.button.1",
+        IBotIcon: "widget.ibot.icon",
     },
     Direction,
     JustifyContent,

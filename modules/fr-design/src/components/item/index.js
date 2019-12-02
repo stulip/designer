@@ -12,6 +12,7 @@ import {HeaderItem} from "./view/HeaderItem";
 import './assets/item.pcss'
 import {LockButtonItem} from "./view/LockButtonItem";
 import {ColorItem} from "./view/ColorItem";
+import {IBotIconItem} from "./view/IBotIconItem";
 
 // 注册背景颜色组件
 Form.View.registerComponent(ItemConst.Type.Background, {component: BackgroundItem});
@@ -24,6 +25,8 @@ Form.View.registerComponent(ItemConst.Type.LockIconButton, {component: LockButto
 // Color
 Form.View.registerComponent(ItemConst.Type.Color, {component: ColorItem});
 
+// ibot icon
+Form.View.registerComponent(ItemConst.Type.IBotIcon, {component: IBotIconItem});
 
 export {
     ItemConst

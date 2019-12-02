@@ -22,7 +22,7 @@ export class RightPanel extends React.PureComponent<Props, State> {
         let that = this;
         let store = this.props.store;
         return (
-            <div className={"panel-right"}>
+            <div className={"panel-right form-panel"}>
                 <Tabs forceRenderTabPanel>
                     <TabList>
                         <Tab>样式</Tab>

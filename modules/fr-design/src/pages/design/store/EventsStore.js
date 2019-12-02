@@ -5,10 +5,11 @@
  */
 import React from "react";
 import {BaseStore} from "./BaseStore";
-import {Form} from "fr-ui";
+import {Form, SVG} from "fr-ui";
 import {action, observable} from "mobx";
 import {DesignEvent} from "fr-web";
 import {PropsConst, randomId} from "../../../config";
+import {ItemConst} from "../../../components/item";
 
 export class EventsStore extends BaseStore {
     // form
@@ -42,16 +43,28 @@ export class EventsStore extends BaseStore {
                     form: `${index}.cid`,
                     value: event.cid
                 },
+                [
+                    {
+                        form: `${index}.name`,
+                        type: Form.Const.Type.IBotInput,
+                        className: "event-input",
+                        value: event.name
+                    },
+                    {
+                        type: ItemConst.Type.IBotIcon,
+                        value: "删除",
+                        svg: {icon: SVG.trash, className: "trash", onClick: () => that.handleDelEvent(event.cid)}
+                    }
+                ],
                 {
-                    form: `${index}.name`,
-                    type: Form.Const.Type.IBotInput,
-                    className: "event-input",
-                    value: event.name
+                    title: "类型",
+                    form: `${index}.type`,
+                    type: Form.Const.Type.Text,
                 },
                 {
-                    title: "吃饭",
-                    form: `${index}.title`,
-                    type: Form.Const.Type.Text
+                    title: "行为",
+                    form: `${index}.behavior`,
+                    type: Form.Const.Type.Text,
                 },
                 {
                     form: "length",
@@ -137,4 +150,17 @@ export class EventsStore extends BaseStore {
         const {viewGroup} = that.main;
         viewGroup.sWidget.setEvents((that.events = formData));
     };
+
+    /**
+     * 删除事件
+     * @param cid 事件ID
+     */
+    @action
+    handleDelEvent(cid: string) {
+        const that = this;
+        const ix = that.events.findIndex(event => event.cid === cid);
+        that.events.splice(ix, 1);
+        that.main.viewGroup.sWidget.setEvents(that.events);
+        that._setConfig(that.events);
+    }
 }
