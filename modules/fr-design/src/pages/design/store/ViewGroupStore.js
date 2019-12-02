@@ -92,7 +92,6 @@ export class ViewGroupStore extends BaseStore {
         if (!widgets || !widgets.length) {
             if (isApp) {
                 const {root, widgets} = WidgetAppFactory.navigator;
-                root.cid = id;
                 that.rootWidgetConfig = root;
                 that.widgetMap = widgets;
             }

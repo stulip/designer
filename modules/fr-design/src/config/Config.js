@@ -39,7 +39,7 @@ export const viewportScale = { x: 3, y: 2 };
 export const ENUM = {
     DESIGN_SCALE: "design_scale",
     DESIGN_GRID: 'design_grid',
-    PROJECT: "PROJECT",
+    PAGE: "PAGE",
 
     ZOOM_M: 1,
     ZOOM_P: 2,

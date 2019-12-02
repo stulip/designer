@@ -79,7 +79,9 @@ export class SectionStore extends BaseStore {
         that.rootData = widget.getFormData();
         const width = that.rootData[PropsConst.canvasWidth];
         const height = that.rootData[PropsConst.canvasHeight];
-        that.setCanvasSize(width, height);
+        if (width && height) {
+            that.setCanvasSize(width, height);
+        }
     };
 
     /**

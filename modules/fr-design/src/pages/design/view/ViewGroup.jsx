@@ -73,6 +73,7 @@ export class ViewGroup extends React.Component<Props, State> {
         return (
             <RootWidget
                 {...rootWidgetConfig}
+                cid={main.pageId}
                 designRect={designRect}
                 canvasRect={canvasRect}
                 widgetMap={store.widgetMap}

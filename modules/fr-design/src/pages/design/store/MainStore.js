@@ -39,7 +39,8 @@ export class MainStore {
     viewGroup: ViewGroupStore;
     events: EventsStore;
 
-    pageId = "007";
+    // 页面ID
+    pageId;
 
     // 页面配置信息
     pageData: PageData = {};
@@ -55,7 +56,11 @@ export class MainStore {
 
     constructor(props) {
         let that = this;
+        const {name} = props.match.params;
+        const isApp = name === 'app';
+        that.pageId = (isApp ? "A" : "W") + "-007";
         that._storeList = [];
+
         that.keyEvents = new EventEmitter();
         that.screens = new ScreensStore(that);
         that.toolbar = new ToolbarStore(that);
@@ -67,9 +72,7 @@ export class MainStore {
         that.events = new EventsStore(that);
 
         that._storeList.forEach(da => da.classMount());
-
         that.addListener();
-        const {name} = props.match.params;
         that.config = createConfig({
             isApp: name === 'app',
         });
@@ -83,7 +86,7 @@ export class MainStore {
         let that = this;
         const config = that.config;
         const pageData = {
-            ...Storage.local.getItem(`${ENUM.PROJECT}_${that.pageId}`, config.defaultProps),
+            ...Storage.local.getItem(`${ENUM.PAGE}-${that.pageId}`, config.defaultProps),
             id: that.pageId
         };
         const options = {
@@ -154,7 +157,7 @@ export class MainStore {
         const that = this;
         const data = toJS(that.pageData);
         data.widgets = that.viewGroup.rootWidget.widgetData;
-        Storage.local.setItem(`${ENUM.PROJECT}_${data.id}`, data);
+        Storage.local.setItem(`${ENUM.PAGE}-${data.id}`, data);
     }
 
     /**
@@ -165,7 +168,7 @@ export class MainStore {
         const that = this;
         //切换页面时, 保存数据到本地
         that.savePageDataToLocal();
-        that.pageId = pageId;
+        that.pageId = `${that.config.isApp ? "A" : "W"}-${pageId}`;
         that.init();
     }
 }
