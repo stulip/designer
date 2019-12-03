@@ -122,7 +122,7 @@ const EventBehavior = {
         {label: "跳转页面", value: BehaviorConst.switchPage},
         {label: "切换状态", value: BehaviorConst.switchState},
         {label: "工作流", value: BehaviorConst.workFlow},
-        {label: "存储变量", value: BehaviorConst.variable},
+        {label: "存储值", value: BehaviorConst.variable},
     ]
 };
 

@@ -122,7 +122,39 @@ export class EventsStore extends BaseStore {
                     select: {data: ItemConst.PageType.options({isApp})},
                     visible: data => Number(data[`${index}.behavior`]) === BehaviorConst.switchState
                 },
+                {
+                    title: '目标',
+                    form: `${index}.widgetState`,
+                    type: Form.Const.Type.IBotSelect,
+                    union: `${index}.behavior`,
+                    value: event.widgetState,
+                    select: {data: ItemConst.PageType.options({isApp})},
+                    visible: data => Number(data[`${index}.behavior`]) === BehaviorConst.switchState
+                },
                 // --------- 行为 - 切换状态 ---------
+                // --------- 行为 - 存储值 ---------
+                {
+                    title: "值表达式",
+                    form: `${index}.variable`,
+                    type: Form.Const.Type.IBotInput,
+                    className: "event-input",
+                    titleDirection: Form.Const.Direction.Top,
+                    union: `${index}.behavior`,
+                    value: event.variable,
+                    visible: data => Number(data[`${index}.behavior`]) === BehaviorConst.variable
+                },
+                // --------- 行为 - 存储值 ---------
+                // --------- 行为 - 工作流 ---------
+                {
+                    title: '工作流',
+                    form: `${index}.workflow`,
+                    type: Form.Const.Type.IBotSelect,
+                    union: `${index}.behavior`,
+                    value: event.workflow,
+                    select: {data: ItemConst.PageType.options({isApp})},
+                    visible: data => Number(data[`${index}.behavior`]) === BehaviorConst.workFlow
+                },
+                // --------- 行为 - 工作流 ---------
                 {
                     form: "length",
                     value: events.length
