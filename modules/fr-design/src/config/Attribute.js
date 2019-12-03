@@ -222,6 +222,26 @@ export const BehaviorConst = {
     variable: 6,
 };
 
+// 事件类型常量
+export const EventTypeConst = {
+    click: 1, // app / pc 公用
+    watchWidgetVariable: 10,
+    watchWidgetState: 11,
+    watchFocus: 12,
+    watchBlur: 13,
+    keyDown: 30,
+    keyUp: 31,
+    keyPress: 32,
+    touchLongPress: 100,
+    touchPress: 101,
+    touchSlideLeft: 102,
+    touchSlideRight: 103,
+    tapClick: 200,
+    tapDBLClick: 201,
+    tapMouseLeave: 210,
+    tapMouseEnter: 211,
+};
+
 // 布局按钮配置
 export const ArrangeConfig = [
     {

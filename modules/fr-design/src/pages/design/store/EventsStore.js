@@ -36,6 +36,7 @@ export class EventsStore extends BaseStore {
 
     createFieldConfig() {
         const that = this;
+        const {isApp} = that.main.config;
         return (that.events || []).map((event, index, events) => ({
             className: "event-item",
             config: [
@@ -60,7 +61,9 @@ export class EventsStore extends BaseStore {
                 {
                     title: "类型",
                     form: `${index}.type`,
-                    type: Form.Const.Type.Text,
+                    type: Form.Const.Type.IBotSelect,
+                    select: {data: ItemConst.EventType.options({isApp})},
+                    value: event.type
                 },
                 {
                     title: "行为表达式",
@@ -74,7 +77,7 @@ export class EventsStore extends BaseStore {
                     title: "行为",
                     form: `${index}.behavior`,
                     type: Form.Const.Type.IBotSelect,
-                    select: {data: ItemConst.Behavior.options},
+                    select: {data: ItemConst.EventBehavior.options},
                     value: event.behavior
                 },
                 {

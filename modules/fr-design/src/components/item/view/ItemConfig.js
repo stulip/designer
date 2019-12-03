@@ -4,7 +4,7 @@
  * @sine 2019-10-16 14:06
  */
 
-import {BehaviorConst, LayoutConst, TextConst} from "../../../config/Attribute";
+import {BehaviorConst, EventTypeConst, LayoutConst, TextConst} from "../../../config/Attribute";
 
 // 布局方向
 const Direction = {
@@ -116,13 +116,48 @@ const FontWeight = {
 };
 
 // 事件 - 行为
-const Behavior = {
+const EventBehavior = {
     options: [
         {label: "跳转页面", value: BehaviorConst.switchPage},
         {label: "切换页面状态", value: BehaviorConst.switchPageState},
         {label: "切换组件状态", value: BehaviorConst.switchWidgetState},
         {label: "工作流", value: BehaviorConst.workFlow},
         {label: "存储变量", value: BehaviorConst.variable},
+    ]
+};
+
+// 事件类型
+const EventType = {
+    options: ({isApp}) => [
+        {label: '点击', value: EventTypeConst.click},
+        [
+            "观察事件",
+            {label: '值改变', value: EventTypeConst.watchWidgetVariable},
+            {label: '状态改变', value: EventTypeConst.watchWidgetState},
+            {label: '获得焦点', value: EventTypeConst.watchFocus},
+            {label: '失去焦点', value: EventTypeConst.watchBlur},
+        ],
+        //App
+        [
+            "Touch事件",
+            {label: '长按', value: EventTypeConst.touchLongPress},
+            {label: '左滑', value: EventTypeConst.touchSlideLeft},
+            {label: '右滑', value: EventTypeConst.touchSlideRight},
+        ],
+        // PC
+        [
+            "鼠标事件",
+            {label: '双击', value: EventTypeConst.tapDBLClick},
+            {label: '离开', value: EventTypeConst.tapMouseLeave},
+            {label: '进入', value: EventTypeConst.tapMouseEnter},
+        ],
+        // 键盘事件
+        [
+            "键盘事件",
+            {label: '按下', value: EventTypeConst.keyDown},
+            {label: '释放', value: EventTypeConst.keyUp},
+            {label: '按住', value: EventTypeConst.keyPress},
+        ],
     ]
 };
 
@@ -145,5 +180,6 @@ export const ItemConst = {
     TextAlign,
     FontSize,
     FontWeight,
-    Behavior
+    EventBehavior,
+    EventType
 };
