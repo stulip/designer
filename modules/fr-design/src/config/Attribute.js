@@ -213,6 +213,15 @@ export const ArrangeConst = {
     alignCenterH: 8
 };
 
+// 行为常量
+export const BehaviorConst = {
+    switchPage: 2,
+    switchPageState: 3,
+    switchWidgetState: 4,
+    workFlow: 5,
+    variable: 6,
+};
+
 // 布局按钮配置
 export const ArrangeConfig = [
     {

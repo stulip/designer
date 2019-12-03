@@ -1,11 +1,12 @@
-import {LayoutConst, TextConst} from "../../../config/Attribute";
-
 /**
  *
  * @author tangzehua
  * @sine 2019-10-16 14:06
  */
 
+import {BehaviorConst, LayoutConst, TextConst} from "../../../config/Attribute";
+
+// 布局方向
 const Direction = {
     options: [
         {label: "横向", value: LayoutConst.direction.row},
@@ -13,6 +14,7 @@ const Direction = {
     ]
 };
 
+// 布局之 justify content
 const JustifyContent = {
     options: [
         {label: "center", value: LayoutConst.justifyContent.center},
@@ -24,6 +26,7 @@ const JustifyContent = {
     ]
 };
 
+// 布局之 align content
 const AlignContent = {
     options: [
         {label: "", value: undefined},
@@ -36,6 +39,7 @@ const AlignContent = {
     ]
 };
 
+// 布局之 align items
 const AlignItems = {
     options: [
         {label: "center", value: LayoutConst.alignItem.center},
@@ -46,6 +50,7 @@ const AlignItems = {
     ]
 };
 
+// 布局之 align self
 const AlignSelf = {
     options: [
         {label: "auto", value: LayoutConst.alignSelf.auto},
@@ -56,6 +61,7 @@ const AlignSelf = {
         {label: "baseline", value: LayoutConst.alignSelf.baseline}
     ]
 };
+// 边框
 const BorderStyles = {
     options: [
         {label: "", value: ""},
@@ -65,6 +71,7 @@ const BorderStyles = {
     ]
 };
 
+// 字体对齐方式
 const TextAlign = {
     options: [
         {label: '左对齐', value: TextConst.textAlign.left},
@@ -74,6 +81,7 @@ const TextAlign = {
     ]
 };
 
+// 字体大小
 const FontSize = {
     options: [
         {label: 12, value: 12},
@@ -90,6 +98,7 @@ const FontSize = {
     ]
 };
 
+// 字体权重(字体粗细)
 const FontWeight = {
     options: [
         {label: "标准", value: TextConst.weight.normal},
@@ -103,6 +112,17 @@ const FontWeight = {
         {label: "700", value: TextConst.weight['700']},
         {label: "800", value: TextConst.weight['800']},
         {label: "900", value: TextConst.weight['900']},
+    ]
+};
+
+// 事件 - 行为
+const Behavior = {
+    options: [
+        {label: "跳转页面", value: BehaviorConst.switchPage},
+        {label: "切换页面状态", value: BehaviorConst.switchPageState},
+        {label: "切换组件状态", value: BehaviorConst.switchWidgetState},
+        {label: "工作流", value: BehaviorConst.workFlow},
+        {label: "存储变量", value: BehaviorConst.variable},
     ]
 };
 
@@ -124,5 +144,6 @@ export const ItemConst = {
     BorderStyles,
     TextAlign,
     FontSize,
-    FontWeight
+    FontWeight,
+    Behavior
 };

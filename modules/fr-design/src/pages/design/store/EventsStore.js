@@ -73,7 +73,9 @@ export class EventsStore extends BaseStore {
                 {
                     title: "行为",
                     form: `${index}.behavior`,
-                    type: Form.Const.Type.Text,
+                    type: Form.Const.Type.IBotSelect,
+                    select: {data: ItemConst.Behavior.options},
+                    value: event.behavior
                 },
                 {
                     form: "length",
