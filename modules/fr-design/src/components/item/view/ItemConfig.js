@@ -4,7 +4,7 @@
  * @sine 2019-10-16 14:06
  */
 
-import {BehaviorConst, EventTypeConst, LayoutConst, TextConst} from "../../../config/Attribute";
+import {BehaviorConst, EventTypeConst, LayoutConst, PageTypeConst, TextConst} from "../../../config/Attribute";
 
 // 布局方向
 const Direction = {
@@ -117,10 +117,10 @@ const FontWeight = {
 
 // 事件 - 行为
 const EventBehavior = {
+    default: BehaviorConst.switchPage,
     options: [
         {label: "跳转页面", value: BehaviorConst.switchPage},
-        {label: "切换页面状态", value: BehaviorConst.switchPageState},
-        {label: "切换组件状态", value: BehaviorConst.switchWidgetState},
+        {label: "切换状态", value: BehaviorConst.switchState},
         {label: "工作流", value: BehaviorConst.workFlow},
         {label: "存储变量", value: BehaviorConst.variable},
     ]
@@ -161,6 +161,15 @@ const EventType = {
     ]
 };
 
+// 页面类型
+const PageType = {
+    default: PageTypeConst.tabs,
+    options: ({isApp}) => [
+        {label: '页签', value: PageTypeConst.tabs},
+        {label: '弹出层', value: PageTypeConst.dialog},
+    ]
+};
+
 export const ItemConst = {
     Type: {
         Color: "widget.color.0",
@@ -181,5 +190,6 @@ export const ItemConst = {
     FontSize,
     FontWeight,
     EventBehavior,
-    EventType
+    EventType,
+    PageType
 };

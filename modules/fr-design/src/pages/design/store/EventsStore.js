@@ -8,7 +8,7 @@ import {BaseStore} from "./BaseStore";
 import {Form, SVG} from "fr-ui";
 import {action, observable} from "mobx";
 import {DesignEvent} from "fr-web";
-import {PropsConst, randomId} from "../../../config";
+import {BehaviorConst, PropsConst, randomId} from "../../../config";
 import {ItemConst} from "../../../components/item";
 
 export class EventsStore extends BaseStore {
@@ -65,6 +65,14 @@ export class EventsStore extends BaseStore {
                     select: {data: ItemConst.EventType.options({isApp})},
                     value: event.type
                 },
+                {type: Form.Const.Type.Line, top: 0, left: 6, right: 6,},
+                {
+                    title: "行为",
+                    form: `${index}.behavior`,
+                    type: Form.Const.Type.IBotSelect,
+                    select: {data: ItemConst.EventBehavior.options},
+                    value: event.behavior || ItemConst.EventBehavior.default,
+                },
                 {
                     title: "行为表达式",
                     form: `${index}.exps`,
@@ -73,13 +81,48 @@ export class EventsStore extends BaseStore {
                     value: event.exps,
                     titleDirection: Form.Const.Direction.Top
                 },
+                {type: Form.Const.Type.Line, top: 0, left: 6, right: 6,},
+                // --------- 行为 - 页面 ---------
                 {
-                    title: "行为",
-                    form: `${index}.behavior`,
+                    title: "页面类型",
+                    form: `${index}.pageType`,
                     type: Form.Const.Type.IBotSelect,
-                    select: {data: ItemConst.EventBehavior.options},
-                    value: event.behavior
+                    union: `${index}.behavior`,
+                    value: event.pageType || ItemConst.PageType.default,
+                    select: {data: ItemConst.PageType.options({isApp})},
+                    visible: data => Number(data[`${index}.behavior`]) === BehaviorConst.switchPage
                 },
+                {
+                    title: "页面URL",
+                    form: `${index}.pageURL`,
+                    type: Form.Const.Type.IBotInput,
+                    className: "event-input",
+                    titleDirection: Form.Const.Direction.Top,
+                    union: `${index}.behavior`,
+                    value: event.pageURL,
+                    visible: data => Number(data[`${index}.behavior`]) === BehaviorConst.switchPage
+                },
+                {
+                    title: "页面参数",
+                    form: `${index}.pageArgs`,
+                    type: Form.Const.Type.IBotInput,
+                    className: "event-input",
+                    titleDirection: Form.Const.Direction.Top,
+                    union: `${index}.behavior`,
+                    visible: data => Number(data[`${index}.behavior`]) === BehaviorConst.switchPage
+                },
+                // --------- 行为 - 页面 ---------
+                // --------- 行为 - 切换状态 ---------
+                {
+                    title: '组件',
+                    form: `${index}.widget`,
+                    type: Form.Const.Type.IBotSelect,
+                    union: `${index}.behavior`,
+                    value: event.widget,
+                    select: {data: ItemConst.PageType.options({isApp})},
+                    visible: data => Number(data[`${index}.behavior`]) === BehaviorConst.switchState
+                },
+                // --------- 行为 - 切换状态 ---------
                 {
                     form: "length",
                     value: events.length
@@ -117,8 +160,10 @@ export class EventsStore extends BaseStore {
     switchWidget = widget => {
         const that = this;
         widget = widget || that.main.viewGroup.sWidget;
-        const events = widget.getEvents();
-        that.events !== events && that._setConfig(events);
+        if (widget) {
+            const events = widget.getEvents();
+            that.events !== events && that._setConfig(events);
+        }
     };
 
     /**

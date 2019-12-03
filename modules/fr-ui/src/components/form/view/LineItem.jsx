@@ -5,7 +5,12 @@
  */
 
 // @flow
-import React from 'react';
+import React from "react";
 
-export const LineItem = ({item}) => <div className={'line-item'} style={{marginTop: item.top, marginBottom: item.bottom}}/>;
-export const GapItem = ({item}) => <div className={'gap-item'} style={{height: item.height}}/>;
+export const LineItem = ({item}) => (
+    <div
+        className={"line-item"}
+        style={{marginTop: item.top, marginBottom: item.bottom, marginLeft: item.left, marginRight: item.right}}
+    />
+);
+export const GapItem = ({item}) => <div className={"gap-item"} style={{height: item.height}}/>;

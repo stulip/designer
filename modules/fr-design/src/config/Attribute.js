@@ -216,8 +216,7 @@ export const ArrangeConst = {
 // 行为常量
 export const BehaviorConst = {
     switchPage: 2,
-    switchPageState: 3,
-    switchWidgetState: 4,
+    switchState: 4,
     workFlow: 5,
     variable: 6,
 };
@@ -240,6 +239,12 @@ export const EventTypeConst = {
     tapDBLClick: 201,
     tapMouseLeave: 210,
     tapMouseEnter: 211,
+};
+
+// 页面类型
+export const PageTypeConst = {
+    tabs: 1,
+    dialog: 2,
 };
 
 // 布局按钮配置
