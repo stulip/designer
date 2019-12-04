@@ -1,0 +1,19 @@
+{
+  "name": "fr-min",
+  "version": "1.0.0",
+  "license": "MIT",
+  "main": "dist/web.min.js",
+  "scripts": {
+    "build": "webpack",
+    "debug": "webpack --mode development"
+  },
+  "dependencies": {
+  },
+  "peerDependencies": {
+    "react": "^16.*",
+    "react-dom": "^16.*"
+  },
+  "devDependencies": {
+    "webpack-cli": "^3.3.10"
+  }
+}

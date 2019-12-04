@@ -203,8 +203,6 @@ function plugins() {
         new webpack.DefinePlugin({
             'process.env': {
                 'MODULE_VERSION': JSON.stringify(getLastVersion(config.packages.version)),
-                "NODE_DEBUG": `"${isDebug}"`,
-                "NODE_DEV": `"${libName}"`
             }
         }),
         ...isDebug ? devPlugin : proPlugins

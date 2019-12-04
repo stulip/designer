@@ -18,6 +18,7 @@
     "module:init": "python3 scripts/git_sub_module.py"
   },
   "workspaces": [
+    "packages/*",
     "modules/*"
   ],
   "engines": {
@@ -99,7 +100,7 @@
     "webpack": "^4.41.2",
     "webpack-merge-and-include-globally": "^2.1.20",
     "webpack-plugin-serve": "^0.12.1",
-    "yargs": "^15.0.2"
+    "yargs": "^14.2.2"
   },
   "resolutions": {
     "babel-core": "^7.0.0-bridge.0",
