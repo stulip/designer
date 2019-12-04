@@ -9,11 +9,11 @@ import {AsyncComps} from '@xt-web/react'
 const routes = [
     {
         path: ":name(app|web)",
-        component: AsyncComps(() => import("../pages/design"))
+        component: AsyncComps(() => import(/* webpackChunkName: "design" */ "../pages/design"))
     },
     {
         path: 'view',
-        component: AsyncComps(()=> import('../pages/home'))
+        component: AsyncComps(() => import(/* webpackChunkName: "design_home" */ '../pages/home'))
     },
 ];
 

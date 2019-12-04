@@ -215,7 +215,7 @@ function plugins() {
 function optimization() {
     return {
         // namedModules: true,
-        // namedChunks: true,
+        namedChunks: true,
         splitChunks: {
             chunks: 'async',
             minSize: 30000,
