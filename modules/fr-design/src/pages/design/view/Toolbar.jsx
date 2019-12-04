@@ -72,7 +72,7 @@ export class Toolbar extends React.Component<Props, State> {
                             </div>
                             {showToolbar && <span>保存</span>}
                         </a>
-                        <a className={'icons'}>
+                        {/*<a className={'icons'}>
                             <div className={'wrapper'}>
                                 <IBotIcon type={'dora'} name={'undo'}/>
                             </div>
@@ -83,11 +83,11 @@ export class Toolbar extends React.Component<Props, State> {
                                 <IBotIcon type={'dora'} name={'redo'}/>
                             </div>
                             { showToolbar && <span>重做</span> }
-                        </a>
+                        </a>*/}
                     </div>
                     <ZoomItem handleZoom={store.handleZoom} value={scaleValue} showToolbar={showToolbar}/>
                     <div>
-                        <a className={'icons'}>
+                        {/*<a className={'icons'}>
                             <div className={'wrapper'}>
                                 <IBotIcon type={'dora'} name={'export'}/>
                             </div>
@@ -98,22 +98,22 @@ export class Toolbar extends React.Component<Props, State> {
                                 <IBotIcon type={'dora'} name={'share'}/>
                             </div>
                             { showToolbar && <span>分享</span> }
-                        </a>
+                        </a>*/}
                     </div>
                 </div>
                 <div className={'right'}>
                     <div>
-                        <a className={'icons'}>
+                        {/* <a className={'icons'}>
                             <div className={'wrapper'}>
                                 <IBotSVG name={'code'}/>
                             </div>
                             { showToolbar && <span>标注</span> }
-                        </a>
-                        <a className={'icons'}>
+                        </a>*/}
+                        <a className={'icons'} onClick={store.handlePreview}>
                             <div className={'wrapper'}>
-                                <IBotSVG  name={'play'}/>
+                                <IBotSVG name={'play'}/>
                             </div>
-                            { showToolbar && <span>运行2</span> }
+                            {showToolbar && <span>运行</span>}
                         </a>
                     </div>
                 </div>

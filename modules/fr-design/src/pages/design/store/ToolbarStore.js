@@ -63,5 +63,15 @@ export class ToolbarStore extends BaseStore{
                 section.setContentScale(zoomScale.normal);
                 break;
         }
+    };
+
+    /**
+     * 跳转到预览页面
+     */
+    handlePreview = () => {
+        const that = this;
+        const {isApp} = that.main.config;
+        const url = isApp ? "/preview/app" : "/preview/web";
+        window.open(`${url}?pageId=${that.main.pageId}`, "preview");
     }
 }

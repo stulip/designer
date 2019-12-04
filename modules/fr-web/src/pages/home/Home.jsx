@@ -3,15 +3,15 @@
  * @author tangzehua
  * @sine 2019-08-16 09:30
  */
-import React, { PureComponent } from "react";
-import { Route } from "@xt-web/react-dom";
+import React, {PureComponent} from "react";
+import {Route} from "@xt-web/react-dom";
 
 export class Home extends PureComponent {
     gotoApp = () => {
-        Route.push("/design/app");
+        Route.push("/design/app/007");
     };
 
-    gotoWeb = ()=> {
+    gotoWeb = () => {
         Route.push("/design/web")
     };
 

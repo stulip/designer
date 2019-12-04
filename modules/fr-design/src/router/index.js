@@ -8,7 +8,7 @@ import {AsyncComps} from '@xt-web/react'
 
 const routes = [
     {
-        path: ":name(app|web)",
+        path: ":name(app|web)/:id",
         component: AsyncComps(() => import(/* webpackChunkName: "design" */ "../pages/design"))
     },
     {

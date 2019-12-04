@@ -19,6 +19,7 @@ import {ViewGroupStore} from "./ViewGroupStore";
 import {BaseStore} from "./BaseStore";
 import {Storage} from "@xt-web/core";
 import {EventsStore} from "./EventsStore";
+import {Route} from "@xt-web/react-dom";
 
 export class MainStore {
     // 配置
@@ -56,9 +57,9 @@ export class MainStore {
 
     constructor(props) {
         let that = this;
-        const {name} = props.match.params;
+        const {name, id} = props.match.params;
         const isApp = name === 'app';
-        that.pageId = (isApp ? "A" : "W") + "-007";
+        that.pageId = (isApp ? "A" : "W") + "-" + id;
         that._storeList = [];
 
         that.keyEvents = new EventEmitter();
@@ -166,9 +167,12 @@ export class MainStore {
      */
     switchPage(pageId) {
         const that = this;
+        const {isApp} = that.config;
         //切换页面时, 保存数据到本地
         that.savePageDataToLocal();
-        that.pageId = `${that.config.isApp ? "A" : "W"}-${pageId}`;
+        that.pageId = `${isApp ? "A" : "W"}-${pageId}`;
         that.init();
+
+        Route.replace(`/design/${isApp ? "app" : "web"}/${pageId}`);
     }
 }
