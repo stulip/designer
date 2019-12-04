@@ -5,14 +5,15 @@
 # version v1.0.0
 
 
-import sys
-import utils
-import subprocess
-import time
 import os
 import shutil
+import subprocess
+import sys
+import time
+
 import _thread as thread
 import git_sub_module
+import utils
 
 thread_copy_res_num = 0
 error_module = []
@@ -44,7 +45,7 @@ def parse_args(argv):
     parser.add_argument("-r", "--release", dest="release", action="store_true", help="编译正式版(ZIP)",
                         default=0)
     parser.add_argument("-a", "--all", dest="all", action="store_true", help="编译所有模块")
-    parser.add_argument("-d", "--dev", dest="dev", action="store_true", default=0, help="编译DEV版本")
+    parser.add_argument("-d", "--dev", dest="dev", action="store_true", default=False, help="编译DEV版本")
     parser.add_argument("-b", "--block", dest="block", action="store", default="dev",
                         help="模块配置名称(默认:base), 编译CORE的时候需要")
     parser.add_argument("-yu", "--yarn_upgrade", dest="yarn_upgrade", action="store_true",
@@ -73,9 +74,9 @@ def start(argv, args):
                 continue
 
             print("\033[0;34m webpack:\033[0m 编译模块 %s" % str(mo_name).upper())
-            dev = args.dev and 'true' or 'false'
+            dev = args.dev and 1 or 0
             commend = 'node %s --module %s --progress false --block %s --release %s --dev %s' % (
-            build_web, mo_name, args.block, args.release, dev)
+                build_web, mo_name, args.block, args.release, dev)
             thread_start(build_js, (mo_name, commend,))
         thread_sleep()
         for name in error_module:
@@ -150,10 +151,10 @@ def build_module(args, module):
         stat = subprocess.call('yarn %s' % (args.yarn_upgrade and 'upgrade' or ''), shell=True)
         if stat != 0:
             raise Exception("安装模块 %s 依赖失败!" % module.upper())
-    progress = args.git and 'false' or 'true'
-    dev = args.dev and 'true' or 'false'
+    progress = args.git and 0 or 1
+    dev = args.dev and 1 or 0
     commend = 'node %s --module %s --progress %s --block %s --dev %s' % (
-    build_web, module, progress, args.block, dev)
+        build_web, module, progress, args.block, dev)
     stat = subprocess.call(commend, shell=True)
     if stat != 0:
         raise Exception("编译模块 %s 失败!" % module.upper())
