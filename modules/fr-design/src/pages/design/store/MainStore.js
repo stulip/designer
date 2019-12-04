@@ -59,7 +59,7 @@ export class MainStore {
         let that = this;
         const {name, id} = props.match.params;
         const isApp = name === 'app';
-        that.pageId = (isApp ? "A" : "W") + "-" + id;
+        that.pageId = id;
         that._storeList = [];
 
         that.keyEvents = new EventEmitter();
@@ -168,9 +168,10 @@ export class MainStore {
     switchPage(pageId) {
         const that = this;
         const {isApp} = that.config;
+
         //切换页面时, 保存数据到本地
         that.savePageDataToLocal();
-        that.pageId = `${isApp ? "A" : "W"}-${pageId}`;
+        that.pageId = pageId;
         that.init();
 
         Route.replace(`/design/${isApp ? "app" : "web"}/${pageId}`);

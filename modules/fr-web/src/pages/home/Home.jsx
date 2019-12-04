@@ -12,7 +12,7 @@ export class Home extends PureComponent {
     };
 
     gotoWeb = () => {
-        Route.push("/design/web")
+        Route.push("/design/web/107")
     };
 
     gotoTest = ()=> {
