@@ -79,10 +79,16 @@ export class RootWidget extends BaseWidget<Props, State> {
 
     render() {
         const that = this;
-        const {children, designRect, canvasRect} = this.props;
+        const {children, designRect, canvasRect, isPreview} = this.props;
+
+        const pStyle = {};
+        if (isPreview) {
+            const data = that.getFormData();
+            pStyle.backgroundColor = data[PropsConst.background];
+        }
 
         return (
-            <div className={`group-list group-root ${designRect.type}`} ref={that.widgetRef}>
+            <div className={`group-list group-root ${designRect.type}`} ref={that.widgetRef} style={pStyle}>
                 {that.renderChild()}
             </div>
         );

@@ -19,6 +19,7 @@ export type BaseWidgetProps = {
     module: Object, // 所有可用属性控件
     parent?: { current: any },
     isDrag: boolean, // 是否被拖动
+    isPreview: boolean, //是否为预览
     ...WidgetConfigDefined
 };
 type State = {
@@ -264,7 +265,7 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
     addListener() {
         let that = this;
 
-        if (that.widget) {
+        if (that.widget && !that.props.isPreview) {
             that.widget.addEventListener("mouseleave", that.handleMouseLeave, false);
             that.widget.addEventListener("mousedown", that.handleMouseDown, false);
             that.widget.addEventListener("mouseover", that.handleMouseEnter, false);
@@ -274,7 +275,7 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
     removeListener() {
         let that = this;
 
-        if (that.widget) {
+        if (that.widget && !that.props.isPreview) {
             that.widget.removeEventListener("mouseleave", that.handleMouseLeave);
             that.widget.removeEventListener("mousedown", that.handleMouseDown);
             that.widget.removeEventListener("mouseover", that.handleMouseEnter);
@@ -446,7 +447,7 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
         const widget = wc && that.childrenMap.get(wc);
         if (widget) {
             widget.pastWidget(widgetId, targetId);
-        } else {
+        } else if (Array.isArray(children)) {
             const nChildren = [];
             children.forEach(wid => {
                 nChildren.push(wid);

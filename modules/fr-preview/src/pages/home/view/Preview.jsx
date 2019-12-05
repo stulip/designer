@@ -42,6 +42,7 @@ export class Preview extends React.Component<Props, State> {
                         designRect={designRect}
                         widgetMap={widgetMap}
                         module={widgetModule}
+                        isPreview
                     />
                 </div>
             </div>
