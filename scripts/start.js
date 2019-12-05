@@ -176,8 +176,8 @@ async function writeDevInfo(body) {
         let modInfo = ${JSON.stringify(modInfo)};
         let colors = ["#999966", "#9933CC", "#CCCC66", "#990033", "#9999CC", "#660066", "#0066CC"], i = 0;
         console.group("%c前端模块化工程", "color:#CC0033;");
-        for(let module in xt) {
-            let ver = xt[module].version;
+        for(let module in $fr) {
+            let ver = $fr[module].version;
             let online = modInfo[module.toUpperCase()].online;
             console.log("(%c" + (online? '在线': '离线') + ") %c" + module +": \t" + ver, "color:" + (online?'#CCCC66':'red'), 'color:' + colors[i]);
             i = (i + 1) === colors.length? 0: (i + 1);

@@ -1,0 +1,91 @@
+
+.group-list {
+    position: relative;
+    z-index: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .flex {
+        display: flex;
+
+        &.center {
+            justify-content: center;
+        }
+
+        &.middle {
+            align-items: center;
+        }
+    }
+
+    .group-item {
+        position: absolute;
+    }
+
+    .group-flow {
+        display: flex;
+    }
+
+    .text_view .text,
+    .rounded_rect .text,
+    .circle_rect .text,
+    .mtooltip .text {
+        width: 100%;
+        white-space: pre-wrap;
+        word-break: break-word;
+        word-wrap: break-word;
+    }
+
+    .label.vmiddle,
+    .button.vmiddle,
+    .text_view.vmiddle,
+    .rounded_rect.vmiddle,
+    .circle_rect.vmiddle,
+    .operate_bar.vmiddle {
+        align-items: center;
+    }
+
+    .label.hcenter,
+    .button.hcenter,
+    .text_view.hcenter,
+    .rounded_rect.hcenter,
+    .circle_rect.hcenter,
+    .operate_bar.hcenter {
+        justify-content: center;
+    }
+
+    .text_view .text p,
+    .rounded_rect .text p,
+    .circle_rect .text p,
+    .mtooltip .text p {
+        padding: 0;
+        margin-bottom: 5px;
+        white-space: pre-wrap;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    &.group-root.iphone_x,
+    .group-root.iphone_xs_max {
+        clip-path: inset(0px round 44px);
+    }
+}
+
+.ds-preview {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+
+    .canvas {
+        background: #fff;
+
+        &.iphone_x, &.iphone_xs_max {
+            border: 10px solid #000;
+            border-radius: 45px;
+        }
+    }
+}

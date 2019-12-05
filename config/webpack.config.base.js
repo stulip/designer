@@ -55,8 +55,9 @@ const config = {
         "mobx": "mobx",
         "mobx-react": "mobxReact",
         "mobx-react-lite": "mobxReactLite",
-        'fr-web': 'xt.web',
-        'fr-ui': 'xt.ui',
+        'fr-web': '$fr.web',
+        'fr-ui': '$fr.ui',
+        'fr-design': '$fr.design',
         '@xt-web/core': "$xt.core",
         '@xt-web/react': "$xt.react",
         '@xt-web/react-dom': "$xt.reactDOM",
@@ -342,12 +343,12 @@ module.exports.config = {
     output: {
         hashDigestLength: 8,
         filename: 'js/[name].js',
-        chunkFilename: isDebug? 'js/[name].js': 'js/[chunkhash].js',
+        chunkFilename: isDebug ? 'js/[name].js' : 'js/[chunkhash].js',
         hotUpdateMainFilename: "hot/[hash].update.json",
         hotUpdateChunkFilename: 'hot/[hash].update.js',
         //`${config.module.name.charAt(0).toUpperCase()}${config.module.name.slice(1)}`
         //["fr", `${config.module.name}`]
-        library: ['xt', `${config.module.name}`],
+        library: ['$fr', `${config.module.name}`],
     },
     module: {rules},
     resolve: {

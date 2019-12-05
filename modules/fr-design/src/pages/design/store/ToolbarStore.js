@@ -72,6 +72,6 @@ export class ToolbarStore extends BaseStore{
         const that = this;
         const {isApp} = that.main.config;
         const url = isApp ? "/preview/app" : "/preview/web";
-        window.open(`${url}?pageId=${that.main.pageId}`, "preview");
+        window.open(`${url}/${that.main.pageId}`, "preview");
     }
 }

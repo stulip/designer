@@ -41,24 +41,27 @@ export class Screens extends React.Component<Props, State> {
         const store = that.props.store;
         const { main } = store;
         const { canvasScale, canvasRect } = main.section;
-        const { width, height } = canvasRect;
-        const { designRect } = main.config;
+        const {width, height} = canvasRect;
+        const {designRect, isApp} = main.config;
 
         const topHeight = designRect.top * canvasScale;
         const bottomHeight = designRect.bottom * canvasScale;
         return (
             <>
-                <div className={"slider"}>
-                    <span className="is-hh" style={{ height: topHeight }} />
-                    <span className="is-fh" style={{ height: bottomHeight }} />
-                    <div className="hh" style={{ top: topHeight }}>
-                        <img src={sliderImage} />
+                {
+                    isApp &&
+                    <div className={"slider"}>
+                        <span className="is-hh" style={{height: topHeight}}/>
+                        <span className="is-fh" style={{height: bottomHeight}}/>
+                        <div className="hh" style={{top: topHeight}}>
+                            <img src={sliderImage}/>
+                        </div>
+                        <div className="fh" style={{bottom: bottomHeight}}>
+                            <img src={sliderImage}/>
+                        </div>
                     </div>
-                    <div className="fh" style={{ bottom: bottomHeight }}>
-                        <img src={sliderImage} />
-                    </div>
-                </div>
-                <AdjustSizeCanvas handleResize={store.handleCanvasResize} width={width} height={height} />
+                }
+                <AdjustSizeCanvas handleResize={store.handleCanvasResize} width={width} height={height}/>
             </>
         );
     }

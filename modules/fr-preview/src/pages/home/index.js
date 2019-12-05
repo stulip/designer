@@ -5,6 +5,6 @@
  */
 
 import {hot} from "react-hot-loader/root";
-import {PreviewApp} from "./view/PreviewApp";
+import {Preview} from "./view/Preview";
 
-export default hot(PreviewApp);
+export default hot(Preview);

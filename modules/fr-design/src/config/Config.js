@@ -114,7 +114,7 @@ export const createConfig = (options: ConfigOption): PageConfig => {
     config.isApp = isApp;
 
     // 设置默认视图属性
-    const defaultProps = {id: undefined, widgets: [], events: []};
+    const defaultProps = {id: undefined, widgets: []};
     if (isApp) {
         // 先写上,默认iPhone X
         config.designRect = DEVICE_INFO.App[2];
