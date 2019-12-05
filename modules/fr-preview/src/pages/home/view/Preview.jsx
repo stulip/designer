@@ -32,18 +32,25 @@ export class Preview extends React.Component<Props, State> {
             height: isApp ? designRect.height : '100vh'
         };
 
+        const min = {
+            minWidth: designRect.width + 20 * 2,
+            minHeight: designRect.height + 20 * 2,
+        };
+
         return (
             <div className={'ds-preview screens grid-background'}>
-                <div style={style} className={classNames("canvas", designRect.type)}>
-                    <RootWidget
-                        cid={pageId}
-                        {...rootConfig}
-                        canvasRect={designRect}
-                        designRect={designRect}
-                        widgetMap={widgetMap}
-                        module={widgetModule}
-                        isPreview
-                    />
+                <div className={'center'} style={min}>
+                    <div style={style} className={classNames("canvas", designRect.type)}>
+                        <RootWidget
+                            cid={pageId}
+                            {...rootConfig}
+                            canvasRect={designRect}
+                            designRect={designRect}
+                            widgetMap={widgetMap}
+                            module={widgetModule}
+                            isPreview
+                        />
+                    </div>
                 </div>
             </div>
         );

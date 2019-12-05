@@ -74,11 +74,16 @@
 }
 
 .ds-preview {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    overflow: auto;
     width: 100vw;
     height: 100vh;
+
+    .center {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
 
     .canvas {
         box-sizing: content-box;
