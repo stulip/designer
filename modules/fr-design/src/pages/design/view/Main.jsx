@@ -5,6 +5,7 @@
  * @sine 2019-08-28 16:49
  */
 import React, {Component} from "react";
+import {classNames} from 'fr-web';
 import "../assets/design.pcss";
 import {Toolbar} from "./Toolbar";
 import {Screens} from "./Screens";
@@ -158,7 +159,8 @@ export class Main extends Component {
 
     _render() {
         let store = this.store;
-        const { color, targetRect, onChange: colorChange } = store.colorPickProps;
+        const {designRect} = store.config;
+        const {color, targetRect, onChange: colorChange} = store.colorPickProps;
         return (
             <div id={"design"}>
                 <div className={`ds-design ${store.footer.preferenceConfig.theme}`}>
@@ -168,7 +170,8 @@ export class Main extends Component {
                         {this.renderSlidePanel()}
                         <ColorPicker color={color} onChange={colorChange} targetRect={targetRect}/>
                         <Dialog/>
-                        <div className={'group-list drag-new-widget'} ref={store.widgets.newWidgetRef}/>
+                        <div className={classNames("group-list drag-new-widget", designRect.type)}
+                             ref={store.widgets.newWidgetRef}/>
                     </div>
                 </div>
             </div>
