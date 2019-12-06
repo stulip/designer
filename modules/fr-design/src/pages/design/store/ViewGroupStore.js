@@ -11,7 +11,7 @@ import {BaseStore} from "./BaseStore";
 import {DesignEvent, Toast} from "fr-web";
 import {PropsConst} from "../../../config/Attribute";
 import type {PageConfig, PageData, WidgetConfigDefined, WidgetState} from "../../../flow/Main.flow";
-import WidgetModule, {WidgetAppFactory} from "../../../widget";
+import WidgetModule, {WidgetAppFactory, WidgetWebFactory} from "../../../widget";
 import {Dialog} from "fr-ui";
 import {CloneWidget} from "../../../widget/config";
 
@@ -93,6 +93,10 @@ export class ViewGroupStore extends BaseStore {
         if (!widgets || !widgets.length) {
             if (isApp) {
                 const {root, widgets} = WidgetAppFactory.navigator;
+                that.rootWidgetConfig = root;
+                that.widgetMap = widgets;
+            } else {
+                const {root, widgets} = WidgetWebFactory.navigator;
                 that.rootWidgetConfig = root;
                 that.widgetMap = widgets;
             }

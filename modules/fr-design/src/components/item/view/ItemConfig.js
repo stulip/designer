@@ -91,6 +91,7 @@ const FontSize = {
         {label: 17, value: 17},
         {label: 18, value: 18},
         {label: 20, value: 20},
+        {label: 24, value: 24},
         {label: 28, value: 28},
         {label: 36, value: 36},
         {label: 48, value: 48},

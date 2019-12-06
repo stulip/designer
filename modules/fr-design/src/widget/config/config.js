@@ -14,7 +14,9 @@ const App = Object.freeze({
 
 const Web = Object.freeze({
     Panel: "web.panel.1",
-    Text: "web.text.1"
+    Text: "web.text.1",
+    Header: "web.header.1",
+    DetailHeader: "web.detail.head.1",
 });
 
 export const WidgetConst = Object.freeze({
@@ -80,9 +82,15 @@ export const AppWidgets = Object.freeze([
 
 export const WebWidgets = Object.freeze([
     {
-        title: "导航栏",
+        title: "页面头部",
         svg: "design/textarea",
-        guideId: "web.header",
-        webId: App.Header
+        guideId: "web.head",
+        webId: Web.Header
+    },
+    {
+        title: "详情头部",
+        svg: "design/textarea",
+        guideId: "web.detail.head",
+        webId: Web.DetailHeader
     }
 ]);

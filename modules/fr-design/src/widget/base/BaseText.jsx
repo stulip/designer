@@ -36,10 +36,18 @@ export class BaseText extends BasePanel<BaseTextProps, State> {
         }
         spCfg[PropsConst.textAlign] = TextConst.textAlign.left;
         spCfg[PropsConst.textWeight] = TextConst.weight.normal;
-        spCfg[PropsConst.textLineHeight] = 16;
+        // spCfg[PropsConst.textLineHeight] = 16;
         spCfg[PropsConst.textSize] = 12;
         spCfg[PropsConst.textLetterSpacing] = 0;
         return spCfg;
+    }
+
+    createWidgetProps(config): * {
+        const data = super.createWidgetProps(config);
+        if (Types.isEmpty(data[PropsConst.textLineHeight])) {
+            data[PropsConst.textLineHeight] = data[PropsConst.textSize] + 4;
+        }
+        return data
     }
 
     widgetProps(child: Array<Object> = []): Array<Object> {

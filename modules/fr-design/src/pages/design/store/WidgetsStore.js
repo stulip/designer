@@ -70,7 +70,7 @@ export class WidgetsStore extends BaseStore {
         let that = this;
         const { isApp } = config;
         that.widgetFactory = isApp ? WidgetAppFactory : WidgetWebFactory;
-        that.isLeftPanelOpen = !isApp;
+        // that.isLeftPanelOpen = !isApp;
     }
 
     @action.bound
