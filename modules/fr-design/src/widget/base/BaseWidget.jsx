@@ -12,6 +12,8 @@ import {Form} from "fr-ui";
 import type {DesignType, Rect, WidgetConfigDefined, WidgetProps, WidgetState} from "../../flow/Main.flow";
 import {WidgetConfig} from "./base.widget.config";
 import {Types} from "@xt-web/core";
+import {Config} from "../../index";
+import {Route} from "@xt-web/react-dom";
 
 export type BaseWidgetProps = {
     canvasRect: Rect,
@@ -157,7 +159,7 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
      */
     createWidget(widgetIds, widgetMap) {
         const that = this;
-        const {canvasRect, designRect, module} = that.props;
+        const {canvasRect, designRect, module, isPreview} = that.props;
         if (!module) return null;
         const {dragWidgetId} = that.state;
         widgetMap = widgetMap || that.props.widgetMap;
@@ -178,6 +180,7 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
                         module={module}
                         parent={that}
                         ref={ref => that.childrenMap.set(cid, ref)}
+                        isPreview={isPreview}
                         isDrag={dragWidgetId === cid}
                     />
                 )
@@ -265,20 +268,40 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
     addListener() {
         let that = this;
 
-        if (that.widget && !that.props.isPreview) {
-            that.widget.addEventListener("mouseleave", that.handleMouseLeave, false);
-            that.widget.addEventListener("mousedown", that.handleMouseDown, false);
-            that.widget.addEventListener("mouseover", that.handleMouseEnter, false);
+        if (that.widget) {
+            if (that.props.isPreview) {
+                const events = Object.entries(this.props.event);
+                for (const [state, event] of events) {
+                    event.forEach(ev => {
+                        if (Number(ev.type) === Config.EventTypeConst.click) {
+                            that.widget.addEventListener('click', function () {
+                                const {pageURL, behavior} = ev;
+                                if (Number(behavior) === Config.BehaviorConst.switchPage) {
+                                    Route.push(pageURL);
+                                }
+                            });
+                        }
+                    });
+                }
+            } else {
+                that.widget.addEventListener("mouseleave", that.handleMouseLeave, false);
+                that.widget.addEventListener("mousedown", that.handleMouseDown, false);
+                that.widget.addEventListener("mouseover", that.handleMouseEnter, false);
+            }
         }
     }
 
     removeListener() {
         let that = this;
 
-        if (that.widget && !that.props.isPreview) {
-            that.widget.removeEventListener("mouseleave", that.handleMouseLeave);
-            that.widget.removeEventListener("mousedown", that.handleMouseDown);
-            that.widget.removeEventListener("mouseover", that.handleMouseEnter);
+        if (that.widget) {
+            if (that.props.isPreview) {
+
+            } else {
+                that.widget.removeEventListener("mouseleave", that.handleMouseLeave);
+                that.widget.removeEventListener("mousedown", that.handleMouseDown);
+                that.widget.removeEventListener("mouseover", that.handleMouseEnter);
+            }
         }
     }
 

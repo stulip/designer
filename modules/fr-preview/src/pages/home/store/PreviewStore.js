@@ -12,23 +12,21 @@ export class PreviewStore {
 
     config = {};
     pageId;
-    widgetMap = new Map();
+    @observable.ref widgetMap = new Map();
     rootConfig = {};
 
     @observable.ref widgetModule;
 
-    constructor(props) {
+    @action
+    init(props) {
         const that = this;
         const {id, name} = props.match.params;
         that.config = Config.createConfig({
             isApp: name === 'app'
         });
         that.pageId = id;
-        that.init();
-    }
 
-    init() {
-        const that = this;
+        that.widgetMap = new Map();
         const {isApp} = that.config;
         const {widgets} = Storage.local.getItem(`${Config.ENUM.PAGE}-${that.pageId}`, {widgets: []});
         that.rootConfig = widgets.find(wi => wi.cid === that.pageId);

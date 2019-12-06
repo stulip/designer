@@ -19,11 +19,29 @@ type State = {};
 export class Preview extends React.Component<Props, State> {
     constructor(props) {
         super(props);
-        this.store = new PreviewStore(props);
+        const {match: {params: {id}}} = props;
+        this.state = {id};
+        this.store = new PreviewStore();
+        this.store.init(props);
+    }
+
+    static getDerivedStateFromProps(nextProps, prevState) {
+        const {match: {params: {id}}} = nextProps;
+        if (id !== prevState.id) {
+            return {id};
+        }
+        return null;
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        const {id} = prevState;
+        if (id !== this.state.id) {
+            this.store.init(this.props);
+        }
     }
 
     render() {
-        const {pageId, widgetMap, rootConfig = {}, widgetModule, config} = this.store;
+        const {pageId, widgetMap, rootConfig = {}, widgetModule, config = {}} = this.store;
         const {props: {default: rootProps = {}} = {}} = rootConfig;
 
         const {designRect, isApp} = config;
