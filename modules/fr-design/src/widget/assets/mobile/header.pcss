@@ -1,35 +1,37 @@
 
+.app {
+    .group-list {
 
-.group-list {
+        .header-left {
+            padding: 10px;
+            max-width: 30%;
 
-    .header-left {
-        padding: 10px;
-        max-width: 30%;
+            img {
+                padding-right: 3px;
+                color: #000033;
+                filter: brightness(0.4%);
+            }
 
-        img {
-            padding-right: 3px;
-            color: #000033;
-            filter: brightness(0.4%);
+            .text {
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+                font-size: 16px;
+            }
         }
 
-        .text {
-            text-overflow: ellipsis;
-            overflow: hidden;
-            white-space: nowrap;
-            font-size: 16px;
-        }
-    }
+        .header-title {
+            padding: 10px;
+            position: absolute;
+            width: 60%;
+            left: 20%;
 
-    .header-title {
-        padding: 10px;
-        position: absolute;
-        width: 60%;
-        left: 20%;
-        .text {
-            line-height: initial;
-            text-overflow: ellipsis;
-            overflow: hidden;
-            white-space: nowrap;
+            .text {
+                line-height: initial;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+            }
         }
     }
 }

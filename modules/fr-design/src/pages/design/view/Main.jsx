@@ -159,12 +159,12 @@ export class Main extends Component {
 
     _render() {
         let store = this.store;
-        const {designRect} = store.config;
+        const {designRect, isApp} = store.config;
         const {color, targetRect, onChange: colorChange} = store.colorPickProps;
         return (
             <div id={"design"}>
-                <div className={`ds-design ${store.footer.preferenceConfig.theme}`}>
-                    <Toolbar store={store.toolbar} />
+                <div className={`ds-design ${store.footer.preferenceConfig.theme} ${isApp ? "app" : "pc"}`}>
+                    <Toolbar store={store.toolbar}/>
                     {this.renderContext()}
                     <div className={"fixed_area"}>
                         {this.renderSlidePanel()}
