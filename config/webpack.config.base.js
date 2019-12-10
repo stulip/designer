@@ -76,7 +76,7 @@ const config = {
             ...isDebug ?
                 [
                     'fast-levenshtein', 'hoist-non-react-statics', 'prop-types', 'react-is', 'sort-keys', 'is-plain-obj',
-                    'shallowequal', 'react-lifecycles-compat', 'lodash/merge', 'normalize-url', 'prepend-http', 'query-string',
+                    'shallowequal', 'react-lifecycles-compat', 'normalize-url', 'prepend-http', 'query-string',
                     'strict-uri-encode'
                 ] : []
         ]
