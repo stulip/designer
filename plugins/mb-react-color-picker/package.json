@@ -1,0 +1,36 @@
+{
+  "name": "mb-react-color-picker",
+  "version": "1.2.0-dev.14",
+  "description": "A React component that enables to pick color through HSV/HEX/RGBA.",
+  "author": "MockingBot",
+  "license": "MIT",
+  "repository": "https://github.com/mockingbot/mb-color-picker",
+  "main": "src/index.js",
+  "module": "dist/index.es.js",
+  "jsnext:main": "dist/index.es.js",
+  "engines": {
+    "node": ">=8",
+    "npm": ">=5"
+  },
+  "scripts": {
+    "test": "cross-env CI=1 react-scripts test --env=jsdom",
+    "test:watch": "react-scripts test --env=jsdom",
+    "build": "rollup -c",
+    "start": "rollup -c -w",
+    "prepare": "npm run build",
+    "predeploy": "cd example && npm install && npm run build",
+    "deploy": "gh-pages -d example/build"
+  },
+  "peerDependencies": {
+    "prop-types": "^15.5.4",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "react-router-dom": "^5.1.2",
+    "styled-components": "^4"
+  },
+  "devDependencies": {
+  },
+  "files": [
+    "dist"
+  ]
+}
