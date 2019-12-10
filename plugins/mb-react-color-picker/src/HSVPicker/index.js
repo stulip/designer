@@ -3,8 +3,8 @@ import React, {PureComponent} from 'react'
 
 import {hex2rgb, hsv2rgb, rgb2hex, rgb2hsv, rgb2rgbaStr} from '../utils/color'
 import {stopReactEventPropagation} from '../utils/DOM'
-
-import {StyledHSVPicker} from './styles'
+// import {StyledHSVPicker} from './styles'
+import './styles.pcss'
 
 export default class HSVPicker extends PureComponent {
   static propTypes = {
@@ -244,7 +244,7 @@ export default class HSVPicker extends PureComponent {
     const APointerStyle = this._getAPointerStyle(a);
 
     return (
-      <StyledHSVPicker className="hsv-picker" theme={theme}>
+      <div className="mb-hsv-picker">
         <section
           className="s-v-plane"
           ref={this.setSVPlaneRef}
@@ -294,7 +294,7 @@ export default class HSVPicker extends PureComponent {
             <div style={{height: '100%', background: rgb2rgbaStr({...hsv2rgb({h, s, v}), a})}}/>
           </div>
         </div>
-      </StyledHSVPicker>
+      </div>
     )
   }
 }

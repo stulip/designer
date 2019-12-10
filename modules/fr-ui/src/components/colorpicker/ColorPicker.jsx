@@ -181,7 +181,7 @@ export class ColorPicker extends React.Component<Props, State> {
 
     handleConfirm = color => {
         this.setState({color});
-        // this.props.onChange && this.props.onChange(color);
+        this.props.onChange && this.props.onChange(color);
     };
 
     handleToogleExpand = () => {

@@ -7,7 +7,7 @@ import "./assets";
 // plugins
 // mo dao
 import Ruler from "mb-sketch-ruler";
-import ResizableRect from "react-resizable-rotatable-draggable";
+// import ResizableRect from "react-resizable-rotatable-draggable";
 import ColorPicker, {parseColor} from "mb-react-color-picker";
 import IBotIcon from "@ibot/ibot/lib/icon";
 import IBotSVG from "@ibot/ibot/lib/svg";
@@ -45,7 +45,6 @@ export const version = process.env.MODULE_VERSION;
 export {
     Toast,
     Ruler,
-    ResizableRect,
     ColorPicker,
     IBotIcon,
     IBotSVG,

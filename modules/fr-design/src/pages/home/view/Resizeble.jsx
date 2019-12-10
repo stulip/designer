@@ -5,13 +5,13 @@
  * @sine 2019-08-22 16:22
  */
 import React from 'react';
-import {ResizableRect} from 'fr-web'
+
+// import {ResizableRect} from 'fr-web'
 
 export class Resizeble extends React.Component {
 
-
     constructor() {
-        super()
+        super();
         this.state = {
             width: 100,
             height: 100,
@@ -24,37 +24,37 @@ export class Resizeble extends React.Component {
     handleResize = (style, isShiftKey, type) => {
         // type is a string and it shows which resize-handler you clicked
         // e.g. if you clicked top-right handler, then type is 'tr'
-        let { top, left, width, height } = style
-        top = Math.round(top)
-        left = Math.round(left)
-        width = Math.round(width)
-        height = Math.round(height)
+        let {top, left, width, height} = style;
+        top = Math.round(top);
+        left = Math.round(left);
+        width = Math.round(width);
+        height = Math.round(height);
         this.setState({
             top,
             left,
             width,
             height
         })
-    }
+    };
 
     handleRotate = (rotateAngle) => {
         this.setState({
             rotateAngle
         })
-    }
+    };
 
     handleDrag = (deltaX, deltaY) => {
         this.setState({
             left: this.state.left + deltaX,
             top: this.state.top + deltaY
         })
-    }
+    };
 
     render() {
-        const {width, top, left, height, rotateAngle} = this.state
+        const {width, top, left, height, rotateAngle} = this.state;
         return (
             <div className="App">
-                <ResizableRect
+                <div
                     left={left}
                     top={top}
                     width={width}

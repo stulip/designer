@@ -8,8 +8,8 @@ import HexInput from './HexInput'
 import AlphaInput from './AlphaInput'
 import {formatHex, hex2rgbaStr, rgb2hex} from './utils/color'
 import {stopReactEventPropagation} from './utils/DOM'
-
-import {StyledColorPicker} from './styles'
+// import {StyledColorPicker} from './styles'
+import './styles.pcss'
 
 const CLOSE_SVG = <svg width="10" height="10" xmlns="http://www.w3.org/2000/svg">
   <path
@@ -189,7 +189,7 @@ export default class ColorPicker extends PureComponent {
     if (this.props.children) outsideColorPicker = this.genOutsideColorPicker();
 
     return (
-      <StyledColorPicker
+      <div
         className="--mb--color-picker"
         ref={this.setContainerRef}
         onMouseDown={stopReactEventPropagation}
@@ -250,7 +250,7 @@ export default class ColorPicker extends PureComponent {
             />
           }
         </div>
-      </StyledColorPicker>
+      </div>
     )
   }
 }

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React, {PureComponent} from 'react'
 
-import {StyledRGBInput} from '../RGBInput/styles'
+// import {StyledRGBInput} from '../RGBInput/styles'
 
 export default class HexInput extends PureComponent {
 
@@ -108,7 +108,7 @@ export default class HexInput extends PureComponent {
     }
 
     return (
-      <StyledRGBInput
+      <label
         className="color-input hex-input"
         theme={theme}
         style={{width: '62px'}}>
@@ -120,7 +120,7 @@ export default class HexInput extends PureComponent {
           onChange={this.handleChange}
           onBlur={this.handleBlur}/>
         <span>Hex</span>
-      </StyledRGBInput>
+      </label>
     )
   }
 }

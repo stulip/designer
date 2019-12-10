@@ -34,9 +34,9 @@ export class ColorItem extends Form.BaseItem<Props, State> {
         const { item } = that.props;
         const { value } = that.state;
         if (Types.isFunction(item.handlePicker)) {
-            item.handlePicker(event, value.hex, that.onChange);
+            item.handlePicker(event, value.rgba, that.onChange);
         } else {
-            DesignEvent.emit(item.handlePicker, event, value.hex, that.onChange);
+            DesignEvent.emit(item.handlePicker, event, value.rgba, that.onChange);
         }
     };
 
