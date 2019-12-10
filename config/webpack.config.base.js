@@ -287,7 +287,7 @@ const rules = [
     {
         test: /\.(js|jsx)$/,
         // exclude: /(node_modules)/,
-        include: RegExp(`(@xt-web|fr-${moduleName})`),
+        include: RegExp(`(@xt-web|fr-${moduleName}|plugins)`),
         use: [{
             loader: "thread-loader",
             options: {

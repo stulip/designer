@@ -5,11 +5,17 @@
  */
 
 import React from "react";
-import {ColorPicker as Picker, IBotIcon} from "fr-web";
+import {ColorPicker as Picker} from "fr-web";
 import "./assets";
+import {colorPanelList} from './constant'
 import {Types} from "@xt-web/core";
 
-const parseColor = Picker.parseColor;
+const TUBE_SVG = <svg width="14" height="14" xmlns="http://www.w3.org/2000/svg">
+    <path
+        d="M10.751.934l-2.2 2.2-.89-.89a.935.935 0 0 0-1.322 0l-.413.413a.935.935 0 0 0 0 1.322l.7.7L.59 10.714a.458.458 0 0 0-.132.377l-.003 2.045c0 .226.183.41.409.41H2.96c.122 0 .239-.049.325-.136l6.036-6.035.7.699a.935.935 0 0 0 1.321 0l.413-.413a.935.935 0 0 0 0-1.322l-.89-.89 2.2-2.2A1.636 1.636 0 0 0 10.751.933zM4.739 10.74l-2.414-.485L7.432 5.13 8.87 6.575 4.74 10.74z"
+        fill="#415058" fillRule="nonzero"/>
+</svg>;
+
 // 默认主题颜色
 const THEME_COLORS = [
     "transparent",
@@ -38,9 +44,9 @@ type State = {
     targetRect: ClientRect
 };
 
-function getHistoryColors() {
-    return JSON.parse(localStorage.getItem("pickerPrevColors") || "[]");
-}
+const getPanelColors = () => {
+
+};
 
 export class ColorPicker extends React.Component<Props, State> {
     static defaultProps = {
@@ -58,7 +64,10 @@ export class ColorPicker extends React.Component<Props, State> {
         color: this.props.color,
         pColor: this.props.color,
         visible: false,
-        position: { x: 0, y: 0 }
+        isClickExpand: false,
+        currentSelect: "最近使用",
+        colorPanelList: [],
+        position: {x: 0, y: 0}
     };
 
     static getDerivedStateFromProps(nextProps: Props, prevState: State) {
@@ -67,8 +76,7 @@ export class ColorPicker extends React.Component<Props, State> {
             const visible =
                 !Types.isEmpty(targetRect) && targetRect !== prevState.targetRect ? true : prevState.visible;
             const color = nextProps.color !== prevState.pColor ? nextProps.color : prevState.color;
-            const historyColors = getHistoryColors();
-            return {color, pColor: nextProps.color, visible, targetRect, historyColors};
+            return {color, pColor: nextProps.color, visible, targetRect};
         }
         return {pColor: nextProps.color};
     }
@@ -92,23 +100,35 @@ export class ColorPicker extends React.Component<Props, State> {
             || nextState.color !== that.state.color
             || nextState.position !== that.state.position
             || nextState.visible !== that.state.visible
+            || nextState.isClickExpand !== that.state.isClickExpand
+            || nextState.currentSelect !== that.state.currentSelect
+    }
+
+    componentDidMount() {
+        this.setState({colorPanelList: this.getPanelColors()});
+    }
+
+    getPanelColors() {
+        return [{
+            name: '最近使用',
+            key: 'history',
+            colors: JSON.parse(window.localStorage.getItem('pickerPrevColors') || '[]')
+        }, ...colorPanelList];
     }
 
     addLastColorToHistory = () => {
-        const {color} = this.state;
-        const {themeColors} = this.props;
-        const {hex, alpha} = parseColor(color);
+        const {color, colorPanelList} = this.state;
         let history = JSON.parse(localStorage.getItem("pickerPrevColors") || "[]");
 
-        if ((themeColors.includes(hex) && alpha === 1) || color === "transparent") {
-            return;
-        } else if (history.includes(color)) {
-            history.splice(history.indexOf(color), 1);
+        if (history.includes(color)) {
+            history.splice(history.indexOf(color), 1)
         } else {
-            history = history.slice(0, 17);
+            history = history.slice(0, 17)
         }
 
         history.unshift(color);
+        colorPanelList[0].colors = history;
+
         localStorage.setItem("pickerPrevColors", JSON.stringify(history));
     };
 
@@ -155,40 +175,49 @@ export class ColorPicker extends React.Component<Props, State> {
     };
 
     handleChange = color => {
-        this.setState({ color });
+        this.setState({color});
         this.props.onChange && this.props.onChange(color);
     };
 
     handleConfirm = color => {
-        this.setState({ color });
-        this.props.onChange && this.props.onChange(color);
+        this.setState({color});
+        // this.props.onChange && this.props.onChange(color);
     };
+
+    handleToogleExpand = () => {
+        this.setState({isClickExpand: !this.state.isClickExpand})
+    };
+
+    handleChangeSelect = currentSelect => this.setState({currentSelect});
 
     render() {
         let that = this;
-        const {position, visible, color, historyColors} = that.state;
+        const {position, visible, color, colorPanelList, isClickExpand, currentSelect} = that.state;
         if (!visible) return null;
-
-        const { themeColors, headerText } = that.props;
+        const {headerText} = that.props;
         return (
             <div
                 className={"ui-color-pick"}
-                style={{ left: position.x, top: position.y }}
+                style={{left: position.x, top: position.y,}}
             >
                 <Picker
+                    headerText={headerText}
                     color={color}
                     onChange={that.handleChange}
                     onConfirm={that.handleConfirm}
                     onClose={that.handleClose}
-                    themeColors={themeColors}
-                    customColors={historyColors}
-                    headerText={headerText}
-                    customColorsHeaderText="历史值"
                     applyDidMountSideEffect={that.centerColorPicker}
                     applyWillUnmountSideEffect={that.addLastColorToHistory}
                     onDragStart={that.handleDragStart}
+
+                    colorPanelList={colorPanelList}
+                    onChangeSelect={this.handleChangeSelect}
+                    currentSelect={currentSelect}
+                    isExpandFeature={true}
+                    isClickExpand={isClickExpand}
+                    onToogleExpand={this.handleToogleExpand}
                 >
-                    <SystemColorPicker />
+                    <SystemColorPicker/>
                 </Picker>
             </div>
         );
@@ -202,7 +231,7 @@ class SystemColorPicker extends React.Component {
         const { hex } = this.props;
         return (
             <div className="system-wrapper">
-                <IBotIcon type="dora" name="tube" />
+                {TUBE_SVG}
                 <input className="system" type="color" value={hex} onChange={this.handleSystem} />
             </div>
         );
