@@ -8,7 +8,8 @@
 import React from "react";
 import "../assets/color.pcss";
 import {Form} from "fr-ui";
-import {ColorPicker, DesignEvent} from "fr-web";
+import {ColorPicker} from "fr-web";
+import {DesignEvent} from 'fr-design'
 import {Types} from "@xt-web/core";
 
 type Props = {

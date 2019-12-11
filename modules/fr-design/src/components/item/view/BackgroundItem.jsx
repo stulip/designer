@@ -8,7 +8,8 @@
 import React from "react";
 import "../assets/background.pcss";
 import {Form, Slider} from "fr-ui";
-import {ColorPicker, DesignEvent, IBotConfirmInputNumber} from "fr-web";
+import {ColorPicker, IBotConfirmInputNumber} from "fr-web";
+import {DesignEvent} from 'fr-design';
 import {Color, Tools, Types} from "@xt-web/core";
 
 type Props = {

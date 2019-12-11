@@ -7,7 +7,7 @@ import React from "react";
 import {BaseStore} from "./BaseStore";
 import {Form, SVG} from "fr-ui";
 import {action, observable} from "mobx";
-import {DesignEvent} from "fr-web";
+import {DesignEvent} from "fr-design";
 import {BehaviorConst, PropsConst, randomId} from "../../../config";
 import {ItemConst} from "../../../components/item";
 

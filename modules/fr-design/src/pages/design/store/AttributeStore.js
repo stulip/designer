@@ -10,7 +10,7 @@ import {Form} from "fr-ui";
 import {ItemConst} from "../../../components";
 import {ArrangeConst, PropsConst} from "../../../config/Attribute";
 import {BaseStore} from "./BaseStore";
-import {DesignEvent} from "fr-web";
+import {DesignEvent} from "fr-design";
 
 export class AttributeStore extends BaseStore {
 

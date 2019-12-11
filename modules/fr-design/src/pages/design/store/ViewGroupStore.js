@@ -8,7 +8,7 @@ import React from "react";
 import {action, observable} from "mobx";
 import type {BaseWidget} from "../../../widget/base";
 import {BaseStore} from "./BaseStore";
-import {DesignEvent, Toast} from "fr-web";
+import {DesignEvent, Toast} from "fr-design";
 import {PropsConst} from "../../../config/Attribute";
 import type {PageConfig, PageData, WidgetConfigDefined, WidgetState} from "../../../flow/Main.flow";
 import WidgetModule, {WidgetAppFactory, WidgetWebFactory} from "../../../widget";

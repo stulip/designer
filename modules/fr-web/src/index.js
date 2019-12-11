@@ -22,8 +22,6 @@ import IBotInput, {Textarea as IBotTextArea} from '@ibot/ibot/lib/input';
 //
 import Toast from 'cogo-toast';
 import {configure} from "mobx";
-// EventEmitter
-import {EventEmitter} from "eventemitter3";
 //class names
 import classNames from "classnames";
 // xt
@@ -32,8 +30,6 @@ import {Storage} from '@xt-web/core'
 ColorPicker.parseColor = parseColor;
 
 configure({enforceActions: "observed"});
-
-const DesignEvent = new EventEmitter();
 
 // end
 Storage.local = new Storage(localStorage);
@@ -58,7 +54,5 @@ export {
     IBotTextArea,
     IBotInputNumber,
     IBotConfirmInputNumber,
-    EventEmitter,
-    DesignEvent,
     classNames,
 };

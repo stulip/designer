@@ -6,6 +6,7 @@
  */
 import React from "react";
 import {Tools, Types} from "@xt-web/core";
+import {EventEmitter} from 'eventemitter3'
 import {Required} from "./Required";
 import "./assets/form-item.pcss";
 import {Toast} from "fr-web";
@@ -57,7 +58,8 @@ export type ItemProps = {
     _defaultValue?: any, // 根据类型自动生成默认值, 最后处理Form数据的时候使用
     _visible?: boolean, // 是否隐藏
     _disabled?: boolean, // 是否禁用
-    renderProps?: CompsProps // 自定义组件
+    renderProps?: CompsProps, // 自定义组件
+    eventTarget: EventEmitter,// 事件代理
 };
 
 // 组件集合
@@ -150,6 +152,7 @@ const convertState = props => {
 type Props = {
     formData?: Object,
     config: Object,
+    eventTarget?: EventEmitter,
     ref?: { current: Object },
     onChange?: (formData: Object) => void // 任意一个item触发onChange, 则会触发此onChange
 };
@@ -527,7 +530,7 @@ class FormView extends React.Component<Props, State> {
 
     renderComponent(item, props) {
         let that = this;
-        const { index, children, key } = props;
+        const {index, children, key, eventTarget = new EventEmitter} = props;
         let required = that.getRequired(item);
         let { formData, config } = that.state;
         let value = formData[item.form],
@@ -545,7 +548,8 @@ class FormView extends React.Component<Props, State> {
 
         let Comps = that.switchComps(item, props);
 
-        return Comps ? <Comps key={key} {...compsProps} index={index} children={children}/> : null;
+        return Comps ?
+            <Comps key={key} {...compsProps} index={index} children={children} eventTarget={eventTarget}/> : null;
     }
 
     componentDidUpdate(prevProps, prevState) {

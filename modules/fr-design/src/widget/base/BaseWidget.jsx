@@ -6,7 +6,8 @@
 
 // @flow
 import React from "react";
-import {classNames, DesignEvent} from "fr-web";
+import {classNames} from "fr-web";
+import {DesignEvent} from 'fr-design'
 import {PropsConst, StatesConst} from "../../config/Attribute";
 import {Form} from "fr-ui";
 import type {DesignType, Rect, WidgetConfigDefined, WidgetProps, WidgetState} from "../../flow/Main.flow";

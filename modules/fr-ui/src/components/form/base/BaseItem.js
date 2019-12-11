@@ -7,7 +7,7 @@
 import React from "react";
 import type {ItemProps} from "./../FormView";
 import {Tools, Types} from "@xt-web/core";
-import {classNames, DesignEvent} from "fr-web";
+import {classNames} from "fr-web";
 import {FormConst} from "../FormConst";
 
 type Props = {
@@ -55,13 +55,15 @@ class BaseItem extends React.Component<Props> {
     }
 
     componentDidMount() {
-        const { key } = this.getListener();
-        key && DesignEvent.addListener(key, this.listenerValueChange);
+        const {key} = this.getListener();
+        const {eventTarget} = this.props;
+        key && eventTarget.addListener(key, this.listenerValueChange);
     }
 
     componentWillUnmount() {
-        const { key } = this.getListener();
-        key && DesignEvent.removeListener(key, this.listenerValueChange);
+        const {key} = this.getListener();
+        const {eventTarget} = this.props;
+        key && eventTarget.removeListener(key, this.listenerValueChange);
     }
 
     getListener() {
@@ -152,8 +154,9 @@ class BaseItem extends React.Component<Props> {
 
     onChange(data) {
         let that = this;
-        const { key, setValue } = that.getListener();
-        DesignEvent.emit(key, setValue ? setValue(data, that.props.formData) : data);
+        const {eventTarget} = that.props;
+        const {key, setValue} = that.getListener();
+        eventTarget.emit(key, setValue ? setValue(data, that.props.formData) : data);
         that._onChange(data);
     }
 

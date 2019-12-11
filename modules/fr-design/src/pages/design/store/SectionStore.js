@@ -9,7 +9,7 @@ import type {Rect, Size} from "../../../flow/Main.flow";
 import {ENUM, scrollbarMinWidth, scrollbarThick, viewMinSize, viewportScale, zoomScale} from "../../../config/Config";
 import React from "react";
 import {Storage, Types} from "@xt-web/core";
-import {DesignEvent} from "fr-web";
+import {DesignEvent} from "fr-design";
 import {PropsConst} from "../../../config/Attribute";
 import {BaseStore} from "./BaseStore";
 

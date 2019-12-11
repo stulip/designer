@@ -12,7 +12,9 @@ import {ScreensStore} from "./ScreensStore";
 import {SectionStore} from "./SectionStore";
 import {createConfig, ENUM} from "../../../config/Config";
 import type {PageConfig, PageData} from "../../../flow/Main.flow";
-import {DesignEvent, EventEmitter, Toast} from 'fr-web'
+import {Toast} from 'fr-web'
+import {EventEmitter} from 'eventemitter3';
+import {DesignEvent} from 'fr-design'
 import {AttributeStore} from "./AttributeStore";
 import {PropsConst} from "../../../config/Attribute";
 import {ViewGroupStore} from "./ViewGroupStore";

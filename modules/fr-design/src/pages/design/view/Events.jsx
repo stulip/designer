@@ -7,6 +7,7 @@
 // @flow
 import React from 'react';
 import {Form} from 'fr-ui'
+import {DesignEvent} from 'fr-design'
 import './../assets/events.pcss'
 import {EventsStore} from "../store/EventsStore";
 import {observer} from "mobx-react";
@@ -23,7 +24,8 @@ export class Events extends React.Component<Props, State> {
         return (
             <div className={'ds-events'}>
                 <ol className={'event-list'}>
-                    <Form.View config={store.formConfig} ref={store.formRef} onChange={store.handleFormData}/>
+                    <Form.View config={store.formConfig} ref={store.formRef} onChange={store.handleFormData}
+                               eventTarget={DesignEvent}/>
                 </ol>
                 <a className={'add-button'} onClick={store.handleAddEvent}>
                     <span>添加事件</span>

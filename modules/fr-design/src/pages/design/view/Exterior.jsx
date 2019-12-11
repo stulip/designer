@@ -8,6 +8,7 @@
 import * as React from "react";
 import "../assets/exterior.pcss";
 import {Form} from "fr-ui";
+import {DesignEvent} from 'fr-design'
 import {IBotSVG} from "fr-web";
 import {observer} from "mobx-react";
 import {AttributeStore} from "../store/AttributeStore";
@@ -53,6 +54,7 @@ export class Exterior extends React.Component<Props, State> {
                 {/*<div className={"arrange"}>{ArrangeConfig.map(that.renderArrange)}</div>*/}
                 <main className={"ds-attribute"}>
                     <Form.View
+                        eventTarget={DesignEvent}
                         config={config}
                         ref={store.formRef}
                         formData={store.formData}

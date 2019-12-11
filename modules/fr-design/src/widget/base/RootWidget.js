@@ -9,7 +9,7 @@ import React from "react";
 import {BaseWidget} from "./BaseWidget";
 import {RootConfig} from "./root.config";
 import {PropsConst, StatesConst} from "../../config";
-import {DesignEvent} from "fr-web";
+import {DesignEvent} from "fr-design";
 
 type Props = {};
 type State = {};

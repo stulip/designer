@@ -65,6 +65,7 @@ const config = {
         'react-router-dom': "ReactRouterDOM",
         'react-router-config': "ReactRouterConfig",
         'lodash': "lodash",
+        'eventemitter3': "EventEmitter3",
         "react-tabs": "ReactTabs"
     },
     provide: {
@@ -151,6 +152,11 @@ config.libs.cdn = {
     reactTabs: {
         name: `react-tabs.production.min.js`,
         from: 'node_modules/react-tabs/dist',
+        to: config.libs.name,
+    },
+    eventemitter3: {
+        name: `eventemitter3.min.js`,
+        from: 'node_modules/eventemitter3/umd',
         to: config.libs.name,
     },
     xtCore: {
