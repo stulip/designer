@@ -15,6 +15,8 @@ export const arrow_right2 = [12, 12, '<path d="M9 6l-5 4V2z"/>'];
 export const plus_o = [14, 14, '<path d="M6.01 6L6 4h2l.01 2H10v2H8.019l.009 1.917h-2L6.018 8H4V6h2.01zM7 14A7 7 0 1 1 7 0a7 7 0 0 1 0 14zm0-2A5 5 0 1 0 7 2a5 5 0 0 0 0 10z"/>'];
 // 垃圾桶
 export const trash = [10, 12, '<path d="M1 4v7a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4H1z"/><path d="M4 1V.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5V1h3a1 1 0 1 1 0 2H1a1 1 0 1 1 0-2h3z"/>'];
+// 文件目录tree图标
+export const file = [9, 12, '<path d="M5 1H1v10h7V5H7a2 2 0 0 1-2-2V1zm1 .487V3a1 1 0 0 0 1 1h1v-.313l-2-2.2zM1 0h4.558a1 1 0 0 1 .74.327L8.74 3.014a1 1 0 0 1 .26.673V11a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V1a.996.996 0 0 1 1-1z"/>'];
 
 /**
  * 背景格子

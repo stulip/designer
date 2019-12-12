@@ -13,6 +13,8 @@ import "@ibot/ibot/lib/check/index.css"
 import "@ibot/ibot/lib/core-modal/index.css";
 // react tabs
 import "./react-tabs.pcss";
+//rc-tree
+import 'rc-tree/assets/index.css';
 
 import "./index.pcss";
 import "./home.pcss";

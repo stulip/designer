@@ -514,6 +514,7 @@ export class ViewGroupStore extends BaseStore {
      */
     findWidget(widgetId) {
         const that = this;
+        if (!that.rootWidget) return null;
         if (widgetId === that.rootWidget.getId()) return that.rootWidget;
         const widget = that.widgetMap.get(widgetId);
         return widget && widget.target;

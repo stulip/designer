@@ -43,7 +43,7 @@ export class WidgetPanel extends React.PureComponent<Props, State> {
         const that = this;
         return (
             <>
-                <div>
+                <div className={'ds-widget'}>
                     <header/>
                     <main className={"widget-panel"}>
                         <header>
@@ -63,7 +63,7 @@ export class WidgetPanel extends React.PureComponent<Props, State> {
         const that = this;
         return (
             <>
-                <div>
+                <div className={'ds-widget'}>
                     <header/>
                     <main className={"widget-panel"}>
                         <header>
@@ -84,7 +84,7 @@ export class WidgetPanel extends React.PureComponent<Props, State> {
         const {isApp} = that.props;
         return (
             <>
-                <div>
+                <div className={'ds-widget'}>
                     <header/>
                     <main className={"widget-panel"}>
                         <header>

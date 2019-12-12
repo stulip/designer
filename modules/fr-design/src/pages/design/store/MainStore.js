@@ -22,6 +22,7 @@ import {BaseStore} from "./BaseStore";
 import {Storage} from "@xt-web/core";
 import {EventsStore} from "./EventsStore";
 import {Route} from "@xt-web/react-dom";
+import {StructureStore} from "./StructureStore";
 
 export class MainStore {
     // 配置
@@ -41,6 +42,7 @@ export class MainStore {
     attribute: AttributeStore;
     viewGroup: ViewGroupStore;
     events: EventsStore;
+    structure: StructureStore;
 
     // 页面ID
     pageId;
@@ -73,6 +75,7 @@ export class MainStore {
         that.attribute = new AttributeStore(that);
         that.viewGroup = new ViewGroupStore(that);
         that.events = new EventsStore(that);
+        that.structure = new StructureStore(that);
 
         that._storeList.forEach(da => da.classMount());
         that.addListener();

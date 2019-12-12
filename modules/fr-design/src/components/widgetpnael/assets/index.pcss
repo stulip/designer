@@ -1,100 +1,101 @@
+.ds-widget {
+    .widget-panel {
+        flex: 1;
+        overflow-x: hidden;
+        overflow-y: auto;
+        width: calc(100% - 2px);
 
-.widget-panel {
-    flex: 1;
-    overflow-x: hidden;
-    overflow-y: auto;
-    width: calc(100% - 2px);
-
-    header {
-        height: 32px;
-        padding-left: 10px;
-        padding-right: 10px;
-        display: flex;
-        -webkit-box-align: center;
-        align-items: center;
-        cursor: pointer;
-
-        &:hover {
-            background: #f7f7f7;
-        }
-
-        .arrow-icon {
-            transform: rotate(90deg);
-        }
-
-        .title {
-            height: 20px;
-            line-height: 18px;
-            color: rgb(65, 80, 88);
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            flex: 1;
-            overflow: hidden;
-
-            border-top: 1px solid #0000;
-            border-bottom: 1px solid #0000
-        }
-    }
-
-    .arrow-icon {
-        flex-shrink: 0;
-        margin-right: 4px;
-        font-size: 12px;
-        line-height: 12px;
-        text-align: center;
-        color: rgb(141, 158, 167);
-        transition: transform 0.2s ease-in-out 0s;
-    }
-
-    .widget-item-list {
-        list-style: none;
-        width: calc(100% + 15px);
-        display: flex;
-        flex-wrap: wrap;
-        margin-top: 2px;
-        margin-left: 1px;
-        padding: 0 0 10px 10px;
-
-        span {
-            margin-top: 6px;
-            text-align: center;
-            color: #5B6B73;
-        }
-
-        li {
-            width: 75px;
-            height: 70px;
-            margin-top: -1px;
-            margin-left: -1px;
+        header {
+            height: 32px;
+            padding-left: 10px;
+            padding-right: 10px;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
+            -webkit-box-align: center;
             align-items: center;
-            background: #fff;
-            border: 1px solid #ebebeb;
-            color: #5B6B73;
             cursor: pointer;
 
             &:hover {
-                z-index: 1;
-                border-color: #79baff;
-                border-width: 2px;
+                background: #f7f7f7;
+            }
+
+            .arrow-icon {
+                transform: rotate(90deg);
+            }
+
+            .title {
+                height: 20px;
+                line-height: 18px;
+                color: rgb(65, 80, 88);
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                flex: 1;
+                overflow: hidden;
+
+                border-top: 1px solid #0000;
+                border-bottom: 1px solid #0000;
             }
         }
-    }
 
-    .widget-icon-wrapper {
-        height: 30px;
-        font-size: 34px;
-        display: -webkit-box;
-        display: flex;
-        -webkit-box-pack: center;
-        justify-content: center;
-        -webkit-box-align: center;
-        align-items: center;
+        .arrow-icon {
+            flex-shrink: 0;
+            margin-right: 4px;
+            font-size: 12px;
+            line-height: 12px;
+            text-align: center;
+            color: rgb(141, 158, 167);
+            transition: transform 0.2s ease-in-out 0s;
+        }
 
-        svg {
-            color: #8D9EA7
+        .widget-item-list {
+            list-style: none;
+            width: calc(100% + 15px);
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 2px;
+            margin-left: 1px;
+            padding: 0 0 10px 10px;
+
+            span {
+                margin-top: 6px;
+                text-align: center;
+                color: #5b6b73;
+            }
+
+            li {
+                width: 75px;
+                height: 70px;
+                margin-top: -1px;
+                margin-left: -1px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                background: #fff;
+                border: 1px solid #ebebeb;
+                color: #5b6b73;
+                cursor: pointer;
+
+                &:hover {
+                    z-index: 1;
+                    border-color: #79baff;
+                    border-width: 2px;
+                }
+            }
+        }
+
+        .widget-icon-wrapper {
+            height: 30px;
+            font-size: 34px;
+            display: -webkit-box;
+            display: flex;
+            -webkit-box-pack: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            align-items: center;
+
+            svg {
+                color: #8d9ea7;
+            }
         }
     }
 }

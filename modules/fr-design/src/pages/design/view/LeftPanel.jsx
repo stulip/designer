@@ -8,6 +8,7 @@
 import React from "react";
 import {WidgetsStore} from "../store/WidgetsStore";
 import {observer} from "mobx-react";
+import {Structure} from "./Structure";
 
 type Props = { store: WidgetsStore };
 type State = {};
@@ -21,28 +22,14 @@ export class LeftPanel extends React.Component<Props, State> {
             leftPanelVXWidth,
             switchPage,
             main: {
-                config: {isApp}
+                structure,
             }
         } = this.props.store;
-        const pages = isApp
-            ? [
-                {name: "客户关注产品", id: "007"},
-                {name: "商品", id: "008"},
-                {name: "信息收集", id: "009"}
-            ]
-            : [
-                {name: "客户", id: "107"},
-                {name: "产品", id: "108"},
-                {name: "供应商", id: "109"}
-            ];
+
         return (
             <div className={`panel-left ${isToggle ? "panel-left-size" : ""}`} style={{width: leftPanelWidth}}>
                 <div style={{width: leftPanelVXWidth}} className={"content"}>
-                    {pages.map(pg => (
-                        <a key={pg.id} onClick={() => switchPage(pg.id)}>
-                            {pg.name}
-                        </a>
-                    ))}
+                    <Structure store={structure}/>
                 </div>
             </div>
         );

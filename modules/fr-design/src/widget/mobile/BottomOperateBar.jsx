@@ -19,6 +19,10 @@ type Props = {
  * @return {null}
  */
 export class BottomOperateBar extends BaseWidget<Props> {
+    getName(): * {
+        return "iPhone 操作条";
+    }
+
     render() {
         const {canvasRect, designRect, cid} = this.props;
         if (designRect.bottom === 0) return null;
