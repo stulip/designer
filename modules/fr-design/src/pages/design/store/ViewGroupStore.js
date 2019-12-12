@@ -93,6 +93,12 @@ export class ViewGroupStore extends BaseStore {
         const {isApp} = config;
         const {data: {widgets, id}} = options;
 
+        that.hoveRect = null;
+        that.selectRect = null;
+        that._widget = null;
+        that.widgetList = [];
+        that.widgetList2 = [];
+
         if (!widgets || !widgets.length) {
             if (isApp) {
                 const {root, widgets} = WidgetAppFactory.navigator;

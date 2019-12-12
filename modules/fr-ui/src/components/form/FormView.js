@@ -531,9 +531,10 @@ class FormView extends React.Component<Props, State> {
 
     renderComponent(item, props) {
         let that = this;
-        const {index, children, key, eventTarget = new EventEmitter} = props;
+        const {eventTarget} = that.props;
+        const {index, children, key} = props;
         let required = that.getRequired(item);
-        let { formData, config } = that.state;
+        let {formData, config} = that.state;
         let value = formData[item.form],
             change = that.onValueChange;
 
@@ -546,7 +547,6 @@ class FormView extends React.Component<Props, State> {
             ref: item.form,
             config
         };
-
         let Comps = that.switchComps(item, props);
 
         return Comps ?
