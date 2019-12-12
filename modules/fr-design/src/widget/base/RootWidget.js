@@ -30,7 +30,9 @@ export class RootWidget extends BaseWidget<Props, State> {
 
     componentDidMount() {
         super.componentDidMount();
-        DesignEvent.emit(PropsConst.rootWidgetInit, this);
+        setTimeout(() => {
+            DesignEvent.emit(PropsConst.rootWidgetInit, this);
+        }, 0);
     }
 
     componentDidUpdate(prevProps, prevState) {

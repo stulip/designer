@@ -66,6 +66,7 @@ export type WidgetConfigDefined = {
     visible?: boolean, // 是否显示, 状态之外的控制.  默认true
     children?: string | Array<string>, // 子节点具体根据widget类型
     widget?: { children: string, [string]: any },// 内置组件, 自由扩展子节点
+    target?: Element,// ref 引用
 }
 
 // 事件类型枚举

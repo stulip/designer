@@ -60,6 +60,7 @@ export type ItemProps = {
     _disabled?: boolean, // 是否禁用
     renderProps?: CompsProps, // 自定义组件
     eventTarget: EventEmitter,// 事件代理
+
 };
 
 // 组件集合
@@ -504,7 +505,7 @@ class FormView extends React.Component<Props, State> {
     switchItem(item, index) {
         let that = this,
             component;
-        const key = `${item.form}-${item.title}-${item.type}-${index}`;
+        const key = `${item.form}-${item.title}-${item.type}-${index}-${item.key}`;
         if (Array.isArray(item)) {
             component = (
                 <div key={key} className={"item-group"}>

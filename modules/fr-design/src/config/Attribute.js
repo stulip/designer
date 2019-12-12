@@ -12,6 +12,11 @@ export const PropsConst = {
     // widget 状态改变
     switchWidgetState: "switch.widget.state",
 
+    // 删除 widget
+    removeWidget: "remove.widget",
+    // 添加widget
+    addWidget: "add.widget",
+
     canvasWidth: "basic.canvas.width",
     canvasHeight: "basic.canvas.height",
     canvasSize: "basic.canvas.size",

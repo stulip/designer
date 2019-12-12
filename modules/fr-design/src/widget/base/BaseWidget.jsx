@@ -20,6 +20,7 @@ export type BaseWidgetProps = {
     canvasRect: Rect,
     designRect: DesignType,
     module: Object, // 所有可用属性控件
+    widgetMap: Map<string, WidgetConfigDefined>,// 所有widget信息
     parent?: { current: any },
     isDrag: boolean, // 是否被拖动
     isPreview: boolean, //是否为预览
@@ -45,6 +46,7 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
     };
     states: [WidgetState] = [];
     fields = {};
+    childrenMap: Map<string, BaseWidget>;
 
     get widget() {
         return this.widgetRef.current;
@@ -170,6 +172,10 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
             const widget = widgetMap.get(cid);
             if (!widget) return null;
             const Comp = module[widget.component];
+            const setRef = ref => {
+                widget.target = ref;
+                that.childrenMap.set(cid, ref)
+            };
             return (
                 Comp && (
                     <Comp
@@ -180,7 +186,7 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
                         widgetMap={widgetMap}
                         module={module}
                         parent={that}
-                        ref={ref => that.childrenMap.set(cid, ref)}
+                        ref={setRef}
                         isPreview={isPreview}
                         isDrag={dragWidgetId === cid}
                     />
@@ -437,6 +443,15 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
     }
 
     /**
+     * 获取状态
+     * @param stateId
+     * @returns {*}
+     */
+    getState(stateId: string) {
+        return this.states.find(da => da.cid === stateId)
+    }
+
+    /**
      * 删除状态其属性
      * @param stateId
      */
@@ -456,7 +471,9 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
         if (widget) {
             widget.addNewWidget(widgetId);
         } else {
-            that.setState({ children: [...children, widgetId], dragWidgetId: widgetId });
+            that.setState({children: [...children, widgetId], dragWidgetId: widgetId}, () => {
+                DesignEvent.emit(PropsConst.addWidget, widgetId);
+            });
         }
     }
 
@@ -556,7 +573,9 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
             const wix = children.indexOf(widgetId);
             if (wix !== -1) {
                 children.splice(wix, 1);
-                that.setState({ children: Array.from(children), dragWidgetId: null });
+                that.setState({children: Array.from(children), dragWidgetId: null}, () => {
+                    DesignEvent.emit(PropsConst.removeWidget, widgetId);
+                });
             }
         }
     }

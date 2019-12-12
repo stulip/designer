@@ -23,7 +23,10 @@ export class ViewGroupStore extends BaseStore {
     _widgetMap: Map<string, WidgetConfigDefined> = new Map();
     rootRef = React.createRef();
 
-    get rootWidget(): BaseWidget {
+    /**
+     * @returns {RootWidget}
+     */
+    get rootWidget() {
         return this.rootRef.current;
     }
 
@@ -496,5 +499,17 @@ export class ViewGroupStore extends BaseStore {
      */
     get sWidget() {
         return this.widget || this.rootWidget;
+    }
+
+    /**
+     * 根据widget id 获取实例widget对象
+     * @param widgetId
+     * @returns {BaseWidget}
+     */
+    findWidget(widgetId) {
+        const that = this;
+        if (widgetId === that.rootWidget.getId()) return that.rootWidget;
+        const widget = that.widgetMap.get(widgetId);
+        return widget && widget.target;
     }
 }

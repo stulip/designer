@@ -8,13 +8,12 @@ import {BaseStore} from "./BaseStore";
 import {Form, SVG} from "fr-ui";
 import {action, observable} from "mobx";
 import {DesignEvent} from "fr-design";
-import {BehaviorConst, PropsConst, randomId} from "../../../config";
+import {BehaviorConst, PropsConst, randomId, StatesConst} from "../../../config";
 import {ItemConst} from "../../../components/item";
 
 export class EventsStore extends BaseStore {
     // form
     formRef = React.createRef();
-
     get form() {
         return this.formRef.current;
     }
@@ -34,133 +33,204 @@ export class EventsStore extends BaseStore {
         that.formConfig = [];
     }
 
+    getWidgetSelectList = () => {
+        const {
+            viewGroup: {rootWidget}
+        } = this.main;
+        const widgets = [
+            {
+                label: rootWidget.getName(),
+                value: rootWidget.getId()
+            }
+        ];
+        const putWidget = widgetMap => {
+            for (const wGet of widgetMap.values()) {
+                if (wGet) {
+                    widgets.push({
+                        label: wGet.getName(),
+                        value: wGet.getId()
+                    });
+                    putWidget(wGet.childrenMap);
+                }
+            }
+        };
+        putWidget(rootWidget.childrenMap);
+        return widgets;
+    };
+
+    /**
+     * 获取对应widget的状态列表
+     * @param widgetId
+     * @returns {{label: *, value: *}[]|*[]}
+     */
+    getWidgetStateSelectList = widgetId => {
+        const widget = this.main.viewGroup.findWidget(widgetId);
+        if (widget) {
+            const state = [StatesConst.global, StatesConst.default, ...widget.getWidgetStates()];
+            return state.map(da => ({label: da.name, value: da.cid}));
+        }
+        return [];
+    };
+
     createFieldConfig() {
         const that = this;
-        const {isApp} = that.main.config;
-        return (that.events || []).map((event, index, events) => ({
-            className: "event-item",
-            config: [
-                {
-                    form: `${index}.cid`,
-                    value: event.cid
-                },
-                [
+        const {
+            viewGroup,
+            config: {isApp}
+        } = this.main;
+
+        return (that.events || []).map((event, index, events) => {
+            const defaultWidget = event.widget
+                ? [{value: event.widget, label: viewGroup.findWidget(event.widget)?.getName()}]
+                : [];
+            const defaultState =
+                event.widgetState && event.widget
+                    ? [
+                        {
+                            value: event.widgetState,
+                            label: viewGroup.findWidget(event.widget)?.getState(event.widgetState)?.name
+                        }
+                    ]
+                    : [];
+            return {
+                className: "event-item",
+                config: [
                     {
-                        form: `${index}.name`,
-                        type: Form.Const.Type.IBotInput,
-                        className: "event-input",
-                        value: event.name,
-                        rules: true,
+                        form: `${index}.cid`,
+                        value: event.cid
+                    },
+                    [
+                        {
+                            key: event.cid,
+                            form: `${index}.name`,
+                            type: Form.Const.Type.IBotInput,
+                            className: "event-input",
+                            value: event.name,
+                            rules: true
+                        },
+                        {
+                            type: ItemConst.Type.IBotIcon,
+                            value: "删除",
+                            svg: {icon: SVG.trash, className: "trash", onClick: () => that.handleDelEvent(event.cid)}
+                        }
+                    ],
+                    {
+                        key: event.cid,
+                        title: "类型",
+                        form: `${index}.type`,
+                        type: Form.Const.Type.IBotSelect,
+                        select: {data: ItemConst.EventType.options({isApp})},
+                        value: event.type
+                    },
+                    {type: Form.Const.Type.Line, top: 0, left: 6, right: 6},
+                    {
+                        key: event.cid,
+                        title: "行为",
+                        form: `${index}.behavior`,
+                        type: Form.Const.Type.IBotSelect,
+                        select: {data: ItemConst.EventBehavior.options},
+                        value: event.behavior || ItemConst.EventBehavior.default
                     },
                     {
-                        type: ItemConst.Type.IBotIcon,
-                        value: "删除",
-                        svg: {icon: SVG.trash, className: "trash", onClick: () => that.handleDelEvent(event.cid)}
+                        key: event.cid,
+                        title: "行为表达式",
+                        form: `${index}.exps`,
+                        type: Form.Const.Type.IBotInput,
+                        className: "event-input",
+                        value: event.exps,
+                        titleDirection: Form.Const.Direction.Top
+                    },
+                    {type: Form.Const.Type.Line, top: 0, left: 6, right: 6},
+                    // --------- 行为 - 页面 ---------
+                    {
+                        key: event.cid,
+                        title: "页面类型",
+                        form: `${index}.pageType`,
+                        type: Form.Const.Type.IBotSelect,
+                        union: `${index}.behavior`,
+                        value: event.pageType || ItemConst.PageType.default,
+                        select: {data: ItemConst.PageType.options({isApp})},
+                        visible: data => Number(data[`${index}.behavior`]) === BehaviorConst.switchPage
+                    },
+                    {
+                        key: event.cid,
+                        title: "页面URL",
+                        form: `${index}.pageURL`,
+                        type: Form.Const.Type.IBotInput,
+                        className: "event-input",
+                        titleDirection: Form.Const.Direction.Top,
+                        union: `${index}.behavior`,
+                        value: event.pageURL,
+                        visible: data => Number(data[`${index}.behavior`]) === BehaviorConst.switchPage
+                    },
+                    {
+                        key: event.cid,
+                        title: "页面参数",
+                        form: `${index}.pageArgs`,
+                        type: Form.Const.Type.IBotInput,
+                        className: "event-input",
+                        titleDirection: Form.Const.Direction.Top,
+                        union: `${index}.behavior`,
+                        visible: data => Number(data[`${index}.behavior`]) === BehaviorConst.switchPage
+                    },
+                    // --------- 行为 - 页面 ---------
+                    // --------- 行为 - 切换状态 state ---------
+                    {
+                        key: event.cid,
+                        title: "组件",
+                        form: `${index}.widget`,
+                        type: Form.Const.Type.IBotSelect,
+                        union: `@${index}.behavior`,
+                        value: event.widget,
+                        select: {getData: () => that.getWidgetSelectList(), data: defaultWidget},
+                        visible: data => Number(data[`${index}.behavior`]) === BehaviorConst.switchState
+                    },
+                    {
+                        key: event.cid,
+                        title: "目标",
+                        form: `${index}.widgetState`,
+                        type: Form.Const.Type.IBotSelect,
+                        union: [`@${index}.behavior`, `${index}.widget`],
+                        value: event.widgetState,
+                        select: {
+                            getData: data => that.getWidgetStateSelectList(data[`${index}.widget`]),
+                            data: defaultState
+                        },
+                        visible: data => Number(data[`${index}.behavior`]) === BehaviorConst.switchState
+                    },
+                    // --------- 行为 - 切换状态 ---------
+                    // --------- 行为 - 存储值 ---------
+                    {
+                        key: event.cid,
+                        title: "值表达式",
+                        form: `${index}.variable`,
+                        type: Form.Const.Type.IBotInput,
+                        className: "event-input",
+                        titleDirection: Form.Const.Direction.Top,
+                        union: `${index}.behavior`,
+                        value: event.variable,
+                        visible: data => Number(data[`${index}.behavior`]) === BehaviorConst.variable
+                    },
+                    // --------- 行为 - 存储值 ---------
+                    // --------- 行为 - 工作流 ---------
+                    {
+                        key: event.cid,
+                        title: "工作流",
+                        form: `${index}.workflow`,
+                        type: Form.Const.Type.IBotSelect,
+                        union: `${index}.behavior`,
+                        value: event.workflow,
+                        select: {data: ItemConst.PageType.options({isApp})},
+                        visible: data => Number(data[`${index}.behavior`]) === BehaviorConst.workFlow
+                    },
+                    // --------- 行为 - 工作流 ---------
+                    {
+                        form: "length",
+                        value: events.length
                     }
-                ],
-                {
-                    title: "类型",
-                    form: `${index}.type`,
-                    type: Form.Const.Type.IBotSelect,
-                    select: {data: ItemConst.EventType.options({isApp})},
-                    value: event.type
-                },
-                {type: Form.Const.Type.Line, top: 0, left: 6, right: 6,},
-                {
-                    title: "行为",
-                    form: `${index}.behavior`,
-                    type: Form.Const.Type.IBotSelect,
-                    select: {data: ItemConst.EventBehavior.options},
-                    value: event.behavior || ItemConst.EventBehavior.default,
-                },
-                {
-                    title: "行为表达式",
-                    form: `${index}.exps`,
-                    type: Form.Const.Type.IBotInput,
-                    className: "event-input",
-                    value: event.exps,
-                    titleDirection: Form.Const.Direction.Top
-                },
-                {type: Form.Const.Type.Line, top: 0, left: 6, right: 6,},
-                // --------- 行为 - 页面 ---------
-                {
-                    title: "页面类型",
-                    form: `${index}.pageType`,
-                    type: Form.Const.Type.IBotSelect,
-                    union: `${index}.behavior`,
-                    value: event.pageType || ItemConst.PageType.default,
-                    select: {data: ItemConst.PageType.options({isApp})},
-                    visible: data => Number(data[`${index}.behavior`]) === BehaviorConst.switchPage
-                },
-                {
-                    title: "页面URL",
-                    form: `${index}.pageURL`,
-                    type: Form.Const.Type.IBotInput,
-                    className: "event-input",
-                    titleDirection: Form.Const.Direction.Top,
-                    union: `${index}.behavior`,
-                    value: event.pageURL,
-                    visible: data => Number(data[`${index}.behavior`]) === BehaviorConst.switchPage
-                },
-                {
-                    title: "页面参数",
-                    form: `${index}.pageArgs`,
-                    type: Form.Const.Type.IBotInput,
-                    className: "event-input",
-                    titleDirection: Form.Const.Direction.Top,
-                    union: `${index}.behavior`,
-                    visible: data => Number(data[`${index}.behavior`]) === BehaviorConst.switchPage
-                },
-                // --------- 行为 - 页面 ---------
-                // --------- 行为 - 切换状态 ---------
-                {
-                    title: '组件',
-                    form: `${index}.widget`,
-                    type: Form.Const.Type.IBotSelect,
-                    union: `${index}.behavior`,
-                    value: event.widget,
-                    select: {data: ItemConst.PageType.options({isApp})},
-                    visible: data => Number(data[`${index}.behavior`]) === BehaviorConst.switchState
-                },
-                {
-                    title: '目标',
-                    form: `${index}.widgetState`,
-                    type: Form.Const.Type.IBotSelect,
-                    union: `${index}.behavior`,
-                    value: event.widgetState,
-                    select: {data: ItemConst.PageType.options({isApp})},
-                    visible: data => Number(data[`${index}.behavior`]) === BehaviorConst.switchState
-                },
-                // --------- 行为 - 切换状态 ---------
-                // --------- 行为 - 存储值 ---------
-                {
-                    title: "值表达式",
-                    form: `${index}.variable`,
-                    type: Form.Const.Type.IBotInput,
-                    className: "event-input",
-                    titleDirection: Form.Const.Direction.Top,
-                    union: `${index}.behavior`,
-                    value: event.variable,
-                    visible: data => Number(data[`${index}.behavior`]) === BehaviorConst.variable
-                },
-                // --------- 行为 - 存储值 ---------
-                // --------- 行为 - 工作流 ---------
-                {
-                    title: '工作流',
-                    form: `${index}.workflow`,
-                    type: Form.Const.Type.IBotSelect,
-                    union: `${index}.behavior`,
-                    value: event.workflow,
-                    select: {data: ItemConst.PageType.options({isApp})},
-                    visible: data => Number(data[`${index}.behavior`]) === BehaviorConst.workFlow
-                },
-                // --------- 行为 - 工作流 ---------
-                {
-                    form: "length",
-                    value: events.length
-                }
-            ]
-        }));
+                ]
+            };
+        });
     }
 
     addListener() {
@@ -230,7 +300,8 @@ export class EventsStore extends BaseStore {
         //  新的事件
         events.push({
             cid: randomId(),
-            name: `事件 ${events.length}`
+            name: `事件 ${events.length}`,
+            widget: widget.getId()
         });
         that._setConfig(events);
     };
@@ -240,7 +311,7 @@ export class EventsStore extends BaseStore {
         const formData = that.form.validateData();
         if (formData) {
             const {sWidget} = that.main.viewGroup;
-            sWidget.setEvents(that.events = Array.from(formData));
+            sWidget.setEvents((that.events = Array.from(formData)));
         }
     };
 
