@@ -1,0 +1,53 @@
+{
+  "name": "rc-animate",
+  "version": "2.10.2",
+  "description": "css-transition ui component for react",
+  "keywords": [
+    "react",
+    "react-component",
+    "react-animate",
+    "animate"
+  ],
+  "files": [
+    "es",
+    "lib"
+  ],
+  "homepage": "https://github.com/react-component/animate",
+  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:react-component/animate.git"
+  },
+  "bugs": {
+    "url": "http://github.com/react-component/animate/issues"
+  },
+  "licenses": "MIT",
+  "main": "./es/Animate",
+  "config": {
+    "port": 8201
+  },
+  "scripts": {
+    "build": "rc-tools run build",
+    "gh-pages": "rc-tools run gh-pages",
+    "start": "rc-tools run server",
+    "pub": "rc-tools run pub --babel-runtime",
+    "lint": "rc-tools run lint",
+    "karma": "rc-test run karma",
+    "saucelabs": "rc-test run saucelabs",
+    "test": "rc-test run test",
+    "chrome-test": "rc-test run chrome-test",
+    "coverage": "rc-test run coverage",
+    "prepublish": "rc-tools run guard",
+    "now-build": "npm run build"
+  },
+  "devDependencies": {
+  },
+  "pre-commit": [
+    "lint"
+  ],
+  "dependencies": {
+    "raf": "^3.4.0",
+    "rc-util": "^4.15.3",
+    "react-lifecycles-compat": "^3.0.4"
+  }
+}

@@ -22,28 +22,28 @@ module.exports = {
     ],
     plugins: [
         ["lodash"],
-        [
-            "@babel/plugin-transform-runtime",
-            {
-                corejs: false,
-                helpers: false,
-                regenerator: true,
-                useESModules: true
-            }
-        ],
+        // [
+        //     "@babel/plugin-transform-runtime",
+        //     {
+        //         corejs: false,
+        //         helpers: false,
+        //         regenerator: false,
+        //         useESModules: true
+        //     }
+        // ],
         ["@babel/plugin-proposal-decorators", {legacy: true}],
         ["@babel/plugin-proposal-class-properties", {loose: true}],
         ["@babel/plugin-proposal-optional-chaining", {loose: true}],
         ["@babel/plugin-proposal-function-bind"],
         ["@babel/plugin-proposal-export-namespace-from"],
-        [
-            "import",
-            {
-                libraryName: "antd",
-                libraryDirectory: "lib", // default: lib
-                style: "css"
-            }
-        ]
+        // [
+        //     "import",
+        //     {
+        //         libraryName: "antd",
+        //         libraryDirectory: "lib", // default: lib
+        //         style: "css"
+        //     }
+        // ]
     ],
     env: {
         production: {

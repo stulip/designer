@@ -19,6 +19,7 @@ import IBotCheck, {CheckGroup as IBotCheckGroup} from '@ibot/ibot/lib/check';
 import IBotSelect, {SelectMenu as IBotSelectMenu} from '@ibot/ibot/lib/select';
 import IBotInput, {Textarea as IBotTextArea} from '@ibot/ibot/lib/input';
 // mobx end
+import Tree from 'rc-tree'
 //
 import Toast from 'cogo-toast';
 import {configure} from "mobx";
@@ -55,4 +56,5 @@ export {
     IBotInputNumber,
     IBotConfirmInputNumber,
     classNames,
+    Tree
 };
