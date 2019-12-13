@@ -82,6 +82,8 @@ export class MainStore {
         that.config = createConfig({
             isApp: name === 'app',
         });
+
+        that.switchPage = ::that.switchPage;
     }
 
     /**

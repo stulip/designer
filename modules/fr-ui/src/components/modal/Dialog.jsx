@@ -80,6 +80,7 @@ export class Dialog extends React.Component<Props, State> {
         } = that.state;
         return (
             <IBotModal
+                canCloseOnEsc={true}
                 {...modal}
                 isOpen={true}
                 title={title}

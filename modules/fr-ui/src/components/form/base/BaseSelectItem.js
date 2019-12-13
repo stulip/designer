@@ -9,8 +9,8 @@ import {BaseItem} from "./BaseItem";
 
 class BaseSelectItem extends BaseItem {
     // 可选择数据
-    _selectData: Array<any> = [];
-    _lastData: Array<any> = [];
+    _selectData: Array<any>;
+    _lastData: Array<any>;
 
     get selectData(): Array<Object> {
         let that = this;
@@ -19,7 +19,7 @@ class BaseSelectItem extends BaseItem {
             return that._lastData = select.data;
         }
 
-        return this._selectData;
+        return that._selectData || that._lastData || [];
     }
 
     set selectData(value: Array<Object>) {

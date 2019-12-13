@@ -392,8 +392,12 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
      */
     widgetProps(child: Array<WidgetProps> = []) {
         const that = this;
+        // widget 名称修改后发送一个事件
+        const onBlur = () => {
+            DesignEvent.emit(PropsConst.widgetName, {id: that.getId(), name: that.getName()});
+        };
         const basic = that.getBasicConfig();
-        const nameOptions = {onChange: that.asyncName};
+        const nameOptions = {onChange: that.asyncName, input: {onBlur}};
         return WidgetConfig({basic, nameOptions});
     }
 
