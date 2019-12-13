@@ -32,6 +32,7 @@ export class ViewGroupStore extends BaseStore {
 
     // 鼠标悬浮元素
     @observable hoveRect: ClientRect;
+    hoverFill: boolean = false;
     // 选中元素
     @observable selectRect: ClientRect;
 
@@ -134,6 +135,7 @@ export class ViewGroupStore extends BaseStore {
     cancelHove = () => {
         this.hoveRect = null;
         this.hoverWidget = null;
+        this.hoverFill = false;
     };
 
     // 取消选中元素

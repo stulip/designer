@@ -6,20 +6,19 @@
 
 // @flow
 import React from "react";
-import { ViewGroupStore } from "../store/ViewGroupStore";
-import {observer} from "mobx-react";
 
 type Props = {
     selectRect: ClientRect,
-    hoveRect: ClientRect
+    hoveRect: ClientRect,
+    hoverFill: boolean, // 颜色覆盖
 };
 
 type State = {};
 
 export class WidgetBorder extends React.PureComponent<Props, State> {
     renderHoveBorder() {
-        const { hoveRect } = this.props;
-        const { top, left, width, height } = hoveRect;
+        const {hoveRect, hoverFill} = this.props;
+        const {top, left, width, height} = hoveRect;
         const style = {
             top: `${top}%`,
             left: `${left}%`,
@@ -27,7 +26,10 @@ export class WidgetBorder extends React.PureComponent<Props, State> {
             height: `${height}%`,
             transform: "rotate(0deg)"
         };
-        return <div className={"hove"} style={style} />;
+        if (hoverFill) {
+            style.backgroundColor = 'rgba(228, 222, 255, 0.4)'
+        }
+        return <div className={"hove"} style={style}/>;
     }
 
     renderSelectBorder() {

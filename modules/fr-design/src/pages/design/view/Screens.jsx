@@ -119,10 +119,10 @@ export class Screens extends React.Component<Props, State> {
     _render() {
         let that = this;
         const store = that.props.store;
-        const { main, screenRef, screensRef } = store;
-        const { canvasRect, canvasScale } = main.section;
-        const { width, height } = canvasRect;
-        const { designRect } = main.config;
+        const {main: {section, config, viewGroup}, screenRef, screensRef} = store;
+        const {canvasRect, canvasScale} = section;
+        const {width, height} = canvasRect;
+        const {designRect} = config;
         const transform = `matrix(1, 0, 0, 1, ${canvasRect.x}, ${canvasRect.y})`;
         const scaleValue = parseInt(100 * canvasScale);
         const position = (100 - scaleValue) / 2;
@@ -154,7 +154,8 @@ export class Screens extends React.Component<Props, State> {
                         {designRect.height < height && <div className="first-page-divider" />}
 
                         <div className={"fe-canvas"} style={{width: width * canvasScale, height: height * canvasScale}}>
-                            <WidgetBorder hoveRect={main.viewGroup.hoveRect} selectRect={main.viewGroup.selectRect}/>
+                            <WidgetBorder hoveRect={viewGroup.hoveRect} selectRect={viewGroup.selectRect}
+                                          hoverFill={viewGroup.hoverFill}/>
                         </div>
                     </div>
                 </div>

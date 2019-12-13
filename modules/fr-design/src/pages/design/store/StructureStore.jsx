@@ -107,7 +107,10 @@ export class StructureStore extends BaseStore {
         const {eventKey: widgetId} = node.props;
         const {viewGroup} = that.main;
         const widget = viewGroup.findWidget(widgetId);
-        widget && viewGroup.setHoverWidget(widget);
+        if (widget) {
+            viewGroup.hoverFill = true;
+            viewGroup.setHoverWidget(widget);
+        }
     };
 
     /**
