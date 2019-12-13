@@ -21,7 +21,7 @@ export class Structure extends React.Component<Props, State> {
         if (children.length) {
             return (
                 <a className={"expander"}>
-                    <IBotSVG icon={SVG.arrow_right} className={classNames({expanded})}/>
+                    <IBotSVG icon={SVG.arrow_right2} className={classNames({expanded})}/>
                 </a>
             )
         }
@@ -35,7 +35,12 @@ export class Structure extends React.Component<Props, State> {
             main: {
                 config: {isApp}
             },
-            structureData
+            structureData,
+            onStructureExpand,
+            onStructureSelect,
+            onStructureMouseEnter,
+            onStructureMouseLeave,
+            structureExpendKeys,
         } = this.props.store;
         const pages = isApp
             ? [
@@ -76,6 +81,11 @@ export class Structure extends React.Component<Props, State> {
                         </header>
                         <div className={'structure-list'}>
                             <Tree
+                                onMouseEnter={onStructureMouseEnter}
+                                onMouseLeave={onStructureMouseLeave}
+                                onSelect={onStructureSelect}
+                                expandedKeys={structureExpendKeys}
+                                onExpand={onStructureExpand}
                                 switcherIcon={that.switcherIcon}
                                 icon={<IBotSVG icon={SVG.file}/>}
                                 defaultExpandParent={true}

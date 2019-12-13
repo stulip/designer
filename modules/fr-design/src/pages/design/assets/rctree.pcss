@@ -1,13 +1,27 @@
 
 .ds-content .panel-left {
+
+    .rc-tree {
+        padding: 0;
+
+        li {
+            position: relative;
+        }
+    }
+
     .rc-tree-switcher {
         background-image: none;
+        position: absolute;
+        height: 32px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .rc-tree-node-content-wrapper {
         position: relative;
         height: 32px;
-        padding-left: 14px;
+        padding-left: 15px;
         display: flex;
         -webkit-box-align: center;
         align-items: center;
@@ -18,6 +32,23 @@
         border-style: solid;
         border-color: transparent;
         border-image: initial;
+
+        &:hover {
+            color: rgb(41, 141, 248);
+            background: rgb(247, 247, 247);
+        }
+    }
+
+    .rc-tree-iconEle {
+        width: 14px;
+        height: 14px;
+        display: flex;
+        flex-shrink: 0;
+        -webkit-box-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        justify-content: center;
+        margin-right: 8px;
     }
 
 
@@ -25,7 +56,6 @@
         color: rgb(41, 141, 248);
         background: rgb(242, 242, 242);
         opacity: inherit;
-        border: inherit;
     }
 }
 

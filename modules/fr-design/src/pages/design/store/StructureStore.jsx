@@ -11,6 +11,7 @@ import {action, observable} from "mobx";
 export class StructureStore extends BaseStore {
 
     @observable structureData = [];
+    @observable structureExpendKeys = [];
 
     constructor(props) {
         super(props);
@@ -33,6 +34,7 @@ export class StructureStore extends BaseStore {
     @action
     initRoot(rootWidget) {
         const that = this;
+        that.structureExpendKeys = [];
         that.upStructureData(rootWidget);
     }
 
@@ -48,12 +50,57 @@ export class StructureStore extends BaseStore {
             for (const [key, value] of widgets) {
                 value && data.push({
                     key,
+                    icon: null,
                     title: value.getName(),
                     children: map(value.childrenMap)
                 });
             }
             return data;
         };
-        that.structureData = map(rootWidget.childrenMap);
+        const data = map(rootWidget.childrenMap);
+        if (!that.structureExpendKeys.length) {
+            that.structureExpendKeys = data.map(da => da.key);
+        }
+        that.structureData = data;
+    }
+
+    @action
+    onStructureExpand = (expandedKeys) => {
+        this.structureExpendKeys = expandedKeys;
+    };
+
+    /**
+     * widget 被点击
+     * @param selectedKeys
+     */
+    onStructureSelect = (selectedKeys) => {
+        const that = this;
+        const [widgetId] = selectedKeys;
+        const {viewGroup} = that.main;
+        const widget = viewGroup.findWidget(widgetId);
+        widget && viewGroup.setSelectWidget(widget)
+    };
+
+    /**
+     * widget 鼠标移入
+     * @param event
+     * @param node
+     */
+    onStructureMouseEnter = ({event, node}) => {
+        const that = this;
+        const {eventKey: widgetId} = node.props;
+        const {viewGroup} = that.main;
+        const widget = viewGroup.findWidget(widgetId);
+        widget && viewGroup.setHoverWidget(widget);
+    };
+
+    /**
+     * widget 鼠标移除
+     * @param event
+     * @param node
+     */
+    onStructureMouseLeave = ({event, node}) => {
+        const {viewGroup} = this.main;
+        viewGroup.cancelHove();
     }
 }

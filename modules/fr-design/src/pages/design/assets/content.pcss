@@ -50,19 +50,26 @@
 
             .expander {
                 display: flex;
-                justify-content: center;
+                justify-content: flex-end;
                 align-items: center;
-                width: 12px;
-                margin-left: -12px;
+                width: 18px;
+                height: 18px;
                 color: rgb(200, 205, 208);
+                z-index: 9;
 
                 .svg-icon {
-                    margin-right: 0px;
-                    color: rgb(141, 158, 167);
+                    margin-right: 0;
+                    color: #8d9ea7;
                 }
 
                 .expanded {
                     transform: rotate(90deg);
+                }
+
+                &:hover {
+                    .svg-icon {
+                        color: #ccc;
+                    }
                 }
             }
         }
@@ -162,6 +169,12 @@
             .structure-list {
                 flex: 1;
                 overflow: auto;
+            }
+
+            .rc-tree-iconEle .svg-icon {
+                width: 9px;
+                height: 12px;
+                color: rgb(141, 158, 167);
             }
         }
     }

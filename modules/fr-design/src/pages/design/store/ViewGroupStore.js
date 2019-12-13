@@ -162,7 +162,8 @@ export class ViewGroupStore extends BaseStore {
     @action
     setSelectWidget = (widget?: BaseWidget) => {
         let that = this;
-        if (widget !== that.widget) {
+        if (widget && widget !== that.widget) {
+            that.setSelectBox(widget.widget);
             widget.onUpdate = that._reWidgetSelectBox;
             that.main.widgets.setWidgetStates(widget.getWidgetStates(), widget.getStateId());
             that.widget = widget;
@@ -302,7 +303,7 @@ export class ViewGroupStore extends BaseStore {
     _eachWidgetEnter = () => {
         const that = this;
         let lastWidget = that.getMouseWidgetSelect(that.widgetList2);
-        lastWidget && that._handleMouseEnter(lastWidget);
+        lastWidget && that.setHoverWidget(lastWidget);
         that.widgetList2 = [];
     };
 
@@ -322,7 +323,7 @@ export class ViewGroupStore extends BaseStore {
     }
 
     @action
-    _handleMouseEnter = (widget: BaseWidget) => {
+    setHoverWidget = (widget: BaseWidget) => {
         const that = this;
         if (!that.rootWidget) return;
         const rootRect = that.rootWidget.widget.getBoundingClientRect();
@@ -369,8 +370,6 @@ export class ViewGroupStore extends BaseStore {
             // text panel header
             let lastWidget = that.getMouseWidgetSelect(that.widgetList);
             if (lastWidget) {
-                // 设置选框
-                that.setSelectBox(lastWidget.widget);
                 that.setSelectWidget(lastWidget);
             }
         } else {
@@ -514,7 +513,7 @@ export class ViewGroupStore extends BaseStore {
      */
     findWidget(widgetId) {
         const that = this;
-        if (!that.rootWidget) return null;
+        if (!widgetId || !that.rootWidget) return null;
         if (widgetId === that.rootWidget.getId()) return that.rootWidget;
         const widget = that.widgetMap.get(widgetId);
         return widget && widget.target;

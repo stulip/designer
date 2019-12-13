@@ -30,7 +30,7 @@ export class BottomOperateBar extends BaseWidget<Props> {
         const height = designRect.bottom;
 
         return (
-            <div className="group-item" style={{bottom: 0, width, height}} data-cid={cid}>
+            <div className="group-item" style={{bottom: 0, width, height}} data-cid={cid} ref={this.widgetRef}>
                 <div
                     className="widget operate_bar hcenter vmiddle iphone_x_operate_bar"
                     style={{width, height}}
