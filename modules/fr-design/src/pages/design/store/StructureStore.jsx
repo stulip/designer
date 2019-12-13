@@ -44,11 +44,12 @@ export class StructureStore extends BaseStore {
     /**
      * @param {RootWidget} rootWidget
      */
-    @action
     initRoot(rootWidget) {
         const that = this;
-        that.structureExpendKeys = [];
-        that.upStructureData(rootWidget);
+        setTimeout(action(() => {
+            that.structureExpendKeys = [];
+            that.upStructureData(rootWidget);
+        }), 10);
     }
 
     /**

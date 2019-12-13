@@ -40,6 +40,7 @@ export const ENUM = {
     DESIGN_SCALE: "design_scale",
     DESIGN_GRID: 'design_grid',
     PAGE: "PAGE",
+    PROJECT: "PROJECT",
 
     ZOOM_M: 1,
     ZOOM_P: 2,

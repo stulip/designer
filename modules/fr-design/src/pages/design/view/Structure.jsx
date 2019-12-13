@@ -25,16 +25,14 @@ export class Structure extends React.Component<Props, State> {
                 </a>
             )
         }
-
         return null;
     };
 
-    _render() {
+    renderStructure() {
         const that = this;
         const {
             main: {
                 config: {isApp},
-                switchPage
             },
             structureData,
             onStructureExpand,
@@ -44,6 +42,44 @@ export class Structure extends React.Component<Props, State> {
             structureExpendKeys,
             structureSelectedKeys,
             structureRef,
+        } = this.props.store;
+        return (
+            <div className={"widget-panel"}>
+                <div className={"layout-panel"}>
+                    <header>
+                        <div className={"header-left"}>
+                            <p>元素</p>
+                        </div>
+                        <div className={"header-right"}/>
+                    </header>
+                    <div className={'structure-list'}>
+                        <Tree
+                            showLine={false}
+                            ref={structureRef}
+                            selectedKeys={structureSelectedKeys}
+                            onMouseEnter={onStructureMouseEnter}
+                            onMouseLeave={onStructureMouseLeave}
+                            onSelect={onStructureSelect}
+                            expandedKeys={structureExpendKeys}
+                            onExpand={onStructureExpand}
+                            switcherIcon={that.switcherIcon}
+                            icon={<IBotSVG icon={SVG.file}/>}
+                            defaultExpandParent={true}
+                            treeData={structureData}
+                        />
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    renderProject() {
+        const that = this;
+        const {
+            main: {
+                config: {isApp},
+                switchPage
+            },
         } = this.props.store;
         const pages = isApp
             ? [
@@ -57,48 +93,31 @@ export class Structure extends React.Component<Props, State> {
                 {name: "供应商", id: "109"}
             ];
         return (
+            <div className={"screen-panel"}>
+                <header>
+                    <div className={'left'}>
+                        <IBotIcon name={"plus_cb"} type={'dora'}/>
+                        <p>新建页面</p>
+                    </div>
+                    <div className={'right'}/>
+                </header>
+                <div className={'screen-list'}>
+                    {pages.map(pg => (
+                        <a key={pg.id} onClick={() => switchPage(pg.id)}>
+                            {pg.name}
+                        </a>
+                    ))}
+                </div>
+            </div>
+        )
+    }
+
+    _render() {
+        const that = this;
+        return (
             <div className={"structure"}>
-                <div className={"screen-panel"}>
-                    <header>
-                        <div className={'left'}>
-                            <IBotIcon name={"plus_cb"} type={'dora'}/>
-                            <p>新建页面</p>
-                        </div>
-                        <div className={'right'}/>
-                    </header>
-                    <div className={'screen-list'}>
-                        {pages.map(pg => (
-                            <a key={pg.id} onClick={() => switchPage(pg.id)}>
-                                {pg.name}
-                            </a>
-                        ))}
-                    </div>
-                </div>
-                <div className={"widget-panel"}>
-                    <div className={"layout-panel"}>
-                        <header>
-                            <div className={"header-left"}>
-                                <p>元素</p>
-                            </div>
-                            <div className={"header-right"}/>
-                        </header>
-                        <div className={'structure-list'}>
-                            <Tree
-                                ref={structureRef}
-                                selectedKeys={structureSelectedKeys}
-                                onMouseEnter={onStructureMouseEnter}
-                                onMouseLeave={onStructureMouseLeave}
-                                onSelect={onStructureSelect}
-                                expandedKeys={structureExpendKeys}
-                                onExpand={onStructureExpand}
-                                switcherIcon={that.switcherIcon}
-                                icon={<IBotSVG icon={SVG.file}/>}
-                                defaultExpandParent={true}
-                                treeData={structureData}
-                            />
-                        </div>
-                    </div>
-                </div>
+                {that.renderProject()}
+                {that.renderStructure()}
             </div>
         );
     }
