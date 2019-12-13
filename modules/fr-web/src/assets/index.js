@@ -11,6 +11,7 @@ import "@ibot/ibot/lib/numberInput/index.css"
 import "@ibot/ibot/lib/input/index.css"
 import "@ibot/ibot/lib/check/index.css"
 import "@ibot/ibot/lib/core-modal/index.css";
+import "@ibot/ibot/lib/ellipsis/index.css"
 // react tabs
 import "./react-tabs.pcss";
 //rc-tree

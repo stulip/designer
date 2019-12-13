@@ -18,6 +18,7 @@ import IBotConfirmInputNumber from '@ibot/ibot/lib/confirmInputNumber';
 import IBotCheck, {CheckGroup as IBotCheckGroup} from '@ibot/ibot/lib/check';
 import IBotSelect, {SelectMenu as IBotSelectMenu} from '@ibot/ibot/lib/select';
 import IBotInput, {Textarea as IBotTextArea} from '@ibot/ibot/lib/input';
+import IBotEllipsis from '@ibot/ibot/lib/ellipsis';
 // mobx end
 import Tree from 'rc-tree'
 //
@@ -53,6 +54,7 @@ export {
     IBotSelectMenu,
     IBotInput,
     IBotTextArea,
+    IBotEllipsis,
     IBotInputNumber,
     IBotConfirmInputNumber,
     classNames,
