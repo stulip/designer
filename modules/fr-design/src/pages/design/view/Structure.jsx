@@ -41,6 +41,7 @@ export class Structure extends React.Component<Props, State> {
             onStructureMouseEnter,
             onStructureMouseLeave,
             structureExpendKeys,
+            structureSelectedKeys,
         } = this.props.store;
         const pages = isApp
             ? [
@@ -81,6 +82,7 @@ export class Structure extends React.Component<Props, State> {
                         </header>
                         <div className={'structure-list'}>
                             <Tree
+                                selectedKeys={structureSelectedKeys}
                                 onMouseEnter={onStructureMouseEnter}
                                 onMouseLeave={onStructureMouseLeave}
                                 onSelect={onStructureSelect}

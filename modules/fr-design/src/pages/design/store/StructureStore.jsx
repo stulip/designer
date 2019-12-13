@@ -12,6 +12,7 @@ export class StructureStore extends BaseStore {
 
     @observable structureData = [];
     @observable structureExpendKeys = [];
+    @observable structureSelectedKeys = [];
 
     constructor(props) {
         super(props);
@@ -21,11 +22,13 @@ export class StructureStore extends BaseStore {
     addListener() {
         const that = this;
         DesignEvent.addListener(PropsConst.rootWidgetInit, that.initRoot);
+        DesignEvent.addListener(PropsConst.switchWidget, that.switchWidget);
     }
 
     removeListener() {
         const that = this;
         DesignEvent.removeListener(PropsConst.rootWidgetInit, that.initRoot);
+        DesignEvent.removeListener(PropsConst.switchWidget, that.switchWidget);
     }
 
     /**
@@ -78,7 +81,7 @@ export class StructureStore extends BaseStore {
         const [widgetId] = selectedKeys;
         const {viewGroup} = that.main;
         const widget = viewGroup.findWidget(widgetId);
-        widget && viewGroup.setSelectWidget(widget)
+        widget && viewGroup.setSelectWidget(widget);
     };
 
     /**
@@ -102,5 +105,15 @@ export class StructureStore extends BaseStore {
     onStructureMouseLeave = ({event, node}) => {
         const {viewGroup} = this.main;
         viewGroup.cancelHove();
+    };
+
+    @action
+    switchWidget = (widget) => {
+        const that = this;
+        if (widget) {
+            that.structureSelectedKeys = [widget.getId()];
+        } else {
+            that.structureSelectedKeys = [];
+        }
     }
 }
