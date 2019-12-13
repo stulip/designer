@@ -16,6 +16,14 @@ type State = {};
 @observer
 export class Structure extends React.Component<Props, State> {
 
+    componentDidMount() {
+        this.props.store.mount();
+    }
+
+    componentWillUnmount() {
+        this.props.store.unmount();
+    }
+
     switcherIcon = (props) => {
         const {expanded, children} = props;
         if (children.length) {

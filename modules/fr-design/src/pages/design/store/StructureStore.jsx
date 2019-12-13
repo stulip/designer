@@ -44,12 +44,11 @@ export class StructureStore extends BaseStore {
     /**
      * @param {RootWidget} rootWidget
      */
+    @action
     initRoot(rootWidget) {
         const that = this;
-        setTimeout(action(() => {
-            that.structureExpendKeys = [];
-            that.upStructureData(rootWidget);
-        }), 10);
+        that.structureExpendKeys = [];
+        that.upStructureData(rootWidget);
     }
 
     /**
@@ -60,6 +59,8 @@ export class StructureStore extends BaseStore {
     upStructureData(rootWidget) {
         const that = this;
         rootWidget = rootWidget || that.main.viewGroup.rootWidget;
+        if (!rootWidget) return;
+
         const map = (widgets) => {
             const data = [];
             for (const [key, value] of widgets) {

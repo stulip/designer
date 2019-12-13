@@ -19,6 +19,15 @@ type State = {};
 
 @observer
 export class Events extends React.Component<Props, State> {
+
+    componentDidMount() {
+        this.props.store.mount();
+    }
+
+    componentWillUnmount() {
+        this.props.store.unmount();
+    }
+
     render() {
         const {store} = this.props;
         return (

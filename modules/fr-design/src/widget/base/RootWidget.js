@@ -19,6 +19,11 @@ const displayName = "root.widget";
 export class RootWidget extends BaseWidget<Props, State> {
     static displayName = displayName;
 
+    init() {
+        super.init();
+        this._initMit = false;
+    }
+
     getName(): * {
         return displayName;
     }
@@ -28,18 +33,23 @@ export class RootWidget extends BaseWidget<Props, State> {
         return RootConfig({canvasRect, designRect});
     }
 
-    componentDidMount() {
-        super.componentDidMount();
-        setTimeout(() => {
-            DesignEvent.emit(PropsConst.rootWidgetInit, this);
-        }, 0);
-    }
-
     componentDidUpdate(prevProps, prevState) {
+        super.componentDidUpdate(prevProps, prevState);
         if (prevProps.cid !== this.props.cid) {
             this.resetWidget();
+        } else {
+            this._emitInit();
         }
     }
+
+    _emitInit = async () => {
+        const that = this;
+        if (this._initMit) return;
+        that._initMit = true;
+        setTimeout(() => {
+            DesignEvent.emit(PropsConst.rootWidgetInit, that);
+        }, 0);
+    };
 
     /**
      * 重置widget, 切换页面的时候
@@ -47,9 +57,7 @@ export class RootWidget extends BaseWidget<Props, State> {
     resetWidget() {
         const that = this;
         that.init();
-        that.forceUpdate(() => {
-            DesignEvent.emit(PropsConst.rootWidgetInit, that);
-        });
+        that.forceUpdate(that._emitInit);
     }
 
     addListener() {
