@@ -24,7 +24,7 @@ export const BaseTextConfig = () => [
             type: Form.Const.Type.IBotSelect,
             form: PropsConst.textSize,
             titleDirection: Form.Const.Direction.Bottom,
-            style: {maxWidth: 60},
+            style: {maxWidth: 70},
             value: textSize,
             select: {data: ItemConst.FontSize.options}
         },

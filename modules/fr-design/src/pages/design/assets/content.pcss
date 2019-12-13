@@ -79,7 +79,7 @@
             display: flex;
             flex-direction: column;
             flex: 1;
-            background: rgb(255, 255, 255);
+            background-color: inherit;
             overflow: hidden;
 
             header {
@@ -137,7 +137,7 @@
         .widget-panel {
             flex-basis: 50%;
             position: relative;
-            background: rgb(255, 255, 255);
+            background-color: inherit;
             overflow: hidden;
 
             .layout-panel {
@@ -187,13 +187,14 @@
         box-sizing: border-box;
     }
 
-    .panel-right{
+    .panel-right {
         position: relative;
         width: 230px;
+        max-width: 230px;
         display: flex;
         box-shadow: rgba(39, 54, 78, 0.11) 0 -2px 30px 0;
         z-index: 4;
-    //background: white; background-color: inherit;
+        background-color: inherit;
 
         .content, .react-tabs__tab-panel--selected {
             display: flex;
