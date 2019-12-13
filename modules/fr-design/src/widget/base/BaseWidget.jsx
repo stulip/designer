@@ -504,7 +504,9 @@ export class BaseWidget extends React.Component<BaseWidgetProps, State> {
             if (widgetId) {
                 nChildren.push(widgetId);
             }
-            that.setState({ children: nChildren });
+            that.setState({children: nChildren}, () => {
+                DesignEvent.emit(PropsConst.addWidget, widgetId);
+            });
         }
     }
 
